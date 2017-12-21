@@ -1,0 +1,14 @@
+[2017-12-19 09:17:48.364] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:18:11.046] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:18:12.916] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:20:12.036] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:20:12.700] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:20:27.275] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:20:27.710] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:20:39.872] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:21:07.517] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:21:09.440] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:21:24.046] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:21:25.925] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:22:01.113] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
+[2017-12-19 09:22:01.792] [INFO] logInfo - errTypeError: mapMsgClass.keys[Symbol.iterator] is not a function
