@@ -23,6 +23,6 @@ function WsMgr(){
     };
 
     this.send = function(socket, msgid, data){
-        socket.emit('message', msgid, data, data.length);
+        socket.emit(msgid, data, data.length);
     };
 }
