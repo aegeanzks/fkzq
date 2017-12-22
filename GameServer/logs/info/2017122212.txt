@@ -1,0 +1,1 @@
+[2017-12-22 12:01:31.465] [INFO] logInfo - errError: Heartbeat timeout

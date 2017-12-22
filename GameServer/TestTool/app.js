@@ -1,10 +1,10 @@
-var pbLogin = require('../Msg/MsgFile/msg.svrcli_pb');
+﻿var pbLogin = require('../Msg/MsgFile/msg.svrcli_pb');
 
 
 function start() {
 
     var io = require('socket.io-client');
-    var socket = io.connect('ws://127.0.0.1:10010');
+    var socket = io.connect('ws://127.0.0.1:10011');
     socket.binaryType = 'arraybuffer';
     socket.on('connect', function () {
         console.log('连接上了...');

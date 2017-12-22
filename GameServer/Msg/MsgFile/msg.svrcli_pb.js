@@ -1,8 +1,6 @@
 /**
  * @fileoverview
  * @enhanceable
- * @suppress {messageConventions} JS Compiler reports an error if a variable or
- *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -58,7 +56,6 @@ proto.kzgame.svrcli.msg.Ask_Login.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.kzgame.svrcli.msg.Ask_Login} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.kzgame.svrcli.msg.Ask_Login.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -109,25 +106,43 @@ proto.kzgame.svrcli.msg.Ask_Login.deserializeBinaryFromReader = function(msg, re
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_Login} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_Login.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.kzgame.svrcli.msg.Ask_Login.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.kzgame.svrcli.msg.Ask_Login.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.kzgame.svrcli.msg.Ask_Login} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.kzgame.svrcli.msg.Ask_Login.serializeBinaryToWriter = function(message, writer) {
+proto.kzgame.svrcli.msg.Ask_Login.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_Login} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_Login.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_Login} */ (jspb.Message.cloneMessage(this));
 };
 
 
@@ -182,12 +197,11 @@ proto.kzgame.svrcli.msg.Res_Login.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.kzgame.svrcli.msg.Res_Login} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.kzgame.svrcli.msg.Res_Login.toObject = function(includeInstance, msg) {
   var f, obj = {
-    result: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    coin: +jspb.Message.getFieldWithDefault(msg, 2, 0.0)
+    result: msg.getResult(),
+    coin: msg.getCoin()
   };
 
   if (includeInstance) {
@@ -242,33 +256,42 @@ proto.kzgame.svrcli.msg.Res_Login.deserializeBinaryFromReader = function(msg, re
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_Login} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_Login.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.kzgame.svrcli.msg.Res_Login.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.kzgame.svrcli.msg.Res_Login.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.kzgame.svrcli.msg.Res_Login} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.kzgame.svrcli.msg.Res_Login.serializeBinaryToWriter = function(message, writer) {
+proto.kzgame.svrcli.msg.Res_Login.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getResult();
+  f = this.getResult();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getCoin();
+  f = this.getCoin();
   if (f !== 0.0) {
     writer.writeDouble(
       2,
@@ -279,23 +302,24 @@ proto.kzgame.svrcli.msg.Res_Login.serializeBinaryToWriter = function(message, wr
 
 
 /**
- * @enum {number}
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_Login} The clone.
  */
-proto.kzgame.svrcli.msg.Res_Login.Type = {
-  UNSET: 0,
-  ID: 10001
+proto.kzgame.svrcli.msg.Res_Login.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_Login} */ (jspb.Message.cloneMessage(this));
 };
+
 
 /**
  * optional int32 result = 1;
  * @return {number}
  */
 proto.kzgame.svrcli.msg.Res_Login.prototype.getResult = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.kzgame.svrcli.msg.Res_Login.prototype.setResult = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -306,14 +330,22 @@ proto.kzgame.svrcli.msg.Res_Login.prototype.setResult = function(value) {
  * @return {number}
  */
 proto.kzgame.svrcli.msg.Res_Login.prototype.getCoin = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.kzgame.svrcli.msg.Res_Login.prototype.setCoin = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_Login.Type = {
+  UNSET: 0,
+  ID: 10001
+};
 
 goog.object.extend(exports, proto.kzgame.svrcli.msg);

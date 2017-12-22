@@ -13,7 +13,7 @@ var http = require('http');
 var dbStructure = require('../db_structure');
 var UtilsFunc = require('../Utils/Functions');
 
-const SERVERID = process.argv[2]; //获取服务端id
+global.SERVERID = process.argv[2]; //获取服务端id
 
 process.on('exit', function(){
     // 引入readline模块
@@ -43,8 +43,8 @@ var config = configs.gameSvrConfig();
 //判断是否有配置
 mapSvrConf = config.servers[SERVERID];
 
-var ip = "127.0.0.1";
-var port = mapSvrConf['port']; //暴露给客户端的接口
+global.ip = "127.0.0.1";
+global.port = mapSvrConf['port']; //暴露给客户端的接口
 
 // 检测端口是否被占用
 var net = require('net');

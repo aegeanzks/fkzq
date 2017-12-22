@@ -472,7 +472,7 @@ function dataUpdate(data,scheduledocs,oddsdocs,yapandocs,rangqiudocs){
             if(data[i]['id'] == yapandocs[n]['_doc']['id']){
                 var yapandocValue = yapanComp(data[i],yapandocs[n]['_doc']);
                 for(var key in yapandocValue){
-                    _YapanStatement.collection.update({id:Id},{$set:oddsdocValue},false,true);
+                    _YapanStatement.collection.update({id:Id},{$set:yapandocValue},false,true);
                     break;
                 }
                 break;

@@ -23,9 +23,9 @@ function Login(){
     self.login = function(askLogin, socket){
         var userid = 1;
         waitMap.set(userid, socket);
-        //OBJ('DataCenterAgentModule').logic.reqGetCoin(userid);
-        self.resGetCoin({'userid':userid, 'coin':100000});
-        console.log('enter login!');
+        OBJ('DataCenterAgentModule').logic.reqGetCoin(userid);
+        //self.resGetCoin({'userid':userid, 'coin':100000});
+        console.log(userid + ' enter login!');
     };
     
     self.resGetCoin = function(data){

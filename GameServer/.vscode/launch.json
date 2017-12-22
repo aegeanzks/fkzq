@@ -10,7 +10,7 @@
             "name": "GameSvr",
             "program": "${workspaceFolder}/GameSvr\\App.js"
             "args": [
-                "server1"
+                "server2"
             ]
         },
         {

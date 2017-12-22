@@ -1,0 +1,398 @@
+[2017-12-22 10:11:58.261] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime", id: Path `id` is required.
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:27:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] },
+     id: 
+      { ValidatorError: Path `id` is required.
+          at MongooseError.ValidatorError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validator.js:25:11)
+          at validate (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:782:13)
+          at d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:829:11
+          at Array.forEach (native)
+          at SchemaString.SchemaType.doValidate (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:789:19)
+          at d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:1543:9
+          at _combinedTickCallback (internal/process/next_tick.js:73:7)
+          at process._tickCallback (internal/process/next_tick.js:104:9)
+        message: 'Path `id` is required.',
+        name: 'ValidatorError',
+        properties: [Object],
+        kind: 'required',
+        path: 'id',
+        value: undefined,
+        reason: undefined,
+        '$isValidatorError': true } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:14:50.911] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:15:45.874] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:15:47.163] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:15:48.092] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:15:49.502] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:31:47.776] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:34:13.196] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:34:47.765] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }
+[2017-12-22 10:34:52.928] [ERROR] logErr - { ValidationError: gameserverinfo validation failed: createTime: Cast to Date failed for value "Invalid Date" at path "createTime"
+    at MongooseError.ValidationError.inspect (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\validation.js:57:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at Object.inspect (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:34:23)
+    at formatValue (util.js:351:36)
+    at inspect (util.js:185:10)
+    at Object.exports.format (util.js:71:24)
+    at formatLogData (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:47:22)
+    at basicLayout (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\layouts.js:109:7)
+    at Logger.<anonymous> (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\appenders\dateFile.js:35:19)
+    at emitOne (events.js:96:13)
+    at Logger.emit (events.js:188:7)
+    at Logger._log (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:93:8)
+    at Logger.(anonymous function) [as error] (d:\myGit\fkzq\GameServer\node_modules\log4js\lib\logger.js:86:12)
+    at LogMgr.__dirname.LogMgr.writeErr (d:\myGit\fkzq\GameServer\Utils\Manager\LogMgr.js:88:16)
+  errors: 
+   { createTime: 
+      { CastError: Cast to Date failed for value "Invalid Date" at path "createTime"
+          at MongooseError.CastError (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+          at model.Document.$set (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\document.js:772:7)
+          at model.set [as createTime] (d:\myGit\fkzq\GameServer\node_modules\mongoose\lib\services\document\compile.js:142:26)
+          at Common.__dirname.Common.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\Common.js:28:46)
+          at CommonModule.__dirname.CommonModule.run (d:\myGit\fkzq\GameServer\GameSvr\Module\Common\CommonModule.js:20:15)
+          at Timeout.runFunc [as _onTimeout] (d:\myGit\fkzq\GameServer\Utils\Manager\ModuleMgr.js:26:27)
+          at ontimeout (timers.js:386:14)
+          at tryOnTimeout (timers.js:250:5)
+          at Timer.listOnTimeout (timers.js:214:5)
+        message: 'Cast to Date failed for value "Invalid Date" at path "createTime"',
+        name: 'CastError',
+        stringValue: '"Invalid Date"',
+        kind: 'Date',
+        value: Invalid Date,
+        path: 'createTime',
+        reason: [Object] } },
+  _message: 'gameserverinfo validation failed',
+  name: 'ValidationError' }

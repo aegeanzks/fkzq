@@ -20,7 +20,7 @@ function ModuleMgr(){
     };
 
     function runFunc(){
-        var timestamp = (new Date()).valueOf();
+        var timestamp = Date.now();
         for(moduleOne of moduleSet){
             try {
                 moduleOne.run(timestamp);

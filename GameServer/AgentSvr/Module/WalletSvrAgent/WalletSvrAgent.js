@@ -32,12 +32,12 @@ function WalletSvrAgent(){
             var msgType = data.readInt8(0);
 
             if(msgType == 2){
-                var requistId = data.readUInt32BE(4);
+                var requistId = data.readUInt32BE(1);
                 var cbFunc = cbMap.get(requistId);
                 if(cbFunc){
-                    var cbData = new Buffer(data.length - 8);
-                    data.copy(cbData, 8);
-                    cbFunc.func(cbData);
+                    var cbData = new Buffer(data.length - 5);
+                    data.copy(cbData, 0, 5);
+                    cbFunc.func(new Uint8Array(cbData));
                 }
             }
         };  
@@ -55,22 +55,30 @@ function WalletSvrAgent(){
             cbId = OBJ('GlobalModule').getUniqueId();
             cbMap.set(cbId, {'func':func, 'overdueTime':Date.now()+10000});
         }
-
-        var reqBuf = new Buffer(data.serializeBinary());
-        var buf=new Buffer(9+reqBuf.byteLength);
-        buf.writeInt8(1, 0);
-        buf.writeUInt32BE(604440000, 1);
-        buf.writeUInt32BE(funcId,5);
-        reqBuf.copy(buf, 9);
-        self.ws.send(buf);
+        try{
+            var reqBuf = new Buffer(data.serializeBinary());
+            var buf=new Buffer(9+reqBuf.byteLength);
+            buf.writeInt8(1, 0);
+            buf.writeUInt32BE(cbId, 1);
+            buf.writeUInt32BE(funcId,5);
+            reqBuf.copy(buf, 9);
+            self.ws.send(buf);
+        }catch(err){
+            console.log(err);
+        }
     }
     //获取用户金额
     this.reqGetCoin = function(source, userid){
         var rgc = new pbWallet.GetUserBalance();
         rgc.setUserId(userid);
         req(2010002, rgc, function(data){
-            var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
-            OBJ('RpcMgr').send(source, 'resGetCoin', res);
+            try {
+                var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
+                //OBJ('RpcMgr').send(source, 'resGetCoin', 
+                //{'userid':userid, 'res': res.getRet(), 'msg': res.getMsg(), 'balance': res.getBalance()});
+            } catch (error) {
+                console.log(error);
+            }
         });
     };
 

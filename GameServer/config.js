@@ -32,12 +32,24 @@ exports.gameSvrConfig = function(){
     };
 };
 
+
+/*
+	@pullInterval 请求间隔时间,单位s
+	@noDataTotal  根据连续n期空数据,获取轮询截至期号
+	@switch       获取历史数据开关,0-开启 1-关闭
+	@beginTime    获取历史数据起始时间,@switch=1 设为空 ,other样式 20171216
+	@endTime      获取历史数据截止时间,@switch=1 设为空 ,other样式 20171231
+*/
 exports.dataCenterSvrConfig = function(){
     return {
         serverId:'dataCenter',
         //数据采集频率
-        pullInterval:5000,
-        runInterval:300//帧率
+        pullInterval:6,
+        runInterval:30, //帧率
+        noDataTotal:'3',             
+        switch:'1',                 
+        beginTime:'',                
+        endTime:'',      
     };
 };
 

@@ -13,21 +13,35 @@ var SingleTimer = require('../../../Utils/SingleTimer');
 
 function Common(){
     var pingTimer = new SingleTimer();
-    pingTimer.startup(1000);
+    pingTimer.startup(5000);
 
-    var model_GameServerInfos = OBJ('DbMgr').getModel(GameServerInfosSchema);
+    var class_GameServerInfos = OBJ('DbMgr').getStatement(GameServerInfosSchema);
     this.run = function(timestamp){
         //注册服务器
         if(null != pingTimer && pingTimer.toNextTime())
         {
-            model_GameServerInfos.ip = '127.0.0.1';
-            model_GameServerInfos.port = 10010;
-            model_GameServerInfos.onLineNum = 0;
-            model_GameServerInfos.createTime = new Date(timestamp);
-            model_GameServerInfos.save(function(err){
-                if(err){
-                    console.log(err);
-                    OBJ('LogMgr').writeErr(err);
+            class_GameServerInfos.find({'serverid':SERVERID}, function(err, data){
+                if(data.length == 0){
+                    var model_GameServerInfos = OBJ('DbMgr').getModel(GameServerInfosSchema);
+                    model_GameServerInfos.serverid = SERVERID;
+                    model_GameServerInfos.ip = global.ip;
+                    model_GameServerInfos.port = global.port;
+                    model_GameServerInfos.onLineNum = 0;
+                    model_GameServerInfos.save(function(err){
+                        if(err){
+                            console.log(err);
+                            OBJ('LogMgr').writeErr(err);
+                        }
+                    });
+                } else {
+
+                    var updateVar = {updateTime:Date.now()};
+                    class_GameServerInfos.update({'serverid':SERVERID}, {$set:updateVar}, function(err){
+                        if(err){
+                            console.log(err);
+                            OBJ('LogMgr').writeErr(err);
+                        }
+                    });
                 }
             });
         }

@@ -1,8 +1,6 @@
 /**
  * @fileoverview
  * @enhanceable
- * @suppress {messageConventions} JS Compiler reports an error if a variable or
- *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -63,12 +61,11 @@ proto.pb.wallet.RspCommon.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.RspCommon} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.RspCommon.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ret: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    msg: jspb.Message.getFieldWithDefault(msg, 2, "")
+    ret: msg.getRet(),
+    msg: msg.getMsg()
   };
 
   if (includeInstance) {
@@ -123,33 +120,42 @@ proto.pb.wallet.RspCommon.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.RspCommon} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.RspCommon.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.RspCommon.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.RspCommon.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.RspCommon} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.RspCommon.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.RspCommon.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getRet();
+  f = this.getRet();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getMsg();
+  f = this.getMsg();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -160,15 +166,24 @@ proto.pb.wallet.RspCommon.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.RspCommon} The clone.
+ */
+proto.pb.wallet.RspCommon.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.RspCommon} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional int32 ret = 1;
  * @return {number}
  */
 proto.pb.wallet.RspCommon.prototype.getRet = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.RspCommon.prototype.setRet = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -179,11 +194,11 @@ proto.pb.wallet.RspCommon.prototype.setRet = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspCommon.prototype.getMsg = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspCommon.prototype.setMsg = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -232,17 +247,16 @@ proto.pb.wallet.AddTrade.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.AddTrade} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.AddTrade.toObject = function(includeInstance, msg) {
   var f, obj = {
-    outTradeNo: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    outType: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    userId: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    money: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    moneyFrom: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    memo: jspb.Message.getFieldWithDefault(msg, 7, "")
+    outTradeNo: msg.getOutTradeNo(),
+    type: msg.getType(),
+    outType: msg.getOutType(),
+    userId: msg.getUserId(),
+    money: msg.getMoney(),
+    moneyFrom: msg.getMoneyFrom(),
+    memo: msg.getMemo()
   };
 
   if (includeInstance) {
@@ -317,68 +331,77 @@ proto.pb.wallet.AddTrade.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.AddTrade} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.AddTrade.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.AddTrade.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.AddTrade.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.AddTrade} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.AddTrade.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.AddTrade.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getOutTradeNo();
+  f = this.getOutTradeNo();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getType();
+  f = this.getType();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
-  f = message.getOutType();
+  f = this.getOutType();
   if (f !== 0) {
     writer.writeInt32(
       3,
       f
     );
   }
-  f = message.getUserId();
+  f = this.getUserId();
   if (f !== 0) {
     writer.writeInt32(
       4,
       f
     );
   }
-  f = message.getMoney();
+  f = this.getMoney();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getMoneyFrom();
+  f = this.getMoneyFrom();
   if (f !== 0) {
     writer.writeInt32(
       6,
       f
     );
   }
-  f = message.getMemo();
+  f = this.getMemo();
   if (f.length > 0) {
     writer.writeString(
       7,
@@ -389,15 +412,24 @@ proto.pb.wallet.AddTrade.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.AddTrade} The clone.
+ */
+proto.pb.wallet.AddTrade.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.AddTrade} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional string out_trade_no = 1;
  * @return {string}
  */
 proto.pb.wallet.AddTrade.prototype.getOutTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.AddTrade.prototype.setOutTradeNo = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -408,11 +440,11 @@ proto.pb.wallet.AddTrade.prototype.setOutTradeNo = function(value) {
  * @return {number}
  */
 proto.pb.wallet.AddTrade.prototype.getType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.AddTrade.prototype.setType = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -423,11 +455,11 @@ proto.pb.wallet.AddTrade.prototype.setType = function(value) {
  * @return {number}
  */
 proto.pb.wallet.AddTrade.prototype.getOutType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.AddTrade.prototype.setOutType = function(value) {
   jspb.Message.setField(this, 3, value);
 };
@@ -438,11 +470,11 @@ proto.pb.wallet.AddTrade.prototype.setOutType = function(value) {
  * @return {number}
  */
 proto.pb.wallet.AddTrade.prototype.getUserId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.AddTrade.prototype.setUserId = function(value) {
   jspb.Message.setField(this, 4, value);
 };
@@ -453,11 +485,11 @@ proto.pb.wallet.AddTrade.prototype.setUserId = function(value) {
  * @return {string}
  */
 proto.pb.wallet.AddTrade.prototype.getMoney = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.AddTrade.prototype.setMoney = function(value) {
   jspb.Message.setField(this, 5, value);
 };
@@ -468,11 +500,11 @@ proto.pb.wallet.AddTrade.prototype.setMoney = function(value) {
  * @return {number}
  */
 proto.pb.wallet.AddTrade.prototype.getMoneyFrom = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.AddTrade.prototype.setMoneyFrom = function(value) {
   jspb.Message.setField(this, 6, value);
 };
@@ -483,11 +515,11 @@ proto.pb.wallet.AddTrade.prototype.setMoneyFrom = function(value) {
  * @return {string}
  */
 proto.pb.wallet.AddTrade.prototype.getMemo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.AddTrade.prototype.setMemo = function(value) {
   jspb.Message.setField(this, 7, value);
 };
@@ -536,14 +568,13 @@ proto.pb.wallet.RspAddTrade.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.RspAddTrade} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.RspAddTrade.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ret: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    msg: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    tradeNo: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    balance: jspb.Message.getFieldWithDefault(msg, 4, "")
+    ret: msg.getRet(),
+    msg: msg.getMsg(),
+    tradeNo: msg.getTradeNo(),
+    balance: msg.getBalance()
   };
 
   if (includeInstance) {
@@ -606,47 +637,56 @@ proto.pb.wallet.RspAddTrade.deserializeBinaryFromReader = function(msg, reader) 
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.RspAddTrade} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.RspAddTrade.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.RspAddTrade.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.RspAddTrade.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.RspAddTrade} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.RspAddTrade.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.RspAddTrade.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getRet();
+  f = this.getRet();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getMsg();
+  f = this.getMsg();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getTradeNo();
+  f = this.getTradeNo();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getBalance();
+  f = this.getBalance();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -657,15 +697,24 @@ proto.pb.wallet.RspAddTrade.serializeBinaryToWriter = function(message, writer) 
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.RspAddTrade} The clone.
+ */
+proto.pb.wallet.RspAddTrade.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.RspAddTrade} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional int32 ret = 1;
  * @return {number}
  */
 proto.pb.wallet.RspAddTrade.prototype.getRet = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.RspAddTrade.prototype.setRet = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -676,11 +725,11 @@ proto.pb.wallet.RspAddTrade.prototype.setRet = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspAddTrade.prototype.getMsg = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspAddTrade.prototype.setMsg = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -691,11 +740,11 @@ proto.pb.wallet.RspAddTrade.prototype.setMsg = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspAddTrade.prototype.getTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspAddTrade.prototype.setTradeNo = function(value) {
   jspb.Message.setField(this, 3, value);
 };
@@ -706,11 +755,11 @@ proto.pb.wallet.RspAddTrade.prototype.setTradeNo = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspAddTrade.prototype.getBalance = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspAddTrade.prototype.setBalance = function(value) {
   jspb.Message.setField(this, 4, value);
 };
@@ -759,11 +808,10 @@ proto.pb.wallet.GetUserBalance.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.GetUserBalance} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.GetUserBalance.toObject = function(includeInstance, msg) {
   var f, obj = {
-    userId: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    userId: msg.getUserId()
   };
 
   if (includeInstance) {
@@ -814,26 +862,35 @@ proto.pb.wallet.GetUserBalance.deserializeBinaryFromReader = function(msg, reade
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.GetUserBalance} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.GetUserBalance.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.GetUserBalance.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.GetUserBalance.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.GetUserBalance} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.GetUserBalance.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.GetUserBalance.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getUserId();
+  f = this.getUserId();
   if (f !== 0) {
     writer.writeInt32(
       1,
@@ -844,15 +901,24 @@ proto.pb.wallet.GetUserBalance.serializeBinaryToWriter = function(message, write
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.GetUserBalance} The clone.
+ */
+proto.pb.wallet.GetUserBalance.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.GetUserBalance} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional int32 user_id = 1;
  * @return {number}
  */
 proto.pb.wallet.GetUserBalance.prototype.getUserId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.GetUserBalance.prototype.setUserId = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -901,13 +967,12 @@ proto.pb.wallet.RspGetUserBalance.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.RspGetUserBalance} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.RspGetUserBalance.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ret: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    msg: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    balance: jspb.Message.getFieldWithDefault(msg, 3, "")
+    ret: msg.getRet(),
+    msg: msg.getMsg(),
+    balance: msg.getBalance()
   };
 
   if (includeInstance) {
@@ -966,40 +1031,49 @@ proto.pb.wallet.RspGetUserBalance.deserializeBinaryFromReader = function(msg, re
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.RspGetUserBalance} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.RspGetUserBalance.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.RspGetUserBalance.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.RspGetUserBalance.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.RspGetUserBalance} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.RspGetUserBalance.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.RspGetUserBalance.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getRet();
+  f = this.getRet();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getMsg();
+  f = this.getMsg();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getBalance();
+  f = this.getBalance();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -1010,15 +1084,24 @@ proto.pb.wallet.RspGetUserBalance.serializeBinaryToWriter = function(message, wr
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.RspGetUserBalance} The clone.
+ */
+proto.pb.wallet.RspGetUserBalance.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.RspGetUserBalance} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional int32 ret = 1;
  * @return {number}
  */
 proto.pb.wallet.RspGetUserBalance.prototype.getRet = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.RspGetUserBalance.prototype.setRet = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -1029,11 +1112,11 @@ proto.pb.wallet.RspGetUserBalance.prototype.setRet = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspGetUserBalance.prototype.getMsg = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspGetUserBalance.prototype.setMsg = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -1044,11 +1127,11 @@ proto.pb.wallet.RspGetUserBalance.prototype.setMsg = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspGetUserBalance.prototype.getBalance = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspGetUserBalance.prototype.setBalance = function(value) {
   jspb.Message.setField(this, 3, value);
 };
@@ -1097,20 +1180,19 @@ proto.pb.wallet.GetTrades.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.GetTrades} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.GetTrades.toObject = function(includeInstance, msg) {
   var f, obj = {
-    tradeNo: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    outTradeNo: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    userId: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    platformId: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    outType: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    startTime: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    endTime: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    pageNum: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    curPage: jspb.Message.getFieldWithDefault(msg, 10, 0)
+    tradeNo: msg.getTradeNo(),
+    outTradeNo: msg.getOutTradeNo(),
+    userId: msg.getUserId(),
+    platformId: msg.getPlatformId(),
+    type: msg.getType(),
+    outType: msg.getOutType(),
+    startTime: msg.getStartTime(),
+    endTime: msg.getEndTime(),
+    pageNum: msg.getPageNum(),
+    curPage: msg.getCurPage()
   };
 
   if (includeInstance) {
@@ -1160,7 +1242,7 @@ proto.pb.wallet.GetTrades.deserializeBinaryFromReader = function(msg, reader) {
       msg.setUserId(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setPlatformId(value);
       break;
     case 5:
@@ -1197,89 +1279,98 @@ proto.pb.wallet.GetTrades.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.GetTrades} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.GetTrades.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.GetTrades.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.GetTrades.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.GetTrades} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.GetTrades.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.GetTrades.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getTradeNo();
+  f = this.getTradeNo();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getOutTradeNo();
+  f = this.getOutTradeNo();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getUserId();
+  f = this.getUserId();
   if (f !== 0) {
     writer.writeInt32(
       3,
       f
     );
   }
-  f = message.getPlatformId();
-  if (f.length > 0) {
-    writer.writeString(
+  f = this.getPlatformId();
+  if (f !== 0) {
+    writer.writeInt32(
       4,
       f
     );
   }
-  f = message.getType();
+  f = this.getType();
   if (f !== 0) {
     writer.writeInt32(
       5,
       f
     );
   }
-  f = message.getOutType();
+  f = this.getOutType();
   if (f !== 0) {
     writer.writeInt32(
       6,
       f
     );
   }
-  f = message.getStartTime();
+  f = this.getStartTime();
   if (f.length > 0) {
     writer.writeString(
       7,
       f
     );
   }
-  f = message.getEndTime();
+  f = this.getEndTime();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
     );
   }
-  f = message.getPageNum();
+  f = this.getPageNum();
   if (f !== 0) {
     writer.writeInt32(
       9,
       f
     );
   }
-  f = message.getCurPage();
+  f = this.getCurPage();
   if (f !== 0) {
     writer.writeInt32(
       10,
@@ -1290,15 +1381,24 @@ proto.pb.wallet.GetTrades.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.GetTrades} The clone.
+ */
+proto.pb.wallet.GetTrades.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.GetTrades} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional string trade_no = 1;
  * @return {string}
  */
 proto.pb.wallet.GetTrades.prototype.getTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.GetTrades.prototype.setTradeNo = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -1309,11 +1409,11 @@ proto.pb.wallet.GetTrades.prototype.setTradeNo = function(value) {
  * @return {string}
  */
 proto.pb.wallet.GetTrades.prototype.getOutTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.GetTrades.prototype.setOutTradeNo = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -1324,26 +1424,26 @@ proto.pb.wallet.GetTrades.prototype.setOutTradeNo = function(value) {
  * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getUserId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setUserId = function(value) {
   jspb.Message.setField(this, 3, value);
 };
 
 
 /**
- * optional string platform_id = 4;
- * @return {string}
+ * optional int32 platform_id = 4;
+ * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getPlatformId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
 };
 
 
-/** @param {string} value */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setPlatformId = function(value) {
   jspb.Message.setField(this, 4, value);
 };
@@ -1354,11 +1454,11 @@ proto.pb.wallet.GetTrades.prototype.setPlatformId = function(value) {
  * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setType = function(value) {
   jspb.Message.setField(this, 5, value);
 };
@@ -1369,11 +1469,11 @@ proto.pb.wallet.GetTrades.prototype.setType = function(value) {
  * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getOutType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setOutType = function(value) {
   jspb.Message.setField(this, 6, value);
 };
@@ -1384,11 +1484,11 @@ proto.pb.wallet.GetTrades.prototype.setOutType = function(value) {
  * @return {string}
  */
 proto.pb.wallet.GetTrades.prototype.getStartTime = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.GetTrades.prototype.setStartTime = function(value) {
   jspb.Message.setField(this, 7, value);
 };
@@ -1399,11 +1499,11 @@ proto.pb.wallet.GetTrades.prototype.setStartTime = function(value) {
  * @return {string}
  */
 proto.pb.wallet.GetTrades.prototype.getEndTime = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.GetTrades.prototype.setEndTime = function(value) {
   jspb.Message.setField(this, 8, value);
 };
@@ -1414,11 +1514,11 @@ proto.pb.wallet.GetTrades.prototype.setEndTime = function(value) {
  * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getPageNum = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 9, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setPageNum = function(value) {
   jspb.Message.setField(this, 9, value);
 };
@@ -1429,11 +1529,11 @@ proto.pb.wallet.GetTrades.prototype.setPageNum = function(value) {
  * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getCurPage = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 10, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setCurPage = function(value) {
   jspb.Message.setField(this, 10, value);
 };
@@ -1489,13 +1589,12 @@ proto.pb.wallet.RspGetTrades.prototype.toObject = function(opt_includeInstance) 
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.RspGetTrades} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.RspGetTrades.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ret: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    msg: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    count: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    ret: msg.getRet(),
+    msg: msg.getMsg(),
+    count: msg.getCount(),
     listList: jspb.Message.toObjectList(msg.getListList(),
     proto.pb.wallet.Trade.toObject, includeInstance)
   };
@@ -1549,7 +1648,8 @@ proto.pb.wallet.RspGetTrades.deserializeBinaryFromReader = function(msg, reader)
     case 4:
       var value = new proto.pb.wallet.Trade;
       reader.readMessage(value,proto.pb.wallet.Trade.deserializeBinaryFromReader);
-      msg.addList(value);
+      msg.getListList().push(value);
+      msg.setListList(msg.getListList());
       break;
     default:
       reader.skipField();
@@ -1561,47 +1661,56 @@ proto.pb.wallet.RspGetTrades.deserializeBinaryFromReader = function(msg, reader)
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.RspGetTrades} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.RspGetTrades.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.RspGetTrades.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.RspGetTrades.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.RspGetTrades} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.RspGetTrades.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.RspGetTrades.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getRet();
+  f = this.getRet();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getMsg();
+  f = this.getMsg();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getCount();
+  f = this.getCount();
   if (f !== 0) {
     writer.writeInt32(
       3,
       f
     );
   }
-  f = message.getListList();
+  f = this.getListList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       4,
@@ -1613,15 +1722,24 @@ proto.pb.wallet.RspGetTrades.serializeBinaryToWriter = function(message, writer)
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.RspGetTrades} The clone.
+ */
+proto.pb.wallet.RspGetTrades.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.RspGetTrades} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional int32 ret = 1;
  * @return {number}
  */
 proto.pb.wallet.RspGetTrades.prototype.getRet = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.RspGetTrades.prototype.setRet = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -1632,11 +1750,11 @@ proto.pb.wallet.RspGetTrades.prototype.setRet = function(value) {
  * @return {string}
  */
 proto.pb.wallet.RspGetTrades.prototype.getMsg = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.RspGetTrades.prototype.setMsg = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -1647,11 +1765,11 @@ proto.pb.wallet.RspGetTrades.prototype.setMsg = function(value) {
  * @return {number}
  */
 proto.pb.wallet.RspGetTrades.prototype.getCount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.RspGetTrades.prototype.setCount = function(value) {
   jspb.Message.setField(this, 3, value);
 };
@@ -1659,6 +1777,8 @@ proto.pb.wallet.RspGetTrades.prototype.setCount = function(value) {
 
 /**
  * repeated Trade list = 4;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.pb.wallet.Trade>}
  */
 proto.pb.wallet.RspGetTrades.prototype.getListList = function() {
@@ -1667,19 +1787,9 @@ proto.pb.wallet.RspGetTrades.prototype.getListList = function() {
 };
 
 
-/** @param {!Array.<!proto.pb.wallet.Trade>} value */
+/** @param {Array.<!proto.pb.wallet.Trade>} value  */
 proto.pb.wallet.RspGetTrades.prototype.setListList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
-};
-
-
-/**
- * @param {!proto.pb.wallet.Trade=} opt_value
- * @param {number=} opt_index
- * @return {!proto.pb.wallet.Trade}
- */
-proto.pb.wallet.RspGetTrades.prototype.addList = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.pb.wallet.Trade, opt_index);
 };
 
 
@@ -1731,22 +1841,21 @@ proto.pb.wallet.Trade.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.Trade} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.Trade.toObject = function(includeInstance, msg) {
   var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    tradeNo: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    outTradeNo: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    userId: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    platformId: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    outType: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    money: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    moneyFrom: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    balance: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    memo: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    createdTime: jspb.Message.getFieldWithDefault(msg, 12, "")
+    id: msg.getId(),
+    tradeNo: msg.getTradeNo(),
+    outTradeNo: msg.getOutTradeNo(),
+    userId: msg.getUserId(),
+    platformId: msg.getPlatformId(),
+    type: msg.getType(),
+    outType: msg.getOutType(),
+    money: msg.getMoney(),
+    moneyFrom: msg.getMoneyFrom(),
+    balance: msg.getBalance(),
+    memo: msg.getMemo(),
+    createdTime: msg.getCreatedTime()
   };
 
   if (includeInstance) {
@@ -1800,7 +1909,7 @@ proto.pb.wallet.Trade.deserializeBinaryFromReader = function(msg, reader) {
       msg.setUserId(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setPlatformId(value);
       break;
     case 6:
@@ -1841,103 +1950,112 @@ proto.pb.wallet.Trade.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.Trade} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.Trade.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.Trade.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.Trade.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.Trade} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.Trade.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.Trade.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getId();
+  f = this.getId();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getTradeNo();
+  f = this.getTradeNo();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getOutTradeNo();
+  f = this.getOutTradeNo();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getUserId();
+  f = this.getUserId();
   if (f !== 0) {
     writer.writeInt32(
       4,
       f
     );
   }
-  f = message.getPlatformId();
-  if (f.length > 0) {
-    writer.writeString(
+  f = this.getPlatformId();
+  if (f !== 0) {
+    writer.writeInt32(
       5,
       f
     );
   }
-  f = message.getType();
+  f = this.getType();
   if (f !== 0) {
     writer.writeInt32(
       6,
       f
     );
   }
-  f = message.getOutType();
+  f = this.getOutType();
   if (f !== 0) {
     writer.writeInt32(
       7,
       f
     );
   }
-  f = message.getMoney();
+  f = this.getMoney();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
     );
   }
-  f = message.getMoneyFrom();
+  f = this.getMoneyFrom();
   if (f !== 0) {
     writer.writeInt32(
       9,
       f
     );
   }
-  f = message.getBalance();
+  f = this.getBalance();
   if (f.length > 0) {
     writer.writeString(
       10,
       f
     );
   }
-  f = message.getMemo();
+  f = this.getMemo();
   if (f.length > 0) {
     writer.writeString(
       11,
       f
     );
   }
-  f = message.getCreatedTime();
+  f = this.getCreatedTime();
   if (f.length > 0) {
     writer.writeString(
       12,
@@ -1948,15 +2066,24 @@ proto.pb.wallet.Trade.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.Trade} The clone.
+ */
+proto.pb.wallet.Trade.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.Trade} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional int32 id = 1;
  * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setId = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -1967,11 +2094,11 @@ proto.pb.wallet.Trade.prototype.setId = function(value) {
  * @return {string}
  */
 proto.pb.wallet.Trade.prototype.getTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.Trade.prototype.setTradeNo = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -1982,11 +2109,11 @@ proto.pb.wallet.Trade.prototype.setTradeNo = function(value) {
  * @return {string}
  */
 proto.pb.wallet.Trade.prototype.getOutTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.Trade.prototype.setOutTradeNo = function(value) {
   jspb.Message.setField(this, 3, value);
 };
@@ -1997,26 +2124,26 @@ proto.pb.wallet.Trade.prototype.setOutTradeNo = function(value) {
  * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getUserId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setUserId = function(value) {
   jspb.Message.setField(this, 4, value);
 };
 
 
 /**
- * optional string platform_id = 5;
- * @return {string}
+ * optional int32 platform_id = 5;
+ * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getPlatformId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
 };
 
 
-/** @param {string} value */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setPlatformId = function(value) {
   jspb.Message.setField(this, 5, value);
 };
@@ -2027,11 +2154,11 @@ proto.pb.wallet.Trade.prototype.setPlatformId = function(value) {
  * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setType = function(value) {
   jspb.Message.setField(this, 6, value);
 };
@@ -2042,11 +2169,11 @@ proto.pb.wallet.Trade.prototype.setType = function(value) {
  * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getOutType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 7, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setOutType = function(value) {
   jspb.Message.setField(this, 7, value);
 };
@@ -2057,11 +2184,11 @@ proto.pb.wallet.Trade.prototype.setOutType = function(value) {
  * @return {string}
  */
 proto.pb.wallet.Trade.prototype.getMoney = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.Trade.prototype.setMoney = function(value) {
   jspb.Message.setField(this, 8, value);
 };
@@ -2072,11 +2199,11 @@ proto.pb.wallet.Trade.prototype.setMoney = function(value) {
  * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getMoneyFrom = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 9, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setMoneyFrom = function(value) {
   jspb.Message.setField(this, 9, value);
 };
@@ -2087,11 +2214,11 @@ proto.pb.wallet.Trade.prototype.setMoneyFrom = function(value) {
  * @return {string}
  */
 proto.pb.wallet.Trade.prototype.getBalance = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 10, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.Trade.prototype.setBalance = function(value) {
   jspb.Message.setField(this, 10, value);
 };
@@ -2102,11 +2229,11 @@ proto.pb.wallet.Trade.prototype.setBalance = function(value) {
  * @return {string}
  */
 proto.pb.wallet.Trade.prototype.getMemo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 11, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.Trade.prototype.setMemo = function(value) {
   jspb.Message.setField(this, 11, value);
 };
@@ -2117,11 +2244,11 @@ proto.pb.wallet.Trade.prototype.setMemo = function(value) {
  * @return {string}
  */
 proto.pb.wallet.Trade.prototype.getCreatedTime = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 12, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.Trade.prototype.setCreatedTime = function(value) {
   jspb.Message.setField(this, 12, value);
 };
@@ -2170,13 +2297,14 @@ proto.pb.wallet.NsqAddTrade.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.pb.wallet.NsqAddTrade} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.pb.wallet.NsqAddTrade.toObject = function(includeInstance, msg) {
   var f, obj = {
-    funcId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    platformId: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    tradeNo: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    funcId: msg.getFuncId(),
+    platformId: msg.getPlatformId(),
+    tradeNo: msg.getTradeNo(),
+    balance: msg.getBalance(),
+    createdTime: msg.getCreatedTime(),
     trade: (f = msg.getTrade()) && proto.pb.wallet.AddTrade.toObject(includeInstance, f)
   };
 
@@ -2227,6 +2355,14 @@ proto.pb.wallet.NsqAddTrade.deserializeBinaryFromReader = function(msg, reader) 
       msg.setTradeNo(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBalance(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedTime(value);
+      break;
+    case 6:
       var value = new proto.pb.wallet.AddTrade;
       reader.readMessage(value,proto.pb.wallet.AddTrade.deserializeBinaryFromReader);
       msg.setTrade(value);
@@ -2241,50 +2377,73 @@ proto.pb.wallet.NsqAddTrade.deserializeBinaryFromReader = function(msg, reader) 
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.pb.wallet.NsqAddTrade} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.pb.wallet.NsqAddTrade.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.pb.wallet.NsqAddTrade.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.pb.wallet.NsqAddTrade.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.pb.wallet.NsqAddTrade} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.pb.wallet.NsqAddTrade.serializeBinaryToWriter = function(message, writer) {
+proto.pb.wallet.NsqAddTrade.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getFuncId();
+  f = this.getFuncId();
   if (f !== 0) {
     writer.writeUint32(
       1,
       f
     );
   }
-  f = message.getPlatformId();
+  f = this.getPlatformId();
   if (f !== 0) {
     writer.writeUint32(
       2,
       f
     );
   }
-  f = message.getTradeNo();
+  f = this.getTradeNo();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getTrade();
+  f = this.getBalance();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = this.getCreatedTime();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = this.getTrade();
   if (f != null) {
     writer.writeMessage(
-      4,
+      6,
       f,
       proto.pb.wallet.AddTrade.serializeBinaryToWriter
     );
@@ -2293,15 +2452,24 @@ proto.pb.wallet.NsqAddTrade.serializeBinaryToWriter = function(message, writer) 
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.pb.wallet.NsqAddTrade} The clone.
+ */
+proto.pb.wallet.NsqAddTrade.prototype.cloneMessage = function() {
+  return /** @type {!proto.pb.wallet.NsqAddTrade} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional uint32 func_id = 1;
  * @return {number}
  */
 proto.pb.wallet.NsqAddTrade.prototype.getFuncId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.NsqAddTrade.prototype.setFuncId = function(value) {
   jspb.Message.setField(this, 1, value);
 };
@@ -2312,11 +2480,11 @@ proto.pb.wallet.NsqAddTrade.prototype.setFuncId = function(value) {
  * @return {number}
  */
 proto.pb.wallet.NsqAddTrade.prototype.getPlatformId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
 };
 
 
-/** @param {number} value */
+/** @param {number} value  */
 proto.pb.wallet.NsqAddTrade.prototype.setPlatformId = function(value) {
   jspb.Message.setField(this, 2, value);
 };
@@ -2327,29 +2495,59 @@ proto.pb.wallet.NsqAddTrade.prototype.setPlatformId = function(value) {
  * @return {string}
  */
 proto.pb.wallet.NsqAddTrade.prototype.getTradeNo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.pb.wallet.NsqAddTrade.prototype.setTradeNo = function(value) {
   jspb.Message.setField(this, 3, value);
 };
 
 
 /**
- * optional AddTrade trade = 4;
- * @return {?proto.pb.wallet.AddTrade}
+ * optional string balance = 4;
+ * @return {string}
  */
-proto.pb.wallet.NsqAddTrade.prototype.getTrade = function() {
-  return /** @type{?proto.pb.wallet.AddTrade} */ (
-    jspb.Message.getWrapperField(this, proto.pb.wallet.AddTrade, 4));
+proto.pb.wallet.NsqAddTrade.prototype.getBalance = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
 };
 
 
-/** @param {?proto.pb.wallet.AddTrade|undefined} value */
+/** @param {string} value  */
+proto.pb.wallet.NsqAddTrade.prototype.setBalance = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional string created_time = 5;
+ * @return {string}
+ */
+proto.pb.wallet.NsqAddTrade.prototype.getCreatedTime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+};
+
+
+/** @param {string} value  */
+proto.pb.wallet.NsqAddTrade.prototype.setCreatedTime = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional AddTrade trade = 6;
+ * @return {proto.pb.wallet.AddTrade}
+ */
+proto.pb.wallet.NsqAddTrade.prototype.getTrade = function() {
+  return /** @type{proto.pb.wallet.AddTrade} */ (
+    jspb.Message.getWrapperField(this, proto.pb.wallet.AddTrade, 6));
+};
+
+
+/** @param {proto.pb.wallet.AddTrade|undefined} value  */
 proto.pb.wallet.NsqAddTrade.prototype.setTrade = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
+  jspb.Message.setWrapperField(this, 6, value);
 };
 
 
@@ -2360,10 +2558,10 @@ proto.pb.wallet.NsqAddTrade.prototype.clearTrade = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return{!boolean}
  */
 proto.pb.wallet.NsqAddTrade.prototype.hasTrade = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
