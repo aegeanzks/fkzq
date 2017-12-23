@@ -28,13 +28,13 @@ function Login(){
         console.log(userid + ' enter login!');
     };
     
-    self.resGetCoin = function(data){
+    self.resGetCoin = function(source, data){
         //console.log('resGetCoin:'+data);
         var socket = waitMap.get(data.userid);
         if(socket){
             var res = new pbSvrcli.Res_Login();
-            res.setResult(0);
-            res.setCoin(data.coin);
+            res.setResult(data.res === 'ok'? 0:1);
+            res.setCoin(data.balance);
 
             OBJ('WsMgr').send(socket, pbSvrcli.Res_Login.Type.ID, res.serializeBinary());
         }

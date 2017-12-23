@@ -19,7 +19,7 @@ function DataCenterAgentModule(){
     //////////////////////////////////////
     //注册函数
     (function registerRpc(){
-        OBJ('RpcMgr').register('resGetCoin', self.logic.reqGetCoin);
+        OBJ('RpcMgr').register('resGetCoin', self.logic.resGetCoin);
     })();
     //一帧
     this.run = function(timestamp){

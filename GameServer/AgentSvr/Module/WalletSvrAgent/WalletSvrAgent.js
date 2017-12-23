@@ -74,8 +74,8 @@ function WalletSvrAgent(){
         req(2010002, rgc, function(data){
             try {
                 var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
-                //OBJ('RpcMgr').send(source, 'resGetCoin', 
-                //{'userid':userid, 'res': res.getRet(), 'msg': res.getMsg(), 'balance': res.getBalance()});
+                OBJ('RpcMgr').send(source, 'resGetCoin', 
+                {'userid':userid, 'res': res.getRet(), 'msg': res.getMsg(), 'balance': res.getBalance()});
             } catch (error) {
                 console.log(error);
             }

@@ -13,7 +13,7 @@ function DataCenterAgent(){
     this.reqGetCoin = function(userid){
         OBJ('RpcMgr').send('agent', 'reqGetCoin', userid);
     };
-    this.resGetCoin = function(res){
-        OBJ('LoginModule').logic.resGetCoin(res);
+    this.resGetCoin = function(source, res){
+        OBJ('LoginModule').logic.resGetCoin(source, res);
     };
 }
