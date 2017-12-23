@@ -13,9 +13,11 @@ function start() {
         //askLogin.token = '123456';
         //askLogin.userid = 123456;
         var buf = askLogin.serializeBinary();
+        var remeberTime = Date.now();
         socket.emit(pbLogin.Ask_Login.Type.ID, buf, buf.length);
 
 		socket.on('10001', function(msg, length){
+            console.log('使用时间：'+(Date.now()-remeberTime) + '毫秒');
             msg.length = length;
             var res = pbLogin.Res_Login.deserializeBinary(new Uint8Array(msg));
             console.log(res.getCoin());
