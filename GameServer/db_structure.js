@@ -1,13 +1,13 @@
 //游戏服列表
 exports.GameServerInfos = function(){
     return {
-        'name':'gameserverinfo',
+        'name':'game_server_info',
         'schema':{
-            serverid: String,
+            server_id: String,
             ip: String,           //ip                
             port: Number,         //端口                           
-            onLineNum: Number,    //当前在线数         
-            updateTime: Date,
+            on_line_num: Number,    //当前在线数         
+            update_time: Date,
         }
     };
 };
@@ -97,20 +97,20 @@ exports.User = function(){              //用户表
     return {
         'name':'user',
         'schema':{
-            userid: {                   //用户ID
+            user_id: {                   //用户ID
                 type: Number,
                 index: true,
             },
-            username: {                 //用户账号
+            user_name: {                 //用户账号
                 type: String,
                 index: true,
             },
-            lastLoginDate: Date,        //最后登录时间
-            lastLoginIp: String,        //最后登录IP
-            loginCount: Number,         //登录次数
+            last_login_date: Date,        //最后登录时间
+            last_login_ip: String,        //最后登录IP
+            login_count: Number,         //登录次数
             status: Number,             //状态 0启用，1不启用
-            inventedProfitrate: Number, //虚拟长盈利率
-            inventedSlewRate: Number,   //虚拟长杀率
+            invented_profitrate: Number, //虚拟场盈利率
+            invented_slew_rate: Number,   //虚拟场杀率
         }
     };
 };
@@ -118,28 +118,28 @@ exports.User = function(){              //用户表
 //竞彩足球记录表(真实比赛)
 exports.LogRealBet = function(){    
     return {
-        'name':'logrealbet',
+        'name':'log_real_bet',
         'schema':{
-            userid: {               //用户ID
+            user_id: {               //用户ID
                 type: Number,
                 index: true,
             },
-            username: {             //用户账号
+            user_name: {             //用户账号
                 type: String,
                 index: true,
             },
-            betDate: Date,          //下注时间
-            betNum: Number,         //注数
+            bet_date: Date,          //下注时间
+            bet_num: Number,         //注数
             multiple: Number,       //倍数
-            betCoin: Number,        //下注金额
-            distributeCoin: Number, //派发金额
-            beforeBetCoin: Number,  //下注前金额
+            bet_coin: Number,        //下注金额
+            distribute_coin: Number, //派发金额
+            before_bet_coin: Number,  //下注前金额
             status: Number,         //状态 0未开奖 1不中 2中
-            balanceScheduleId: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
+            balance_schedule_id: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
                 type: Number,
                 index: true,
             },
-            betPlan: String         //投注方案,格式为{'scheduleIds':[11,12,13,14],'area':[0,1,1,2]} //0主胜 1平 2客胜（有几个场次就是几串1）
+            bet_plan: String         //投注方案,格式为{'scheduleIds':[11,12,13,14],'area':[0,1,1,2]} //0主胜 1平 2客胜（有几个场次就是几串1）
         }
     };
 };
@@ -147,14 +147,14 @@ exports.LogRealBet = function(){
 //虚拟足球开奖记录
 exports.VirtualSchedule = function(){    
     return {
-        'name':'virtualschedule',
+        'name':'virtual_schedule',
         'schema':{
             date: String,           //期数    20171213
-            dateNum: String,        //期号    20171213001
+            date_num: String,       //期号    20171213001
             host: String,           //主队    曼联
             guest: String,          //客队    曼城
             score: String,          //比分    1:0
-            allBet: Number,         //下注金额
+            all_bet: Number,         //下注金额
             distribution: Number,   //派发金额 包含下注金额
         }
     };
@@ -163,53 +163,32 @@ exports.VirtualSchedule = function(){
 //虚拟足球全部竞猜记录
 exports.LogVirtualBet = function(){
     return {
-        'name':'logvirtualbet',
+        'name':'log_virtual_bet',
         'schema':{
-            userid: {           //用户ID
+            user_id: {           //用户ID
                 type: Number,
-                required: true,
-                default:0,
                 index: true,
             },
-            username: {         //用户账号
+            user_name: {         //用户账号
                 type: String,
-                required: true,
-                default: '',
                 index: true,
             },
-            betDate: {          //下注时间
+            bet_date: {          //下注时间
                 type: Date,
                 default: Date.now,
                 index: true,
             },
-            betNum: {           //注数
-                type: Number,
-                default: 0,
-            },
-            multiple: {         //倍数
-                type: Number,
-                default: 1,
-            },
-            betCoin: {          //下注金额
-                type: Number,
-                default: 0,
-            },
-            distributeCoin: {   //派发金额
-                type: Number,
-                default: 0,
-            },
-            beforeBetCoin: {    //下注前金额
-                type: Number,
-                default: 0,
-            },
+            bet_num: Number,           //注数
+            multiple: Number,         //倍数
+            bet_coin: Number,          //下注金额
+            distribute_coin: Number,   //派发金额
+            before_bet_coin: Number,    //下注前金额
             status: {           //状态 0未开奖 1不中 2中
                 type: Number,
-                default: 0,
                 index: true,     
             },
-            balanceScheduleId: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
+            balance_schedule_id: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
                 type: Number,
-                default: 0,
                 index: true,
             }
         }
@@ -219,16 +198,16 @@ exports.LogVirtualBet = function(){
 //虚拟足球时间配置
 exports.ConfVirtualEvent = function(){
     return {
-        'name':'confvirtualevent',
+        'name':'conf_virtual_event',
         'schema':{
             event : String,                 //事件
-            hostBallHandling : Number,      //主队控球
-            hostAttack: Number,             //主队进攻
-            hostDangerousAttack: Number,    //主队危险进攻
-            guestBallHandling : Number,     //客队控球
-            guestAttack: Number,            //客队进攻
-            guestDangerousAttack: Number,   //客队危险进攻
-            AnimationTime: Number,          //动画事件（秒）
+            host_ball_handling : Number,      //主队控球
+            host_attack: Number,             //主队进攻
+            host_dangerous_attack: Number,    //主队危险进攻
+            guest_ball_handling : Number,     //客队控球
+            guest_attack: Number,            //客队进攻
+            guest_dangerous_attack: Number,   //客队危险进攻
+            animation_time: Number,          //动画事件（秒）
             blockade: Number,               //伴随封盘动画
         }
     }
@@ -237,9 +216,9 @@ exports.ConfVirtualEvent = function(){
 //危险进攻动画时间最大值
 exports.ConfDangerousAttackTime = function(){
     return {
-        'name':'confdangerousattacktime',
+        'name':'conf_dangerous_attack_time',
         'schema':{
-            maxTime: Number,                //动画最大时间
+            max_time: Number,                //动画最大时间
         }
     }
 };
@@ -247,16 +226,16 @@ exports.ConfDangerousAttackTime = function(){
 //虚拟足球赔率配置
 exports.ConfVirtualOdds = function(){
     return {
-        'name':'confvirtualodds',
+        'name':'conf_virtual_odds',
         'schema':{
-            bothSides: String,      //上下、上中/中下等
-            sidesDValue: Number,    //上2，中1，下0；上下=（2-0=2）上中=（2-1=1）这里的值就是填差值
-            hostWin: Number,        //主胜
+            both_sides: String,      //上下、上中/中下等
+            sides_dvalue: Number,    //上2，中1，下0；上下=（2-0=2）上中=（2-1=1）这里的值就是填差值
+            host_win: Number,        //主胜
             drawn: Number,          //平
-            guestWin: Number,       //客胜
-            hostGoal: Number,       //主队进球
+            guest_win: Number,       //客胜
+            host_goal: Number,       //主队进球
             zero: Number,           //无进球
-            guestGoal: Number,      //客队进球
+            guest_goal: Number,      //客队进球
         }
     }
 };
@@ -264,9 +243,9 @@ exports.ConfVirtualOdds = function(){
 //进球数配置
 exports.ConfVirtualGoal = function(){
     return {
-        'name':'confvirtualgoal',
+        'name':'conf_virtual_goal',
         'schema':{
-            allGoalNum: Number,     //总进球数
+            all_goal_num: Number,     //总进球数
             chance: Number,         //总进球数概率
         }
     }
@@ -275,15 +254,17 @@ exports.ConfVirtualGoal = function(){
 //库存配置
 exports.ConfStock = function(){
     return {
-        'name':'confstock',
+        'name':'conf_stock',
         'schema':{
-            curStock: Number,           //当前库存
-            stockInitialValue: Number,  //库存初始值
-            cheatChance1: Number,       //作弊概率1
-            stockThreshold1: Number,    //作弊阀值1
-            cheatChance2: Number,       //作弊概率2
-            stockThreshold2: Number,    //作弊阀值2
-            cheatChance3: Number,       //作弊概率3
+            cur_stock: Number,           //当前库存
+            stock_initial_value: Number,  //库存初始值
+            cheat_chance_1: Number,       //作弊概率1
+            stock_threshold_1: Number,    //作弊阀值1
+            cheat_chance_2: Number,       //作弊概率2
+            stock_threshold_2: Number,    //作弊阀值2
+            cheat_chance_3: Number,       //作弊概率3
         }
     }
 }
+
+//

@@ -6,6 +6,7 @@
 // | Author: Zhengks
 // +----------------------------------------------------------------------
 var OBJ = require('../../../Utils/ObjRoot').getObj;
+var Player = require('../Player/Player');
 
 module.exports = Login;
 
@@ -22,21 +23,28 @@ function Login(){
 
     self.login = function(askLogin, socket){
         var userid = 1;
-        waitMap.set(userid, socket);
+        var userName = '用户1';
+        waitMap.set(userid, [socket, userName]);
         OBJ('DataCenterAgentModule').logic.reqGetCoin(userid);
         //self.resGetCoin({'userid':userid, 'coin':100000});
-        console.log(userid + ' enter login!');
+        console.log('用户:' + userid + ' 登录成功!');
     };
     
     self.resGetCoin = function(source, data){
         //console.log('resGetCoin:'+data);
-        var socket = waitMap.get(data.userid);
-        if(socket){
+        var userArr = waitMap.get(data.userid);
+        if(userArr){
+            var socket = userArr[0];
+            var userName = userArr[1];
             var res = new pbSvrcli.Res_Login();
             res.setResult(data.res === 'ok'? 0:1);
             res.setCoin(data.balance);
-
+            //登录成功返回金币
             OBJ('WsMgr').send(socket, pbSvrcli.Res_Login.Type.ID, res.serializeBinary());
+            //登录记录
+            player = new Player(data.userid, userName, data.balance, socket);
+            player.updateLoginDb();
+            OBJ('PlayerContainer').addPlayer(socket, player);
         }
     };
     
