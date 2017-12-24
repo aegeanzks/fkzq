@@ -8,17 +8,22 @@
 module.exports = PlayerContainer;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
-var Player = require('./Player');
+var BaseModule = require("../BaseModule");
 
 function PlayerContainer(){
-    playerMap = new Map();
+    BaseModule.call(this);
+    var playerMap = new Map();
 
     this.addPlayer = function(socket, player){
         playerMap.set(socket, player);
-        Player.socket = socket;
+        player.socket = socket;
     };
 
     this.findPlayer = function(socket){
         return playerMap.get(socket);
+    };
+
+    this.getOnlineNum = function(){
+        return playerMap.size;
     };
 }

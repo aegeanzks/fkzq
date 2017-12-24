@@ -6,7 +6,7 @@ exports.GameServerInfos = function(){
             server_id: String,
             ip: String,           //ip                
             port: Number,         //端口                           
-            on_line_num: Number,    //当前在线数         
+            online_num: Number,    //当前在线数         
             update_time: Date,
         }
     };

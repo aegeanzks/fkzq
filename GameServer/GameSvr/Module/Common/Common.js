@@ -20,13 +20,20 @@ function Common(){
         //注册服务器
         if(null != pingTimer && pingTimer.toNextTime())
         {
-            class_GameServerInfos.find({'serverid':SERVERID}, function(err, data){
+            /**
+             *  server_id: String,
+                ip: String,           //ip                
+                port: Number,         //端口                           
+                on_line_num: Number,    //当前在线数         
+                update_time: Date,
+             */
+            class_GameServerInfos.find({'server_id':SERVERID}, function(err, data){
                 if(data.length == 0){
                     var model_GameServerInfos = OBJ('DbMgr').getModel(GameServerInfosSchema);
-                    model_GameServerInfos.serverid = SERVERID;
+                    model_GameServerInfos.server_id = SERVERID;
                     model_GameServerInfos.ip = global.ip;
                     model_GameServerInfos.port = global.port;
-                    model_GameServerInfos.onLineNum = 0;
+                    model_GameServerInfos.online_num = OBJ('PlayerContainer').getOnlineNum();
                     model_GameServerInfos.save(function(err){
                         if(err){
                             console.log(err);
@@ -34,9 +41,8 @@ function Common(){
                         }
                     });
                 } else {
-
-                    var updateVar = {updateTime:Date.now()};
-                    class_GameServerInfos.update({'serverid':SERVERID}, {$set:updateVar}, function(err){
+                    var updateVar = {update_time:Date.now(), online_num:OBJ('PlayerContainer').getOnlineNum()};
+                    class_GameServerInfos.update({'server_id':SERVERID}, {$set:updateVar}, function(err){
                         if(err){
                             console.log(err);
                             OBJ('LogMgr').writeErr(err);

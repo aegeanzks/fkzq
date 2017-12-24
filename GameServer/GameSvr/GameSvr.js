@@ -60,9 +60,9 @@ GameSvr.registerModule = function(){
 
 //与客户端交互的模块这边还需要注册socket事件
 GameSvr.regsterFun = function(socket){
-    new CommonModule().registerFun(socket);
-    new LoginModule().registerFun(socket);
-    new PlayerModule().registerFun(socket);
+    OBJ('CommonModule').registerFun(socket);
+    OBJ('LoginModule').registerFun(socket);
+    OBJ('PlayerModule').registerFun(socket);
 };
 
 

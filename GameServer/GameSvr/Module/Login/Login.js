@@ -42,7 +42,7 @@ function Login(){
             //登录成功返回金币
             OBJ('WsMgr').send(socket, pbSvrcli.Res_Login.Type.ID, res.serializeBinary());
             //登录记录
-            player = new Player(data.userid, userName, data.balance, socket);
+            var player = new Player(data.userid, userName, data.balance, socket);
             player.updateLoginDb();
             OBJ('PlayerContainer').addPlayer(socket, player);
         }
