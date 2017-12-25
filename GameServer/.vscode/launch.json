@@ -24,6 +24,12 @@
             "request": "launch",
             "name": "AgentSvr",
             "program": "${workspaceFolder}/AgentSvr\\App.js"
-        }
+        },
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "AdminSvr",
+			"program": "${workspaceFolder}/AdminSvr\\App.js"
+			}
     ]
 }

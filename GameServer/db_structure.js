@@ -200,7 +200,8 @@ exports.ConfVirtualEvent = function(){
     return {
         'name':'conf_virtual_event',
         'schema':{
-            event : String,                 //事件
+            event_id : Number,              //事件ID
+            event_name : String,                 //事件
             host_ball_handling : Number,      //主队控球
             host_attack: Number,             //主队进攻
             host_dangerous_attack: Number,    //主队危险进攻
@@ -210,7 +211,7 @@ exports.ConfVirtualEvent = function(){
             animation_time: Number,          //动画事件（秒）
             blockade: Number,               //伴随封盘动画
         }
-    }
+    };
 };
 
 //危险进攻动画时间最大值

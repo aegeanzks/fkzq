@@ -27,7 +27,7 @@ function RpcMgr(){
     this.run = function(serverId){
         
         thisServerId = serverId;
-        amqp.connect('amqp://localhost', function (err, conn) {
+        amqp.connect(RpcConfig.RPCURL, function (err, conn) {
             conn.createChannel(function (err, ch) {
                 rpcCh = ch;
                 ch.assertQueue(serverId, { durable: false });

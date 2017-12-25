@@ -13,11 +13,7 @@ exports.mongodb = function(){
 //rpc
 exports.rpc = function(){
     return {
-        RPCURL:'mongodb://127.0.0.1:27017/mmq', //RPC
-        /*consumeInterval: 1000,   //消费周期60毫秒
-        maxConsumption: 1000,   //一次消费数量
-        visibility: 30000, //消息可见时间，一个消息超过这个时间将会丢失，秒*/
-        errorListener: console.error,//错误处理函数
+        RPCURL:'amqp://zks:zks@192.168.0.63', //RPC
     };
 };
 
@@ -52,6 +48,13 @@ exports.dataCenterSvrConfig = function(){
         endTime:'',      
     };
 };
+
+exports.adminSvrConfig = function(){
+    return {
+        serverId:'admin',
+        port:9090,
+    }
+}
 
 exports.agentSvrConfig = function(){
     return {

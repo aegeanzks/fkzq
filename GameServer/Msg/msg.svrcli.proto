@@ -1,15 +1,13 @@
 syntax = "proto3";
 //Common               0-9999
 //Login		       10000-19999
+//VirtualFootball      20000-29999
 
 package kzgame.svrcli.msg;
 
-//enum AllType 
-//{
-//	UNSET = 0;
-//	Ask_Ping = 1;
-//}
-
+///////////////////////////////////////////////////////////////////////////
+//登录
+///////////////////////////////////////////////////////////////////////////
 //登录请求
 message Ask_Login
 {
@@ -21,4 +19,127 @@ message Res_Login
 	enum Type {UNSET = 0; ID = 10001;}
 	int32 result = 1;	//0登录成功 1失败 其他预留
 	double coin = 2;		//游戏币  成功时才有效
+}
+
+///////////////////////////////////////////////////////////////////////////
+//虚拟足球
+///////////////////////////////////////////////////////////////////////////
+//进入虚拟足球页面信息请求
+message Ask_VirtualFootMainInfo
+{
+	enum Type {UNSET = 0; ID = 20000;}
+}
+//比赛信息
+message MatchInfo
+{
+	//比赛状态
+	int32 matchState = 1;		//比赛状态：0等待开始、1正在进行、2比赛结束（等待开奖）、3、比赛结束（开奖）
+	int32 lastSecond = 2;		//这个比赛状态剩余时间（秒）
+	//当前事件(matchState为1时才有效)
+	int32 event = 3;		//0无事件 1主队控球 2主队进攻 3主队危险进攻 4客队控球 5客队进攻 6客队危险进攻 7主队进球 8客队进球
+}
+//比分与盘口信息
+message GoalAndBetArea
+{
+	//球队进球信息
+	int32 hostTeamId = 1;		//主队ID
+	int32 hostTeamGoal = 2;		//主队进球数
+	int32 guestTeamId = 3;		//客队ID
+	int32 guestTeamGoal = 4;	//客队进球数
+	////盘口
+	//猜胜负平
+	float hostWinTimes = 5;		//主胜倍数
+	int32 hostWinSupport = 6;	//主胜支持率
+	float drawTimes = 7;		//平  倍数
+	int32 drawSupport = 8;		//平  支持率
+	float guestWinTimes = 9;	//客胜倍数
+	int32 guestWinSupport = 10;	//客胜支持率
+	//猜下一队进球
+	float hostNextGoalTimes = 11;	//主队进球倍数
+	int32 hostNextGoalSupport = 12;	//主队进球支持率
+	float zeroGoalTimes = 13;	//无进球  倍数
+	int32 zeroGoalSupport = 14;	//无进球  支持率
+	float guestNextGoalTimes = 15;	//客队进球倍数
+	float guestNextGoalSupport = 16;//客队进球支持率
+}
+//虚拟足球页面信息回应(回复当前信息)
+message Res_VirtualFootMainInfo
+{
+	enum Type {UNSET = 0; ID = 20001;}
+	MatchInfo matchInfo = 1;	//比赛状态
+	GoalAndBetArea goalAndBetArea = 2;//比分及盘口信息
+	//两队交锋场次
+	int32 hostWinNum = 3;		//主队胜场次
+	int32 drawNum = 4;		//平
+	int32 guestWinNum = 5;		//客队胜场次
+}
+//虚拟足球比赛状态推送(服务端主动通知客户端)
+message Push_MatchInfo
+{
+	enum Type {UNSET = 0; ID = 20002;}
+	MatchInfo matchInfo = 1;	//比赛状态
+}
+//虚拟足球比分与盘口信息推送
+message Push_GoalAndBetArea
+{
+	enum Type {UNSET = 0; ID = 20003;}
+	GoalAndBetArea goalAndBetArea = 1;//比分与盘口信息
+}
+//进入竞猜记录页面信息请求
+message Ask_GuessingRecord
+{
+	enum Type {UNSET = 0; ID = 20004;}
+	int32 page = 1;			//一页默认12行，按投注日期由近到远排列,申请页无数据时，返回数组为空
+}
+//一条投注记录
+message GuessingRecord
+{
+	string issue = 1;		//期号
+	int32 hostTeamId = 2;		//主队ID
+	int32 guestTeamId = 3;		//客队ID
+	uint64 betDate = 4;		//投注时间（时间戳）
+	int32 betArea = 5;		//投注区域 1主胜 2平 3客胜 4主队进球 5无进球 6客队进球
+	float betTimes = 6;		//投注时的赔率
+	int32 betCoin = 7;		//投注金额
+	int32 getCoin = 8;		//获得金额
+}
+//进入竞猜记录页面信息回应
+message Res_GuessingRecord
+{
+	enum Type {UNSET = 0; ID = 20005;}
+	repeated GuessingRecord guessingRecords = 1;
+}
+//进入历史开奖页面信息请求
+message Ask_VirtualHistory
+{
+	enum Type {UNSET = 0; ID = 20006;}
+	int32 page = 1;			//一页默认12行，按比赛日期由近到远排列,申请页无数据时，返回数组为空
+}
+//一条开奖记录
+message VirtualHistory
+{
+	string issue = 1;		//期号
+	int32 hostTeamId = 2;		//主队ID
+	int32 hostTeamGoal = 3;		//主队进球数
+	int32 guestTeamId = 4;		//客队ID
+	int32 guestTeamGoal = 5;	//客队进球数
+}
+//进入历史开奖页面信息回应
+message Res_VirtualHistory
+{
+	enum Type {UNSET = 0; ID = 20007;}
+	repeated VirtualHistory virtualHistory = 1;
+}
+//虚拟足球投注请求
+message Ask_VirtualBet
+{
+	enum Type {UNSET = 0; ID = 20008;}
+	int32 betArea = 1;		//投注区域 1主胜 2平 3客胜 4主队进球 5无进球 6客队进球
+	int32 coinItem = 2;		//投注金额项 1第一项（100） 2第二项（1000） 3第三项（10000）
+}
+//虚拟足球投注回应
+message Res_VirtualBet
+{
+	enum Type {UNSET = 0; ID = 20009;}
+	int32 result = 1;		//0成功 1参数错误 2当前时间不可投注
 }
