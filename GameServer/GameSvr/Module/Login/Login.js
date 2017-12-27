@@ -25,7 +25,7 @@ function Login(){
         var userid = 1;
         var userName = '用户1';
         waitMap.set(userid, [socket, userName]);
-        OBJ('DataCenterAgentModule').logic.reqGetCoin(userid);
+        OBJ('WalletAgentModule').logic.reqGetCoin(userid);
         //self.resGetCoin({'userid':userid, 'coin':100000});
         console.log('用户:' + userid + ' 登录成功!');
     };

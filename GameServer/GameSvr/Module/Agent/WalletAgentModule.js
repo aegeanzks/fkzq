@@ -5,23 +5,24 @@
 // +----------------------------------------------------------------------
 // | Author: Zhengks
 // +----------------------------------------------------------------------
-module.exports = DataCenterModule;
+module.exports = WalletAgentModule;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 
 var BaseModule = require("../BaseModule");
-var Logic = require('./DataCenter');
+var Logic = require('./WalletAgent');
 
-function DataCenterModule(){
+function WalletAgentModule(){
     BaseModule.call(this);
-    var logic = new Logic();
+    var self = this;
+    this.logic = new Logic();
     //////////////////////////////////////
     //注册函数
     (function registerRpc(){
-        OBJ('RpcMgr').register('dataCenterMsg', logic.dataCenterMsg);
+        OBJ('RpcMgr').register('resGetCoin', self.logic.resGetCoin);
     })();
     //一帧
     this.run = function(timestamp){
-        logic.run(timestamp);
+        //console.log("CommonModule.run..."+timestamp);
     };
 }

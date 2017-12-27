@@ -8,34 +8,40 @@
 module.exports = VirtualFootballConf;
 
 var fs = require('fs');
+var Functions = require('../../../Utils/Functions');
+var OBJ = require('../../../Utils/ObjRoot').getObj;
+var Schema = require('../../../db_structure');
 
 function VirtualFootballConf(){
     //成员变量
     var self = this;
-    var mapTeamInfo; //球队信息
-    var mapTeamOdds = new Map();    //球队赔率
-    var timeTable = new Map();      //时刻表，记录虚拟足球的每天的球赛时间
-    const readySecondLong = 10 * 1000;     //准备时长 秒
-    const matchSecondLong = 130 * 1000;    //比赛时长 秒
-    const settlementSecondLong = 5 * 1000; //结算时长 秒
-    const showTrophySecondLong = 5 * 1000; //展示结果 秒
+    var mapTeamInfo = new Map(); //球队信息
+    var classConfVirtualGoal = OBJ('DbMgr').getStatement(Schema.ConfVirtualGoal());
+    var classConfVirtualOdds = OBJ('DbMgr').getStatement(Schema.ConfVirtualOdds());
+    var classConfVirtualEvent = OBJ('DbMgr').getStatement(Schema.ConfVirtualEvent());
+    //var mapTeamOdds = new Map();    //球队赔率
 
     //初始化函数
     function init(){
         createTeamInfo();
-        createTeamOdds();
-        createTimeTable();
+        //createTeamOdds();
     }
     init();
 
     function createTeamInfo(){
-        mapTeamInfo = JSON.parse(fs.readFileSync('./Json/TeamInfo.json'));
+        var teamInfo = JSON.parse(fs.readFileSync('./Json/TeamInfo.json'));
+        for(var key in teamInfo){
+            var item = teamInfo[key];
+            mapTeamInfo.set(item.ID, item);
+        }
     }
 
-    function createTeamOdds(){
+    /*function createTeamOdds(){
+        var index = 0;
         var teamOdds = JSON.parse(fs.readFileSync('./Json/TeamOdds.json'));
         for(var key in teamOdds){
             var item = teamOdds[key];
+            index = item.ID;
             var arrayTeamOdds = mapTeamOdds.get(item.LevelDif);
             if (null == arrayTeamOdds){
                 arrayTeamOdds = [];
@@ -43,32 +49,93 @@ function VirtualFootballConf(){
             }
             arrayTeamOdds.push(item);
         }
-    }
+        //添加主队比客队弱的情况
+        index++;
+        for (var value of mapTeamOdds){
+            if(value[0]>0){
+                var arr = value[1];
+                for (var key in arr){
+                    var item = arr[key];
+                    item.ID = index++;
+                    item.LevelDif = -item.LevelDif;
+                    var tmp = Functions.exchangeNum(item.HostWinTimes, item.GuestWinTimes);
+                    item.HostWinTimes = tmp[0];
+                    item.GuestWinTimes = tmp[1];
+                    tmp = Functions.exchangeNum(item.HostNextGoal, item.GuestNextGoal);
+                    item.HostNextGoal = tmp[0];
+                    item.GuestNextGoal = tmp[1];
 
-    function createTimeTable(){
-        //获取当天0时的时间
-        var today = new Date();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        today.setMilliseconds(0);
-        var tomorrow = new Date(today);
-        tomorrow.setHours(24);
-        var timeToday = today.getTime();
-        var timeTomorrow = tomorrow.getTime();
-
-        //const readySecondLong = 10 * 1000;     //准备时长 秒
-        //const matchSecondLong = 130 * 1000;    //比赛时长 秒
-        //const settlementSecondLong = 5 * 1000; //结算时长 秒
-        //const showTrophySecondLong = 5 * 1000; //展示结果 秒
-        var oneLong = readySecondLong + matchSecondLong + settlementSecondLong + showTrophySecondLong;
-        for (var curTime=timeToday, issue=1; curTime <= timeTomorrow; curTime+=oneLong, issue++){  //一局150秒
-            var one = new Map();
-            one.set(0, curTime);                 //等待开始
-            one.set(1, curTime + readySecondLong);      //正在进行
-            one.set(2, curTime + readySecondLong + matchSecondLong);    //比赛结束（等待开奖）
-            one.set(3, curTime + readySecondLong + matchSecondLong + settlementSecondLong); //比赛结束（开奖）
-            timeTable.set(issue, one);
+                    var arrayTeamOdds = mapTeamOdds.get(item.LevelDif);
+                    if (null == arrayTeamOdds){
+                        arrayTeamOdds = [];
+                        mapTeamOdds.set(item.LevelDif, arrayTeamOdds);
+                    }
+                    arrayTeamOdds.push(item);
+                }
+            }
         }
-    }
+    }*/
+
+    this.randATeam = function(exceptId){
+        var index = Functions.getRandomNum(1, mapTeamInfo.size);
+        var maxNum = 10;
+        while(index == exceptId){
+            index = Functions.getRandomNum(1, mapTeamInfo.size);
+            maxNum--;
+            if(maxNum == 0){
+                index = 1;
+                break;
+            }
+        }
+        return mapTeamInfo.get(index);
+    };
+
+    /*this.randOdds = function(level1, level2){
+        var dif = level1-level2;
+        var arr = mapTeamOdds.get(dif);
+        if (null == arr)
+            return null;
+        var index = Functions.getRandomNum(0, arr.length);
+        return arr[index];
+    };*/
+    this.randOdds = function(level1, level2, func){
+        classConfVirtualOdds.find({'sides_dvalue':level1-level2}, function(err, data){
+            if(err){
+                console.log(err);
+                return;
+            }
+            var index = Functions.getRandomNum(0, data.length-1);
+            func(data[index]);
+        });
+    };
+    this.randGoal = function(func){
+        classConfVirtualGoal.find(function(err, data){
+            if(err){
+                console.log(err);
+                return;
+            }
+            var arr = [];
+            for (var value of data){
+                for(var i=0; i<value.chance; i++){
+                    arr.push(value.all_goal_num);
+                }
+            }
+            var index = Functions.getRandomNum(0, arr.length-1);
+            func(arr[index]);
+        });
+    };
+    this.getEvents = function(func){
+        classConfVirtualEvent.find(function(err, data){
+            if(err){
+                console.log(err);
+                return;
+            }
+            var retMap = new Map();
+            for(var item of data){
+                retMap.set(item.event_id, item);
+            }
+            func(retMap);
+        });
+    };
 }
+

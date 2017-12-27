@@ -12,13 +12,13 @@ var GameServerInfosSchema = require('../../../db_structure').GameServerInfos();
 var SingleTimer = require('../../../Utils/SingleTimer');
 
 function Common(){
-    var pingTimer = new SingleTimer();
-    pingTimer.startup(5000);
+    var registerTimer = new SingleTimer();
+    registerTimer.startup(5000);
 
     var class_GameServerInfos = OBJ('DbMgr').getStatement(GameServerInfosSchema);
     this.run = function(timestamp){
         //注册服务器
-        if(null != pingTimer && pingTimer.toNextTime())
+        if(null != registerTimer && registerTimer.toNextTime())
         {
             /**
              *  server_id: String,

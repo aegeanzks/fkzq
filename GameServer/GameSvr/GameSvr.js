@@ -17,9 +17,10 @@ var DbMgr = require('../Utils/Manager/DbMgr');
 var LogMgr = require('../Utils/Manager/LogMgr');
 
 var PlayerModule = require('./Module/Player/PlayerModule');
-var DataCenterAgentModule = require('./Module/DataCenterAgent/DataCenterAgentModule');
+var WalletAgentModule = require('./Module/Agent/WalletAgentModule');
 var LoginModule = require('./Module/Login/LoginModule');
 var CommonModule = require('./Module/Common/CommonModule');
+var DataCenterModule = require('./Module/DataCenter/DataCenterModule');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
@@ -52,10 +53,11 @@ GameSvr.run = function() {
 
 //所有用户模块注册
 GameSvr.registerModule = function(){
-    new DataCenterAgentModule();
+    new WalletAgentModule();
     new CommonModule();
     new LoginModule();
     new PlayerModule();
+    new DataCenterModule();
 }
 
 //与客户端交互的模块这边还需要注册socket事件

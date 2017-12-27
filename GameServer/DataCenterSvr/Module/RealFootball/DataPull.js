@@ -27,9 +27,6 @@ function DataPull(){
 
     //数据库statement
     var _ScheduleStatement = OBJ('DbMgr').getStatement(Schema.Schedule());
-    var _OddsStatement = OBJ('DbMgr').getStatement(Schema.Odds());
-    var _YapanStatement = OBJ('DbMgr').getStatement(Schema.Yapan());
-    var _RangqiuStatement = OBJ('DbMgr').getStatement(Schema.Rangqiu());
     //end 数据库statement
 
     //初始化
@@ -47,7 +44,7 @@ function DataPull(){
             }
             else{
                 console.log('期号:'+phase);
-                OBJ('HttpClientMgr').Get(_pageUrl+20171221,reqCallBack);
+                OBJ('HttpClientMgr').Get(_pageUrl+phase,reqCallBack);
             }
         }
     };
@@ -155,6 +152,36 @@ function SetNextPhase(status){
  */
 function scheduleDeal(data){
     var scheduleDoc = OBJ('DbMgr').getModel(Schema.Schedule());
+    //让球赔率
+    scheduleDoc.odds_rangqiu_bet365 = data['odds_rangqiu_bet365'];
+    scheduleDoc.odds_rangqiu_libo = data['odds_rangqiu_libo'];
+    scheduleDoc.odds_rangqiu_wlxe = data['odds_rangqiu_wlxe'];
+    scheduleDoc.odds_rangqiu = data['odds_rangqiu'];
+
+    scheduleDoc.odds_rangqiu_admin = data['odds_rangqiu'];
+
+    //亚盘赔率
+    scheduleDoc.odds_yapan_weide = data['odds_yapan_weide'];
+    scheduleDoc.odds_yapan_ysb = data['odds_yapan_ysb'];
+    scheduleDoc.odds_yapan_hg = data['odds_yapan_hg'];
+    scheduleDoc.odds_yapan_bet365 = data['odds_yapan_bet365'];
+    scheduleDoc.odds_yapan = data['odds_yapan'];
+    //欧赔赔率
+    scheduleDoc.odds_12bet = data['odds_12bet']
+    scheduleDoc.odds_coral = data['odds_coral'];
+    scheduleDoc.odds_ysb = data['odds_ysb'];
+    scheduleDoc.odds_hg = data['odds_hg'];
+    scheduleDoc.odds_weide = data['odds_weide'];
+    scheduleDoc.odds_bwin = data['odds_bwin'];
+    scheduleDoc.odds_bet365 = data['odds_bet365'];
+    scheduleDoc.odds_libo = data['odds_libo'];
+    scheduleDoc.odds_aomen = data['odds_aomen'];
+    scheduleDoc.odds_wlxe = data['odds_wlxe'];
+    scheduleDoc.odds_avg = data['odds_avg'];
+    scheduleDoc.odds_jingcai = data['odds_jingcai'];
+
+    scheduleDoc.odds_jingcai_admin =data['odds_jingcai'];
+    //赛事
     scheduleDoc.score_dateline = new Date(parseInt(data['score_dateline'])*1000);
     scheduleDoc.odds_dateline = new Date(parseInt(data['odds_dateline'])*1000);
     scheduleDoc.weekday = data['weekday'];
@@ -183,55 +210,6 @@ function scheduleDeal(data){
 }
 
 /*
-    @func 解析odds数据
- */
-function oddsDeal(data){
-    var oddsDoc = OBJ('DbMgr').getModel(Schema.Odds());
-    oddsDoc.odds_12bet = data['odds_12bet']
-    oddsDoc.odds_coral = data['odds_coral'];
-    oddsDoc.odds_ysb = data['odds_ysb'];
-    oddsDoc.odds_hg = data['odds_hg'];
-    oddsDoc.odds_weide = data['odds_weide'];
-    oddsDoc.odds_bwin = data['odds_bwin'];
-    oddsDoc.odds_bet365 = data['odds_bet365'];
-    oddsDoc.odds_libo = data['odds_libo'];
-    oddsDoc.odds_aomen = data['odds_aomen'];
-    oddsDoc.odds_wlxe = data['odds_wlxe'];
-    oddsDoc.odds_avg = data['odds_avg'];
-    oddsDoc.odds_jingcai = data['odds_jingcai'];
-    oddsDoc.id = parseInt(data['id']);
-    return oddsDoc;
-
-}
-
-/*
-    @func 解析yapan数据
- */
-function yapanDeal(data){
-    var yapanDoc = OBJ('DbMgr').getModel(Schema.Yapan());
-    yapanDoc.odds_yapan_weide = data['odds_yapan_weide'];
-    yapanDoc.odds_yapan_ysb = data['odds_yapan_ysb'];
-    yapanDoc.odds_yapan_hg = data['odds_yapan_hg'];
-    yapanDoc.odds_yapan_bet365 = data['odds_yapan_bet365'];
-    yapanDoc.odds_yapan = data['odds_yapan'];
-    yapanDoc.id = parseInt(data['id']);
-    return yapanDoc;
-}
-
-/*
-    @func 解析rangqiu数据
- */
-function rangqiuDeal(data){
-    var rangqiuDoc = OBJ('DbMgr').getModel(Schema.Rangqiu()); 
-    rangqiuDoc.odds_rangqiu_bet365 = data['odds_rangqiu_bet365'];
-    rangqiuDoc.odds_rangqiu_libo = data['odds_rangqiu_libo'];
-    rangqiuDoc.odds_rangqiu_wlxe = data['odds_rangqiu_wlxe'];
-    rangqiuDoc.odds_rangqiu = data['odds_rangqiu'];
-    rangqiuDoc.id = parseInt(data['id']);
-    return rangqiuDoc;
-}
-
-/*
     @func 批量插入数据回调函数
  */
 function onInsert(err, docs) {
@@ -243,12 +221,6 @@ function onInsert(err, docs) {
     }
 }
 
-/*  
-    @func 查找回调函数
- */
-function onFind(err,docs){
-
-}
 
 /*
     @func schedule数据比较
@@ -281,17 +253,8 @@ function scheduleComp(data,doc){
     if(doc['weekday'] != data['weekday']){
         docValue['weekday']=data['weekday'];
     }
-    return docValue;
-    
-}
 
-/*
-    @func odds数据比较
-    @data 抓取得数据
-    @doc  本地数据
- */
-function oddsComp(data,doc){
-    var docValue = {};
+    //odds数据比较
     if(doc['odds_jingcai'] != null && !Func.isObjectValueEqual(doc['odds_jingcai'][0],data['odds_jingcai'])){
         docValue['odds_jingcai'] = data['odds_jingcai'];
     }
@@ -322,17 +285,8 @@ function oddsComp(data,doc){
     if(doc['odds_ysb'] != null && !Func.isObjectValueEqual(doc['odds_ysb'][0],data['odds_ysb'])){
         docValue['odds_ysb'] = data['odds_ysb'];
     }
-    return docValue;
-    
-}
 
-/*
-    @func yapan数据比较
-    @data 抓取得数据
-    @doc  本地数据
- */
-function yapanComp(data,doc){
-    var docValue = {};
+    //yapan数据比较
     if(doc['odds_yapan'] != null && !Func.isObjectValueEqual(doc['odds_yapan'][0],data['odds_yapan'])){
         docValue['odds_yapan'] = data['odds_yapan'];
     }
@@ -348,18 +302,9 @@ function yapanComp(data,doc){
     if(doc['odds_yapan_weide'] != null && !Func.isObjectValueEqual(doc['odds_yapan_weide'][0],data['odds_yapan_weide'])){
         docValue['odds_yapan_weide'] = data['odds_yapan_weide'];
     }
-    return docValue;
-    
-}
 
-/*
-    @func rangqiu数据比较
-    @data 抓取得数据
-    @doc  本地数据
- */
-function rangqiuComp(data,doc){
-    var docValue = {};
-    if(doc['odds_rangqiu_wlxe'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu'][0],data['odds_rangqiu'])){
+    //rangqiu数据比较
+    if(doc['odds_rangqiu'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu'][0],data['odds_rangqiu'])){
         docValue['odds_rangqiu'] = data['odds_rangqiu'];
     }
     if(doc['odds_rangqiu_wlxe'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_wlxe'][0],data['odds_rangqiu_wlxe'])){
@@ -370,6 +315,15 @@ function rangqiuComp(data,doc){
     }
     if(doc['odds_rangqiu_bet365'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_bet365'][0],data['odds_rangqiu_bet365'])){
         docValue['odds_rangqiu_bet365'] = data['odds_rangqiu_bet365'];
+    }
+
+    if(doc['input_flag'] == 0){
+        if(doc['odds_rangqiu_admin'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_admin'][0],data['odds_rangqiu'])){
+            docValue['odds_rangqiu_admin'] = data['odds_rangqiu'];
+        }
+        if(doc['odds_jingcai_admin'] != null && !Func.isObjectValueEqual(doc['odds_jingcai_admin'][0],data['odds_jingcai'])){
+            docValue['odds_jingcai_admin'] = data['odds_jingcai'];
+        }
     }
     return docValue;
     
@@ -382,43 +336,21 @@ function rangqiuComp(data,doc){
 */
 function dataSave(data,len){
     var schedule = [];
-    var odds = [];
-    var yapan = [];
-    var rangqiu = [];
     var batchSize = 10;
     var size = 0;
     for(var i= 1;i<=len;i++){
         schedule.push(scheduleDeal(data[i-1]));
-        odds.push(oddsDeal(data[i-1]));
-        yapan.push(yapanDeal(data[i-1]));
-        rangqiu.push(rangqiuDeal(data[i-1]));
         if(0 == i%batchSize){
             //写数据库
             if(schedule.length != 0)
                 _ScheduleStatement.collection.insert(schedule,onInsert);
-            if(odds.length !=0)
-                _OddsStatement.collection.insert(odds,onInsert);
-            if(yapan.length !=0)
-                _YapanStatement.collection.insert(yapan,onInsert);
-            if(rangqiu.length !=0)
-                _RangqiuStatement.collection.insert(rangqiu,onInsert);
-    
             schedule = [];
-            odds = [];
-            yapan = [];
-            rangqiu = [];
         }
     }
-    if(schedule.length != 0 || odds.length !=0 || yapan.length !=0 || rangqiu.length !=0){
+    if(schedule.length != 0){
         //写数据库
         if(schedule.length != 0)
             _ScheduleStatement.collection.insert(schedule,onInsert);
-        if(odds.length !=0)
-            _OddsStatement.collection.insert(odds,onInsert);
-        if(yapan.length !=0)
-            _YapanStatement.collection.insert(yapan,onInsert);
-        if(rangqiu.length !=0)
-            _RangqiuStatement.collection.insert(rangqiu,onInsert);
     }
 }
 
@@ -427,16 +359,12 @@ function dataSave(data,len){
     @func            数据更新
     @data            抓取的数据
     @scheduledocs    本地数据
-    @oddsdocs        本地数据
-    @yapandocs       本地数据
-    @rangqiudocs     本地数据
  */
-function dataUpdate(data,scheduledocs,oddsdocs,yapandocs,rangqiudocs){
+function dataUpdate(data,scheduledocs){
 
-    if(data.length != scheduledocs.length || data.length != oddsdocs.length 
-        || data.length != yapandocs.length ||data.length != rangqiudocs.length){
-            console.log('func dataUpdate length illegal');
-            return ;
+    if(data.length != scheduledocs.length){
+        console.log('func dataUpdate length illegal');
+        return ;
     }
     var len = data.length;
     var Id = 0;
@@ -454,43 +382,6 @@ function dataUpdate(data,scheduledocs,oddsdocs,yapandocs,rangqiudocs){
                 break;
             } 
         }
-
-        //odds判断
-        for(var m =0;m<len;m++){
-            if(data[i]['id'] == oddsdocs[m]['_doc']['id']){
-                var oddsdocValue = oddsComp(data[i],oddsdocs[m]['_doc']);
-                for(var key in oddsdocValue){
-                     _OddsStatement.collection.update({id:Id},{$set:oddsdocValue},false,true);
-                    break;
-                }
-                break;
-            } 
-        }
-
-        //yapan判断
-        for(var n =0;n<len;n++){
-            if(data[i]['id'] == yapandocs[n]['_doc']['id']){
-                var yapandocValue = yapanComp(data[i],yapandocs[n]['_doc']);
-                for(var key in yapandocValue){
-                    _YapanStatement.collection.update({id:Id},{$set:yapandocValue},false,true);
-                    break;
-                }
-                break;
-            }
-
-        }
-
-        //让球判断
-        for(var k = 0;k<len;k++){
-            if(data[i]['id'] == rangqiudocs[k]['_doc']['id']){
-                var rangqiudocValue = rangqiuComp(data[i],rangqiudocs[k]['_doc']);
-                for(var key in rangqiudocValue){
-                    _RangqiuStatement.collection.update({id:Id},{$set:rangqiudocValue},false,true);
-                    break;
-                }
-                break;
-            }
-        }
     }
 }
 
@@ -505,9 +396,6 @@ function dataSaveAndUpdate(dataArr,scheduledocs,len){
     var saveDate = [];
     var updateData = [];
     var length = 0;
-    var oddsdocs = [];
-    var yapandocs = [];
-    var rangqiudocs = [];
     for(var i= 0 ;i<scheduledocs.length;i++){
         docsId.push(parseInt(scheduledocs[i]['_doc']['id']));
     }
@@ -525,62 +413,9 @@ function dataSaveAndUpdate(dataArr,scheduledocs,len){
     }
 
     //更新数据
-    updateDeal(updataData,scheduledocs,docsId);
+    dataUpdate(updataData,scheduledocs);
 }
 
-/*
-    @func         获取本地数据,做更新
-    @updataData   待更新数据
-    @scheduledocs 本地数据     
- */
-function updateDeal(updataData,scheduledocs,Id){
-    var count = 0;
-    var oddsdocs = [];
-    var yapandocs = [];
-    var rangqiudocs = [];
-
-    //TODO Odds查询数据
-    _OddsStatement.find({},function(err,docs){
-        if(!err){
-            oddsdocs = docs;
-            count++;
-            if(count == 3){
-                dataUpdate(updataData,scheduledocs,oddsdocs,yapandocs,rangqiudocs);
-            }
-        }else{
-            console.log('func dataSaveAndUpdate _OddsStatement.find '+err);
-            return ;
-        }
-    }).where('id').in(Id);
-
-    //TODO Yapan查询数据
-    _YapanStatement.find({},function(err,docs){
-        if(!err){
-            yapandocs = docs;
-            count++;
-            if(count == 3){
-                dataUpdate(updataData,scheduledocs,oddsdocs,yapandocs,rangqiudocs);
-            }
-        }else{
-            console.log('func dataSaveAndUpdate _YapanStatement.find '+err);
-            return ;
-        }
-    }).where('id').in(Id);
-
-    //TODO Rangqiu查询数据
-    _RangqiuStatement.find({},function(err,docs){
-        if(!err){
-            rangqiudocs = docs;
-            count++;
-            if(count == 3){
-                dataUpdate(updataData,scheduledocs,oddsdocs,yapandocs,rangqiudocs);
-            }
-        }else{
-            console.log('func dataSaveAndUpdate _RangqiuStatement.find '+err);
-            return ;
-        }
-    }).where('id').in(Id);
-}
 
 /*
     @func 数据处理
@@ -601,8 +436,8 @@ function dataDeal(html){
                 dataSave(dataArr,len);
             }
             else if(len == scheduledocs.length){
-                console.log('func dataDeal updateDeal');
-                updateDeal(dataArr,scheduledocs,Id);
+                console.log('func dataDeal dataUpdate');
+                dataUpdate(dataArr,scheduledocs);
             }else{
                 console.log('func dataDeal dataSaveAndUpdate');
                 dataSaveAndUpdate(dataArr,scheduledocs,len);

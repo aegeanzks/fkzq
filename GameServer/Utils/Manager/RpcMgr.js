@@ -37,6 +37,7 @@ function RpcMgr(){
                     if(func)
                         func(json['source'], json['msgData']);
                 }, {noAck: true});
+                console.log('rpc已连接...');
             });
             //setTimeout(function () { conn.close(); process.exit(0) }, 500);
         });

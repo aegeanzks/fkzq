@@ -53,11 +53,11 @@ exports.getDate = function(timestamp){
 
 /*
     @func    根据日期,获取时间戳
-    @date    日期   样式20171216-12:00:00
+    @date    日期   样式20171216-00:00:00
     @return  返回时间戳,单位ms
  */
 exports.getStamp =function(date){
-    var str = date.substr(0,4)+'-'+date.substr(4,2)+'-'+date.substr(6,2)+' '+'12:00:00';
+    var str = date.substr(0,4)+'-'+date.substr(4,2)+'-'+date.substr(6,2)+' '+'00:00:00';
     var timeStamp = new Date(str).getTime();
     return timeStamp;  
 }
@@ -91,6 +91,21 @@ exports.isObjectValueEqual=function(obj1, obj2) {
     }
     return true;
 }
+
+//获得范围内的随机数
+exports.getRandomNum = function(Min,Max){   
+    var Range = Max - Min;   
+    var Rand = Math.random();   
+    return(Min + Math.round(Rand * Range));   
+};
+
+//两数交换
+exports.exchangeNum = function(one, two){
+    var temp = one;
+    one = two;
+    two = temp;
+    return [one, two];
+};
 
 
 

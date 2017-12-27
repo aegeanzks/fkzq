@@ -17,6 +17,7 @@ var HttpClientMgr = require('../Utils/Manager/HttpClientMgr');
 
 var RealFootballModule = require('./Module/RealFootball/RealFootballModule');
 var VirtualFootballModule = require('./Module/VirtualFootball/VirtualFootballModule');
+var GameSvrAgentModule = require('./Module/GameSvrAgent/GameSvrAgentModule');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
@@ -41,7 +42,8 @@ GameSvr.start = function () {
 //用户模块注册
 GameSvr.regsterFun = function(){
     //用户组件
-    new RealFootballModule();
+    //new RealFootballModule();
+    new GameSvrAgentModule();
     new VirtualFootballModule();
 };
 

@@ -7,11 +7,24 @@
 // +----------------------------------------------------------------------
 module.exports = DataCenter;
 
-var http = require('http');
+var configDataCenter = require('../../../config').dataCenterSvrConfig();
+var SingleTimer = require('../../../Utils/SingleTimer');
+var OBJ = require('../../../Utils/ObjRoot').getObj;
 
 function DataCenter(){
 
-    this.func = function(data){
-        console.log(data);
-    }
+    var pingTimer = new SingleTimer();
+    pingTimer.startup(1000);
+
+    this.run = function(timestamp){
+        //ping到数据中心
+        if(null != pingTimer && pingTimer.toNextTime())
+        {
+            OBJ('RpcMgr').send(configDataCenter.serverId, 'gameServerPing', null);
+        }
+    };
+
+    this.dataCenterMsg = function(source, res){
+        console.log(res);
+    };
 }

@@ -17,7 +17,10 @@ exports.Schedule = function(){
     return {
         'name':'schedule',
         'schema':{
-            id:Number,                   //赛事标识
+            id:{                         //赛事标识
+                type:Number,
+                index:true,
+            },                   
             match_num:String,            //场次
             phase:Number,                //期号
             official_date:Date,          //正式时间
@@ -38,17 +41,19 @@ exports.Schedule = function(){
             weekday:String,              //星期
             odds_dateline:Date,
             score_dateline:Date,
-        }
-
-    };
-};
-
-//赔率-欧赔
-exports.Odds = function(){
-    return{
-        'name':'odds',
-        'schema':{
-            id:Number,                    //赛事标识
+            hot_flag:{                   //是否热门
+                type: Number,
+                default: 0,              //0 非热门  1显示
+            },
+            display_flag:{               //是否显示
+                type:Number,
+                default:1,               //0 不显示  1显示
+            },
+            input_flag:{                //是否录入管理员数据
+                type:Number,
+                default:0,              //0  不录入  1录入    
+            },
+            //欧赔
             odds_jingcai:Array,           //竞彩官方        
             odds_avg:Array,               //平均欧赔
             odds_wlxe:Array,              //威廉希尔 
@@ -61,37 +66,31 @@ exports.Odds = function(){
             odds_ysb:Array,               //易胜博
             odds_coral:Array,             //Coral
             odds_12bet:Array,             //12Bet(12博)
-        }
-    };
-};
-
-//赔率-亚盘
-exports.Yapan = function(){
-    return {
-        'name':'yapan',
-        'schema':{
-            id:Number,                    //赛事标识
+            odds_jingcai_admin:{          //竞彩官方 启用管理员录入数据
+                type:Array,
+                default:null,
+            }, 
+            //亚赔
             odds_yapan:Array,             //澳门
             odds_yapan_bet365:Array,      //bet365
             odds_yapan_hg:Array,          //皇冠
             odds_yapan_ysb:Array,         //易胜博
             odds_yapan_weide:Array,       //伟德
-        }
-    };
-};
-//赔率-让球
-exports.Rangqiu = function(){
-    return {
-        'name':'rangqiu',
-        'schema':{
-            id:Number,                    //赛事标识
+            //让球
             odds_rangqiu:Array,           //竞彩官方
             odds_rangqiu_wlxe:Array,      //威廉希尔
             odds_rangqiu_libo:Array,      //立博
             odds_rangqiu_bet365:Array,    //bet365
+            odds_rangqiu_admin:{          //竞彩官方 启用管理员录入数据
+                type:Array,
+                default:null,
+            }
         }
+
     };
 };
+
+
 //用户
 exports.User = function(){              //用户表
     return {
@@ -268,4 +267,34 @@ exports.ConfStock = function(){
     }
 }
 
-//
+//虚拟足球主页信息
+exports.VirtualMainInfo = function(){
+    return {
+        'name':'virtual_main_info',
+        'schema':{
+            match_state: Number,            //比赛状态：0等待开始、1正在进行、2比赛结束（等待开奖）、3、比赛结束（开奖）
+            last_second: Number,            //这个比赛状态剩余时间（秒）
+            event: Number,                  //0无事件 1主队控球 2主队进攻 3主队危险进攻 4客队控球 5客队进攻 6客队危险进攻 7主队进球 8客队进球
+            //球队进球信息
+	        host_team_id: Number,		    //主队ID
+	        host_team_goal: Number,		    //主队进球数
+	        guest_team_id: Number,		    //客队ID
+	        guest_team_goal: Number,	        //客队进球数
+	        ////盘口
+	        //猜胜负平
+	        host_win_times: Number,		    //主胜倍数
+	        host_win_support: Number,	        //主胜支持率
+	        draw_times: Number,		        //平  倍数
+	        draw_support: Number,		    //平  支持率
+	        guest_win_times: Number,	        //客胜倍数
+	        guest_win_support: Number,	    //客胜支持率
+	        //猜下一队进球
+            host_next_goal_times: Number,	    //主队进球倍数
+            host_next_goal_support: Number,	//主队进球支持率
+            zero_goal_times: Number,	        //无进球  倍数
+            zero_goal_support: Number,	    //无进球  支持率
+            guest_next_goal_times: Number,	    //客队进球倍数
+            guest_next_goal_support: Number,   //客队进球支持率
+        }
+    }
+}
