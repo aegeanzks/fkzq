@@ -48,10 +48,11 @@ function VirtualFootball(){
                         case 1: strMatchEvent = '主队控球'; break;
                         case 4: strMatchEvent = '客队控球'; break;
                     }
-                    console.log('战场事件：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
+                    console.log('战场事件1：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
                 }
                 else if(timeAgent.matchState == 2) {
                     matchAgent.stopMatch();
+                    matchAgent = null;
                 }
             }
             if(null != matchAgent){
@@ -68,7 +69,7 @@ function VirtualFootball(){
                         case 7: strMatchEvent = '主队进球'; break;
                         case 8: strMatchEvent = '客队进球'; break;
                     }
-                    console.log('战场事件：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
+                    console.log('战场事件2：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
                     //OBJ('GameSvrAgentModule').broadcastGameServer({type:2,value:matchAgent.getCurEvent()});
                     OBJ('GameSvrAgentModule').broadcastGameServer({
                         module:'VirtualFootball',

@@ -68,12 +68,12 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     initBetArea();
     function initBetArea(){
         conf.randOdds(self.hostTeam.Level, self.guestTeam.Level, function(odds){
-            hostWinTimes = odds.host_win;
-            drawTimes = odds.drawn;
-            guestWinTimes = odds.guest_win;
-            hostNextGoalTimes = odds.host_goal;
-            zeroGoalTimes = odds.zero;
-            guestNextGoalTimes = odds.guest_goal;
+            self.hostWinTimes = odds.host_win;
+            self.drawTimes = odds.drawn;
+            self.guestWinTimes = odds.guest_win;
+            self.hostNextGoalTimes = odds.host_goal;
+            self.zeroGoalTimes = odds.zero;
+            self.guestNextGoalTimes = odds.guest_goal;
         });
     }
 
@@ -155,6 +155,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             }
             self.nextEventTime = timeGoal[0].goal_animation_endTime;
             nInGoalTime = 2;
+            console.log('nInGoalTime = 2');
             timeGoal.shift();       //删除第一个进球时间节点
             return oldEvent != self.curEvent;
         } else if (2 == nInGoalTime &&  2 != judge){
@@ -166,11 +167,14 @@ function VirtualFootballMatch(conf, beginTime, endTime){
                 self.guestTeamGoal++;
             }
             var maxTime = confMatchEvent.get(HOST_GOAL).animation_time;
-            self.nextEventTime = (timestamp/1000 + Functions.getRandomNum(1, maxTime))*1000;
+            self.nextEventTime = self.nextEventTime + Functions.getRandomNum(1, maxTime)*1000;
+            console.log('增加时间：'+(self.nextEventTime-timestamp));
             nInGoalTime = 0;
+            console.log('nInGoalTime = 0');
             return oldEvent != self.curEvent;
         } else if (2 == nInGoalTime &&  2 == judge){
             nInGoalTime = 0;
+            console.log('nInGoalTime = 0 ----------');
         }
         //根据配置的概率，随机出下一个事件与事件需要的时间
         var eventConf = confMatchEvent.get(self.curEvent);
@@ -184,10 +188,12 @@ function VirtualFootballMatch(conf, beginTime, endTime){
         var index = Functions.getRandomNum(0, randArr.length-1);
         self.curEvent = randArr[index];
         var maxTime = confMatchEvent.get(self.curEvent).animation_time;
-        self.nextEventTime = (timestamp/1000 + Functions.getRandomNum(1, maxTime))*1000;
+        self.nextEventTime = self.nextEventTime + Functions.getRandomNum(1, maxTime)*1000;
+        console.log('增加时间：'+(self.nextEventTime-timestamp));
         if(timeGoal.length > 0){
-            if(self.nextEventTime > timeGoal[0].goal_animation_beginTime){
+            if(self.nextEventTime >= timeGoal[0].goal_animation_beginTime){
                 nInGoalTime = 1;
+                console.log('nInGoalTime = 1');
                 self.nextEventTime = timeGoal[0].goal_animation_beginTime;
             }
         }
