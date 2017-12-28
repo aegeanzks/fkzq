@@ -17,10 +17,11 @@ var DbMgr = require('../Utils/Manager/DbMgr');
 var LogMgr = require('../Utils/Manager/LogMgr');
 
 var PlayerModule = require('./Module/Player/PlayerModule');
-var WalletAgentModule = require('./Module/Agent/WalletAgentModule');
+var WalletAgentModule = require('./Module/WalletAgent/WalletAgentModule');
 var LoginModule = require('./Module/Login/LoginModule');
 var CommonModule = require('./Module/Common/CommonModule');
 var DataCenterModule = require('./Module/DataCenter/DataCenterModule');
+var VirtualFootModule = require('./Module/VirtualFootball/VirtualFootballModule');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
@@ -37,13 +38,13 @@ GameSvr.start = function (serverId, ip, port) {
     new MsgMgr();
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
-    new WsMgr().run(port, GameSvr.regsterFun);
-    new RpcMgr().run(serverId);
-    //RPC组件不需要socket，所以提前初始化
-    GameSvr.registerModule();
-    GameSvr.run();   //30毫秒
-
-    console.log('服务已启动...');
+    new RpcMgr().run(serverId, function(){
+        //RPC组件不需要socket，所以提前初始化
+        console.log('服务已启动...');
+        GameSvr.registerModule();
+        new WsMgr().run(port, GameSvr.regsterFun);
+        GameSvr.run();
+    });
 };
 
 //运行
@@ -58,6 +59,7 @@ GameSvr.registerModule = function(){
     new LoginModule();
     new PlayerModule();
     new DataCenterModule();
+    new VirtualFootModule();
 }
 
 //与客户端交互的模块这边还需要注册socket事件
@@ -65,6 +67,7 @@ GameSvr.regsterFun = function(socket){
     OBJ('CommonModule').registerFun(socket);
     OBJ('LoginModule').registerFun(socket);
     OBJ('PlayerModule').registerFun(socket);
+    OBJ('VirtualFootballModule').registerFun(socket);
 };
 
 

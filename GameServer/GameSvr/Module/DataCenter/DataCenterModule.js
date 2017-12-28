@@ -14,14 +14,15 @@ var Logic = require('./DataCenter');
 
 function DataCenterModule(){
     BaseModule.call(this);
-    var logic = new Logic();
+    var self = this;
+    self.logic = new Logic();
     //////////////////////////////////////
-    //注册函数
-    (function registerRpc(){
-        OBJ('RpcMgr').register('dataCenterMsg', logic.dataCenterMsg);
-    })();
     //一帧
     this.run = function(timestamp){
-        logic.run(timestamp);
+        self.logic.run(timestamp);
+    };
+
+    this.send = function(msg){
+        self.logic.send(msg);
     };
 }

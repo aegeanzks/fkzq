@@ -31,12 +31,8 @@ GameSvr.start = function () {
     console.log('开始启动服务('+config.serverId+')...');
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
-    new RpcMgr().run(config.serverId);
     new HttpClientMgr();
-    GameSvr.regsterFun();
-
-    GameSvr.run();
-    console.log('服务已启动...');
+    new RpcMgr().run(config.serverId, GameSvr.run);
 };
 
 //用户模块注册
@@ -49,6 +45,8 @@ GameSvr.regsterFun = function(){
 
 //运行
 GameSvr.run = function() {
+    console.log('服务已启动...');
+    GameSvr.regsterFun();
     OBJ('ModuleMgr').run(config.runInterval);
 };
 

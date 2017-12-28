@@ -9,11 +9,11 @@ module.exports = ObjRoot;
 
 function ObjRoot(name){
     ObjRoot.objMap.set(name, this);
-};
+}
 ObjRoot.objMap = new Map();
 ObjRoot.getObj = function(name){
     var obj = ObjRoot.objMap.get(name);
     if(null == obj)
         return null;
     return obj;
-}
+};

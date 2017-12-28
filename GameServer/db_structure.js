@@ -20,6 +20,7 @@ exports.Schedule = function(){
             id:{                         //赛事标识
                 type:Number,
                 index:true,
+                unique: true,
             },                   
             match_num:String,            //场次
             phase:Number,                //期号
@@ -228,6 +229,11 @@ exports.ConfVirtualOdds = function(){
     return {
         'name':'conf_virtual_odds',
         'schema':{
+            id:{                   //id标识
+                type:Number,
+                unique: true,
+                index:true,
+            },
             both_sides: String,      //上下、上中/中下等
             sides_dvalue: Number,    //上2，中1，下0；上下=（2-0=2）上中=（2-1=1）这里的值就是填差值
             host_win: Number,        //主胜
@@ -256,6 +262,11 @@ exports.ConfStock = function(){
     return {
         'name':'conf_stock',
         'schema':{
+            game_id: {                   //游戏id
+                type:Number,
+                unique: true,
+            },             
+            game_name: String,           //游戏名字
             cur_stock: Number,           //当前库存
             stock_initial_value: Number,  //库存初始值
             cheat_chance_1: Number,       //作弊概率1

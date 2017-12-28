@@ -5,19 +5,22 @@
 // +----------------------------------------------------------------------
 // | Author: Zhengks
 // +----------------------------------------------------------------------
-module.exports = VirtualFootballModule;
+module.exports = WalletAgentModule;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
-var BaseModule = require('../BaseModule');
-var VirtualFootball = require('./VirtualFootball');
 
-function VirtualFootballModule(){
+var BaseModule = require("../BaseModule");
+var Logic = require('./WalletAgent');
+
+function WalletAgentModule(){
     BaseModule.call(this);
-    this.logic = new VirtualFootball();
-
+    this.logic = new Logic();
+    //////////////////////////////////////
     //一帧
     this.run = function(timestamp){
-        this.logic.run(timestamp);
-        //console.log('VirtualFootballModule...'+timestamp);
+        //console.log("CommonModule.run..."+timestamp);
+    };
+    this.send = function(msg){
+        this.logic.send(msg);
     };
 }

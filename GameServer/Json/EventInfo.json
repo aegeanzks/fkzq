@@ -1,0 +1,98 @@
+{
+  "1": {
+    "event_id": 1,
+    "event_name": "主队控球",
+    "host_ball_handling": 10,
+    "host_attack": 40,
+    "host_dangerous_attack": 20,
+    "guest_ball_handling": 10,
+    "guest_attack": 10,
+    "guest_dangerous_attack": 10,
+    "animation_time": 3,
+    "blockade": 0
+  },
+  "2": {
+    "event_id": 2,
+    "event_name": "主队进攻",
+    "host_ball_handling": 40,
+    "host_attack": 10,
+    "host_dangerous_attack": 20,
+    "guest_ball_handling": 10,
+    "guest_attack": 10,
+    "guest_dangerous_attack": 10,
+    "animation_time": 3,
+    "blockade": 0
+  },
+  "3": {
+    "event_id": 3,
+    "event_name": "主队危险进攻",
+    "host_ball_handling": 20,
+    "host_attack": 40,
+    "host_dangerous_attack": 10,
+    "guest_ball_handling": 10,
+    "guest_attack": 10,
+    "guest_dangerous_attack": 10,
+    "animation_time": 3,
+    "blockade": 20
+  },
+  "4": {
+    "event_id": 4,
+    "event_name": "客队控球",
+    "host_ball_handling": 10,
+    "host_attack": 10,
+    "host_dangerous_attack": 10,
+    "guest_ball_handling": 10,
+    "guest_attack": 40,
+    "guest_dangerous_attack": 20,
+    "animation_time": 3,
+    "blockade": 0
+  },
+  "5": {
+    "event_id": 5,
+    "event_name": "客队进攻",
+    "host_ball_handling": 10,
+    "host_attack": 10,
+    "host_dangerous_attack": 10,
+    "guest_ball_handling": 40,
+    "guest_attack": 10,
+    "guest_dangerous_attack": 20,
+    "animation_time": 3,
+    "blockade": 0
+  },
+  "6": {
+    "event_id": 6,
+    "event_name": "客队危险进攻",
+    "host_ball_handling": 10,
+    "host_attack": 10,
+    "host_dangerous_attack": 10,
+    "guest_ball_handling": 20,
+    "guest_attack": 40,
+    "guest_dangerous_attack": 10,
+    "animation_time": 3,
+    "blockade": 20
+  },
+  "7": {
+    "event_id": 7,
+    "event_name": "主队进球",
+    "host_ball_handling": 20,
+    "host_attack": 20,
+    "host_dangerous_attack": 10,
+    "guest_ball_handling": 20,
+    "guest_attack": 20,
+    "guest_dangerous_attack": 10,
+    "animation_time": 3,
+    "blockade": 0
+  },
+  "8": {
+    "event_id": 8,
+    "event_name": "客队进球",
+    "host_ball_handling": 20,
+    "host_attack": 20,
+    "host_dangerous_attack": 10,
+    "guest_ball_handling": 20,
+    "guest_attack": 20,
+    "guest_dangerous_attack": 10,
+    "animation_time": 3,
+    "blockade": 0
+  }
+}

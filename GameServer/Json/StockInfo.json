@@ -1,0 +1,13 @@
+{
+  "1": {
+    "game_id": 1,
+    "game_name": "虚拟足球",
+    "cur_stock": 10000,
+    "stock_initial_value": 0,
+    "cheat_chance_1": 100,
+    "stock_threshold_1": 1000,
+    "cheat_chance_2": 30,
+    "stock_threshold_2": 2000,
+    "cheat_chance_3": 0
+  }
+}

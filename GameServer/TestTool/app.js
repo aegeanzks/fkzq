@@ -21,7 +21,27 @@ function start() {
             msg.length = length;
             var res = pbLogin.Res_Login.deserializeBinary(new Uint8Array(msg));
             console.log(res.getCoin());
-		});
+
+            var askVirtualFootMainInfo = new pbLogin.Ask_VirtualFootMainInfo();
+            var buf = askVirtualFootMainInfo.serializeBinary();
+            socket.emit(pbLogin.Ask_VirtualFootMainInfo.Type.ID, buf, buf.length);
+        });
+        
+        socket.on(pbLogin.Res_VirtualFootMainInfo.Type.ID, function(msg, length){
+            msg.length = length;
+            var res = pbLogin.Res_VirtualFootMainInfo.deserializeBinary(new Uint8Array(msg));
+            console.log(res.getMatchinfo());
+
+            
+        });
+
+        socket.on(pbLogin.Push_MatchInfo.Type.ID, function(msg, length){
+            console.log('Push_MatchInfo');
+        });
+
+        socket.on(pbLogin.Push_GoalAndBetArea.Type.ID, function(msg, length){
+            console.log('Push_GoalAndBetArea');
+        });
     });
 }
 

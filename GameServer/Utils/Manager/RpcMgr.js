@@ -24,7 +24,7 @@ function RpcMgr(){
         msgMap.set(id, func);
     };
 
-    this.run = function(serverId){
+    this.run = function(serverId, cbfunc){
         
         thisServerId = serverId;
         amqp.connect(RpcConfig.RPCURL, function (err, conn) {
@@ -38,6 +38,7 @@ function RpcMgr(){
                         func(json['source'], json['msgData']);
                 }, {noAck: true});
                 console.log('rpc已连接...');
+                cbfunc();
             });
             //setTimeout(function () { conn.close(); process.exit(0) }, 500);
         });

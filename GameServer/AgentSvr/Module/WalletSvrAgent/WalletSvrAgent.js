@@ -8,6 +8,31 @@ var UtilFun = require('../../../Utils/Functions');
 
 function WalletSvrAgent(){
     var self = this;
+
+    var uniqueId = 0;
+    function getUniqueId(){
+        if(uniqueId >= 10000)
+            uniqueId = 0;
+        return Math.floor(Date.now()%100000)*10000+uniqueId++;
+    }
+
+    //rpc路由
+    //注册函数
+    (function registerRpc(){
+        OBJ('RpcMgr').register('GameSvrReq', rpcRoot);
+    })();
+    function rpcRoot(source, msg){
+        switch(msg.module){
+            case 'WalletSvrAgent':
+            {
+                var mod = OBJ('WalletSvrAgentModule');
+                if(msg.func == 'reqGetCoin'){
+                    mod.logic.reqGetCoin(source, msg.data);
+                }
+            }break;
+        }
+    }
+
     //ws连接
     var connWalletTimer = new SingleTimer();
     //self.ws = new WebSocket.Client("ws://120.78.166.241:4181?platform_id=20");
@@ -52,7 +77,7 @@ function WalletSvrAgent(){
     function req(funcId, data, func){
         var cbId = 0;
         if(func){
-            cbId = OBJ('GlobalModule').getUniqueId();
+            cbId = getUniqueId();
             cbMap.set(cbId, {'func':func, 'overdueTime':Date.now()+10000});
         }
         try{
@@ -74,9 +99,11 @@ function WalletSvrAgent(){
         req(2010002, rgc, function(data){
             try {
                 var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
-                OBJ('RpcMgr').send(source, 'resGetCoin', 
-                {'userid':userid, 'res': res.getRet(), 'msg': res.getMsg(), 'balance': res.getBalance()});
-            } catch (error) {
+
+                self.send(source, {module:'Login', func:'resGetCoin', 
+                    data:{'userid':userid, 'res': res.getRet(), 'msg': res.getMsg(), 'balance': res.getBalance()}});
+            
+                } catch (error) {
                 console.log(error);
             }
         });
@@ -93,5 +120,9 @@ function WalletSvrAgent(){
                 console.error('连接钱包失败...');
             }
         }
+    };
+
+    this.send = function(target, msg){
+        OBJ('RpcMgr').send(target, 'WalletSvrReq', msg);
     };
 }

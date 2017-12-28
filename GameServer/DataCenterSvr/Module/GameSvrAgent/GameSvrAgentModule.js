@@ -9,36 +9,23 @@ module.exports = GameSvrAgentModule;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var BaseModule = require('../BaseModule');
-var SingleTimer = require('../../../Utils/SingleTimer')
+var Logic = require('./GameSvrAgent');
 
 function GameSvrAgentModule(){
     BaseModule.call(this);
-    var gamePingMap = new Map();
-    var pingTimer = new SingleTimer();
-    pingTimer.startup(5000);
-    //注册函数
-    (function registerRpc(){
-        OBJ('RpcMgr').register('gameServerPing', gameServerPing);
-    })();
+    var self = this;
+    this.logic = new Logic();
+    
     //一帧s
     this.run = function(timestamp){
-        if(null != pingTimer && pingTimer.toNextTime()){
-            var tmMap = new Map(gamePingMap);
-            for (var value of tmMap){
-                if (timestamp > value[1]){
-                    gamePingMap.delete(value[0]);
-                }
-            }
-        }
+        self.logic.run(timestamp);
     };
-    
-    function gameServerPing(source, res){
-        gamePingMap.set(source, Date.now()+5000);
-    }
 
-    this.broadcastGameServer = function(msgId, msg){
-        for (var value of gamePingMap){
-            OBJ('RpcMgr').send(value[0], msgId, msg);
-        }
-    }
+    this.broadcastGameServer = function(msg){
+        self.logic.broadcastGameServer(msg);
+    };
+
+    this.send = function(target, msg){
+        self.logic.send(target, msg);
+    };
 }

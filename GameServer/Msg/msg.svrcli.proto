@@ -35,8 +35,10 @@ message MatchInfo
 	//比赛状态
 	int32 matchState = 1;		//比赛状态：0等待开始、1正在进行、2比赛结束（等待开奖）、3、比赛结束（开奖）
 	int32 lastSecond = 2;		//这个比赛状态剩余时间（秒）
-	//当前事件(matchState为1时才有效)
-	int32 event = 3;		//0无事件 1主队控球 2主队进攻 3主队危险进攻 4客队控球 5客队进攻 6客队危险进攻 7主队进球 8客队进球
+	//两队交锋场次
+	int32 hostWinNum = 3;		//主队胜场次
+	int32 drawNum = 4;		//平
+	int32 guestWinNum = 5;		//客队胜场次
 }
 //比分与盘口信息
 message GoalAndBetArea
@@ -61,6 +63,8 @@ message GoalAndBetArea
 	int32 zeroGoalSupport = 14;	//无进球  支持率
 	float guestNextGoalTimes = 15;	//客队进球倍数
 	float guestNextGoalSupport = 16;//客队进球支持率
+	//当前事件(matchState为1时才有效)
+	int32 event = 17;		//0无事件 1主队控球 2主队进攻 3主队危险进攻 4客队控球 5客队进攻 6客队危险进攻 7主队进球 8客队进球
 }
 //虚拟足球页面信息回应(回复当前信息)
 message Res_VirtualFootMainInfo
@@ -68,10 +72,6 @@ message Res_VirtualFootMainInfo
 	enum Type {UNSET = 0; ID = 20001;}
 	MatchInfo matchInfo = 1;	//比赛状态
 	GoalAndBetArea goalAndBetArea = 2;//比分及盘口信息
-	//两队交锋场次
-	int32 hostWinNum = 3;		//主队胜场次
-	int32 drawNum = 4;		//平
-	int32 guestWinNum = 5;		//客队胜场次
 }
 //虚拟足球比赛状态推送(服务端主动通知客户端)
 message Push_MatchInfo

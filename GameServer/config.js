@@ -41,7 +41,7 @@ exports.dataCenterSvrConfig = function(){
         serverId:'dataCenter',
         //数据采集频率
         pullInterval:6,
-        runInterval:30, //帧率
+        runInterval:3, //帧率
         noDataTotal:'3',             
         switch:'1',                 
         beginTime:'',                

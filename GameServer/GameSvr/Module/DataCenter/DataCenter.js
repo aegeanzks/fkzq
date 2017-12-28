@@ -13,6 +13,7 @@ var OBJ = require('../../../Utils/ObjRoot').getObj;
 
 function DataCenter(){
 
+    var self = this;
     var pingTimer = new SingleTimer();
     pingTimer.startup(1000);
 
@@ -20,11 +21,31 @@ function DataCenter(){
         //ping到数据中心
         if(null != pingTimer && pingTimer.toNextTime())
         {
-            OBJ('RpcMgr').send(configDataCenter.serverId, 'gameServerPing', null);
+            self.send({module:'GameSvrAgent', func:'gameServerPing'});
         }
     };
 
-    this.dataCenterMsg = function(source, res){
-        console.log(res);
+    //注册函数
+    (function registerRpc(){
+        OBJ('RpcMgr').register('DataCenterReq', rpcRoot);
+    })();
+    function rpcRoot(source, msg){
+        switch(msg.module){
+            case 'VirtualFootball':
+            {
+                var mod = OBJ('VirtualFootballModule');
+                if(msg.func == 'resCurData'){
+                    mod.logic.resCurData(source, msg.data);
+                }else if(msg.func == 'refreshMatchState'){
+                    mod.logic.refreshMatchState(source, msg.data);
+                }else if(msg.func == 'refreshMatchEvent'){
+                    mod.logic.refreshMatchEvent(source, msg.data);
+                }
+            }break;
+        }
+    }
+
+    this.send = function(msg){
+        OBJ('RpcMgr').send(configDataCenter.serverId, 'GameSvrReq', msg);
     };
 }

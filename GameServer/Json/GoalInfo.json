@@ -1,0 +1,42 @@
+{
+  "0": {
+    "all_goal_num": 0,
+    "chance": 10
+  },
+  "1": {
+    "all_goal_num": 1,
+    "chance": 10
+  },
+  "2": {
+    "all_goal_num": 2,
+    "chance": 10
+  },
+  "3": {
+    "all_goal_num": 3,
+    "chance": 10
+  },
+  "4": {
+    "all_goal_num": 4,
+    "chance": 10
+  },
+  "5": {
+    "all_goal_num": 5,
+    "chance": 10
+  },
+  "6": {
+    "all_goal_num": 6,
+    "chance": 10
+  },
+  "7": {
+    "all_goal_num": 7,
+    "chance": 10
+  },
+  "8": {
+    "all_goal_num": 8,
+    "chance": 10
+  },
+  "9": {
+    "all_goal_num": 9,
+    "chance": 10
+  }
+}

@@ -338,20 +338,26 @@ function dataSave(data,len){
     var schedule = [];
     var batchSize = 10;
     var size = 0;
-    for(var i= 1;i<=len;i++){
-        schedule.push(scheduleDeal(data[i-1]));
-        if(0 == i%batchSize){
+
+    try{
+        for(var i= 1;i<=len;i++){
+            schedule.push(scheduleDeal(data[i-1]));
+            if(0 == i%batchSize){
+                //写数据库
+                if(schedule.length != 0)
+                    _ScheduleStatement.collection.insert(schedule,onInsert);
+                schedule = [];
+            }
+        }
+        if(schedule.length != 0){
             //写数据库
             if(schedule.length != 0)
                 _ScheduleStatement.collection.insert(schedule,onInsert);
-            schedule = [];
         }
+    }catch(err){
+        console.log('dataSave err ' ,err);
     }
-    if(schedule.length != 0){
-        //写数据库
-        if(schedule.length != 0)
-            _ScheduleStatement.collection.insert(schedule,onInsert);
-    }
+
 }
 
 
@@ -372,15 +378,19 @@ function dataUpdate(data,scheduledocs){
         Id = parseInt(data[i]['id']);
 
         //schedule判断
-        for(var j =0;j<len;j++){
-            if(data[i]['id'] == scheduledocs[j]['_doc']['id']){
-                var schedocValue = scheduleComp(data[i],scheduledocs[j]['_doc']);
-                for(var key in schedocValue){
-                     _ScheduleStatement.collection.update({id:Id},{$set:schedocValue},false,true);
+        try{
+            for(var j =0;j<len;j++){
+                if(data[i]['id'] == scheduledocs[j]['_doc']['id']){
+                    var schedocValue = scheduleComp(data[i],scheduledocs[j]['_doc']);
+                    for(var key in schedocValue){
+                         _ScheduleStatement.collection.update({id:Id},{$set:schedocValue},false,true);
+                        break;
+                    }
                     break;
-                }
-                break;
-            } 
+                } 
+            }
+        }catch(err){
+            console.log('dataUpdate err ', err);
         }
     }
 }
@@ -429,24 +439,27 @@ function dataDeal(html){
         Id.push(parseInt(dataArr[i]['id']));
     }
     //TODO schedule查询数据
-    _ScheduleStatement.find({},function(err,scheduledocs){
-        if(!err){
-            if(0 == scheduledocs.length){
-                console.log('func dataDeal dataSave');
-                dataSave(dataArr,len);
-            }
-            else if(len == scheduledocs.length){
-                console.log('func dataDeal dataUpdate');
-                dataUpdate(dataArr,scheduledocs);
+    try{
+        _ScheduleStatement.find({},function(err,scheduledocs){
+            if(!err){
+                if(0 == scheduledocs.length){
+                    console.log('func dataDeal dataSave');
+                    dataSave(dataArr,len);
+                }
+                else if(len == scheduledocs.length){
+                    console.log('func dataDeal dataUpdate');
+                    dataUpdate(dataArr,scheduledocs);
+                }else{
+                    console.log('func dataDeal dataSaveAndUpdate');
+                    dataSaveAndUpdate(dataArr,scheduledocs,len);
+                }
             }else{
-                console.log('func dataDeal dataSaveAndUpdate');
-                dataSaveAndUpdate(dataArr,scheduledocs,len);
+                console.log('func dataDel _ScheduleStatement.find '+err);
             }
-        }else{
-            console.log('func dataDel _ScheduleStatement.find '+err);
-        }
-    }).where('id').in(Id);
+        }).where('id').in(Id);
+    }catch(error){
+        console.log('dataDeal err ', error);
+    }
 }
-
 
 }
