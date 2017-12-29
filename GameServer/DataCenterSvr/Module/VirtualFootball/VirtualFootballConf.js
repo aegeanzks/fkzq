@@ -24,6 +24,7 @@ function VirtualFootballConf(){
     var classConfVirtualOdds = OBJ('DbMgr').getStatement(Schema.ConfVirtualOdds());
     var classConfVirtualEvent = OBJ('DbMgr').getStatement(Schema.ConfVirtualEvent());
     var classConfVirtualStock = OBJ('DbMgr').getStatement(Schema.ConfStock());
+    var classConfBetItem = OBJ('DbMgr').getStatement(Schema.ConfBetItem());
     //var mapTeamOdds = new Map();    //球队赔率
 
     //初始化函数
@@ -273,6 +274,20 @@ function VirtualFootballConf(){
                     retMap.set(item.event_id, item);
                 }
                 func(retMap);
+            }
+        });
+    };
+    this.getBetItem = function(func){
+        classConfBetItem.findOne({'game_id':1}, function(err, data){
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(0 == data.length){
+
+            }else{
+                if (func)
+                    func(data.item1, data.item2, data.item3);
             }
         });
     };

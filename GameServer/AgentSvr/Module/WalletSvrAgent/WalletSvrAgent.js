@@ -28,6 +28,8 @@ function WalletSvrAgent(){
                 var mod = OBJ('WalletSvrAgentModule');
                 if(msg.func == 'reqGetCoin'){
                     mod.logic.reqGetCoin(source, msg.data);
+                }else if(msg.func == 'reqBet'){
+                    mod.logic.reqBet(source, msg.data);
                 }
             }break;
         }
@@ -101,9 +103,75 @@ function WalletSvrAgent(){
                 var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
 
                 self.send(source, {module:'Login', func:'resGetCoin', 
-                    data:{'userid':userid, 'res': res.getRet(), 'msg': res.getMsg(), 'balance': res.getBalance()}});
+                    data:{
+                        userid:userid, 
+                        res: res.getRet(), 
+                        msg: res.getMsg(), 
+                        balance: res.getBalance()
+                    }
+                });
             
-                } catch (error) {
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    };
+
+    //投注
+    this.reqBet = function(source, data){
+        var rb = new pbWallet.AddTrade();
+        rb.setOutTradeNo(data.uuid);
+        rb.setType(2);
+        rb.setOutType(data.outType);
+        //rb.setOutTypeDescription(data.outTypeDescription);
+        rb.setUserId(data.userid);
+        rb.setMoney(data.betCoin);
+        req(2010001, rb, function(msg){
+            try {
+                var res = pbWallet.RspAddTrade.deserializeBinary(msg);
+
+                self.send(source, {module:'VirtualFootball', func:'resVirtualBet',
+                    data:{
+                        uuid:data.uuid,
+                        res: res.getRet(),
+                        msg: res.getMsg(),
+                        trade_no: res.getTradeNo(),
+                        balance: res.getBalance(),
+                        betArea: data.betArea,
+                        betCoin: data.betCoin               
+                    }
+                });
+            }catch(error){
+                console.log(error);
+            }
+        });
+    };
+
+    //投注奖励
+    this.reqAddMoney = function(source, data){
+        var rb = new pbWallet.AddTrade();
+        rb.setOutTradeNo(data.uuid);
+        rb.setType(1);
+        rb.setOutType(data.outType);
+        //rb.setOutTypeDescription(data.outTypeDescription);
+        rb.setUserId(data.userid);
+        rb.setMoney(data.betCoin);
+        req(2010001, rb, function(msg){
+            try {
+                var res = pbWallet.RspAddTrade.deserializeBinary(msg);
+
+                self.send(source, {module:'VirtualFootball', func:'resAddTrade',
+                    data:{
+                        uuid:data.uuid,
+                        res: res.getRet(),
+                        msg: res.getMsg(),
+                        trade_no: res.getTradeNo(),
+                        balance: res.getBalance(),
+                        betArea: data.betArea,
+                        betCoin: data.betCoin               
+                    }
+                });
+            }catch(error){
                 console.log(error);
             }
         });

@@ -1,0 +1,22 @@
+[2017-12-29 08:38:58.676] [ERROR] logErr - { Error: read ECONNRESET
+    at exports._errnoException (util.js:1020:11)
+    at TCP.onread (net.js:568:26) code: 'ECONNRESET', errno: 'ECONNRESET', syscall: 'read' }
+[2017-12-29 08:38:58.684] [ERROR] logErr - Error: read ECONNRESET
+    at exports._errnoException (util.js:1020:11)
+    at TCP.onread (net.js:568:26)
+[2017-12-29 08:40:58.631] [ERROR] logErr - Error: Heartbeat timeout
+    at Heart.<anonymous> (D:\myGit\fkzq\GameServer\node_modules\amqplib\lib\connection.js:426:19)
+    at emitNone (events.js:86:13)
+    at Heart.emit (events.js:185:7)
+    at Heart.runHeartbeat (D:\myGit\fkzq\GameServer\node_modules\amqplib\lib\heartbeat.js:88:17)
+    at ontimeout (timers.js:386:14)
+    at tryOnTimeout (timers.js:250:5)
+    at Timer.listOnTimeout (timers.js:214:5)
+[2017-12-29 08:40:58.632] [ERROR] logErr - Error: Heartbeat timeout
+    at Heart.<anonymous> (D:\myGit\fkzq\GameServer\node_modules\amqplib\lib\connection.js:426:19)
+    at emitNone (events.js:86:13)
+    at Heart.emit (events.js:185:7)
+    at Heart.runHeartbeat (D:\myGit\fkzq\GameServer\node_modules\amqplib\lib\heartbeat.js:88:17)
+    at ontimeout (timers.js:386:14)
+    at tryOnTimeout (timers.js:250:5)
+    at Timer.listOnTimeout (timers.js:214:5)

@@ -50,7 +50,7 @@ message GetTrades{
 	string trade_no=1;			// 钱包系统交易订单号
 	string out_trade_no = 2;  	// 平台订单号
 	int32 user_id = 3;			// 用户id
-	int32 platform_id = 4; 		// 平台标识
+	string platform_id = 4; 	// 平台标识
 	int32 type = 5;			  	// 操作类型（1-平台转入，2-平台转出，3-用户转账）
 	int32 out_type = 6;			// 平台自定义订单类型
 	string start_time = 7;		// 开始时间
@@ -74,7 +74,7 @@ message Trade{
 	string trade_no = 2;		// 钱包系统交易订单号
 	string out_trade_no = 3;  	// 平台订单号
 	int32 user_id = 4;			// 用户id
-	int32 platform_id = 5; 		// 平台标识
+	string platform_id = 5; 	// 平台标识
 	int32 type = 6;			  	// 操作类型（1-平台转入，2-平台转出，3-用户转账）
 	int32 out_type = 7;			// 平台自定义订单类型
 	string money = 8;			// 金额(最多保留7位小数，例如:”1.0000001”) 
@@ -91,9 +91,7 @@ message NsqAddTrade{
 	uint32 func_id = 1;       	// 功能id
 	uint32 platform_id = 2;		// 平台id
 	string trade_no = 3;		// 交易单号
-	string balance = 4;			// 交易后余额度
-	string created_time = 5;	// 交易时间
-	AddTrade trade = 6;			// 订单
+	AddTrade trade = 4;			// 订单
 }
 
 

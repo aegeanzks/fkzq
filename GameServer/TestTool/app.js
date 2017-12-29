@@ -32,7 +32,20 @@ function start() {
             var res = pbLogin.Res_VirtualFootMainInfo.deserializeBinary(new Uint8Array(msg));
             console.log(res.getMatchinfo());
 
-            
+            var askVirtualBet = new pbLogin.Ask_VirtualBet();
+
+            askVirtualBet.setBetarea(1);
+            askVirtualBet.setCoinitem(1);
+
+            var buf = askVirtualBet.serializeBinary();
+            console.log('开始下注');
+            socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+        });
+
+        socket.on(pbLogin.Res_VirtualBet.Type.ID, function(msg, length){
+            msg.length = length;
+            var res = pbLogin.Res_VirtualBet.deserializeBinary(new Uint8Array(msg));
+            console.log('下注成功：' + res.getResult());
         });
 
         socket.on(pbLogin.Push_MatchInfo.Type.ID, function(msg, length){

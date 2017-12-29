@@ -72,6 +72,9 @@ message Res_VirtualFootMainInfo
 	enum Type {UNSET = 0; ID = 20001;}
 	MatchInfo matchInfo = 1;	//比赛状态
 	GoalAndBetArea goalAndBetArea = 2;//比分及盘口信息
+	int32 betItem1 = 3;		//下注项1金额
+	int32 betItem2 = 4;
+	int32 betItem3 = 5;
 }
 //虚拟足球比赛状态推送(服务端主动通知客户端)
 message Push_MatchInfo
@@ -142,4 +145,6 @@ message Res_VirtualBet
 {
 	enum Type {UNSET = 0; ID = 20009;}
 	int32 result = 1;		//0成功 1参数错误 2当前时间不可投注
+	double coin = 2;		//游戏币  成功时才有效
+	int32 betArea = 3;
 }

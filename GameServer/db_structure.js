@@ -178,9 +178,10 @@ exports.LogVirtualBet = function(){
                 default: Date.now,
                 index: true,
             },
-            bet_num: Number,           //注数
-            multiple: Number,         //倍数
             bet_coin: Number,          //下注金额
+			bet_times: Number,			//下注时的赔率
+			bet_distribute_coin,		//将配发的金额（先计算在这边，不显示给后台）
+			bet_area: Number,			//下注区域
             distribute_coin: Number,   //派发金额
             before_bet_coin: Number,    //下注前金额
             status: {           //状态 0未开奖 1不中 2中
@@ -188,9 +189,16 @@ exports.LogVirtualBet = function(){
                 index: true,     
             },
             balance_schedule_id: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
-                type: Number,
+                type: String,
                 index: true,
-            }
+            },
+			server_id: String,
+			out_trade_no: {
+                type: String,
+                unique: true,
+            },
+			trade_no: String,
+			no: String
         }
     };
 };
@@ -276,36 +284,17 @@ exports.ConfStock = function(){
             cheat_chance_3: Number,       //作弊概率3
         }
     }
-}
+};
 
-//虚拟足球主页信息
-exports.VirtualMainInfo = function(){
+//下注项配置
+exports.ConfBetItem = function(){
     return {
-        'name':'virtual_main_info',
+        'name':'conf_bet_item',
         'schema':{
-            match_state: Number,            //比赛状态：0等待开始、1正在进行、2比赛结束（等待开奖）、3、比赛结束（开奖）
-            last_second: Number,            //这个比赛状态剩余时间（秒）
-            event: Number,                  //0无事件 1主队控球 2主队进攻 3主队危险进攻 4客队控球 5客队进攻 6客队危险进攻 7主队进球 8客队进球
-            //球队进球信息
-	        host_team_id: Number,		    //主队ID
-	        host_team_goal: Number,		    //主队进球数
-	        guest_team_id: Number,		    //客队ID
-	        guest_team_goal: Number,	        //客队进球数
-	        ////盘口
-	        //猜胜负平
-	        host_win_times: Number,		    //主胜倍数
-	        host_win_support: Number,	        //主胜支持率
-	        draw_times: Number,		        //平  倍数
-	        draw_support: Number,		    //平  支持率
-	        guest_win_times: Number,	        //客胜倍数
-	        guest_win_support: Number,	    //客胜支持率
-	        //猜下一队进球
-            host_next_goal_times: Number,	    //主队进球倍数
-            host_next_goal_support: Number,	//主队进球支持率
-            zero_goal_times: Number,	        //无进球  倍数
-            zero_goal_support: Number,	    //无进球  支持率
-            guest_next_goal_times: Number,	    //客队进球倍数
-            guest_next_goal_support: Number,   //客队进球支持率
+            game_id: Number,              //游戏ID    1虚拟足球 2真实足球
+            item1: Number,
+            item2: Number,
+            item3: Number,
         }
-    }
-}
+    };
+};

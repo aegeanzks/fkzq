@@ -24,6 +24,13 @@ function WalletAgent(){
                     mod.logic.resGetCoin(source, msg.data);
                 }
             }break;
+            case 'VirtualFootball':
+            {
+                var mod = OBJ('VirtualFootballModule');
+                if (msg.func == 'resVirtualBet'){
+                    mod.logic.resVirtualBet(source, msg.data);
+                }
+            }break;
         }
     }
 

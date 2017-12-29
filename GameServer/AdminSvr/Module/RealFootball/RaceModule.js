@@ -292,8 +292,8 @@ function RlRaceModule(){
             values = {"hot_flag":hot_flag};
         }else{
             values = {"home_team":fields.home_team,"away_team":fields.away_team,
-                          "odds_jingcai":fields.odds_jingcai,"odds_rangqiu":fields.odds_rangqiu,
-                          "input_flag":input_flag};
+                      "odds_jingcai":fields.odds_jingcai,"odds_rangqiu":fields.odds_rangqiu,
+                      "input_flag":input_flag};
 
         }
         updateListById(id,values,res);

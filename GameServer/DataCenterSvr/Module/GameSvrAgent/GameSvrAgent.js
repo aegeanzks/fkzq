@@ -32,6 +32,8 @@ function GameSvrAgent(){
                 var mod = OBJ('VirtualFootballModule');
                 if(msg.func == 'getCurData'){
                     mod.logic.getCurData(source, msg.data);
+                } else if(msg.func == 'canSettlement'){
+                    mod.logic.canSettlement(source, msg.data);
                 }
             }break;
         }
@@ -60,5 +62,9 @@ function GameSvrAgent(){
 
     this.send = function(target, msg){
         OBJ('RpcMgr').send(target, 'DataCenterReq', msg);
+    };
+
+    this.getServerCount = function(){
+        return gamePingMap.size;
     };
 }

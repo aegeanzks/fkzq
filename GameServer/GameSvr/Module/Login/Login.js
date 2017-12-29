@@ -24,7 +24,7 @@ function Login(){
     self.login = function(askLogin, socket){
         var userid = 1;
         var userName = '用户1';
-        waitMap.set(userid, [socket, userName]);
+        waitMap.set(userid, [socket, userName, Date.now()+10000]);//超时10秒
         OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:userid});
         //self.resGetCoin({'userid':userid, 'coin':100000});
         console.log('用户:' + userid + ' 登录成功!');
@@ -32,11 +32,11 @@ function Login(){
     
     self.resGetCoin = function(source, data){
         //console.log('resGetCoin:'+data);
+        var res = new pbSvrcli.Res_Login();
         var userArr = waitMap.get(data.userid);
         if(userArr){
             var socket = userArr[0];
             var userName = userArr[1];
-            var res = new pbSvrcli.Res_Login();
             res.setResult(data.res);
             res.setCoin(data.balance);
             //登录成功返回金币
@@ -50,6 +50,16 @@ function Login(){
     
     self.run = function(timestamp){
         //console.log('login.prototype.run...'+timestamp);
+        //超时删除
+        var tmpArr = [];
+        for(var item of waitMap.entries()){
+            if(timestamp > item[1][2]){
+                tmpArr.push(item[0]);
+            }
+        }
+        for(var item of tmpArr){
+            waitMap.delete(item);
+        }
     };
 }
 

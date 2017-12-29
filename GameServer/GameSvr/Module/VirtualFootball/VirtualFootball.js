@@ -1,9 +1,12 @@
 module.exports = VirtualFootball;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
+var uuid = require('node-uuid');
+var Schema = require('../../../db_structure');
 
 function VirtualFootball(){
 
+    var no = 0;             //场次
     var matchState = 0;
     var lastTime = 0;
     var event = 0;
@@ -24,14 +27,20 @@ function VirtualFootball(){
     var guestNextGoalTimes = 0;
     var guestNextGoalSupport = 0;
 
-    //初始化
+    var betItem1 = 0;
+    var betItem2 = 0;
+    var betItem3 = 0;
+
+    var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
+
     init();
     function init(){
         //申请虚拟足球数据
         OBJ('DataCenterModule').send({module:'VirtualFootball', func:'getCurData'});
     }
-
+    //当前比较数据数据中心回执
     this.resCurData = function(source, data){
+        no = data.no;
         matchState = data.matchState;
         lastTime = data.lastTime;
         event = data.event;
@@ -52,7 +61,7 @@ function VirtualFootball(){
         guestNextGoalTimes = data.guestNextGoalTimes;
         guestNextGoalSupport = data.guestNextGoalSupport;
     };
-
+    //刷新比赛事件
     this.refreshMatchEvent = function(source, data){
         event = data.event;
         hostTeamId = data.hostTeamId;
@@ -95,10 +104,15 @@ function VirtualFootball(){
         push.setGoalandbetarea(goalAndBetArea);
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_GoalAndBetArea.Type.ID, push.serializeBinary());
     };
-
+    //刷新比赛状态
     this.refreshMatchState = function(source, data){
         matchState = data.matchState;
         lastTime = data.lastTime;
+        no = data.no;
+
+        if(matchState == 2){    //关闭投注状态，告诉数据中心可以开始结算了
+            OBJ('DataCenterModule').send({module:'VirtualFootball', func:'canSettlement'});
+        }
 
         //广播
         var push = new pbSvrcli.Push_MatchInfo();
@@ -111,7 +125,13 @@ function VirtualFootball(){
         push.setMatchinfo(matchInfo);
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, push.serializeBinary());
     };
-
+    //刷新投注项
+    this.refreshBetItem = function(source, data){
+        betItem1 = data.betItem1;
+        betItem2 = data.betItem2;
+        betItem3 = data.betItem3;
+    };
+    //获取主页请求
     this.askVirtualFootMainInfo = function(askVirtualFootMainInfo, socket){
         socket.join('VirtualFootMainInfo');
 
@@ -142,24 +162,100 @@ function VirtualFootball(){
         goalAndBetArea.setGuestnextgoalsupport(guestNextGoalSupport);
         goalAndBetArea.setEvent(event);
         res.setGoalandbetarea(goalAndBetArea);
+        res.setBetitem1(betItem1);
+        res.setBetitem2(betItem2);
+        res.setBetitem3(betItem3);
         OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualFootMainInfo.Type.ID, res.serializeBinary());
     };
-
+    //获取竞猜记录请求
     this.askGuessingRecord = function(){
+        socket.leave('VirtualFootMainInfo');
+
+        var res = new pbSvrcli.Res_GuessingRecord();
+        OBJ('WsMgr').send(socket, pbSvrcli.Res_GuessingRecord.Type.ID, res.serializeBinary());
+    };
+    //获取开奖历史请求
+    this.askVirtualHistory = function(){
         socket.leave('VirtualFootMainInfo');
 
         var res = new pbSvrcli.Res_VirtualHistory();
         OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualHistory.Type.ID, res.serializeBinary());
     };
+    //投注请求
+    var waitMap = new Map();
+    this.askVirtualBet = function(askVirtualBet, socket){
+        var player = OBJ('PlayerContainer').findPlayer(socket);
+        if (null == player)
+            return;
+        //获取投注金额
+        var betCoin = 1000;
+        var betItem = askVirtualBet.getCoinitem();
+        if(1 == betItem)
+            betCoin = betItem1;
+        else if(2 == betItem)
+            betCoin = betItem2;
+        else if(3 == betItem)
+            betCoin = betItem3;
+        
+        if(player.gameCoin < betCoin)
+            return;
 
-    this.askVirtualHistory = function(){
-        socket.leave('VirtualFootMainInfo');
-
+        //生成唯一ID
+        var uid = uuid.v4();
+        waitMap.set(uid, player);
+        OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqBet', 
+            data:{userid:player.userId, outType:1, outTypeDescription:'足球竞猜', uuid:uid, betCoin:betCoin.toString(), betArea:askVirtualBet.getBetarea()}});
+    };
+    //投注钱包回执
+    this.resVirtualBet = function(source, data){
         var res = new pbSvrcli.Res_VirtualBet();
-        OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualBet.Type.ID, res.serializeBinary());
+        var player = waitMap.get(data.uuid);
+        if(null == player)
+            return;
+        var oldGameCoin = player.gameCoin;
+        player.gameCoin = data.balance;
+        res.setResult(data.res);
+        res.setCoin(data.balance);
+        //投注
+        player.send(pbSvrcli.Res_VirtualBet.Type.ID, res.serializeBinary());
+        //生成投注记录
+        var modelLogVirtualBet = OBJ('DbMgr').getModel(Schema.LogVirtualBet());
+        modelLogVirtualBet.user_id = player.userId;
+        modelLogVirtualBet.user_name = player.userName;
+        modelLogVirtualBet.bet_date = Date.now();
+        modelLogVirtualBet.bet_coin = data.betCoin;
+        modelLogVirtualBet.bet_area = data.betArea;
+        modelLogVirtualBet.bet_times = getCurAreaTimes(data.betArea);
+        modelLogVirtualBet.bet_distribute_coin = modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times;
+        modelLogVirtualBet.distribute_coin = 0;
+        modelLogVirtualBet.before_bet_coin = oldGameCoin;
+        modelLogVirtualBet.status = 0;
+        modelLogVirtualBet.balance_schedule_id = no;
+        modelLogVirtualBet.server_id = SERVERID;
+        modelLogVirtualBet.out_trade_no = data.uuid;
+        modelLogVirtualBet.trade_no = data.trade_no;
+        modelLogVirtualBet.no = no;
+        modelLogVirtualBet.save(function(err){
+            if(err){
+                console.log(err);
+            }
+        });
     };
 
-    this.run = function(Timestamp){
+    function getCurAreaTimes(area){
+        switch(area){
+            case 1: return hostWinTimes;
+            case 2: return drawTimes;
+            case 3: return guestWinTimes;
+            case 4: return hostNextGoalTimes;
+            case 5: return zeroGoalTimes;
+            case 6: return guestNextGoalTimes;
+            default:
+                return 0;
+        }
+    }
 
+    this.run = function(Timestamp){
+        
     };
 }

@@ -41,6 +41,7 @@ GameSvr.regsterFun = function(){
     //new RealFootballModule();
     new GameSvrAgentModule();
     new VirtualFootballModule();
+    new WalletAgentModule();
 };
 
 //运行

@@ -1418,7 +1418,10 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.toObject = function(op
 proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     matchinfo: (f = msg.getMatchinfo()) && proto.kzgame.svrcli.msg.MatchInfo.toObject(includeInstance, f),
-    goalandbetarea: (f = msg.getGoalandbetarea()) && proto.kzgame.svrcli.msg.GoalAndBetArea.toObject(includeInstance, f)
+    goalandbetarea: (f = msg.getGoalandbetarea()) && proto.kzgame.svrcli.msg.GoalAndBetArea.toObject(includeInstance, f),
+    betitem1: msg.getBetitem1(),
+    betitem2: msg.getBetitem2(),
+    betitem3: msg.getBetitem3()
   };
 
   if (includeInstance) {
@@ -1464,6 +1467,18 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.deserializeBinaryFromReader = fu
       var value = new proto.kzgame.svrcli.msg.GoalAndBetArea;
       reader.readMessage(value,proto.kzgame.svrcli.msg.GoalAndBetArea.deserializeBinaryFromReader);
       msg.setGoalandbetarea(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetitem1(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetitem2(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetitem3(value);
       break;
     default:
       reader.skipField();
@@ -1517,6 +1532,27 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.serializeBinaryToWrite
       2,
       f,
       proto.kzgame.svrcli.msg.GoalAndBetArea.serializeBinaryToWriter
+    );
+  }
+  f = this.getBetitem1();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = this.getBetitem2();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = this.getBetitem3();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
     );
   }
 };
@@ -1588,6 +1624,51 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.clearGoalandbetarea = 
  */
 proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.hasGoalandbetarea = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional int32 betItem1 = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.getBetitem1 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.setBetitem1 = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 betItem2 = 4;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.getBetitem2 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.setBetitem2 = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 betItem3 = 5;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.getBetitem3 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.setBetitem3 = function(value) {
+  jspb.Message.setField(this, 5, value);
 };
 
 
@@ -3528,7 +3609,8 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.toObject = function(opt_include
  */
 proto.kzgame.svrcli.msg.Res_VirtualBet.toObject = function(includeInstance, msg) {
   var f, obj = {
-    result: msg.getResult()
+    result: msg.getResult(),
+    coin: msg.getCoin()
   };
 
   if (includeInstance) {
@@ -3568,6 +3650,10 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.deserializeBinaryFromReader = function(ms
     case 1:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setResult(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setCoin(value);
       break;
     default:
       reader.skipField();
@@ -3614,6 +3700,13 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.serializeBinaryToWriter = funct
       f
     );
   }
+  f = this.getCoin();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -3638,6 +3731,21 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.getResult = function() {
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.setResult = function(value) {
   jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional double coin = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.getCoin = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.setCoin = function(value) {
+  jspb.Message.setField(this, 2, value);
 };
 
 

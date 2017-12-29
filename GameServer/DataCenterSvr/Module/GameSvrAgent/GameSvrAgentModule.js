@@ -28,4 +28,8 @@ function GameSvrAgentModule(){
     this.send = function(target, msg){
         self.logic.send(target, msg);
     };
+
+    this.getServerCount = function(){
+        return self.logic.getServerCount();
+    };
 }
