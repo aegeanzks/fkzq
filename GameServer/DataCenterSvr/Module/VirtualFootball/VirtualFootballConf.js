@@ -283,11 +283,13 @@ function VirtualFootballConf(){
                 console.log(err);
                 return;
             }
-            if(0 == data.length){
+            if(data){
+                if(0 == data.length){
 
-            }else{
-                if (func)
-                    func(data.item1, data.item2, data.item3);
+                }else{
+                    if (func)
+                        func(data.item1, data.item2, data.item3);
+                }
             }
         });
     };

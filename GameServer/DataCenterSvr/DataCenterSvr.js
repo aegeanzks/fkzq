@@ -18,6 +18,7 @@ var HttpClientMgr = require('../Utils/Manager/HttpClientMgr');
 var RealFootballModule = require('./Module/RealFootball/RealFootballModule');
 var VirtualFootballModule = require('./Module/VirtualFootball/VirtualFootballModule');
 var GameSvrAgentModule = require('./Module/GameSvrAgent/GameSvrAgentModule');
+var WalletAgentModule = require('./Module/WalletAgent/WalletAgentModule');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();

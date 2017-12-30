@@ -134,7 +134,7 @@ exports.LogRealBet = function(){
             bet_coin: Number,        //下注金额
             distribute_coin: Number, //派发金额
             before_bet_coin: Number,  //下注前金额
-            status: Number,         //状态 0未开奖 1不中 2中
+            status: Number,         //状态 0未开奖 1不中 2中 3结算失败
             balance_schedule_id: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
                 type: Number,
                 index: true,
@@ -180,7 +180,7 @@ exports.LogVirtualBet = function(){
             },
             bet_coin: Number,          //下注金额
 			bet_times: Number,			//下注时的赔率
-			bet_distribute_coin,		//将配发的金额（先计算在这边，不显示给后台）
+			bet_distribute_coin: Number,		//将配发的金额（先计算在这边，不显示给后台）
 			bet_area: Number,			//下注区域
             distribute_coin: Number,   //派发金额
             before_bet_coin: Number,    //下注前金额
@@ -197,8 +197,9 @@ exports.LogVirtualBet = function(){
                 type: String,
                 unique: true,
             },
-			trade_no: String,
-			no: String
+            trade_no: String,
+            settlement_out_trade_no:String,
+            settlement_trade_no:String
         }
     };
 };

@@ -26,4 +26,16 @@ function PlayerContainer(){
     this.getOnlineNum = function(){
         return playerMap.size;
     };
+
+    this.getAllPlayer = function(){
+        return playerMap;
+    };
+
+    this.getAllPlayerId = function(){
+        var retArr = [];
+        for(var player of playerMap.values()){
+            retArr.push(player.userId);
+        }
+        return retArr;
+    }
 }

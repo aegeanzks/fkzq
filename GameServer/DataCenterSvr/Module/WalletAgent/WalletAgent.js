@@ -21,7 +21,7 @@ function WalletAgent(){
             {
                 var mod = OBJ('VirtualFootballModule');
                 if (msg.func == 'resAddTrade'){
-                    mod.logic.resVirtualBet(source, msg.data);
+                    mod.logic.resAddTrade(source, msg.data);
                 }
             }break;
         }

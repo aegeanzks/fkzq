@@ -20,6 +20,7 @@ function WalletSvrAgent(){
     //注册函数
     (function registerRpc(){
         OBJ('RpcMgr').register('GameSvrReq', rpcRoot);
+        OBJ('RpcMgr').register('DataCenterReq', rpcRoot);
     })();
     function rpcRoot(source, msg){
         switch(msg.module){
@@ -30,6 +31,8 @@ function WalletSvrAgent(){
                     mod.logic.reqGetCoin(source, msg.data);
                 }else if(msg.func == 'reqBet'){
                     mod.logic.reqBet(source, msg.data);
+                }else if(msg.func == 'reqAddMoney'){
+                    mod.logic.reqAddMoney(source, msg.data);
                 }
             }break;
         }
@@ -61,6 +64,7 @@ function WalletSvrAgent(){
             if(msgType == 2){
                 var requistId = data.readUInt32BE(1);
                 var cbFunc = cbMap.get(requistId);
+                cbMap.delete(requistId);
                 if(cbFunc){
                     var cbData = new Buffer(data.length - 5);
                     data.copy(cbData, 0, 5);
@@ -137,8 +141,7 @@ function WalletSvrAgent(){
                         msg: res.getMsg(),
                         trade_no: res.getTradeNo(),
                         balance: res.getBalance(),
-                        betArea: data.betArea,
-                        betCoin: data.betCoin               
+                        betCoin: data.betCoin,             
                     }
                 });
             }catch(error){
@@ -155,7 +158,7 @@ function WalletSvrAgent(){
         rb.setOutType(data.outType);
         //rb.setOutTypeDescription(data.outTypeDescription);
         rb.setUserId(data.userid);
-        rb.setMoney(data.betCoin);
+        rb.setMoney(data.addCoin);
         req(2010001, rb, function(msg){
             try {
                 var res = pbWallet.RspAddTrade.deserializeBinary(msg);
@@ -167,8 +170,7 @@ function WalletSvrAgent(){
                         msg: res.getMsg(),
                         trade_no: res.getTradeNo(),
                         balance: res.getBalance(),
-                        betArea: data.betArea,
-                        betCoin: data.betCoin               
+                        addCoin: data.addCoin               
                     }
                 });
             }catch(error){
