@@ -81,7 +81,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     function initAllGoal(){
         conf.randGoal(function(goal){
             allGoal = goal;
-            allGoal = 9;
+            allGoal = 0;
             console.log('进球数：'+allGoal);
         });
     }

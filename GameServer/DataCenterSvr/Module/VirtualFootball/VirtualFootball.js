@@ -36,6 +36,8 @@ function VirtualFootball(){
         betItem3 = v3;
     });
 
+    var waitNextGoalSettlement = false;
+
     console.log('当前期号：'+timeAgent.no+' 当前事件：'+timeAgent.matchState+' 该事件剩余时间：'+timeAgent.matchStateLastTime/1000);
     OBJ('GameSvrAgentModule').broadcastGameServer('dataCenterMsg', timeAgent.matchState);
     var matchBeginEndTime = timeAgent.getCurMatchStartEndTime();
@@ -142,7 +144,10 @@ function VirtualFootball(){
             }
         }
         if(null != matchAgent){
-            if(matchAgent.update(timestamp)){
+            if(waitNextGoalSettlement){
+                //等待时不进行更新操作
+            }
+            else if(matchAgent.update(timestamp)){
                 var strMatchEvent = '';
                 switch(matchAgent.curEvent){
                     case 0: strMatchEvent = '无事件'; break;
@@ -275,7 +280,8 @@ function VirtualFootball(){
                     var uid = uuid.v4();
                     waitMap.set(uid, {
                         out_trade_no:item.out_trade_no, 
-                        bet_distribute_coin:item.bet_distribute_coin
+                        bet_distribute_coin:item.bet_distribute_coin,
+                        settlementType:1
                     });
                     OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqAddMoney', data:{
                         userid:item.user_id, 
@@ -322,7 +328,8 @@ function VirtualFootball(){
                     var uid = uuid.v4();
                     waitMap.set(uid, {
                         out_trade_no:item.out_trade_no, 
-                        bet_distribute_coin:item.bet_distribute_coin
+                        bet_distribute_coin:item.bet_distribute_coin,
+                        settlementType:2
                     });
                     OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqAddMoney', data:{
                         userid:item.user_id, 
@@ -376,6 +383,19 @@ function VirtualFootball(){
         classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
             if(err){
                 console.log(err);
+            }
+            //检查是否结算完成，并且要等待完成
+            if(waitValue.settlementType == 2){
+                var findParam = {
+                    'status':0,
+                    'balance_schedule_id':timeAgent.no
+                };
+                classLogVirtualBet.find(findParam, function(err, data){
+                    if(data.length != 0)
+                        waitNextGoalSettlement = true;
+                    else
+                        waitNextGoalSettlement = false;
+                });
             }
         });
     };

@@ -30,16 +30,16 @@ function start() {
         socket.on(pbLogin.Res_VirtualFootMainInfo.Type.ID, function(msg, length){
             msg.length = length;
             var res = pbLogin.Res_VirtualFootMainInfo.deserializeBinary(new Uint8Array(msg));
-            console.log(res.getMatchinfo());
+            console.log('Res_VirtualFootMainInfo');
 
-            var askVirtualBet = new pbLogin.Ask_VirtualBet();
+            //var askVirtualBet = new pbLogin.Ask_VirtualBet();
 
-            askVirtualBet.setBetarea(1);
-            askVirtualBet.setCoinitem(1);
+            //askVirtualBet.setBetarea(1);
+            //askVirtualBet.setCoinitem(1);
 
-            var buf = askVirtualBet.serializeBinary();
-            console.log('开始下注');
-            socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            //var buf = askVirtualBet.serializeBinary();
+            //console.log('开始下注');
+            //socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
         });
 
         socket.on(pbLogin.Res_VirtualBet.Type.ID, function(msg, length){
@@ -56,6 +56,79 @@ function start() {
             console.log('Push_GoalAndBetArea');
         });
     });
+
+    // 引入readline模块
+    var readline = require('readline');
+
+    //创建readline接口实例
+    var  rl = readline.createInterface({
+        input:process.stdin,
+        output:process.stdout
+    });
+
+    // question方法
+    function questtion() {
+        rl.question("投注准备好了...",function(key){
+            if(key == '1'){
+                var askVirtualBet = new pbLogin.Ask_VirtualBet();
+    
+                askVirtualBet.setBetarea(1);
+                askVirtualBet.setCoinitem(1);
+    
+                var buf = askVirtualBet.serializeBinary();
+                console.log('开始下注:1');
+                socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }else if(key == '2'){
+                var askVirtualBet = new pbLogin.Ask_VirtualBet();
+    
+                askVirtualBet.setBetarea(2);
+                askVirtualBet.setCoinitem(1);
+    
+                var buf = askVirtualBet.serializeBinary();
+                console.log('开始下注:2');
+                socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }else if(key == '3'){
+                var askVirtualBet = new pbLogin.Ask_VirtualBet();
+    
+                askVirtualBet.setBetarea(3);
+                askVirtualBet.setCoinitem(1);
+    
+                var buf = askVirtualBet.serializeBinary();
+                console.log('开始下注:3');
+                socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }else if(key == '4'){
+                var askVirtualBet = new pbLogin.Ask_VirtualBet();
+    
+                askVirtualBet.setBetarea(4);
+                askVirtualBet.setCoinitem(1);
+    
+                var buf = askVirtualBet.serializeBinary();
+                console.log('开始下注:4');
+                socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }else if(key == '5'){
+                var askVirtualBet = new pbLogin.Ask_VirtualBet();
+    
+                askVirtualBet.setBetarea(5);
+                askVirtualBet.setCoinitem(1);
+    
+                var buf = askVirtualBet.serializeBinary();
+                console.log('开始下注:5');
+                socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }else if(key == '6'){
+                var askVirtualBet = new pbLogin.Ask_VirtualBet();
+    
+                askVirtualBet.setBetarea(6);
+                askVirtualBet.setCoinitem(1);
+    
+                var buf = askVirtualBet.serializeBinary();
+                console.log('开始下注:6');
+                socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }
+
+            questtion();
+        });
+    }
+    questtion();
 }
 
 start();
