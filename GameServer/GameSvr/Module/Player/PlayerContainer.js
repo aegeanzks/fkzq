@@ -23,6 +23,24 @@ function PlayerContainer(){
         return playerMap.get(socket);
     };
 
+    this.findSocketByUserId = function(userid) {
+        for (var item of playerMap.entries()) {
+            if(item[1].userId == userid)
+                return item[0];
+        }
+        return null;
+    };
+
+    this.delete = function(socket) {
+        playerMap.delete(socket);
+    }
+
+    this.updatePlayer = function(oldSocket, newSocket, player) {
+        this.delete(oldSocket);
+        playerMap.set(newSocket, player);
+        player.socket = newSocket;
+    }
+
     this.getOnlineNum = function(){
         return playerMap.size;
     };

@@ -1,4 +1,4 @@
-exports.common = function(){
+﻿exports.common = function(){
     return {
         timeZone:8  //时区，东八区，格林威尔时间+8个小时，如果是西区则要加-号
     };
@@ -21,6 +21,7 @@ exports.gameSvrConfig = function(){
     return {
         //server集群端口（服务名：配置信息）
         servers:{
+	    'count':2,
             'server1':{port:10010},
             'server2':{port:10011}
         },

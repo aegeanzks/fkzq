@@ -52,4 +52,20 @@ function Common(){
             });
         }
     }
+    //注册函数
+    function registerRpc(){
+        OBJ('RpcMgr').register('GameSvrReq', rpcRoot);
+    }
+    registerRpc();
+    function rpcRoot(source, msg){
+        switch(msg.module){
+            case 'Login':
+            {
+                var mod = OBJ('LoginModule');
+                if(msg.func == 'reqPlayerLogin'){
+                    mod.logic.reqPlayerLogin(source, msg.data);
+                }
+            }break;
+        }
+    }
 }

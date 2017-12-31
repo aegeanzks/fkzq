@@ -7,6 +7,7 @@
 // +----------------------------------------------------------------------
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var Player = require('../Player/Player');
+var gamesvrConfig = require('../../../config').gameSvrConfig();
 
 module.exports = Login;
 
@@ -43,9 +44,30 @@ function Login(){
             OBJ('WsMgr').send(socket, pbSvrcli.Res_Login.Type.ID, res.serializeBinary());
             //登录记录
             var player = new Player(data.userid, userName, data.balance, socket);
+            var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data.userid);
+            if(oldSocket){
+                OBJ('PlayerContainer').updatePlayer(oldSocket, socket, player);
+            }else{
+                OBJ('PlayerContainer').addPlayer(socket, player);
+            }
             player.updateLoginDb();
-            OBJ('PlayerContainer').addPlayer(socket, player);
+
+            //告诉其他游戏服，该用户在这台上线
+            var servers = gamesvrConfig.servers;
+            var count = servers.count;
+            for(var i = 1; i<=count; i++){
+                var serverId = 'server'+i;
+                //if(serverId == SERVERID)
+                //    continue;
+                OBJ('RpcMgr').send(serverId, 'GameSvrReq', {module:'Login', func:'reqPlayerLogin', data:data.userid});
+            }
         }
+    };
+
+    self.reqPlayerLogin = function(source, data) {
+        var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data);
+        if(oldSocket)
+            OBJ('PlayerContainer').delete(oldSocket);
     };
     
     self.run = function(timestamp){
