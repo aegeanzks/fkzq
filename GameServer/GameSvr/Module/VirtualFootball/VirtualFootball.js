@@ -35,6 +35,7 @@ function VirtualFootball(){
     var canBet = true;
 
     var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
+    var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
 
     init();
     function init(){
@@ -122,8 +123,6 @@ function VirtualFootball(){
         else
             canBet = false;
         if(matchState == 2){
-            //在线结算
-            //onlineWinLoseSettlement();
             //关闭投注状态，告诉数据中心可以开始结算了
             OBJ('DataCenterModule').send({module:'VirtualFootball', func:'canSettlement'});
         }
@@ -182,18 +181,78 @@ function VirtualFootball(){
         OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualFootMainInfo.Type.ID, res.serializeBinary());
     };
     //获取竞猜记录请求
-    this.askGuessingRecord = function(){
+    this.askGuessingRecord = function(askGuessingRecord, socket){
         socket.leave('VirtualFootMainInfo');
-
-        var res = new pbSvrcli.Res_GuessingRecord();
-        OBJ('WsMgr').send(socket, pbSvrcli.Res_GuessingRecord.Type.ID, res.serializeBinary());
+        var player = OBJ('PlayerContainer').findPlayer(socket);
+        if(null == player)
+            return;
+        var page = askGuessingRecord.getPage();
+        classLogVirtualBet.find({'user_id':player.userId}, null, 
+            {skip:page*12, limit:12, sort:{'bet_date':-1}}, function(err, data){
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                if(data.length == 0)
+                    return;
+                var res = new pbSvrcli.Res_GuessingRecord();
+                var arr = [];
+                for(var item of data){
+                    var row = new pbSvrcli.GuessingRecord();
+                    row.setIssue(item.balance_schedule_id);
+                    row.setHostteamid(item.host_team_id);
+                    row.setGuestteamid(item.guest_team_id);
+                    row.setBetdate(item.bet_date.getTime());
+                    row.setBetarea(item.bet_area);
+                    row.setBettimes(item.bet_times);
+                    row.setBetcoin(item.bet_coin);
+                    row.setGetcoin(parseInt(item.distribute_coin));
+                    arr.push(row);
+                }
+                res.setGuessingrecordsList(arr);
+                player.send(pbSvrcli.Res_GuessingRecord.Type.ID, res.serializeBinary());
+        });
     };
     //获取开奖历史请求
-    this.askVirtualHistory = function(){
+    this.askVirtualHistory = function(askGuessingRecord, socket){
         socket.leave('VirtualFootMainInfo');
-
-        var res = new pbSvrcli.Res_VirtualHistory();
-        OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualHistory.Type.ID, res.serializeBinary());
+        var player = OBJ('PlayerContainer').findPlayer(socket);
+        if(null == player)
+            return;
+        var page = askGuessingRecord.getPage();
+        classVirtualSchedule.find(null, null, 
+            {skip:page*12, limit:12, sort:{'date_num':-1}}, function(err, data){
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                if(data.length == 0)
+                    return;
+                var res = new pbSvrcli.Res_VirtualHistory();
+                var arr = [];
+                for(var item of data){
+                    var row = new pbSvrcli.VirtualHistory();
+                    /**
+                     var insertValue = {
+                            'date':timeAgent.no.substr(0, timeAgent.no.length-3),
+                            'date_num':timeAgent.no,
+                            'host':matchAgent.hostTeam.Team,
+                            'guest':matchAgent.guestTeam.Team,
+                            'score':matchAgent.hostTeamGoal+':'+matchAgent.guestTeamGoal,
+                            'all_bet':all_bet,
+                            'distribution':distribution
+                        };
+                     */
+                    row.setIssue(item.date_num);
+                    row.setHostteamid(item.host_team_id);
+                    row.setGuestteamid(item.guest_team_id);
+                    row.setHostteamgoal(item.host_team_goal);
+                    row.setGuestteamgoal(item.guest_team_goal);
+                    arr.push(row);
+                }
+                res.setVirtualhistoryList(arr);
+                player.send(pbSvrcli.Res_VirtualHistory.Type.ID, res.serializeBinary());
+        });
     };
     //投注请求
     var waitMap = new Map();
@@ -246,7 +305,7 @@ function VirtualFootball(){
         modelLogVirtualBet.bet_coin = data.betCoin;
         modelLogVirtualBet.bet_area = waitValue.betArea;
         modelLogVirtualBet.bet_times = getCurAreaTimes(waitValue.betArea);
-        modelLogVirtualBet.bet_distribute_coin = modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times;
+        modelLogVirtualBet.bet_distribute_coin = parseInt(modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times);
         modelLogVirtualBet.distribute_coin = 0;
         modelLogVirtualBet.before_bet_coin = waitValue.betBeforeCoin;
         modelLogVirtualBet.status = 0;
@@ -254,8 +313,10 @@ function VirtualFootball(){
         modelLogVirtualBet.server_id = SERVERID;
         modelLogVirtualBet.out_trade_no = data.uuid;
         modelLogVirtualBet.trade_no = data.trade_no;
-        modelLogVirtualBet.settlement_out_trade_no = '',
-        modelLogVirtualBet.settlement_trade_no = '',
+        modelLogVirtualBet.settlement_out_trade_no = '';
+        modelLogVirtualBet.settlement_trade_no = '';
+        modelLogVirtualBet.host_team_id = hostTeamId;
+        modelLogVirtualBet.guest_team_id = guestTeamId;
         modelLogVirtualBet.save(function(err){
             if(err){
                 console.log(err);
@@ -273,34 +334,6 @@ function VirtualFootball(){
             case 6: return guestNextGoalTimes;
             default:
                 return 0;
-        }
-    }
-
-    function onlineWinLoseSettlement(){
-        var playeridArr = OBJ('PlayerContainer').getAllPlayerId();
-        if(playeridArr.length > 0){
-            classLogVirtualBet.find({"user_id":{"$in":playeridArr},"'balance_schedule_id'":no,"status":0}, function(err, data){
-                if(err){
-                    console.log(err);
-                    return;
-                }
-                if(data.length > 0){
-                    var winArea = 0;
-                    if(hostTeamGoal > guestTeamGoal)
-                        winArea = 1;       //主胜
-                    else if(hostTeamGoal == guestTeamGoal)
-                        winArea = 2;       //平
-                    else
-                        winArea = 3;       //客胜
-                }
-                for(var item of data){
-                    if(data.bet_area == winArea){   //中了
-                        
-                    }else{
-
-                    }
-                }
-            });
         }
     }
 

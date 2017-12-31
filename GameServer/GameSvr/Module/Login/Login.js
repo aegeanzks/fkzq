@@ -57,8 +57,8 @@ function Login(){
             var count = servers.count;
             for(var i = 1; i<=count; i++){
                 var serverId = 'server'+i;
-                //if(serverId == SERVERID)
-                //    continue;
+                if(serverId == SERVERID)
+                    continue;
                 OBJ('RpcMgr').send(serverId, 'GameSvrReq', {module:'Login', func:'reqPlayerLogin', data:data.userid});
             }
         }

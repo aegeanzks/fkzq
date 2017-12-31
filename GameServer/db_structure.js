@@ -151,8 +151,12 @@ exports.VirtualSchedule = function(){
         'schema':{
             date: String,           //期数    20171213
             date_num: String,       //期号    20171213001
+            host_team_id: Number,   //主队ID
             host: String,           //主队    曼联
+            host_team_goal: Number, //主队进球数
+            guest_team_id: Number,  //客队ID
             guest: String,          //客队    曼城
+            guest_team_goal: String,//客队进球数
             score: String,          //比分    1:0
             all_bet: Number,         //下注金额
             distribution: Number,   //派发金额 包含下注金额
@@ -199,7 +203,9 @@ exports.LogVirtualBet = function(){
             },
             trade_no: String,
             settlement_out_trade_no:String,
-            settlement_trade_no:String
+            settlement_trade_no:String,
+            host_team_id:Number,
+            guest_team_id:Number
         }
     };
 };

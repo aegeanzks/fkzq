@@ -43,17 +43,6 @@ function VirtualFootball(){
     var matchBeginEndTime = timeAgent.getCurMatchStartEndTime();
     var matchAgent = new VirtualFootballMatch(conf, matchBeginEndTime[0], matchBeginEndTime[1]);
 
-    
-    function getCurDateStr() {
-        var myDate = (new Date()).toLocaleDateString();
-        var strArr = myDate.split('-');
-        if(strArr[1].length < 2)
-            strArr[1] = '0'+strArr[1];
-        if(strArr[2].length < 2)
-            strArr[2] = '0'+strArr[2];
-        return strArr[0]+strArr[1]+strArr[2];
-    }
-
     this.run = function(timestamp){
         //游戏记录(优先),查询是否已经都结算完成
         if(null != endMatchUpdateTimer){
@@ -86,12 +75,15 @@ function VirtualFootball(){
                             all_bet += item.bet_coin;
                             distribution += item.distribute_coin;
                         }
-                        var strDate = getCurDateStr();
                         var insertValue = {
-                            'date':strDate,
-                            'date_num':strDate+timeAgent.no,
+                            'date':timeAgent.no.substr(0, timeAgent.no.length-3),
+                            'date_num':timeAgent.no,
                             'host':matchAgent.hostTeam.Team,
+                            'host_team_id':matchAgent.hostTeam.ID,
+                            'host_team_goal':matchAgent.hostTeamGoal,
                             'guest':matchAgent.guestTeam.Team,
+                            'guest_team_id':matchAgent.guestTeam.ID,
+                            'guest_team_goal':matchAgent.guestTeamGoal,
                             'score':matchAgent.hostTeamGoal+':'+matchAgent.guestTeamGoal,
                             'all_bet':all_bet,
                             'distribution':distribution

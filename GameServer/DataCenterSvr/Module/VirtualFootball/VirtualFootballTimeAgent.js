@@ -7,6 +7,8 @@
 // +----------------------------------------------------------------------
 module.exports = VirtualFootballTimeAgent;
 
+var Functions = require('../../../Utils/Functions');
+
 const readySecondLong = 10 * 1000;     //准备时长 秒
 const matchSecondLong = 130 * 1000;    //比赛时长 秒
 const settlementSecondLong = 5 * 1000; //结算时长 秒
@@ -78,13 +80,13 @@ function VirtualFootballTimeAgent(){
         curTimeRange[4] += 86400000;
         timeTable.push(curTimeRange);
         curTimeRange = timeTable.shift();
-        self.no = curTimeRange.no;
+        self.no = Functions.getDate(Date.now())+curTimeRange.no;
     }
     //初始化获得当前需要的事件与时间距离
     function initCurEvent(){
         var timestamp = Date.now();
         curTimeRange = timeTable.shift();
-        self.no = curTimeRange.no;
+        self.no = Functions.getDate(timestamp)+curTimeRange.no;
         if(timestamp > curTimeRange[1]) //初始化时，如果发现游戏已经开始，则作废，时间放到下一期开始
             updateTimeRange();
     

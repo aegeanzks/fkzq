@@ -55,6 +55,21 @@ function start() {
         socket.on(pbLogin.Push_GoalAndBetArea.Type.ID, function(msg, length){
             console.log('Push_GoalAndBetArea');
         });
+
+        socket.on(pbLogin.Res_GuessingRecord.Type.ID, function(msg, length){
+            msg.length = length;
+            var res = pbLogin.Res_GuessingRecord.deserializeBinary(new Uint8Array(msg));
+            var arr = res.getGuessingrecordsList();
+            console.log('arr[0].getIssue()：'+arr[0].getIssue());
+            console.log('arr[0].getbetDate()：'+arr[0].getBetdate());
+        });
+
+        socket.on(pbLogin.Res_VirtualHistory.Type.ID, function(msg, length) {
+            msg.length = length;
+            var res = pbLogin.Res_VirtualHistory.deserializeBinary(new Uint8Array(msg));
+            var arr = res.getVirtualhistoryList();
+            console.log('arr[0].getIssue():' + arr[0].getIssue());
+        });
     });
 
     // 引入readline模块
@@ -123,6 +138,20 @@ function start() {
                 var buf = askVirtualBet.serializeBinary();
                 console.log('开始下注:6');
                 socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+            }else if(key == '7'){
+                var askGuessingRecord = new pbLogin.Ask_GuessingRecord();
+                askGuessingRecord.setPage(0);
+
+                var buf = askGuessingRecord.serializeBinary();
+                console.log('申请投注记录');
+                socket.emit(pbLogin.Ask_GuessingRecord.Type.ID, buf, buf.length);
+            }else if(key == '8'){
+                var askVirtualHistory = new pbLogin.Ask_VirtualHistory();
+                askVirtualHistory.setPage(0);
+
+                var buf = askVirtualHistory.serializeBinary();
+                console.log('申请虚拟赛局记录');
+                socket.emit(pbLogin.Ask_VirtualHistory.Type.ID, buf, buf.length);
             }
 
             questtion();
