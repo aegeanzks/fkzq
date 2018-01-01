@@ -107,5 +107,79 @@ exports.exchangeNum = function(one, two){
     return [one, two];
 };
 
+/**
+ * [getScatteredPointsInSomeSection 根据时间间隔，获取在某个区间内不重叠的随机散落的区间]
+ * 当随机点不能够在区间内正确散落，结果集出现undefined元素
+ * @param  {Array} internals   [随机点的区间间隔]
+ * @param  {Number} maxRange   [最大随机区间]
+ * @return {Array} [返回随机点落下的区间的起始位置]
+ */
+exports.getScatteredSectionBy = function(internals, maxRange) {
+    let sections = [];
+    let scatteredSectios = [];
+    let unScatteredSections = [];
+    let tmpUnScatteredSections = [];//产生下一个随机点时，先去除超出最大范围的随机点，再去除随机点：可能与已生成的随机点区间重叠的点,最后获得临时的未散落随机点的区间tmpUnScatteredSections
+    for (var i = 0; i <= maxRange; i++) {
+        unScatteredSections[i] = i;
+    }
+    for (let i = 0; i < internals.length; i++) {
+        getTmpUnScatteredSections(tmpUnScatteredSections, unScatteredSections, internals[i], sections, maxRange);
+        let pointIndex = Math.floor(Math.random() * tmpUnScatteredSections.length);
+        let point = tmpUnScatteredSections[pointIndex];
+        sections[i] = point;
+        for (var j = 0; j < unScatteredSections.length;) {
+            if (unScatteredSections[j] >= point && unScatteredSections[j] <= point + internals[i]) {
+                unScatteredSections.splice(j, 1);
+            } else {
+                j++;
+            }
+        }
+        // console.log(unScatteredSections.length);
+    }
+    let count = 0;
+    for (var i = 0; i < sections.length; i++) {
+        for (var j = 0; j < sections.length; j++) {
+            if (i != j && sections[i] == sections[j]) {
+                count++;
+                console.log("repeat:" + count);
+                count = 0;
+                break;
+            }
+        }
+    }
+    console.log(sections);
+    return sections;
+}
+/**
+ * [getTmpUnScatteredSections 产生下一个随机点时，先去除超出最大范围的随机点，再去除随机点：可能与已生成的随机点区间重叠的点] 
+ * @param  {Array} unScatteredSections [未分配的随机点集合]
+ * @param  {Number} internal            [当前随机点的区间间隔]
+ * @param  {Array} sections            [当前已获取的随机点]
+ * @param  {Number} maxRange            [最大随机区间]
+ */
+function getTmpUnScatteredSections(tmpUnScatteredSections, unScatteredSections, internal, sections, maxRange) {
+    tmpUnScatteredSections.length = 0;
+    let index = 0;
+    for (var i = 0; i < unScatteredSections.length; i++) {
+        if (unScatteredSections[i] + internal > maxRange) {
+            //去除超过最大范围的随机点
+            continue;
+        }
+        tmpUnScatteredSections[index] = unScatteredSections[i];
+        index++;
+    }
+    for (var i = 0; i < sections.length; i++) {
+        for (var j = 0; j < tmpUnScatteredSections.length;) {
+            if ((tmpUnScatteredSections[j] >= sections[i] - internal && tmpUnScatteredSections[j] < sections[i])) {
+                tmpUnScatteredSections.splice(j, 1);
+            } else {
+                j++;
+            }
+        }
+    }
+    // console.log(tmpUnScatteredSections);
+    return tmpUnScatteredSections;
+}
+
 
 

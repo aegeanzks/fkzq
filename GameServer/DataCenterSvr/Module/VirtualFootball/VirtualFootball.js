@@ -39,7 +39,6 @@ function VirtualFootball(){
     var waitNextGoalSettlement = false;
 
     console.log('当前期号：'+timeAgent.no+' 当前事件：'+timeAgent.matchState+' 该事件剩余时间：'+timeAgent.matchStateLastTime/1000);
-    OBJ('GameSvrAgentModule').broadcastGameServer('dataCenterMsg', timeAgent.matchState);
     var matchBeginEndTime = timeAgent.getCurMatchStartEndTime();
     var matchAgent = new VirtualFootballMatch(conf, matchBeginEndTime[0], matchBeginEndTime[1]);
 
@@ -107,7 +106,10 @@ function VirtualFootball(){
                 data:{
                     no:timeAgent.no,
                     matchState:timeAgent.matchState,
-                    lastTime:timeAgent.matchStateLastTime
+                    lastTime:timeAgent.matchStateLastTime,
+                    hostWinNum:matchAgent.hostWinNum,
+                    drawNum:matchAgent.drawNum,
+                    guestWinNum:matchAgent.guestWinNum
                 }
             });
             if(timeAgent.matchState == 0) {
@@ -224,6 +226,9 @@ function VirtualFootball(){
                 zeroGoalSupport:matchAgent==null?0:matchAgent.zeroGoalSupport,
                 guestNextGoalTimes:matchAgent==null?0:matchAgent.guestNextGoalTimes,
                 guestNextGoalSupport:matchAgent==null?0:matchAgent.guestNextGoalSupport,
+                hostWinNum:matchAgent==null?0:matchAgent.hostWinNum,
+                drawNum:matchAgent==null?0:matchAgent.drawNum,
+                guestWinNum:matchAgent==null?0:matchAgent.guestWinNum
             }
         });
         //发送投注项数据
@@ -237,7 +242,6 @@ function VirtualFootball(){
             }
         });
     };
-    this.getCurData();      //启动时发一次数据
 
     var settlementCount = 0;    //结算回调
     this.canSettlement = function(source, data){

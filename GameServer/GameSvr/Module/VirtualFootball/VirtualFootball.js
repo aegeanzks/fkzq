@@ -7,7 +7,7 @@ var PlayerContainer = require('../Player/PlayerContainer');
 
 function VirtualFootball(){
 
-    var no = 0;             //场次
+    var no = '';             //场次
     var matchState = 0;
     var lastTime = 0;
     var event = 0;
@@ -27,6 +27,9 @@ function VirtualFootball(){
     var zeroGoalSupport = 0;
     var guestNextGoalTimes = 0;
     var guestNextGoalSupport = 0;
+    var hostWinNum = 0;
+    var drawNum = 0;
+    var guestWinNum = 0;
 
     var betItem1 = 0;
     var betItem2 = 0;
@@ -64,6 +67,9 @@ function VirtualFootball(){
         zeroGoalSupport = data.zeroGoalSupport;
         guestNextGoalTimes = data.guestNextGoalTimes;
         guestNextGoalSupport = data.guestNextGoalSupport;
+        hostWinNum = data.hostWinNum;
+        drawNum = data.drawNum;
+        guestWinNum = data.guestWinNum;
 
         if(matchState == 0 || matchState == 1)
             canBet = true;
@@ -118,26 +124,58 @@ function VirtualFootball(){
         matchState = data.matchState;
         lastTime = data.lastTime;
         no = data.no;
+        hostWinNum = data.hostWinNum;
+        drawNum = data.drawNum;
+        guestWinNum = data.guestWinNum;
         if(matchState == 0 || matchState == 1)
             canBet = true;
         else
             canBet = false;
-        if(matchState == 2){
+        if(matchState == 0){    //获取两队
+            broacastMatchInfo(null, null);
+        }
+        else if(matchState == 2){
             //关闭投注状态，告诉数据中心可以开始结算了
             OBJ('DataCenterModule').send({module:'VirtualFootball', func:'canSettlement'});
+            broacastMatchInfo(null, null);
+        } else if(matchState == 3){
+            //获取结算结算并广播
+            var playerMap = OBJ('PlayerContainer').getAllPlayer();
+            for(var player of playerMap.values()){
+                classLogVirtualBet.find({'user_id':player.userId, 'balance_schedule_id':no, 'status':2}, function(err, data){
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                    var winAreas = [];
+                    if(data.length > 0){
+                        for(var item of data){
+                            winAreas.push(item.bet_area);
+                        }
+                    }
+                    broacastMatchInfo(winAreas, player.socket);
+                });
+            }
         }
-
+    };
+    function broacastMatchInfo(winAreas, socket) {
         //广播
         var push = new pbSvrcli.Push_MatchInfo();
         var matchInfo = new pbSvrcli.MatchInfo();
         matchInfo.setMatchstate(matchState);
         matchInfo.setLastsecond(parseInt(lastTime/1000));
-        matchInfo.setHostwinnum(0);
-        matchInfo.setDrawnum(0);
-        matchInfo.setGuestwinnum(0);
+        matchInfo.setHostwinnum(hostWinNum);
+        matchInfo.setDrawnum(drawNum);
+        matchInfo.setGuestwinnum(guestWinNum);
+        if(winAreas && winAreas.length > 0){
+            matchInfo.setWinareasList(winAreas);
+        }
         push.setMatchinfo(matchInfo);
-        io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, push.serializeBinary());
-    };
+        if(socket)
+            socket.emit(pbSvrcli.Push_MatchInfo.Type.ID, push.serializeBinary());
+        else
+            io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, push.serializeBinary());
+    }
     //刷新投注项
     this.refreshBetItem = function(source, data){
         betItem1 = data.betItem1;
@@ -187,7 +225,7 @@ function VirtualFootball(){
         if(null == player)
             return;
         var page = askGuessingRecord.getPage();
-        classLogVirtualBet.find({'user_id':player.userId}, null, 
+        classLogVirtualBetclassLogVirtualBet.find({'user_id':player.userId}, null, 
             {skip:page*12, limit:12, sort:{'bet_date':-1}}, function(err, data){
                 if(err){
                     console.log(err);
@@ -257,6 +295,8 @@ function VirtualFootball(){
     //投注请求
     var waitMap = new Map();
     this.askVirtualBet = function(askVirtualBet, socket){
+        if(!canBet)
+            return;
         var player = OBJ('PlayerContainer').findPlayer(socket);
         if (null == player)
             return;
@@ -295,6 +335,7 @@ function VirtualFootball(){
         player.gameCoin = data.balance;
         res.setResult(data.res);
         res.setCoin(data.balance);
+        res.setBetarea(waitValue.betArea);
         //投注
         player.send(pbSvrcli.Res_VirtualBet.Type.ID, res.serializeBinary());
         //生成投注记录

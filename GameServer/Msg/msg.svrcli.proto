@@ -35,10 +35,12 @@ message MatchInfo
 	//比赛状态
 	int32 matchState = 1;		//比赛状态：0等待开始、1正在进行、2比赛结束（等待开奖）、3、比赛结束（开奖）
 	int32 lastSecond = 2;		//这个比赛状态剩余时间（秒）
-	//两队交锋场次
+	//两队交锋场次（matchState为0时有效，其他情况忽略）
 	int32 hostWinNum = 3;		//主队胜场次
 	int32 drawNum = 4;		//平
 	int32 guestWinNum = 5;		//客队胜场次
+	//中奖区域
+	repeated int32 winAreas = 6;
 }
 //比分与盘口信息
 message GoalAndBetArea

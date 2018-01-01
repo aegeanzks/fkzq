@@ -525,12 +525,19 @@ proto.kzgame.svrcli.msg.Ask_VirtualFootMainInfo.Type = {
  * @constructor
  */
 proto.kzgame.svrcli.msg.MatchInfo = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.MatchInfo.repeatedFields_, null);
 };
 goog.inherits(proto.kzgame.svrcli.msg.MatchInfo, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.kzgame.svrcli.msg.MatchInfo.displayName = 'proto.kzgame.svrcli.msg.MatchInfo';
 }
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.MatchInfo.repeatedFields_ = [6];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -563,7 +570,8 @@ proto.kzgame.svrcli.msg.MatchInfo.toObject = function(includeInstance, msg) {
     lastsecond: msg.getLastsecond(),
     hostwinnum: msg.getHostwinnum(),
     drawnum: msg.getDrawnum(),
-    guestwinnum: msg.getGuestwinnum()
+    guestwinnum: msg.getGuestwinnum(),
+    winareasList: jspb.Message.getField(msg, 6)
   };
 
   if (includeInstance) {
@@ -619,6 +627,10 @@ proto.kzgame.svrcli.msg.MatchInfo.deserializeBinaryFromReader = function(msg, re
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setGuestwinnum(value);
+      break;
+    case 6:
+      var value = /** @type {!Array.<number>} */ (reader.readPackedInt32());
+      msg.setWinareasList(value);
       break;
     default:
       reader.skipField();
@@ -690,6 +702,13 @@ proto.kzgame.svrcli.msg.MatchInfo.prototype.serializeBinaryToWriter = function (
   if (f !== 0) {
     writer.writeInt32(
       5,
+      f
+    );
+  }
+  f = this.getWinareasList();
+  if (f.length > 0) {
+    writer.writePackedInt32(
+      6,
       f
     );
   }
@@ -777,6 +796,28 @@ proto.kzgame.svrcli.msg.MatchInfo.prototype.getGuestwinnum = function() {
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.MatchInfo.prototype.setGuestwinnum = function(value) {
   jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * repeated int32 winAreas = 6;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<number>}
+ */
+proto.kzgame.svrcli.msg.MatchInfo.prototype.getWinareasList = function() {
+  return /** @type {!Array.<number>} */ (jspb.Message.getField(this, 6));
+};
+
+
+/** @param {Array.<number>} value  */
+proto.kzgame.svrcli.msg.MatchInfo.prototype.setWinareasList = function(value) {
+  jspb.Message.setField(this, 6, value || []);
+};
+
+
+proto.kzgame.svrcli.msg.MatchInfo.prototype.clearWinareasList = function() {
+  jspb.Message.setField(this, 6, []);
 };
 
 
@@ -3610,7 +3651,8 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.toObject = function(opt_include
 proto.kzgame.svrcli.msg.Res_VirtualBet.toObject = function(includeInstance, msg) {
   var f, obj = {
     result: msg.getResult(),
-    coin: msg.getCoin()
+    coin: msg.getCoin(),
+    betarea: msg.getBetarea()
   };
 
   if (includeInstance) {
@@ -3654,6 +3696,10 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.deserializeBinaryFromReader = function(ms
     case 2:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setCoin(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetarea(value);
       break;
     default:
       reader.skipField();
@@ -3707,6 +3753,13 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.serializeBinaryToWriter = funct
       f
     );
   }
+  f = this.getBetarea();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -3746,6 +3799,21 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.getCoin = function() {
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.setCoin = function(value) {
   jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 betArea = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.getBetarea = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.setBetarea = function(value) {
+  jspb.Message.setField(this, 3, value);
 };
 
 

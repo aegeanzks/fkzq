@@ -9,6 +9,8 @@ module.exports = VirtualFootballMatch;
 
 var Functions = require('../../../Utils/Functions');
 var shuffle = require('knuth-shuffle').knuthShuffle;
+var OBJ = require('../../../Utils/ObjRoot').getObj;
+var Schema = require('../../../db_structure');
 
 const HOST_BALL_HANDING = 1;            //主队控球
 const HOST_ATTACK = 2;                  //主队进攻
@@ -18,6 +20,8 @@ const GUEST_ATTACK = 5;                 //客队进攻
 const GUEST_DANGEROUS_ATTACK = 6;       //客队危险进攻
 const HOST_GOAL = 7;                    //主队进球
 const GUEST_GOAL = 8;                   //客队进球
+const DANGEROUS_ATTACK = 9;             //自己用，代表还未决定是哪队进球时候的危险进攻
+const GOAL = 10;                        //自己用，代表还未决定是哪队进球时候的进球
 
 function VirtualFootballMatch(conf, beginTime, endTime){
     var self = this;
@@ -47,6 +51,10 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     var beginTime = beginTime;      //比赛开始时间
     var endTime = endTime;          //比赛结束时间
 
+    self.hostWinNum = 0;
+    self.drawNum = 0;
+    self.guestWinNum = 0;
+
     var confMatchEvent;
     //当前比赛事件
     self.curEvent = 0;
@@ -58,12 +66,47 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     //进球时间节点列表
     var timeGoal = [];
 
-    //是否进入进球节点 0未进入 1下一个事件为危险进攻动画 2下一个事件为进球动画
-    var nInGoalTime = 0;
-
     //是否作弊
     var bCheat = false;
     var judge = 0;      //哪一队进球判断结果
+
+    //比赛赛程表
+    var scheduleArr = [];
+
+    var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
+    //获取两队的对战历史
+    initBattleHistory();
+    function initBattleHistory() {
+        //获取两队交锋场次，并广播
+        classVirtualSchedule.find({
+            "$or": [{ "host_team_id": self.hostTeamId, "guest_team_id": self.guestTeamId },
+            { "host_team_id": self.guestTeamId, "guest_team_id": self.hostTeamId }]
+        }, function (err, data) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (data.length > 0) {
+                for (var item of data) {
+                    if (item.host_team_goal == item.guest_team_goal)
+                        self.drawNum++;
+                    else if (item.host_team_goal > item.guest_team_goal) {
+                        if (item.host_team_id == self.hostTeamId) {
+                            self.hostWinNum++;
+                        } else {
+                            self.guestWinNum++;
+                        }
+                    } else {
+                        if (item.host_team_id == self.hostTeamId) {
+                            self.guestWinNum++;
+                        } else {
+                            self.hostWinNum++;
+                        }
+                    }
+                }
+            }
+        });
+    }
     
     initBetArea();
     function initBetArea(){
@@ -81,52 +124,131 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     function initAllGoal(){
         conf.randGoal(function(goal){
             allGoal = goal;
-            allGoal = 0;
             console.log('进球数：'+allGoal);
+            initEvents();
         });
     }
 
-    initEvents();
     function initEvents(){
         conf.getEvents(function(events){
             confMatchEvent = events;
-            //计算进球时间段列表
-            var arrSlot = [];
-            for(var i=0; i<allGoal; i++){
-                var maxTime = confMatchEvent.get(HOST_DANGEROUS_ATTACK).animation_time;
-                arrSlot.push(Functions.getRandomNum(1, maxTime));
+            var baseTime = beginTime;
+            var baseEndTime = baseTime + (endTime-beginTime);
+            var timeAxis = [];
+            var matchLong = (endTime-beginTime)/1000;//比赛时间长度 秒
+            for(var i = 0; i < matchLong; i++){
+                timeAxis.push(true);
             }
-            //将赛场按危险进球的动作长度分割成几块，然后洗牌后，取出当做随机进球时间段
-            var headTime = confMatchEvent.get(HOST_BALL_HANDING).animation_time;
-            var maxTime = confMatchEvent.get(HOST_DANGEROUS_ATTACK).animation_time;
-            maxTime += confMatchEvent.get(HOST_GOAL).animation_time;
-            var count = (130-headTime)/maxTime;
-            var tempPool = [];
-            for(var i=0; i<count; i++){
-                tempPool.push(i);
+
+            //计算比赛赛程表
+            var firEvent = Functions.getRandomNum(0, 1) == 0? HOST_BALL_HANDING:GUEST_BALL_HANDING;
+            var maxTime = confMatchEvent.get(firEvent).animation_time;
+            var nextTime = Functions.getRandomNum(1, maxTime);
+            var nextTimeMill = nextTime*1000;
+            scheduleArr.push({
+                event:firEvent, 
+                happenTime:baseTime+0,
+                endTime:baseTime+0+nextTimeMill,
+                bGoal:false, 
+                goal:0
+            });         //bGoal是否进球点 goal:0不进球 1主队进球 2客队进球
+
+            //随机出进球点的各个时间长度
+            goalsTimeLongArr = randGoalsTimeLong();
+            timeLongParam = [];
+            for(var item of goalsTimeLongArr){
+                timeLongParam.push(item.dangerousTime+item.goalTime);
             }
-            tempPool = shuffle(tempPool.slice(0));
-            var count = arrSlot.length;
-            var sortArr = [];
-            while(count--){
-                sortArr.push(tempPool.shift());
-            }
-            sortArr.sort(function(a,b){
-                return a-b;
-            });
-            var realBeginTime = beginTime+headTime;
-            var realMaxTime = maxTime*1000;
-            for(var i=0; i<sortArr.length; i++){
-                var animation_beginTime = realBeginTime+sortArr[i]*realMaxTime;
-                timeGoal.push({
-                    goal_animation_beginTime: animation_beginTime,
-                    goal_animation_endTime: animation_beginTime + arrSlot[i]*1000
+            console.log(timeLongParam);
+            //计算进球点
+            var goalsScatterArr = Functions.getScatteredSectionBy(timeLongParam, matchLong-nextTime);
+            var goalsSortArr = [];
+            goalsSortArr.push();
+            for(var i=0; i<goalsTimeLongArr.length; i++){
+                goalsSortArr.push({
+                    time1:baseTime+nextTimeMill+goalsScatterArr[i]*1000,
+                    time2:baseTime+nextTimeMill+(goalsScatterArr[i]+goalsTimeLongArr[i].dangerousTime)*1000,
+                    time3:baseTime+nextTimeMill+(goalsScatterArr[i]+timeLongParam[i])*1000
                 });
+            }
+            goalsSortArr.sort(function(a,b){
+                return a.time1-b.time1;
+            });
+            //生成时间轴上的所有事件
+            while(true){
+                var lastEndTime = scheduleArr[scheduleArr.length-1].endTime;
+                if(goalsSortArr.length > 0){
+                    if(lastEndTime == goalsSortArr[0].time1){
+                        scheduleArr.push({
+                            event:DANGEROUS_ATTACK, 
+                            happenTime:goalsSortArr[0].time1,
+                            endTime:goalsSortArr[0].time2,
+                            bGoal:true, 
+                            goal:0
+                        });
+                        scheduleArr.push({
+                            event:GOAL, 
+                            happenTime:goalsSortArr[0].time2,
+                            endTime:goalsSortArr[0].time3,
+                            bGoal:true, 
+                            goal:0
+                        });
+                        goalsSortArr.shift();
+                    } else {
+                        var lastEvent = scheduleArr[scheduleArr.length-1].event;
+                        if(lastEvent == GOAL) lastEvent = HOST_GOAL;
+                        var ret = getRandEventIdAndMaxTime(lastEvent);
+                        var eventEndTime = scheduleArr[scheduleArr.length-1].endTime+ret[1];
+                        if(eventEndTime>=goalsSortArr[0].time1){
+                            eventEndTime = goalsSortArr[0].time1;
+                        }
+                        scheduleArr.push({
+                            event:ret[0], 
+                            happenTime:scheduleArr[scheduleArr.length-1].endTime,
+                            endTime:eventEndTime,
+                            bGoal:false, 
+                            goal:0
+                        });
+                    }
+                } else {
+                    var lastEvent = scheduleArr[scheduleArr.length-1].event;
+                    if(lastEvent == 10) lastEvent = 7;
+                    var ret = getRandEventIdAndMaxTime(lastEvent);
+                    var eventEndTime = scheduleArr[scheduleArr.length-1].endTime+ret[1];
+                    if(eventEndTime > baseEndTime){
+                        eventEndTime = baseEndTime;
+                    }
+                    scheduleArr.push({
+                        event:ret[0], 
+                        happenTime:scheduleArr[scheduleArr.length-1].endTime,
+                        endTime:eventEndTime,
+                        bGoal:false, 
+                        goal:0
+                    });
+                    if(eventEndTime == baseEndTime)
+                        break;
+                }
             }
         });
     }
 
-    //返回 0主队进球 1客队进球 2不进球
+    //随机出进球点所用的时间
+    function randGoalsTimeLong(){
+        if(null == confMatchEvent)
+            return null;
+        var dangerousTime = confMatchEvent.get(HOST_DANGEROUS_ATTACK).animation_time;
+        var goalTime = confMatchEvent.get(HOST_GOAL).animation_time;
+        var randArr = [];
+        for(var i=0; i<allGoal; i++){
+            randArr.push({
+                dangerousTime:Functions.getRandomNum(1, dangerousTime),
+                goalTime:Functions.getRandomNum(1, goalTime)
+            });
+        }
+        return randArr;
+    }
+
+    //返回 0不进球 1主队进球 2客队进球
     function judgeWhichGoal(){
         if(bCheat){         //需要作弊
 
@@ -134,71 +256,64 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             var allScore = self.hostTeam.Score + self.guestTeam.Score;
             var randNum = Functions.getRandomNum(1, allScore);
             if(randNum <= self.hostTeam.Score)
-                return 0;
-            else
                 return 1;
+            else
+                return 2;
         }
     }
 
+    var playerIndex = 0;
     function updateNextEvent(timestamp){
+        playerIndex++;
+        if(playerIndex >= scheduleArr.length)
+            return false;
         var oldEvent = self.curEvent;
-
-        if(1 == nInGoalTime){
-            //判断是主队还是客队进球
+        if(scheduleArr[playerIndex].event == DANGEROUS_ATTACK){
             judge = judgeWhichGoal();
-            if (0 == judge){             //主队进球
-                self.curEvent = HOST_DANGEROUS_ATTACK;
-            }else if(1 == judge){        //客队进球
-                self.curEvent = GUEST_DANGEROUS_ATTACK;
-            }else{                       //不进球
-                self.curEvent = Functions.getRandomNum(0, 1) == 0? HOST_DANGEROUS_ATTACK:GUEST_DANGEROUS_ATTACK;
+            if(1 == judge){
+                scheduleArr[playerIndex].event = HOST_DANGEROUS_ATTACK;
+                scheduleArr[playerIndex+1].event = HOST_GOAL;
+            }else if(2 == judge){
+                scheduleArr[playerIndex].event = GUEST_DANGEROUS_ATTACK;
+                scheduleArr[playerIndex+1].event = GUEST_GOAL;
+            }else{
+                
             }
-            self.nextEventTime = timeGoal[0].goal_animation_endTime;
-            nInGoalTime = 2;
-            console.log('nInGoalTime = 2');
-            timeGoal.shift();       //删除第一个进球时间节点
-            return oldEvent != self.curEvent;
-        } else if (2 == nInGoalTime &&  2 != judge){
-            if (0 == judge){             //主队进球
-                self.curEvent = HOST_GOAL;
-                self.hostTeamGoal++;
-            }else if(1 == judge){        //客队进球
-                self.curEvent = GUEST_GOAL;
-                self.guestTeamGoal++;
-            }
-            var maxTime = confMatchEvent.get(HOST_GOAL).animation_time;
-            self.nextEventTime = self.nextEventTime + Functions.getRandomNum(1, maxTime)*1000;
-            console.log('增加时间：'+(self.nextEventTime-timestamp));
-            nInGoalTime = 0;
-            console.log('nInGoalTime = 0');
-            return oldEvent != self.curEvent;
-        } else if (2 == nInGoalTime &&  2 == judge){
-            nInGoalTime = 0;
-            console.log('nInGoalTime = 0 ----------');
+            scheduleArr[playerIndex].goal = judge;
+            scheduleArr[playerIndex+1].goal = judge;
+        } else if(scheduleArr[playerIndex].event == HOST_GOAL){
+            self.hostTeamGoal++;
+        } else if(scheduleArr[playerIndex].event == GUEST_GOAL){
+            self.guestTeamGoal++;
         }
-        //根据配置的概率，随机出下一个事件与事件需要的时间
-        var eventConf = confMatchEvent.get(self.curEvent);
-        var randArr = [];
-        randArr = packageRandArr(eventConf.host_ball_handling, HOST_BALL_HANDING, randArr);
-        randArr = packageRandArr(eventConf.host_attack, HOST_ATTACK, randArr);
-        randArr = packageRandArr(eventConf.host_dangerous_attack, HOST_DANGEROUS_ATTACK, randArr);
-        randArr = packageRandArr(eventConf.guest_ball_handling, GUEST_BALL_HANDING, randArr);
-        randArr = packageRandArr(eventConf.guest_attack, GUEST_ATTACK, randArr);
-        randArr = packageRandArr(eventConf.guest_dangerous_attack, GUEST_DANGEROUS_ATTACK, randArr);
-        var index = Functions.getRandomNum(0, randArr.length-1);
-        self.curEvent = randArr[index];
-        var maxTime = confMatchEvent.get(self.curEvent).animation_time;
-        self.nextEventTime = self.nextEventTime + Functions.getRandomNum(1, maxTime)*1000;
-        console.log('增加时间：'+(self.nextEventTime-timestamp));
-        if(timeGoal.length > 0){
-            if(self.nextEventTime >= timeGoal[0].goal_animation_beginTime){
-                nInGoalTime = 1;
-                console.log('nInGoalTime = 1');
-                self.nextEventTime = timeGoal[0].goal_animation_beginTime;
-            }
-        }
+        self.curEvent = scheduleArr[playerIndex].event;
+        self.nextEventTime = scheduleArr[playerIndex].endTime;
 
         return oldEvent != self.curEvent;
+    }
+
+    //随机事件与事件所用时间
+    var randArrMap = new Map();
+    function getRandEventIdAndMaxTime(eventId) {
+        if(randArrMap.size == 0){
+            for(var i=HOST_BALL_HANDING; i<=GUEST_GOAL; i++){
+                var eventConf = confMatchEvent.get(i);
+                var randArr = [];
+                randArr = packageRandArr(eventConf.host_ball_handling, HOST_BALL_HANDING, randArr);
+                randArr = packageRandArr(eventConf.host_attack, HOST_ATTACK, randArr);
+                randArr = packageRandArr(eventConf.host_dangerous_attack, HOST_DANGEROUS_ATTACK, randArr);
+                randArr = packageRandArr(eventConf.guest_ball_handling, GUEST_BALL_HANDING, randArr);
+                randArr = packageRandArr(eventConf.guest_attack, GUEST_ATTACK, randArr);
+                randArr = packageRandArr(eventConf.guest_dangerous_attack, GUEST_DANGEROUS_ATTACK, randArr);
+                randArrMap.set(i, randArr);
+            }
+        }
+        var randArr = randArrMap.get(eventId);
+        var index = Functions.getRandomNum(0, randArr.length-1);
+        var retEvent = randArr[index];
+        var maxTime = confMatchEvent.get(retEvent).animation_time;
+        var retTimeLong = Functions.getRandomNum(1, maxTime)*1000;
+        return [retEvent, retTimeLong];
     }
 
     function packageRandArr(num, item, randArr){
@@ -210,9 +325,8 @@ function VirtualFootballMatch(conf, beginTime, endTime){
 
     self.startMatch = function(){
         //初始都是主队控球或者客队控球
-        self.curEvent = Functions.getRandomNum(0, 1) == 0? HOST_BALL_HANDING:GUEST_BALL_HANDING;
-        var maxTime = confMatchEvent.get(self.curEvent).animation_time;
-        self.nextEventTime = beginTime + Functions.getRandomNum(1, maxTime)*1000;
+        self.curEvent = scheduleArr[0].event;
+        self.nextEventTime = scheduleArr[0].endTime;
         bStart = true;
     };
 

@@ -51,6 +51,9 @@ function GameSvrAgent(){
     };
 
     this.gameServerPing = function(source, msg){
+        if(!gamePingMap.has(source)){
+            OBJ('VirtualFootballModule').logic.getCurData(source, null);
+        }
         gamePingMap.set(source, Date.now()+5000);
     };
 
