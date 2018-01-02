@@ -312,7 +312,7 @@ function VirtualFootball(){
         var findParam = {
             'status':0,
             'balance_schedule_id':timeAgent.no,
-            'bet_area':{ $in: [4,6] }
+            'bet_area':{ $in: [4,5,6] }
         };
         classLogVirtualBet.find(findParam, function(err, data){
             if(data.length == 0)
@@ -391,7 +391,7 @@ function VirtualFootball(){
                 var findParam = {
                     'status':0,
                     'balance_schedule_id':timeAgent.no,
-                    'bet_area':{ $in: [4,6] }
+                    'bet_area':{ $in: [4,5,6] }
                 };
                 classLogVirtualBet.find(findParam, function(err, data){
                     if(data.length != 0)

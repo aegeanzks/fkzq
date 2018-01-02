@@ -370,10 +370,10 @@ function VirtualFootball(){
     };
     //统计用户是否中奖且对中奖的进行推送回调
     this.resUpdateMoney = function(source, data){
-        var player = OBJ('PlayerContainer').findSocketByUserId(data.userid);
+        var player = OBJ('PlayerContainer').findPlayerByUserId(data.userid);
         if(null != player && data.balance != player.gameCoin){
             var push = new pbSvrcli.Push_WinBet();
-            push.setWincoin(parseFloat(player.gameCoin)-parseFloat(data.balance));
+            push.setWincoin(data.balance - player.gameCoin);
             push.setCoin(data.balance);
             player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
         }

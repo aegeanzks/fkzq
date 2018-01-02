@@ -31,6 +31,14 @@ function PlayerContainer(){
         return null;
     };
 
+    this.findPlayerByUserId = function(userid) {
+        for (var item of playerMap.entries()) {
+            if(item[1].userId == userid)
+                return item[1];
+        }
+        return null;
+    };
+
     this.delete = function(socket) {
         playerMap.delete(socket);
     }
