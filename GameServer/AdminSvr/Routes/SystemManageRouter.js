@@ -1,19 +1,19 @@
-//竞彩足球管理路由
+//系统管理路由
 var express = require('express');
-var RlRaceController = require('../Controller/RealFootball/RaceController');
+var GameConfigController = require('../Controller/SystemManage/GameConfigController');
 
 
 const router = express.Router();
 
-//比赛管理
-router.get('/list', RlRaceController.getList);                                   //获取赛事列表
-router.post('/updateRaceInfo', RlRaceController.updateRaceInfo);                 //编辑某一赛事
-//end 比赛管理
-
-//全部竞猜记录
-
-//end 全部竞猜记录
-
+//游戏配置
+router.get('/getStockList',GameConfigController.getStockValueList);
+router.get('/getStockInfo',GameConfigController.getStockInfo);
+router.post('/updateStockInfo',GameConfigController.updateStockInfo);
+router.get('/getEventInfo',GameConfigController.getEventInfo);
+router.get('/getOddsInfo',GameConfigController.getOddsInfo);
+router.get('/getGoalInfo',GameConfigController.getGoalInfo);
+//router.post('/updateEventInfo',GameConfigController.updateEventInfo);
+//end 游戏配置
 
 
 

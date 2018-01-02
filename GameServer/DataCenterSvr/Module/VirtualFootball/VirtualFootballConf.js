@@ -86,6 +86,15 @@ function VirtualFootballConf(){
         return goalDoc;
     }
 
+    function betItemDeal(data){
+        var betItemDoc = OBJ('DbMgr').getModel(Schema.ConfBetItem());
+        betItemDoc.game_id = data['game_id'];
+        betItemDoc.item1 = data['item1'];
+        betItemDoc.item2 = data['item2'];
+        betItemDoc.item3 = data['item3'];
+        return betItemDoc;
+    }
+
     /*
         @func           初始化配置数据写到db
         @statemenet     表模型
@@ -116,6 +125,7 @@ function VirtualFootballConf(){
             stockInfo = JSON.parse(fs.readFileSync('./Json/StockInfo.json'));
             eventInfo = JSON.parse(fs.readFileSync('./Json/EventInfo.json'));
             goalInfo = JSON.parse(fs.readFileSync('./Json/GoalInfo.json'));
+            betItemInfo = JSON.parse(fs.readFileSync('./Json/BetItem.json'));
         }catch(err){
             console.log('loadInitDataTodb err :'+err);
         }
@@ -130,46 +140,6 @@ function VirtualFootballConf(){
             mapTeamInfo.set(item.ID, item);
         }
     }
-
-    /*function createTeamOdds(){
-        var index = 0;
-        var teamOdds = JSON.parse(fs.readFileSync('./Json/TeamOdds.json'));
-        for(var key in teamOdds){
-            var item = teamOdds[key];
-            index = item.ID;
-            var arrayTeamOdds = mapTeamOdds.get(item.LevelDif);
-            if (null == arrayTeamOdds){
-                arrayTeamOdds = [];
-                mapTeamOdds.set(item.LevelDif, arrayTeamOdds);
-            }
-            arrayTeamOdds.push(item);
-        }
-        //添加主队比客队弱的情况
-        index++;
-        for (var value of mapTeamOdds){
-            if(value[0]>0){
-                var arr = value[1];
-                for (var key in arr){
-                    var item = arr[key];
-                    item.ID = index++;
-                    item.LevelDif = -item.LevelDif;
-                    var tmp = Functions.exchangeNum(item.HostWinTimes, item.GuestWinTimes);
-                    item.HostWinTimes = tmp[0];
-                    item.GuestWinTimes = tmp[1];
-                    tmp = Functions.exchangeNum(item.HostNextGoal, item.GuestNextGoal);
-                    item.HostNextGoal = tmp[0];
-                    item.GuestNextGoal = tmp[1];
-
-                    var arrayTeamOdds = mapTeamOdds.get(item.LevelDif);
-                    if (null == arrayTeamOdds){
-                        arrayTeamOdds = [];
-                        mapTeamOdds.set(item.LevelDif, arrayTeamOdds);
-                    }
-                    arrayTeamOdds.push(item);
-                }
-            }
-        }
-    }*/
 
     this.randATeam = function(exceptId){
         var index = Functions.getRandomNum(1, mapTeamInfo.size);
@@ -283,13 +253,20 @@ function VirtualFootballConf(){
                 console.log(err);
                 return;
             }
-            if(data){
-                if(0 == data.length){
-
-                }else{
-                    if (func)
-                        func(data.item1, data.item2, data.item3);
+            if(null == data || 0 == data.length){
+                var dataConfig = [];
+                for(var key in betItemInfo){
+                    var item = betItemInfo[key];
+                    if(item.game_id == 1)
+                        dataConfig.push(betItemDeal(item));
                 }
+                insertInfo(classConfBetItem,dataConfig,function(dataCnf){
+                    if(func)
+                        func(dataCnf[0].item1, dataCnf[0].item2, dataCnf[0].item3);
+                });
+            }else{
+                if (func)
+                    func(data.item1, data.item2, data.item3);
             }
         });
     };

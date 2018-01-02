@@ -26,6 +26,8 @@ goog.exportSymbol('proto.kzgame.svrcli.msg.Push_GoalAndBetArea', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_GoalAndBetArea.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_MatchInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_MatchInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_WinBet', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_WinBet.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_GuessingRecord', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_GuessingRecord.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_Login', null, global);
@@ -525,19 +527,12 @@ proto.kzgame.svrcli.msg.Ask_VirtualFootMainInfo.Type = {
  * @constructor
  */
 proto.kzgame.svrcli.msg.MatchInfo = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.MatchInfo.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.kzgame.svrcli.msg.MatchInfo, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.kzgame.svrcli.msg.MatchInfo.displayName = 'proto.kzgame.svrcli.msg.MatchInfo';
 }
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.kzgame.svrcli.msg.MatchInfo.repeatedFields_ = [6];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -570,8 +565,7 @@ proto.kzgame.svrcli.msg.MatchInfo.toObject = function(includeInstance, msg) {
     lastsecond: msg.getLastsecond(),
     hostwinnum: msg.getHostwinnum(),
     drawnum: msg.getDrawnum(),
-    guestwinnum: msg.getGuestwinnum(),
-    winareasList: jspb.Message.getField(msg, 6)
+    guestwinnum: msg.getGuestwinnum()
   };
 
   if (includeInstance) {
@@ -627,10 +621,6 @@ proto.kzgame.svrcli.msg.MatchInfo.deserializeBinaryFromReader = function(msg, re
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setGuestwinnum(value);
-      break;
-    case 6:
-      var value = /** @type {!Array.<number>} */ (reader.readPackedInt32());
-      msg.setWinareasList(value);
       break;
     default:
       reader.skipField();
@@ -702,13 +692,6 @@ proto.kzgame.svrcli.msg.MatchInfo.prototype.serializeBinaryToWriter = function (
   if (f !== 0) {
     writer.writeInt32(
       5,
-      f
-    );
-  }
-  f = this.getWinareasList();
-  if (f.length > 0) {
-    writer.writePackedInt32(
-      6,
       f
     );
   }
@@ -796,28 +779,6 @@ proto.kzgame.svrcli.msg.MatchInfo.prototype.getGuestwinnum = function() {
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.MatchInfo.prototype.setGuestwinnum = function(value) {
   jspb.Message.setField(this, 5, value);
-};
-
-
-/**
- * repeated int32 winAreas = 6;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
- * @return {!Array.<number>}
- */
-proto.kzgame.svrcli.msg.MatchInfo.prototype.getWinareasList = function() {
-  return /** @type {!Array.<number>} */ (jspb.Message.getField(this, 6));
-};
-
-
-/** @param {Array.<number>} value  */
-proto.kzgame.svrcli.msg.MatchInfo.prototype.setWinareasList = function(value) {
-  jspb.Message.setField(this, 6, value || []);
-};
-
-
-proto.kzgame.svrcli.msg.MatchInfo.prototype.clearWinareasList = function() {
-  jspb.Message.setField(this, 6, []);
 };
 
 
@@ -3652,7 +3613,8 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.toObject = function(includeInstance, msg)
   var f, obj = {
     result: msg.getResult(),
     coin: msg.getCoin(),
-    betarea: msg.getBetarea()
+    betarea: msg.getBetarea(),
+    coinitem: msg.getCoinitem()
   };
 
   if (includeInstance) {
@@ -3700,6 +3662,10 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.deserializeBinaryFromReader = function(ms
     case 3:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setBetarea(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setCoinitem(value);
       break;
     default:
       reader.skipField();
@@ -3757,6 +3723,13 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.serializeBinaryToWriter = funct
   if (f !== 0) {
     writer.writeInt32(
       3,
+      f
+    );
+  }
+  f = this.getCoinitem();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
       f
     );
   }
@@ -3818,11 +3791,220 @@ proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.setBetarea = function(value) {
 
 
 /**
+ * optional int32 coinItem = 4;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.getCoinitem = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_VirtualBet.prototype.setCoinitem = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
  * @enum {number}
  */
 proto.kzgame.svrcli.msg.Res_VirtualBet.Type = {
   UNSET: 0,
   ID: 20009
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Push_WinBet = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Push_WinBet, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Push_WinBet.displayName = 'proto.kzgame.svrcli.msg.Push_WinBet';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Push_WinBet.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Push_WinBet} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    wincoin: msg.getWincoin(),
+    coin: msg.getCoin()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Push_WinBet}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Push_WinBet;
+  return proto.kzgame.svrcli.msg.Push_WinBet.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Push_WinBet} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Push_WinBet}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWincoin(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setCoin(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Push_WinBet} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getWincoin();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getCoin();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Push_WinBet} The clone.
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Push_WinBet} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 winCoin = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.getWincoin = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.setWincoin = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional double coin = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.getCoin = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_WinBet.prototype.setCoin = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Push_WinBet.Type = {
+  UNSET: 0,
+  ID: 20010
 };
 
 goog.object.extend(exports, proto.kzgame.svrcli.msg);

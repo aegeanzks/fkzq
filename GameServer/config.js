@@ -13,7 +13,7 @@ exports.mongodb = function(){
 //rpc
 exports.rpc = function(){
     return {
-        RPCURL:'amqp://localhost', //RPC
+        RPCURL:'amqp://zks:zks@192.168.0.63', //RPC
     };
 };
 
@@ -55,6 +55,7 @@ exports.adminSvrConfig = function(){
         serverId:'admin',
         port:9090,
         limit:10,
+        sign:'4A1fd0cEskf',
     }
 }
 

@@ -29,6 +29,10 @@ function WalletAgent(){
                 var mod = OBJ('VirtualFootballModule');
                 if (msg.func == 'resVirtualBet'){
                     mod.logic.resVirtualBet(source, msg.data);
+                } else if(msg.func == 'resGetSettlementCoin'){
+                    mod.logic.resGetSettlementCoin(source, msg.data);
+                } else if(msg.func == 'resUpdateMoney'){
+                    mod.logic.resUpdateMoney(source, msg.data);
                 }
             }break;
         }

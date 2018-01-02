@@ -93,6 +93,10 @@ function start() {
                 var buf = askVirtualBet.serializeBinary();
                 console.log('开始下注:1');
                 socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+                //socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+                //socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+                //socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
+                //socket.emit(pbLogin.Ask_VirtualBet.Type.ID, buf, buf.length);
             }else if(key == '2'){
                 var askVirtualBet = new pbLogin.Ask_VirtualBet();
     

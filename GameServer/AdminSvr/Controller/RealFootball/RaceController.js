@@ -1,7 +1,7 @@
 module.exports = RlRaceController;
 
 var RlRaceModule = require('../../Module/RealFootball/RaceModule');
-var formidable = require('formidable');
+//var formidable = require('formidable');
 var checkSign  = require('../Sign').checkSign;
 var signValue = require('../../../config').adminSvrConfig()['sign'];
 
@@ -207,7 +207,7 @@ RlRaceController.getList = function(req,res,next){
 				return
 		}
 	}catch(err){
-		console.log('获取数据失败', err);
+		console.log('getList 获取数据失败', err);
 		res.send({
 			status: 1,
 			type: 'GET_DATA_ERROR',
@@ -318,7 +318,7 @@ RlRaceController.updateRaceInfo = function(req,res,next){
 		//更新数据
 		rlRaceModule.updateInfo(fields,type,res);
 	}catch(err){
-		console.log(err.message, err);
+		console.log('updateRaceInfo 获取数据失败', err);
 		res.send({
 			status: 1,
 			type: 'UPDATE_DATA_ERROR',

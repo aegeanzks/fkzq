@@ -93,6 +93,11 @@ function VirtualFootball(){
                                 return;
                             }
                         });
+                        //赢钱推送
+                        OBJ('GameSvrAgentModule').broadcastGameServer({
+                            module:'VirtualFootball',
+                            func:'updateMoney'
+                        });
                     });
                 });
             }  
@@ -306,7 +311,8 @@ function VirtualFootball(){
     function SettlementNextGoal(eventId){
         var findParam = {
             'status':0,
-            'balance_schedule_id':timeAgent.no
+            'balance_schedule_id':timeAgent.no,
+            'bet_area':{ $in: [4,6] }
         };
         classLogVirtualBet.find(findParam, function(err, data){
             if(data.length == 0)
@@ -340,7 +346,7 @@ function VirtualFootball(){
                         'settlement_out_trade_no':'',
                         'settlement_trade_no':'',
                         'status':1
-                    }
+                    };
                     classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
                         if(err){
                             console.log(err);
@@ -352,6 +358,7 @@ function VirtualFootball(){
     }
     this.resAddTrade = function(source, data){
         var waitValue = waitMap.get(data.uuid);
+        waitMap.delete(data.uuid);
         if(null == waitValue)
             return;
         if(data.res != 0){
@@ -359,7 +366,7 @@ function VirtualFootball(){
             var updateValue = {
                 'settlement_out_trade_no':data.uuid,
                 'status':3          //系统错误
-            }
+            };
             classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
                 if(err){
                     console.log(err);
@@ -367,15 +374,14 @@ function VirtualFootball(){
             });
             return;
         }
-
-        waitMap.delete(data.uuid);
+        
         //生成投注记录
         var updateValue = {
             'distribute_coin':waitValue.bet_distribute_coin,
             'settlement_out_trade_no':data.uuid,
             'settlement_trade_no':data.trade_no,
             'status':2
-        }
+        };
         classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
             if(err){
                 console.log(err);
@@ -384,13 +390,20 @@ function VirtualFootball(){
             if(waitValue.settlementType == 2){
                 var findParam = {
                     'status':0,
-                    'balance_schedule_id':timeAgent.no
+                    'balance_schedule_id':timeAgent.no,
+                    'bet_area':{ $in: [4,6] }
                 };
                 classLogVirtualBet.find(findParam, function(err, data){
                     if(data.length != 0)
                         waitNextGoalSettlement = true;
-                    else
+                    else{
                         waitNextGoalSettlement = false;
+                        //下一球赢钱推送
+                        OBJ('GameSvrAgentModule').broadcastGameServer({
+                            module:'VirtualFootball',
+                            func:'updateMoney'
+                        });
+                    }
                 });
             }
         });

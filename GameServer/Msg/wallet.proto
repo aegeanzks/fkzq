@@ -17,10 +17,11 @@ message AddTrade{
 	string out_trade_no = 1;  	// 平台订单号
 	int32 type = 2;			  	// 操作类型（1-平台转入，2-平台转出，3-用户转账）
 	int32 out_type = 3;			// 平台自定义订单类型
-	int32 user_id = 4;			// 用户id
-	string money = 5;			// 金额(最多保留7位小数，例如:”1.0000001”) 
-	int32 money_from = 6;		// 转账来源用户id
-	string memo = 7;			// 备注
+	string out_type_description = 4; // 平台自定义订单类型描述
+	int32 user_id = 5;			// 用户id
+	string money = 6;			// 金额(最多保留7位小数，例如:”1.0000001”) 
+	int32 money_from = 7;		// 转账来源用户id
+	string memo = 8;			// 备注
 }
 
 // 添加交易（响应）
@@ -50,13 +51,14 @@ message GetTrades{
 	string trade_no=1;			// 钱包系统交易订单号
 	string out_trade_no = 2;  	// 平台订单号
 	int32 user_id = 3;			// 用户id
-	string platform_id = 4; 	// 平台标识
+	int32 platform_id = 4; 		// 平台标识
 	int32 type = 5;			  	// 操作类型（1-平台转入，2-平台转出，3-用户转账）
 	int32 out_type = 6;			// 平台自定义订单类型
-	string start_time = 7;		// 开始时间
-	string end_time = 8; 		// 结束时间
-	int32 page_num =9; 			// 每页多少条
-	int32 cur_page =10; 		// 当前页码(从1开始)
+	string out_type_description = 7; // 平台自定义订单类型描述
+	string start_time = 8;		// 开始时间
+	string end_time = 9; 		// 结束时间
+	int32 page_num =10; 		// 每页多少条
+	int32 cur_page =11; 		// 当前页码(从1开始)
 }
 
 
@@ -74,14 +76,15 @@ message Trade{
 	string trade_no = 2;		// 钱包系统交易订单号
 	string out_trade_no = 3;  	// 平台订单号
 	int32 user_id = 4;			// 用户id
-	string platform_id = 5; 	// 平台标识
+	int32 platform_id = 5; 		// 平台标识
 	int32 type = 6;			  	// 操作类型（1-平台转入，2-平台转出，3-用户转账）
 	int32 out_type = 7;			// 平台自定义订单类型
-	string money = 8;			// 金额(最多保留7位小数，例如:”1.0000001”) 
-	int32 money_from = 9;		// 转账来源用户id
-	string balance = 10;		// 余额(最多保留7位小数，例如:”1.0000001”)
-	string memo = 11;			// 备注
-	string created_time = 12; 	// 创建时间
+	string out_type_description = 8; // 平台自定义订单类型描述
+	string money = 9;			// 金额(最多保留7位小数，例如:”1.0000001”) 
+	int32 money_from = 10;		// 转账来源用户id
+	string balance = 11;		// 余额(最多保留7位小数，例如:”1.0000001”)
+	string memo = 12;			// 备注
+	string created_time = 13; 	// 创建时间
 }
 
 
@@ -91,7 +94,9 @@ message NsqAddTrade{
 	uint32 func_id = 1;       	// 功能id
 	uint32 platform_id = 2;		// 平台id
 	string trade_no = 3;		// 交易单号
-	AddTrade trade = 4;			// 订单
+	string balance = 4;			// 交易后余额度
+	string created_time = 5;	// 交易时间
+	AddTrade trade = 6;			// 订单
 }
 
 

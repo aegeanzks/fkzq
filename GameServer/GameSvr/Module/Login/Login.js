@@ -26,7 +26,11 @@ function Login(){
         var userid = 1;
         var userName = '用户1';
         waitMap.set(userid, [socket, userName, Date.now()+10000]);//超时10秒
-        OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:userid});
+        OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:{
+            userid:userid, 
+            cbModule:'Login',
+            cbFunc:'resGetCoin'
+        }});
         //self.resGetCoin({'userid':userid, 'coin':100000});
         console.log('用户:' + userid + ' 登录成功!');
     };

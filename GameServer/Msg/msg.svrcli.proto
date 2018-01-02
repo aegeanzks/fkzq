@@ -39,8 +39,6 @@ message MatchInfo
 	int32 hostWinNum = 3;		//主队胜场次
 	int32 drawNum = 4;		//平
 	int32 guestWinNum = 5;		//客队胜场次
-	//中奖区域
-	repeated int32 winAreas = 6;
 }
 //比分与盘口信息
 message GoalAndBetArea
@@ -149,4 +147,12 @@ message Res_VirtualBet
 	int32 result = 1;		//0成功 1参数错误 2当前时间不可投注
 	double coin = 2;		//游戏币  成功时才有效
 	int32 betArea = 3;
+	int32 coinItem = 4;
+}
+//虚拟足球中奖得钱消息
+message Push_WinBet
+{
+	enum Type {UNSET = 0; ID = 20010;}
+	int32 winCoin = 1;		//赢得钱
+	double coin = 2;			//赢钱之后剩多少钱
 }

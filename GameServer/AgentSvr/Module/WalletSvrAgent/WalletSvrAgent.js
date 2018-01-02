@@ -42,8 +42,8 @@ function WalletSvrAgent(){
     var connWalletTimer = new SingleTimer();
     //self.ws = new WebSocket.Client("ws://120.78.166.241:4181?platform_id=20");
     try {
-        self.ws = new WebSocket("ws://120.78.166.241:4181?platform_id=20", [], {
-            origin:'http://120.78.166.241:4181/'
+        self.ws = new WebSocket("ws://120.79.91.250:4181?platform_id=51", [], {
+            origin:'http://120.79.91.250:4181/'
         });
     } catch (error) {
         console.error('连接钱包失败...');
@@ -99,16 +99,18 @@ function WalletSvrAgent(){
         }
     }
     //获取用户金额
-    this.reqGetCoin = function(source, userid){
+    this.reqGetCoin = function(source, msg){
+        console.log('reqGetCoin');
         var rgc = new pbWallet.GetUserBalance();
-        rgc.setUserId(userid);
+        rgc.setUserId(msg.userid);
         req(2010002, rgc, function(data){
+            console.log('resGetCoin');
             try {
                 var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
 
-                self.send(source, {module:'Login', func:'resGetCoin', 
+                self.send(source, {module:msg.cbModule, func:msg.cbFunc, 
                     data:{
-                        userid:userid, 
+                        userid:msg.userid, 
                         res: res.getRet(), 
                         msg: res.getMsg(), 
                         balance: res.getBalance()
@@ -123,14 +125,16 @@ function WalletSvrAgent(){
 
     //投注
     this.reqBet = function(source, data){
+        console.log('reqBet');
         var rb = new pbWallet.AddTrade();
         rb.setOutTradeNo(data.uuid);
         rb.setType(2);
         rb.setOutType(data.outType);
-        //rb.setOutTypeDescription(data.outTypeDescription);
+        rb.setOutTypeDescription(data.outTypeDescription);
         rb.setUserId(data.userid);
         rb.setMoney(data.betCoin);
         req(2010001, rb, function(msg){
+            console.log('resBet');
             try {
                 var res = pbWallet.RspAddTrade.deserializeBinary(msg);
 
@@ -152,6 +156,7 @@ function WalletSvrAgent(){
 
     //投注奖励
     this.reqAddMoney = function(source, data){
+        console.log('reqAddMoney');
         var rb = new pbWallet.AddTrade();
         rb.setOutTradeNo(data.uuid);
         rb.setType(1);
@@ -160,6 +165,7 @@ function WalletSvrAgent(){
         rb.setUserId(data.userid);
         rb.setMoney(data.addCoin);
         req(2010001, rb, function(msg){
+            console.log('reqAddMoney');
             try {
                 var res = pbWallet.RspAddTrade.deserializeBinary(msg);
 

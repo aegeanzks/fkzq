@@ -42,6 +42,8 @@ function DataCenter(){
                     mod.logic.refreshMatchEvent(source, msg.data);
                 }else if(msg.func == 'refreshBetItem'){
                     mod.logic.refreshBetItem(source, msg.data);
+                }else if(msg.func == 'updateMoney'){
+                    mod.logic.updateMoney(source, msg.data);
                 }
             }break;
         }

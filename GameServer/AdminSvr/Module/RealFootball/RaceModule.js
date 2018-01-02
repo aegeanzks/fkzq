@@ -105,8 +105,8 @@ function RlRaceModule(){
             var len = Id.length;
             var count = 0;
             for(var i= 0;i<len;i++){
-                scheduleStatement.collection.update({id:Id[i]},{$set:values},false,true,function(error,docs){
-                    if(!err){
+                scheduleStatement.findOneAndUpdate({id:Id[i]},{$set:values},function(error,docs){
+                    if(!error){
                         count++;
                         if(count == len){
                             res.send({
@@ -121,7 +121,7 @@ function RlRaceModule(){
                 });
             }
         }catch(err){
-            console.log('更新数据失败', err);
+            console.log('updateListById 更新数据失败', err);
             res.send({
                 status: 1,
                 type: 'UPDATE_DATA_ERROR',

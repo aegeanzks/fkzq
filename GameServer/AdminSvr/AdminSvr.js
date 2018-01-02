@@ -20,6 +20,7 @@ var mongoCfg = configs.mongodb();
 var config = configs.adminSvrConfig();
 
 var RlRaceController = require('./Controller/RealFootball/RaceController');
+var GameConfigController = require('./Controller/SystemManage/GameConfigController');
 
 function AdminSvr(){
 }
@@ -40,6 +41,7 @@ AdminSvr.start = function () {
 AdminSvr.regsterFun = function(){
     //用户组件
     new RlRaceController();
+    new GameConfigController();
 };
 
 

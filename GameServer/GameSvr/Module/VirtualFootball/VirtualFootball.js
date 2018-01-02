@@ -117,7 +117,8 @@ function VirtualFootball(){
         goalAndBetArea.setGuestnextgoalsupport(guestNextGoalSupport);
         goalAndBetArea.setEvent(event);
         push.setGoalandbetarea(goalAndBetArea);
-        io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_GoalAndBetArea.Type.ID, push.serializeBinary());
+        var buf = push.serializeBinary();
+        io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_GoalAndBetArea.Type.ID, buf, buf.length);
     };
     //刷新比赛状态
     this.refreshMatchState = function(source, data){
@@ -131,34 +132,13 @@ function VirtualFootball(){
             canBet = true;
         else
             canBet = false;
-        if(matchState == 0){    //获取两队
-            broacastMatchInfo(null, null);
-        }
-        else if(matchState == 2){
+        if(matchState == 2){
             //关闭投注状态，告诉数据中心可以开始结算了
             OBJ('DataCenterModule').send({module:'VirtualFootball', func:'canSettlement'});
-            broacastMatchInfo(null, null);
-        } else if(matchState == 3){
-            //获取结算结算并广播
-            var playerMap = OBJ('PlayerContainer').getAllPlayer();
-            for(var player of playerMap.values()){
-                classLogVirtualBet.find({'user_id':player.userId, 'balance_schedule_id':no, 'status':2}, function(err, data){
-                    if(err){
-                        console.log(err);
-                        return;
-                    }
-                    var winAreas = [];
-                    if(data.length > 0){
-                        for(var item of data){
-                            winAreas.push(item.bet_area);
-                        }
-                    }
-                    broacastMatchInfo(winAreas, player.socket);
-                });
-            }
         }
+        broacastMatchInfo();
     };
-    function broacastMatchInfo(winAreas, socket) {
+    function broacastMatchInfo() {
         //广播
         var push = new pbSvrcli.Push_MatchInfo();
         var matchInfo = new pbSvrcli.MatchInfo();
@@ -167,14 +147,9 @@ function VirtualFootball(){
         matchInfo.setHostwinnum(hostWinNum);
         matchInfo.setDrawnum(drawNum);
         matchInfo.setGuestwinnum(guestWinNum);
-        if(winAreas && winAreas.length > 0){
-            matchInfo.setWinareasList(winAreas);
-        }
         push.setMatchinfo(matchInfo);
-        if(socket)
-            socket.emit(pbSvrcli.Push_MatchInfo.Type.ID, push.serializeBinary());
-        else
-            io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, push.serializeBinary());
+        var buf = push.serializeBinary();
+        io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, buf, buf.length);
     }
     //刷新投注项
     this.refreshBetItem = function(source, data){
@@ -309,13 +284,17 @@ function VirtualFootball(){
             betCoin = betItem2;
         else if(3 == betItem)
             betCoin = betItem3;
+
+        var betArea = askVirtualBet.getBetarea();
+        if(betArea <= 1 && betArea >=6)
+            return;
         
         if(player.gameCoin < betCoin)
             return;
 
         //生成唯一ID
         var uid = uuid.v4();
-        waitMap.set(uid, {player:player, betBeforeCoin: player.gameCoin, betArea: askVirtualBet.getBetarea()});
+        waitMap.set(uid, {player:player, betBeforeCoin: player.gameCoin, betArea: betArea, betItem:betItem});
         OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqBet', data:{
             userid:player.userId, 
             outType:1, 
@@ -336,6 +315,7 @@ function VirtualFootball(){
         res.setResult(data.res);
         res.setCoin(data.balance);
         res.setBetarea(waitValue.betArea);
+        res.setCoinitem(waitValue.betItem);
         //投注
         player.send(pbSvrcli.Res_VirtualBet.Type.ID, res.serializeBinary());
         //生成投注记录
@@ -377,6 +357,27 @@ function VirtualFootball(){
                 return 0;
         }
     }
+    //下一球结算完成，统计用户是否中奖且对中奖的进行推送
+    this.updateMoney = function(){
+        var playerMap = OBJ('PlayerContainer').getAllPlayer();
+        for(var player of playerMap.values()){
+            OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:{
+                userid:player.userId, 
+                cbModule:'VirtualFootball',
+                cbFunc:'resUpdateMoney'
+            }});
+        }
+    };
+    //统计用户是否中奖且对中奖的进行推送回调
+    this.resUpdateMoney = function(source, data){
+        var player = OBJ('PlayerContainer').findSocketByUserId(data.userid);
+        if(null != player && data.balance != player.gameCoin){
+            var push = new pbSvrcli.Push_WinBet();
+            push.setWincoin(parseFloat(player.gameCoin)-parseFloat(data.balance));
+            push.setCoin(data.balance);
+            player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
+        }
+    };
 
     this.run = function(Timestamp){
         

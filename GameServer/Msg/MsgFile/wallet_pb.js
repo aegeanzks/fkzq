@@ -253,6 +253,7 @@ proto.pb.wallet.AddTrade.toObject = function(includeInstance, msg) {
     outTradeNo: msg.getOutTradeNo(),
     type: msg.getType(),
     outType: msg.getOutType(),
+    outTypeDescription: msg.getOutTypeDescription(),
     userId: msg.getUserId(),
     money: msg.getMoney(),
     moneyFrom: msg.getMoneyFrom(),
@@ -306,18 +307,22 @@ proto.pb.wallet.AddTrade.deserializeBinaryFromReader = function(msg, reader) {
       msg.setOutType(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOutTypeDescription(value);
+      break;
+    case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setUserId(value);
       break;
-    case 5:
+    case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setMoney(value);
       break;
-    case 6:
+    case 7:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setMoneyFrom(value);
       break;
-    case 7:
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setMemo(value);
       break;
@@ -380,31 +385,38 @@ proto.pb.wallet.AddTrade.prototype.serializeBinaryToWriter = function (writer) {
       f
     );
   }
+  f = this.getOutTypeDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
   f = this.getUserId();
   if (f !== 0) {
     writer.writeInt32(
-      4,
+      5,
       f
     );
   }
   f = this.getMoney();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      6,
       f
     );
   }
   f = this.getMoneyFrom();
   if (f !== 0) {
     writer.writeInt32(
-      6,
+      7,
       f
     );
   }
   f = this.getMemo();
   if (f.length > 0) {
     writer.writeString(
-      7,
+      8,
       f
     );
   }
@@ -466,62 +478,77 @@ proto.pb.wallet.AddTrade.prototype.setOutType = function(value) {
 
 
 /**
- * optional int32 user_id = 4;
- * @return {number}
+ * optional string out_type_description = 4;
+ * @return {string}
  */
-proto.pb.wallet.AddTrade.prototype.getUserId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+proto.pb.wallet.AddTrade.prototype.getOutTypeDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
 };
 
 
-/** @param {number} value  */
-proto.pb.wallet.AddTrade.prototype.setUserId = function(value) {
+/** @param {string} value  */
+proto.pb.wallet.AddTrade.prototype.setOutTypeDescription = function(value) {
   jspb.Message.setField(this, 4, value);
 };
 
 
 /**
- * optional string money = 5;
- * @return {string}
+ * optional int32 user_id = 5;
+ * @return {number}
  */
-proto.pb.wallet.AddTrade.prototype.getMoney = function() {
-  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+proto.pb.wallet.AddTrade.prototype.getUserId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
 };
 
 
-/** @param {string} value  */
-proto.pb.wallet.AddTrade.prototype.setMoney = function(value) {
+/** @param {number} value  */
+proto.pb.wallet.AddTrade.prototype.setUserId = function(value) {
   jspb.Message.setField(this, 5, value);
 };
 
 
 /**
- * optional int32 money_from = 6;
- * @return {number}
+ * optional string money = 6;
+ * @return {string}
  */
-proto.pb.wallet.AddTrade.prototype.getMoneyFrom = function() {
-  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
+proto.pb.wallet.AddTrade.prototype.getMoney = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 6, ""));
 };
 
 
-/** @param {number} value  */
-proto.pb.wallet.AddTrade.prototype.setMoneyFrom = function(value) {
+/** @param {string} value  */
+proto.pb.wallet.AddTrade.prototype.setMoney = function(value) {
   jspb.Message.setField(this, 6, value);
 };
 
 
 /**
- * optional string memo = 7;
+ * optional int32 money_from = 7;
+ * @return {number}
+ */
+proto.pb.wallet.AddTrade.prototype.getMoneyFrom = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 7, 0));
+};
+
+
+/** @param {number} value  */
+proto.pb.wallet.AddTrade.prototype.setMoneyFrom = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * optional string memo = 8;
  * @return {string}
  */
 proto.pb.wallet.AddTrade.prototype.getMemo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
 };
 
 
 /** @param {string} value  */
 proto.pb.wallet.AddTrade.prototype.setMemo = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setField(this, 8, value);
 };
 
 
@@ -1189,6 +1216,7 @@ proto.pb.wallet.GetTrades.toObject = function(includeInstance, msg) {
     platformId: msg.getPlatformId(),
     type: msg.getType(),
     outType: msg.getOutType(),
+    outTypeDescription: msg.getOutTypeDescription(),
     startTime: msg.getStartTime(),
     endTime: msg.getEndTime(),
     pageNum: msg.getPageNum(),
@@ -1242,7 +1270,7 @@ proto.pb.wallet.GetTrades.deserializeBinaryFromReader = function(msg, reader) {
       msg.setUserId(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setPlatformId(value);
       break;
     case 5:
@@ -1255,17 +1283,21 @@ proto.pb.wallet.GetTrades.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setStartTime(value);
+      msg.setOutTypeDescription(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEndTime(value);
+      msg.setStartTime(value);
       break;
     case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEndTime(value);
+      break;
+    case 10:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setPageNum(value);
       break;
-    case 10:
+    case 11:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setCurPage(value);
       break;
@@ -1329,8 +1361,8 @@ proto.pb.wallet.GetTrades.prototype.serializeBinaryToWriter = function (writer) 
     );
   }
   f = this.getPlatformId();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0) {
+    writer.writeInt32(
       4,
       f
     );
@@ -1349,31 +1381,38 @@ proto.pb.wallet.GetTrades.prototype.serializeBinaryToWriter = function (writer) 
       f
     );
   }
-  f = this.getStartTime();
+  f = this.getOutTypeDescription();
   if (f.length > 0) {
     writer.writeString(
       7,
       f
     );
   }
-  f = this.getEndTime();
+  f = this.getStartTime();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
     );
   }
+  f = this.getEndTime();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
   f = this.getPageNum();
   if (f !== 0) {
     writer.writeInt32(
-      9,
+      10,
       f
     );
   }
   f = this.getCurPage();
   if (f !== 0) {
     writer.writeInt32(
-      10,
+      11,
       f
     );
   }
@@ -1435,15 +1474,15 @@ proto.pb.wallet.GetTrades.prototype.setUserId = function(value) {
 
 
 /**
- * optional string platform_id = 4;
- * @return {string}
+ * optional int32 platform_id = 4;
+ * @return {number}
  */
 proto.pb.wallet.GetTrades.prototype.getPlatformId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
 };
 
 
-/** @param {string} value  */
+/** @param {number} value  */
 proto.pb.wallet.GetTrades.prototype.setPlatformId = function(value) {
   jspb.Message.setField(this, 4, value);
 };
@@ -1480,62 +1519,77 @@ proto.pb.wallet.GetTrades.prototype.setOutType = function(value) {
 
 
 /**
- * optional string start_time = 7;
+ * optional string out_type_description = 7;
  * @return {string}
  */
-proto.pb.wallet.GetTrades.prototype.getStartTime = function() {
+proto.pb.wallet.GetTrades.prototype.getOutTypeDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
 };
 
 
 /** @param {string} value  */
-proto.pb.wallet.GetTrades.prototype.setStartTime = function(value) {
+proto.pb.wallet.GetTrades.prototype.setOutTypeDescription = function(value) {
   jspb.Message.setField(this, 7, value);
 };
 
 
 /**
- * optional string end_time = 8;
+ * optional string start_time = 8;
  * @return {string}
  */
-proto.pb.wallet.GetTrades.prototype.getEndTime = function() {
+proto.pb.wallet.GetTrades.prototype.getStartTime = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
 };
 
 
 /** @param {string} value  */
-proto.pb.wallet.GetTrades.prototype.setEndTime = function(value) {
+proto.pb.wallet.GetTrades.prototype.setStartTime = function(value) {
   jspb.Message.setField(this, 8, value);
 };
 
 
 /**
- * optional int32 page_num = 9;
- * @return {number}
+ * optional string end_time = 9;
+ * @return {string}
  */
-proto.pb.wallet.GetTrades.prototype.getPageNum = function() {
-  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 9, 0));
+proto.pb.wallet.GetTrades.prototype.getEndTime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 9, ""));
 };
 
 
-/** @param {number} value  */
-proto.pb.wallet.GetTrades.prototype.setPageNum = function(value) {
+/** @param {string} value  */
+proto.pb.wallet.GetTrades.prototype.setEndTime = function(value) {
   jspb.Message.setField(this, 9, value);
 };
 
 
 /**
- * optional int32 cur_page = 10;
+ * optional int32 page_num = 10;
  * @return {number}
  */
-proto.pb.wallet.GetTrades.prototype.getCurPage = function() {
+proto.pb.wallet.GetTrades.prototype.getPageNum = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 10, 0));
 };
 
 
 /** @param {number} value  */
-proto.pb.wallet.GetTrades.prototype.setCurPage = function(value) {
+proto.pb.wallet.GetTrades.prototype.setPageNum = function(value) {
   jspb.Message.setField(this, 10, value);
+};
+
+
+/**
+ * optional int32 cur_page = 11;
+ * @return {number}
+ */
+proto.pb.wallet.GetTrades.prototype.getCurPage = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 11, 0));
+};
+
+
+/** @param {number} value  */
+proto.pb.wallet.GetTrades.prototype.setCurPage = function(value) {
+  jspb.Message.setField(this, 11, value);
 };
 
 
@@ -1851,6 +1905,7 @@ proto.pb.wallet.Trade.toObject = function(includeInstance, msg) {
     platformId: msg.getPlatformId(),
     type: msg.getType(),
     outType: msg.getOutType(),
+    outTypeDescription: msg.getOutTypeDescription(),
     money: msg.getMoney(),
     moneyFrom: msg.getMoneyFrom(),
     balance: msg.getBalance(),
@@ -1909,7 +1964,7 @@ proto.pb.wallet.Trade.deserializeBinaryFromReader = function(msg, reader) {
       msg.setUserId(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setPlatformId(value);
       break;
     case 6:
@@ -1922,21 +1977,25 @@ proto.pb.wallet.Trade.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMoney(value);
+      msg.setOutTypeDescription(value);
       break;
     case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMoney(value);
+      break;
+    case 10:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setMoneyFrom(value);
       break;
-    case 10:
+    case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.setBalance(value);
       break;
-    case 11:
+    case 12:
       var value = /** @type {string} */ (reader.readString());
       msg.setMemo(value);
       break;
-    case 12:
+    case 13:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreatedTime(value);
       break;
@@ -2007,8 +2066,8 @@ proto.pb.wallet.Trade.prototype.serializeBinaryToWriter = function (writer) {
     );
   }
   f = this.getPlatformId();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0) {
+    writer.writeInt32(
       5,
       f
     );
@@ -2027,38 +2086,45 @@ proto.pb.wallet.Trade.prototype.serializeBinaryToWriter = function (writer) {
       f
     );
   }
-  f = this.getMoney();
+  f = this.getOutTypeDescription();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
     );
   }
+  f = this.getMoney();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
   f = this.getMoneyFrom();
   if (f !== 0) {
     writer.writeInt32(
-      9,
+      10,
       f
     );
   }
   f = this.getBalance();
   if (f.length > 0) {
     writer.writeString(
-      10,
+      11,
       f
     );
   }
   f = this.getMemo();
   if (f.length > 0) {
     writer.writeString(
-      11,
+      12,
       f
     );
   }
   f = this.getCreatedTime();
   if (f.length > 0) {
     writer.writeString(
-      12,
+      13,
       f
     );
   }
@@ -2135,15 +2201,15 @@ proto.pb.wallet.Trade.prototype.setUserId = function(value) {
 
 
 /**
- * optional string platform_id = 5;
- * @return {string}
+ * optional int32 platform_id = 5;
+ * @return {number}
  */
 proto.pb.wallet.Trade.prototype.getPlatformId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
 };
 
 
-/** @param {string} value  */
+/** @param {number} value  */
 proto.pb.wallet.Trade.prototype.setPlatformId = function(value) {
   jspb.Message.setField(this, 5, value);
 };
@@ -2180,77 +2246,92 @@ proto.pb.wallet.Trade.prototype.setOutType = function(value) {
 
 
 /**
- * optional string money = 8;
+ * optional string out_type_description = 8;
  * @return {string}
  */
-proto.pb.wallet.Trade.prototype.getMoney = function() {
+proto.pb.wallet.Trade.prototype.getOutTypeDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
 };
 
 
 /** @param {string} value  */
-proto.pb.wallet.Trade.prototype.setMoney = function(value) {
+proto.pb.wallet.Trade.prototype.setOutTypeDescription = function(value) {
   jspb.Message.setField(this, 8, value);
 };
 
 
 /**
- * optional int32 money_from = 9;
- * @return {number}
+ * optional string money = 9;
+ * @return {string}
  */
-proto.pb.wallet.Trade.prototype.getMoneyFrom = function() {
-  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 9, 0));
+proto.pb.wallet.Trade.prototype.getMoney = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 9, ""));
 };
 
 
-/** @param {number} value  */
-proto.pb.wallet.Trade.prototype.setMoneyFrom = function(value) {
+/** @param {string} value  */
+proto.pb.wallet.Trade.prototype.setMoney = function(value) {
   jspb.Message.setField(this, 9, value);
 };
 
 
 /**
- * optional string balance = 10;
- * @return {string}
+ * optional int32 money_from = 10;
+ * @return {number}
  */
-proto.pb.wallet.Trade.prototype.getBalance = function() {
-  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 10, ""));
+proto.pb.wallet.Trade.prototype.getMoneyFrom = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 10, 0));
 };
 
 
-/** @param {string} value  */
-proto.pb.wallet.Trade.prototype.setBalance = function(value) {
+/** @param {number} value  */
+proto.pb.wallet.Trade.prototype.setMoneyFrom = function(value) {
   jspb.Message.setField(this, 10, value);
 };
 
 
 /**
- * optional string memo = 11;
+ * optional string balance = 11;
  * @return {string}
  */
-proto.pb.wallet.Trade.prototype.getMemo = function() {
+proto.pb.wallet.Trade.prototype.getBalance = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 11, ""));
 };
 
 
 /** @param {string} value  */
-proto.pb.wallet.Trade.prototype.setMemo = function(value) {
+proto.pb.wallet.Trade.prototype.setBalance = function(value) {
   jspb.Message.setField(this, 11, value);
 };
 
 
 /**
- * optional string created_time = 12;
+ * optional string memo = 12;
  * @return {string}
  */
-proto.pb.wallet.Trade.prototype.getCreatedTime = function() {
+proto.pb.wallet.Trade.prototype.getMemo = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 12, ""));
 };
 
 
 /** @param {string} value  */
-proto.pb.wallet.Trade.prototype.setCreatedTime = function(value) {
+proto.pb.wallet.Trade.prototype.setMemo = function(value) {
   jspb.Message.setField(this, 12, value);
+};
+
+
+/**
+ * optional string created_time = 13;
+ * @return {string}
+ */
+proto.pb.wallet.Trade.prototype.getCreatedTime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 13, ""));
+};
+
+
+/** @param {string} value  */
+proto.pb.wallet.Trade.prototype.setCreatedTime = function(value) {
+  jspb.Message.setField(this, 13, value);
 };
 
 
@@ -2303,6 +2384,8 @@ proto.pb.wallet.NsqAddTrade.toObject = function(includeInstance, msg) {
     funcId: msg.getFuncId(),
     platformId: msg.getPlatformId(),
     tradeNo: msg.getTradeNo(),
+    balance: msg.getBalance(),
+    createdTime: msg.getCreatedTime(),
     trade: (f = msg.getTrade()) && proto.pb.wallet.AddTrade.toObject(includeInstance, f)
   };
 
@@ -2353,6 +2436,14 @@ proto.pb.wallet.NsqAddTrade.deserializeBinaryFromReader = function(msg, reader) 
       msg.setTradeNo(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBalance(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedTime(value);
+      break;
+    case 6:
       var value = new proto.pb.wallet.AddTrade;
       reader.readMessage(value,proto.pb.wallet.AddTrade.deserializeBinaryFromReader);
       msg.setTrade(value);
@@ -2416,10 +2507,24 @@ proto.pb.wallet.NsqAddTrade.prototype.serializeBinaryToWriter = function (writer
       f
     );
   }
+  f = this.getBalance();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = this.getCreatedTime();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
   f = this.getTrade();
   if (f != null) {
     writer.writeMessage(
-      4,
+      6,
       f,
       proto.pb.wallet.AddTrade.serializeBinaryToWriter
     );
@@ -2482,18 +2587,48 @@ proto.pb.wallet.NsqAddTrade.prototype.setTradeNo = function(value) {
 
 
 /**
- * optional AddTrade trade = 4;
+ * optional string balance = 4;
+ * @return {string}
+ */
+proto.pb.wallet.NsqAddTrade.prototype.getBalance = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
+};
+
+
+/** @param {string} value  */
+proto.pb.wallet.NsqAddTrade.prototype.setBalance = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional string created_time = 5;
+ * @return {string}
+ */
+proto.pb.wallet.NsqAddTrade.prototype.getCreatedTime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+};
+
+
+/** @param {string} value  */
+proto.pb.wallet.NsqAddTrade.prototype.setCreatedTime = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional AddTrade trade = 6;
  * @return {proto.pb.wallet.AddTrade}
  */
 proto.pb.wallet.NsqAddTrade.prototype.getTrade = function() {
   return /** @type{proto.pb.wallet.AddTrade} */ (
-    jspb.Message.getWrapperField(this, proto.pb.wallet.AddTrade, 4));
+    jspb.Message.getWrapperField(this, proto.pb.wallet.AddTrade, 6));
 };
 
 
 /** @param {proto.pb.wallet.AddTrade|undefined} value  */
 proto.pb.wallet.NsqAddTrade.prototype.setTrade = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
+  jspb.Message.setWrapperField(this, 6, value);
 };
 
 
@@ -2507,7 +2642,7 @@ proto.pb.wallet.NsqAddTrade.prototype.clearTrade = function() {
  * @return{!boolean}
  */
 proto.pb.wallet.NsqAddTrade.prototype.hasTrade = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
