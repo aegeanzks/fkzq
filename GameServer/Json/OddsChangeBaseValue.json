@@ -1,0 +1,9 @@
+{
+  "1": {
+    "id": 1,
+    "change_rate1": 5,
+    "change_rate2": 5,
+    "change_rate3": 5,
+    "base_value": 0.01
+  }
+}

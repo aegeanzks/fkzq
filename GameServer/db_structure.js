@@ -54,6 +54,7 @@ exports.Schedule = function(){
                 type:Number,
                 default:0,              //0  不录入  1录入    
             },
+            bet_rate:Array,              //投注比例
             //欧赔
             odds_jingcai:Array,           //竞彩官方        
             odds_avg:Array,               //平均欧赔
@@ -120,6 +121,10 @@ exports.LogRealBet = function(){
     return {
         'name':'log_real_bet',
         'schema':{
+            out_trade_no: {         //投注记录id
+                type: String,
+                unique: true,
+            },
             user_id: {               //用户ID
                 type: Number,
                 index: true,
@@ -128,18 +133,18 @@ exports.LogRealBet = function(){
                 type: String,
                 index: true,
             },
+            bet_scheduleid:String,   //投注赛事id列表
             bet_date: Date,          //下注时间
             bet_num: Number,         //注数
             multiple: Number,       //倍数
+            bet_type: Number,       //投注类型   
+            jingcai_type:Number,     //竞猜类型  1胜平负  2让球胜平负 3混合过关
             bet_coin: Number,        //下注金额
             distribute_coin: Number, //派发金额
             before_bet_coin: Number,  //下注前金额
             status: Number,         //状态 0未开奖 1不中 2中 3结算失败
-            balance_schedule_id: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
-                type: Number,
-                index: true,
-            },
-            bet_plan: String         //投注方案,格式为{'scheduleIds':[11,12,13,14],'area':[0,1,1,2]} //0主胜 1平 2客胜（有几个场次就是几串1）
+            bet_plan: String         //投注方案,格式为{'schedule_id':,'team_name':,'match_date':,'bet_info':,'odds':,'bet_result':} 
+
         }
     };
 };
@@ -302,6 +307,8 @@ exports.ConfBetItem = function(){
             item1: Number,
             item2: Number,
             item3: Number,
+            num_limit:Number,            //最多压几场比赛
+            coin_limit:Number,           //最高下注金额
         }
     };
 };

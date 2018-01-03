@@ -16,10 +16,14 @@ function VirtualFootballConf(){
     //成员变量
     var self = this;
     var mapTeamInfo = new Map(); //球队信息
+    var mapOddsChange = new Map(); //赔率变化表
+    var mapOddsChangeRatio = new Map(); //赔率变化系数表
     var oddsInfo;
     var stockInfo;
     var eventInfo;
     var goalInfo;
+    var betItemInfo;
+    var oddsChangeBaseValue;
     var classConfVirtualGoal = OBJ('DbMgr').getStatement(Schema.ConfVirtualGoal());
     var classConfVirtualOdds = OBJ('DbMgr').getStatement(Schema.ConfVirtualOdds());
     var classConfVirtualEvent = OBJ('DbMgr').getStatement(Schema.ConfVirtualEvent());
@@ -30,9 +34,10 @@ function VirtualFootballConf(){
     //初始化函数
     function init(){
         createTeamInfo();
-        //createTeamOdds();
+        createOddsChangeInfo();
+        createOddsChangeBaseValueInfo();
+        createOddsChangeRatioInfo();
         loadInitData();
-
     }
     init();
 
@@ -129,7 +134,6 @@ function VirtualFootballConf(){
         }catch(err){
             console.log('loadInitDataTodb err :'+err);
         }
-
     }
 
 
@@ -138,6 +142,26 @@ function VirtualFootballConf(){
         for(var key in teamInfo){
             var item = teamInfo[key];
             mapTeamInfo.set(item.ID, item);
+        }
+    }
+
+    function createOddsChangeInfo(){
+        var oddsChangeInfo = JSON.parse(fs.readFileSync('./Json/OddsChange.json'));
+        for(var key in oddsChangeInfo){
+            var item = oddsChangeInfo[key];
+            mapOddsChange.set(item.time_scale, item);
+        }
+    }
+
+    function createOddsChangeBaseValueInfo(){
+        oddsChangeBaseValueInfo = JSON.parse(fs.readFileSync('./Json/OddsChangeBaseValue.json'));
+    }
+
+    function createOddsChangeRatioInfo(){
+        var oddsChangeRatioInfo = JSON.parse(fs.readFileSync('./Json/OddsChangeRatio.json'));
+        for(var key in oddsChangeRatioInfo){
+            var item = oddsChangeRatioInfo[key];
+            mapOddsChangeRatio.set(item.goal_dif, item);
         }
     }
 
@@ -155,14 +179,6 @@ function VirtualFootballConf(){
         return mapTeamInfo.get(index);
     };
 
-    /*this.randOdds = function(level1, level2){
-        var dif = level1-level2;
-        var arr = mapTeamOdds.get(dif);
-        if (null == arr)
-            return null;
-        var index = Functions.getRandomNum(0, arr.length);
-        return arr[index];
-    };*/
     this.randOdds = function(level1, level2, func){
         classConfVirtualOdds.find({'sides_dvalue':level1-level2}, function(err, data){
             if(err){
@@ -181,7 +197,7 @@ function VirtualFootballConf(){
                 });
             }else{
                 var index = Functions.getRandomNum(0, data.length-1);
-                func(data[index]); 
+                func(data[index]);
             }
         });
     };
@@ -269,6 +285,14 @@ function VirtualFootballConf(){
                     func(data.item1, data.item2, data.item3);
             }
         });
+    };
+    this.getOddsChangeBaseValue = function(){
+        return {
+            change_rate1: oddsChangeBaseValueInfo["1"].change_rate1,
+            change_rate2: oddsChangeBaseValueInfo["1"].change_rate2,
+            change_rate3: oddsChangeBaseValueInfo["1"].change_rate3,
+            base_value: oddsChangeBaseValueInfo["1"].base_value,
+        };
     };
 }
 

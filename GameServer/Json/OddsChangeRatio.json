@@ -1,0 +1,44 @@
+{
+  "0": {
+    "goal_dif": 0,
+    "win_ratio": 1,
+    "draw_ratio": 1,
+    "lose_ratio": 1
+  },
+  "1": {
+    "goal_dif": 1,
+    "win_ratio": 0.6,
+    "draw_ratio": 1.5,
+    "lose_ratio": 1.5
+  },
+  "2": {
+    "goal_dif": 2,
+    "win_ratio": 1,
+    "draw_ratio": 1,
+    "lose_ratio": 1
+  },
+  "3": {
+    "goal_dif": 3,
+    "win_ratio": 1,
+    "draw_ratio": 1,
+    "lose_ratio": 1
+  },
+  "-1": {
+    "goal_dif": -1,
+    "win_ratio": 1,
+    "draw_ratio": 1,
+    "lose_ratio": 1
+  },
+  "-2": {
+    "goal_dif": -2,
+    "win_ratio": 1,
+    "draw_ratio": 1,
+    "lose_ratio": 1
+  },
+  "-3": {
+    "goal_dif": -3,
+    "win_ratio": 1,
+    "draw_ratio": 1,
+    "lose_ratio": 1
+  }
+}

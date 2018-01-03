@@ -13,6 +13,18 @@ goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_GuessingRecord', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_GuessingRecord.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_Login', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_Login.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootBetInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootMainInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootRecords', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootRecords.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_VirtualBet', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_VirtualBet.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_VirtualFootMainInfo', null, global);
@@ -26,18 +38,40 @@ goog.exportSymbol('proto.kzgame.svrcli.msg.Push_GoalAndBetArea', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_GoalAndBetArea.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_MatchInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_MatchInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_SchedulInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_SchedulInfo.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_WinBet', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_WinBet.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_GuessingRecord', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_GuessingRecord.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_Login', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_Login.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetRecords', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetRecords.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootMainInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootMainInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootRecords', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Res_RealFootRecords.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualBet', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualBet.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualHistory', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualHistory.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlBetConfig', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlBetInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlBetRecordInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlListInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlRecordContent', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlSchedulInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlScheduleRecords', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlScheduleRecordsList', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.VirtualHistory', null, global);
 
 /**
@@ -565,7 +599,9 @@ proto.kzgame.svrcli.msg.MatchInfo.toObject = function(includeInstance, msg) {
     lastsecond: msg.getLastsecond(),
     hostwinnum: msg.getHostwinnum(),
     drawnum: msg.getDrawnum(),
-    guestwinnum: msg.getGuestwinnum()
+    guestwinnum: msg.getGuestwinnum(),
+    hostteamid: msg.getHostteamid(),
+    guestteamid: msg.getGuestteamid()
   };
 
   if (includeInstance) {
@@ -621,6 +657,14 @@ proto.kzgame.svrcli.msg.MatchInfo.deserializeBinaryFromReader = function(msg, re
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setGuestwinnum(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setHostteamid(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setGuestteamid(value);
       break;
     default:
       reader.skipField();
@@ -692,6 +736,20 @@ proto.kzgame.svrcli.msg.MatchInfo.prototype.serializeBinaryToWriter = function (
   if (f !== 0) {
     writer.writeInt32(
       5,
+      f
+    );
+  }
+  f = this.getHostteamid();
+  if (f !== 0) {
+    writer.writeInt32(
+      6,
+      f
+    );
+  }
+  f = this.getGuestteamid();
+  if (f !== 0) {
+    writer.writeInt32(
+      7,
       f
     );
   }
@@ -782,6 +840,36 @@ proto.kzgame.svrcli.msg.MatchInfo.prototype.setGuestwinnum = function(value) {
 };
 
 
+/**
+ * optional int32 hostTeamId = 6;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.MatchInfo.prototype.getHostteamid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.MatchInfo.prototype.setHostteamid = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional int32 guestTeamId = 7;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.MatchInfo.prototype.getGuestteamid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 7, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.MatchInfo.prototype.setGuestteamid = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -828,9 +916,7 @@ proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.toObject = function(opt_include
  */
 proto.kzgame.svrcli.msg.GoalAndBetArea.toObject = function(includeInstance, msg) {
   var f, obj = {
-    hostteamid: msg.getHostteamid(),
     hostteamgoal: msg.getHostteamgoal(),
-    guestteamid: msg.getGuestteamid(),
     guestteamgoal: msg.getGuestteamgoal(),
     hostwintimes: msg.getHostwintimes(),
     hostwinsupport: msg.getHostwinsupport(),
@@ -883,69 +969,61 @@ proto.kzgame.svrcli.msg.GoalAndBetArea.deserializeBinaryFromReader = function(ms
     switch (field) {
     case 1:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setHostteamid(value);
+      msg.setHostteamgoal(value);
       break;
     case 2:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setHostteamgoal(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setGuestteamid(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readInt32());
       msg.setGuestteamgoal(value);
       break;
-    case 5:
+    case 3:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setHostwintimes(value);
       break;
-    case 6:
+    case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setHostwinsupport(value);
       break;
-    case 7:
+    case 5:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setDrawtimes(value);
       break;
-    case 8:
+    case 6:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setDrawsupport(value);
       break;
-    case 9:
+    case 7:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setGuestwintimes(value);
       break;
-    case 10:
+    case 8:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setGuestwinsupport(value);
       break;
-    case 11:
+    case 9:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setHostnextgoaltimes(value);
       break;
-    case 12:
+    case 10:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setHostnextgoalsupport(value);
       break;
-    case 13:
+    case 11:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setZerogoaltimes(value);
       break;
-    case 14:
+    case 12:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setZerogoalsupport(value);
       break;
-    case 15:
+    case 13:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setGuestnextgoaltimes(value);
       break;
-    case 16:
+    case 14:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setGuestnextgoalsupport(value);
       break;
-    case 17:
+    case 15:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setEvent(value);
       break;
@@ -987,122 +1065,108 @@ proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.serializeBinary = function() {
  */
 proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = this.getHostteamid();
+  f = this.getHostteamgoal();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = this.getHostteamgoal();
+  f = this.getGuestteamgoal();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
-  f = this.getGuestteamid();
-  if (f !== 0) {
-    writer.writeInt32(
-      3,
-      f
-    );
-  }
-  f = this.getGuestteamgoal();
-  if (f !== 0) {
-    writer.writeInt32(
-      4,
-      f
-    );
-  }
   f = this.getHostwintimes();
   if (f !== 0.0) {
     writer.writeFloat(
-      5,
+      3,
       f
     );
   }
   f = this.getHostwinsupport();
   if (f !== 0) {
     writer.writeInt32(
-      6,
+      4,
       f
     );
   }
   f = this.getDrawtimes();
   if (f !== 0.0) {
     writer.writeFloat(
-      7,
+      5,
       f
     );
   }
   f = this.getDrawsupport();
   if (f !== 0) {
     writer.writeInt32(
-      8,
+      6,
       f
     );
   }
   f = this.getGuestwintimes();
   if (f !== 0.0) {
     writer.writeFloat(
-      9,
+      7,
       f
     );
   }
   f = this.getGuestwinsupport();
   if (f !== 0) {
     writer.writeInt32(
-      10,
+      8,
       f
     );
   }
   f = this.getHostnextgoaltimes();
   if (f !== 0.0) {
     writer.writeFloat(
-      11,
+      9,
       f
     );
   }
   f = this.getHostnextgoalsupport();
   if (f !== 0) {
     writer.writeInt32(
-      12,
+      10,
       f
     );
   }
   f = this.getZerogoaltimes();
   if (f !== 0.0) {
     writer.writeFloat(
-      13,
+      11,
       f
     );
   }
   f = this.getZerogoalsupport();
   if (f !== 0) {
     writer.writeInt32(
-      14,
+      12,
       f
     );
   }
   f = this.getGuestnextgoaltimes();
   if (f !== 0.0) {
     writer.writeFloat(
-      15,
+      13,
       f
     );
   }
   f = this.getGuestnextgoalsupport();
   if (f !== 0.0) {
     writer.writeFloat(
-      16,
+      14,
       f
     );
   }
   f = this.getEvent();
   if (f !== 0) {
     writer.writeInt32(
-      17,
+      15,
       f
     );
   }
@@ -1119,257 +1183,227 @@ proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.cloneMessage = function() {
 
 
 /**
- * optional int32 hostTeamId = 1;
+ * optional int32 hostTeamGoal = 1;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostteamid = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostteamgoal = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostteamid = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostteamgoal = function(value) {
   jspb.Message.setField(this, 1, value);
 };
 
 
 /**
- * optional int32 hostTeamGoal = 2;
+ * optional int32 guestTeamGoal = 2;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostteamgoal = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestteamgoal = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostteamgoal = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestteamgoal = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 
 
 /**
- * optional int32 guestTeamId = 3;
+ * optional float hostWinTimes = 3;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestteamid = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostwintimes = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestteamid = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostwintimes = function(value) {
   jspb.Message.setField(this, 3, value);
 };
 
 
 /**
- * optional int32 guestTeamGoal = 4;
+ * optional int32 hostWinSupport = 4;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestteamgoal = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostwinsupport = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestteamgoal = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostwinsupport = function(value) {
   jspb.Message.setField(this, 4, value);
 };
 
 
 /**
- * optional float hostWinTimes = 5;
+ * optional float drawTimes = 5;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostwintimes = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getDrawtimes = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostwintimes = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setDrawtimes = function(value) {
   jspb.Message.setField(this, 5, value);
 };
 
 
 /**
- * optional int32 hostWinSupport = 6;
+ * optional int32 drawSupport = 6;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostwinsupport = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getDrawsupport = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostwinsupport = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setDrawsupport = function(value) {
   jspb.Message.setField(this, 6, value);
 };
 
 
 /**
- * optional float drawTimes = 7;
+ * optional float guestWinTimes = 7;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getDrawtimes = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestwintimes = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 7, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setDrawtimes = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestwintimes = function(value) {
   jspb.Message.setField(this, 7, value);
 };
 
 
 /**
- * optional int32 drawSupport = 8;
+ * optional int32 guestWinSupport = 8;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getDrawsupport = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestwinsupport = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 8, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setDrawsupport = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestwinsupport = function(value) {
   jspb.Message.setField(this, 8, value);
 };
 
 
 /**
- * optional float guestWinTimes = 9;
+ * optional float hostNextGoalTimes = 9;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestwintimes = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostnextgoaltimes = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 9, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestwintimes = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostnextgoaltimes = function(value) {
   jspb.Message.setField(this, 9, value);
 };
 
 
 /**
- * optional int32 guestWinSupport = 10;
+ * optional int32 hostNextGoalSupport = 10;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestwinsupport = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostnextgoalsupport = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 10, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestwinsupport = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostnextgoalsupport = function(value) {
   jspb.Message.setField(this, 10, value);
 };
 
 
 /**
- * optional float hostNextGoalTimes = 11;
+ * optional float zeroGoalTimes = 11;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostnextgoaltimes = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getZerogoaltimes = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 11, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostnextgoaltimes = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setZerogoaltimes = function(value) {
   jspb.Message.setField(this, 11, value);
 };
 
 
 /**
- * optional int32 hostNextGoalSupport = 12;
+ * optional int32 zeroGoalSupport = 12;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getHostnextgoalsupport = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getZerogoalsupport = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 12, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setHostnextgoalsupport = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setZerogoalsupport = function(value) {
   jspb.Message.setField(this, 12, value);
 };
 
 
 /**
- * optional float zeroGoalTimes = 13;
+ * optional float guestNextGoalTimes = 13;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getZerogoaltimes = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestnextgoaltimes = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 13, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setZerogoaltimes = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestnextgoaltimes = function(value) {
   jspb.Message.setField(this, 13, value);
 };
 
 
 /**
- * optional int32 zeroGoalSupport = 14;
+ * optional float guestNextGoalSupport = 14;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getZerogoalsupport = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestnextgoalsupport = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 14, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setZerogoalsupport = function(value) {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestnextgoalsupport = function(value) {
   jspb.Message.setField(this, 14, value);
 };
 
 
 /**
- * optional float guestNextGoalTimes = 15;
+ * optional int32 event = 15;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestnextgoaltimes = function() {
+proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getEvent = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 15, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestnextgoaltimes = function(value) {
-  jspb.Message.setField(this, 15, value);
-};
-
-
-/**
- * optional float guestNextGoalSupport = 16;
- * @return {number}
- */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getGuestnextgoalsupport = function() {
-  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 16, 0));
-};
-
-
-/** @param {number} value  */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setGuestnextgoalsupport = function(value) {
-  jspb.Message.setField(this, 16, value);
-};
-
-
-/**
- * optional int32 event = 17;
- * @return {number}
- */
-proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.getEvent = function() {
-  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 17, 0));
-};
-
-
-/** @param {number} value  */
 proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setEvent = function(value) {
-  jspb.Message.setField(this, 17, value);
+  jspb.Message.setField(this, 15, value);
 };
 
 
@@ -4005,6 +4039,4996 @@ proto.kzgame.svrcli.msg.Push_WinBet.prototype.setCoin = function(value) {
 proto.kzgame.svrcli.msg.Push_WinBet.Type = {
   UNSET: 0,
   ID: 20010
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlSchedulInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlSchedulInfo.displayName = 'proto.kzgame.svrcli.msg.RlSchedulInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlSchedulInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlSchedulInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    sceheduleid: msg.getSceheduleid(),
+    matchname: msg.getMatchname(),
+    officialnum: msg.getOfficialnum(),
+    endsale: msg.getEndsale(),
+    homename: msg.getHomename(),
+    awayname: msg.getAwayname(),
+    handicap: msg.getHandicap(),
+    oddsjingcai: msg.getOddsjingcai(),
+    oddsrangqiu: msg.getOddsrangqiu(),
+    oddsavg: msg.getOddsavg(),
+    historyinfo: msg.getHistoryinfo(),
+    lastestinfo: msg.getLastestinfo(),
+    betrate: msg.getBetrate(),
+    hotflag: msg.getHotflag()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlSchedulInfo}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlSchedulInfo;
+  return proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlSchedulInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlSchedulInfo}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSceheduleid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMatchname(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOfficialnum(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEndsale(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHomename(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAwayname(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHandicap(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOddsjingcai(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOddsrangqiu(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOddsavg(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHistoryinfo(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLastestinfo(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBetrate(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setHotflag(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlSchedulInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getSceheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getMatchname();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = this.getOfficialnum();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = this.getEndsale();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = this.getHomename();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = this.getAwayname();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = this.getHandicap();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = this.getOddsjingcai();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = this.getOddsrangqiu();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
+  f = this.getOddsavg();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
+  f = this.getHistoryinfo();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = this.getLastestinfo();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
+      f
+    );
+  }
+  f = this.getBetrate();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
+      f
+    );
+  }
+  f = this.getHotflag();
+  if (f !== 0) {
+    writer.writeInt32(
+      14,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlSchedulInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlSchedulInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 sceheduleId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getSceheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setSceheduleid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string matchName = 2;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getMatchname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setMatchname = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional string officialNum = 3;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOfficialnum = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOfficialnum = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional string endSale = 4;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getEndsale = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setEndsale = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional string homeName = 5;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHomename = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHomename = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional string awayName = 6;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getAwayname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 6, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setAwayname = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional string handicap = 7;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHandicap = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHandicap = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * optional string oddsJingcai = 8;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOddsjingcai = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsjingcai = function(value) {
+  jspb.Message.setField(this, 8, value);
+};
+
+
+/**
+ * optional string oddsRangqiu = 9;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOddsrangqiu = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 9, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsrangqiu = function(value) {
+  jspb.Message.setField(this, 9, value);
+};
+
+
+/**
+ * optional string oddsAvg = 10;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOddsavg = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 10, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsavg = function(value) {
+  jspb.Message.setField(this, 10, value);
+};
+
+
+/**
+ * optional string historyInfo = 11;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHistoryinfo = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 11, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHistoryinfo = function(value) {
+  jspb.Message.setField(this, 11, value);
+};
+
+
+/**
+ * optional string lastestInfo = 12;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getLastestinfo = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 12, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setLastestinfo = function(value) {
+  jspb.Message.setField(this, 12, value);
+};
+
+
+/**
+ * optional string betRate = 13;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getBetrate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 13, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setBetrate = function(value) {
+  jspb.Message.setField(this, 13, value);
+};
+
+
+/**
+ * optional int32 hotFlag = 14;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHotflag = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 14, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHotflag = function(value) {
+  jspb.Message.setField(this, 14, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlListInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.RlListInfo.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlListInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlListInfo.displayName = 'proto.kzgame.svrcli.msg.RlListInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.RlListInfo.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlListInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlListInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    listdesc: msg.getListdesc(),
+    schedulinfoList: jspb.Message.toObjectList(msg.getSchedulinfoList(),
+    proto.kzgame.svrcli.msg.RlSchedulInfo.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlListInfo}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlListInfo;
+  return proto.kzgame.svrcli.msg.RlListInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlListInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlListInfo}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setListdesc(value);
+      break;
+    case 2:
+      var value = new proto.kzgame.svrcli.msg.RlSchedulInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader);
+      msg.getSchedulinfoList().push(value);
+      msg.setSchedulinfoList(msg.getSchedulinfoList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlListInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlListInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getListdesc();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = this.getSchedulinfoList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlListInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlListInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional string listDesc = 1;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.getListdesc = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.setListdesc = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * repeated RlSchedulInfo schedulInfo = 2;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>}
+ */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.getSchedulinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlSchedulInfo, 2));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} value  */
+proto.kzgame.svrcli.msg.RlListInfo.prototype.setSchedulinfoList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+proto.kzgame.svrcli.msg.RlListInfo.prototype.clearSchedulinfoList = function() {
+  this.setSchedulinfoList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlBetConfig = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlBetConfig, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlBetConfig.displayName = 'proto.kzgame.svrcli.msg.RlBetConfig';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlBetConfig.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlBetConfig} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    betitem1: msg.getBetitem1(),
+    betitem2: msg.getBetitem2(),
+    betitem3: msg.getBetitem3(),
+    betnumlimit: msg.getBetnumlimit(),
+    betcoinlimit: msg.getBetcoinlimit()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlBetConfig}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlBetConfig;
+  return proto.kzgame.svrcli.msg.RlBetConfig.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlBetConfig} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlBetConfig}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetitem1(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetitem2(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetitem3(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetnumlimit(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetcoinlimit(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlBetConfig} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getBetitem1();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getBetitem2();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = this.getBetitem3();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = this.getBetnumlimit();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = this.getBetcoinlimit();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlBetConfig} The clone.
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlBetConfig} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 betItem1 = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.getBetitem1 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.setBetitem1 = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 betItem2 = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.getBetitem2 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.setBetitem2 = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 betItem3 = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.getBetitem3 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.setBetitem3 = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 betNumLimit = 4;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.getBetnumlimit = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.setBetnumlimit = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 betCoinLimit = 5;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.getBetcoinlimit = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetConfig.prototype.setBetcoinlimit = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Ask_RealFootMainInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.displayName = 'proto.kzgame.svrcli.msg.Ask_RealFootMainInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    showtype: msg.getShowtype()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Ask_RealFootMainInfo;
+  return proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setShowtype(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getShowtype();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_RealFootMainInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 showType = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.prototype.getShowtype = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.prototype.setShowtype = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootMainInfo.Type = {
+  UNSET: 0,
+  ID: 30000
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Res_RealFootMainInfo.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Res_RealFootMainInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Res_RealFootMainInfo.displayName = 'proto.kzgame.svrcli.msg.Res_RealFootMainInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.repeatedFields_ = [3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Res_RealFootMainInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    scheduletotal: msg.getScheduletotal(),
+    listtotal: msg.getListtotal(),
+    listinfoList: jspb.Message.toObjectList(msg.getListinfoList(),
+    proto.kzgame.svrcli.msg.RlBetConfig.toObject, includeInstance),
+    betconfig: (f = msg.getBetconfig()) && proto.kzgame.svrcli.msg.RlBetConfig.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Res_RealFootMainInfo;
+  return proto.kzgame.svrcli.msg.Res_RealFootMainInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setScheduletotal(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setListtotal(value);
+      break;
+    case 3:
+      var value = new proto.kzgame.svrcli.msg.RlBetConfig;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlBetConfig.deserializeBinaryFromReader);
+      msg.getListinfoList().push(value);
+      msg.setListinfoList(msg.getListinfoList());
+      break;
+    case 4:
+      var value = new proto.kzgame.svrcli.msg.RlBetConfig;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlBetConfig.deserializeBinaryFromReader);
+      msg.setBetconfig(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getScheduletotal();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getListtotal();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = this.getListinfoList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      proto.kzgame.svrcli.msg.RlBetConfig.serializeBinaryToWriter
+    );
+  }
+  f = this.getBetconfig();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.kzgame.svrcli.msg.RlBetConfig.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_RealFootMainInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 scheduleTotal = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.getScheduletotal = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.setScheduletotal = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 listTotal = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.getListtotal = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.setListtotal = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * repeated RlBetConfig ListInfo = 3;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlBetConfig>}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.getListinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlBetConfig>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlBetConfig, 3));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlBetConfig>} value  */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.setListinfoList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.clearListinfoList = function() {
+  this.setListinfoList([]);
+};
+
+
+/**
+ * optional RlBetConfig betConfig = 4;
+ * @return {proto.kzgame.svrcli.msg.RlBetConfig}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.getBetconfig = function() {
+  return /** @type{proto.kzgame.svrcli.msg.RlBetConfig} */ (
+    jspb.Message.getWrapperField(this, proto.kzgame.svrcli.msg.RlBetConfig, 4));
+};
+
+
+/** @param {proto.kzgame.svrcli.msg.RlBetConfig|undefined} value  */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.setBetconfig = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.clearBetconfig = function() {
+  this.setBetconfig(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return{!boolean}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.hasBetconfig = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.Type = {
+  UNSET: 0,
+  ID: 30001
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.displayName = 'proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    sceheduleid: msg.getSceheduleid()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo;
+  return proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSceheduleid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getSceheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 sceheduleId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.getSceheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.setSceheduleid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.Type = {
+  UNSET: 0,
+  ID: 30002
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.displayName = 'proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    oddsavg: msg.getOddsavg(),
+    betrate: msg.getBetrate()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo;
+  return proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOddsavg(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBetrate(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getOddsavg();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = this.getBetrate();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional string oddsAvg = 1;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getOddsavg = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setOddsavg = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string betRate = 2;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getBetrate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setBetrate = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.Type = {
+  UNSET: 0,
+  ID: 30003
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Push_SchedulInfo.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Push_SchedulInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Push_SchedulInfo.displayName = 'proto.kzgame.svrcli.msg.Push_SchedulInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Push_SchedulInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Push_SchedulInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    scheduleinfoList: jspb.Message.toObjectList(msg.getScheduleinfoList(),
+    proto.kzgame.svrcli.msg.RlSchedulInfo.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Push_SchedulInfo}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Push_SchedulInfo;
+  return proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Push_SchedulInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Push_SchedulInfo}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.kzgame.svrcli.msg.RlSchedulInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader);
+      msg.getScheduleinfoList().push(value);
+      msg.setScheduleinfoList(msg.getScheduleinfoList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Push_SchedulInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getScheduleinfoList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Push_SchedulInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Push_SchedulInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * repeated RlSchedulInfo scheduleInfo = 1;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.getScheduleinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlSchedulInfo, 1));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} value  */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.setScheduleinfoList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.clearScheduleinfoList = function() {
+  this.setScheduleinfoList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Push_SchedulInfo.Type = {
+  UNSET: 0,
+  ID: 30004
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlBetInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlBetInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlBetInfo.displayName = 'proto.kzgame.svrcli.msg.RlBetInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlBetInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlBetInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    sceheduleid: msg.getSceheduleid(),
+    betclass: msg.getBetclass(),
+    betarea: msg.getBetarea()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlBetInfo}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlBetInfo;
+  return proto.kzgame.svrcli.msg.RlBetInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlBetInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlBetInfo}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSceheduleid(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetclass(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetarea(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlBetInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getSceheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getBetclass();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = this.getBetarea();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlBetInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlBetInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 sceheduleId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.getSceheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.setSceheduleid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 betClass = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.getBetclass = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.setBetclass = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 betArea = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.getBetarea = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetInfo.prototype.setBetarea = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Ask_RealFootBetInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.displayName = 'proto.kzgame.svrcli.msg.Ask_RealFootBetInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.repeatedFields_ = [6];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    userid: msg.getUserid(),
+    username: msg.getUsername(),
+    bettype: msg.getBettype(),
+    betnum: msg.getBetnum(),
+    bettime: msg.getBettime(),
+    betinfoList: jspb.Message.toObjectList(msg.getBetinfoList(),
+    proto.kzgame.svrcli.msg.RlBetInfo.toObject, includeInstance),
+    betscore: msg.getBetscore()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Ask_RealFootBetInfo;
+  return proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setUserid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUsername(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBettype(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetnum(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBettime(value);
+      break;
+    case 6:
+      var value = new proto.kzgame.svrcli.msg.RlBetInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlBetInfo.deserializeBinaryFromReader);
+      msg.getBetinfoList().push(value);
+      msg.setBetinfoList(msg.getBetinfoList());
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetscore(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getUserid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getUsername();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = this.getBettype();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = this.getBetnum();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = this.getBettime();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+  f = this.getBetinfoList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      6,
+      f,
+      proto.kzgame.svrcli.msg.RlBetInfo.serializeBinaryToWriter
+    );
+  }
+  f = this.getBetscore();
+  if (f !== 0) {
+    writer.writeInt32(
+      7,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_RealFootBetInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 userId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getUserid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setUserid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string userName = 2;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getUsername = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setUsername = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 betType = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getBettype = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setBettype = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 betNum = 4;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getBetnum = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setBetnum = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 betTime = 5;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getBettime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setBettime = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * repeated RlBetInfo betInfo = 6;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlBetInfo>}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getBetinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlBetInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlBetInfo, 6));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlBetInfo>} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setBetinfoList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 6, value);
+};
+
+
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.clearBetinfoList = function() {
+  this.setBetinfoList([]);
+};
+
+
+/**
+ * optional int32 betScore = 7;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.getBetscore = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 7, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.prototype.setBetscore = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetInfo.Type = {
+  UNSET: 0,
+  ID: 30005
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Res_RealFootBetInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Res_RealFootBetInfo.displayName = 'proto.kzgame.svrcli.msg.Res_RealFootBetInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Res_RealFootBetInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    status: msg.getStatus(),
+    sceheduleid: msg.getSceheduleid(),
+    coin: msg.getCoin()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Res_RealFootBetInfo;
+  return proto.kzgame.svrcli.msg.Res_RealFootBetInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStatus(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSceheduleid(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setCoin(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getStatus();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getSceheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = this.getCoin();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_RealFootBetInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 status = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.getStatus = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.setStatus = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 sceheduleId = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.getSceheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.setSceheduleid = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional float coin = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.getCoin = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.prototype.setCoin = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetInfo.Type = {
+  UNSET: 0,
+  ID: 30006
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlBetRecordInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlBetRecordInfo.displayName = 'proto.kzgame.svrcli.msg.RlBetRecordInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlBetRecordInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlBetRecordInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    recordid: msg.getRecordid(),
+    jingcaitype: msg.getJingcaitype(),
+    betdate: msg.getBetdate(),
+    betscore: msg.getBetscore(),
+    betstatus: msg.getBetstatus(),
+    winscore: msg.getWinscore()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlBetRecordInfo}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlBetRecordInfo;
+  return proto.kzgame.svrcli.msg.RlBetRecordInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlBetRecordInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlBetRecordInfo}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRecordid(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setJingcaitype(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBetdate(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetscore(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetstatus(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWinscore(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlBetRecordInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getRecordid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = this.getJingcaitype();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = this.getBetdate();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = this.getBetscore();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+  f = this.getBetstatus();
+  if (f !== 0) {
+    writer.writeInt32(
+      6,
+      f
+    );
+  }
+  f = this.getWinscore();
+  if (f !== 0) {
+    writer.writeInt32(
+      7,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlBetRecordInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlBetRecordInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional string recordId = 1;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.getRecordid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.setRecordid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 jingcaiType = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.getJingcaitype = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.setJingcaitype = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional string betDate = 4;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.getBetdate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.setBetdate = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 betScore = 5;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.getBetscore = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.setBetscore = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional int32 betStatus = 6;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.getBetstatus = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.setBetstatus = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional int32 winScore = 7;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.getWinscore = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 7, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlBetRecordInfo.prototype.setWinscore = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.displayName = 'proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    userid: msg.getUserid()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords;
+  return proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setUserid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getUserid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 userId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.prototype.getUserid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.prototype.setUserid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootballBetRecords.Type = {
+  UNSET: 0,
+  ID: 30007
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Res_RealFootBetRecords.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Res_RealFootBetRecords, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Res_RealFootBetRecords.displayName = 'proto.kzgame.svrcli.msg.Res_RealFootBetRecords';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Res_RealFootBetRecords.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    betrecordinfoList: jspb.Message.toObjectList(msg.getBetrecordinfoList(),
+    proto.kzgame.svrcli.msg.RlBetRecordInfo.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Res_RealFootBetRecords;
+  return proto.kzgame.svrcli.msg.Res_RealFootBetRecords.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.kzgame.svrcli.msg.RlBetRecordInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlBetRecordInfo.deserializeBinaryFromReader);
+      msg.getBetrecordinfoList().push(value);
+      msg.setBetrecordinfoList(msg.getBetrecordinfoList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getBetrecordinfoList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.kzgame.svrcli.msg.RlBetRecordInfo.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords} The clone.
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_RealFootBetRecords} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * repeated RlBetRecordInfo betRecordInfo = 1;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlBetRecordInfo>}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.getBetrecordinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlBetRecordInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlBetRecordInfo, 1));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlBetRecordInfo>} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.setBetrecordinfoList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.prototype.clearBetrecordinfoList = function() {
+  this.setBetrecordinfoList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecords.Type = {
+  UNSET: 0,
+  ID: 30008
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlRecordContent = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlRecordContent, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlRecordContent.displayName = 'proto.kzgame.svrcli.msg.RlRecordContent';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlRecordContent.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlRecordContent} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    teamname: msg.getTeamname(),
+    betinfo: msg.getBetinfo(),
+    betodds: msg.getBetodds(),
+    betresult: msg.getBetresult()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlRecordContent}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlRecordContent;
+  return proto.kzgame.svrcli.msg.RlRecordContent.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlRecordContent} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlRecordContent}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTeamname(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBetinfo(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setBetodds(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetresult(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlRecordContent} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getTeamname();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = this.getBetinfo();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = this.getBetodds();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      3,
+      f
+    );
+  }
+  f = this.getBetresult();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlRecordContent} The clone.
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlRecordContent} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional string teamName = 1;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.getTeamname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.setTeamname = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string betInfo = 2;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.getBetinfo = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.setBetinfo = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional float betOdds = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.getBetodds = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.setBetodds = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 betResult = 4;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.getBetresult = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlRecordContent.prototype.setBetresult = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.displayName = 'proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    recordid: msg.getRecordid(),
+    userid: msg.getUserid()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails;
+  return proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRecordid(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setUserid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getRecordid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = this.getUserid();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional string recordId = 1;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.getRecordid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.setRecordid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 userId = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.getUserid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.prototype.setUserid = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRecordsDetails.Type = {
+  UNSET: 0,
+  ID: 30009
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.displayName = 'proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.repeatedFields_ = [7];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    betstatus: msg.getBetstatus(),
+    recordcontentList: jspb.Message.toObjectList(msg.getRecordcontentList(),
+    proto.kzgame.svrcli.msg.RlRecordContent.toObject, includeInstance),
+    winscore: msg.getWinscore()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails;
+  return proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 6:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetstatus(value);
+      break;
+    case 7:
+      var value = new proto.kzgame.svrcli.msg.RlRecordContent;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlRecordContent.deserializeBinaryFromReader);
+      msg.getRecordcontentList().push(value);
+      msg.setRecordcontentList(msg.getRecordcontentList());
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWinscore(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getBetstatus();
+  if (f !== 0) {
+    writer.writeInt32(
+      6,
+      f
+    );
+  }
+  f = this.getRecordcontentList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      proto.kzgame.svrcli.msg.RlRecordContent.serializeBinaryToWriter
+    );
+  }
+  f = this.getWinscore();
+  if (f !== 0) {
+    writer.writeInt32(
+      8,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails} The clone.
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 betStatus = 6;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.getBetstatus = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.setBetstatus = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * repeated RlRecordContent recordContent = 7;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlRecordContent>}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.getRecordcontentList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlRecordContent>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlRecordContent, 7));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlRecordContent>} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.setRecordcontentList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.clearRecordcontentList = function() {
+  this.setRecordcontentList([]);
+};
+
+
+/**
+ * optional int32 winScore = 8;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.getWinscore = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 8, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.prototype.setWinscore = function(value) {
+  jspb.Message.setField(this, 8, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRecordsDetails.Type = {
+  UNSET: 0,
+  ID: 30010
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlScheduleRecords, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlScheduleRecords.displayName = 'proto.kzgame.svrcli.msg.RlScheduleRecords';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlScheduleRecords.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleRecords} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    sceheduleid: msg.getSceheduleid(),
+    matchname: msg.getMatchname(),
+    officialnum: msg.getOfficialnum(),
+    endsale: msg.getEndsale(),
+    homename: msg.getHomename(),
+    awayname: msg.getAwayname(),
+    firsthalf: msg.getFirsthalf(),
+    finalscore: msg.getFinalscore()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleRecords}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlScheduleRecords;
+  return proto.kzgame.svrcli.msg.RlScheduleRecords.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleRecords} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleRecords}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSceheduleid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMatchname(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOfficialnum(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEndsale(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHomename(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAwayname(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFirsthalf(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFinalscore(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleRecords} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getSceheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getMatchname();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = this.getOfficialnum();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = this.getEndsale();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = this.getHomename();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = this.getAwayname();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = this.getFirsthalf();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = this.getFinalscore();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleRecords} The clone.
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlScheduleRecords} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 sceheduleId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getSceheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setSceheduleid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string matchName = 2;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getMatchname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setMatchname = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional string officialNum = 3;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getOfficialnum = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setOfficialnum = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional string endSale = 4;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getEndsale = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setEndsale = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional string homeName = 5;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getHomename = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setHomename = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional string awayName = 6;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getAwayname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 6, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setAwayname = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional string firstHalf = 7;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getFirsthalf = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setFirsthalf = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * optional string finalScore = 8;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.getFinalscore = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecords.prototype.setFinalscore = function(value) {
+  jspb.Message.setField(this, 8, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.RlScheduleRecordsList.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlScheduleRecordsList, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlScheduleRecordsList.displayName = 'proto.kzgame.svrcli.msg.RlScheduleRecordsList';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlScheduleRecordsList.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleRecordsList} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    listdesc: msg.getListdesc(),
+    schedulerecordsList: jspb.Message.toObjectList(msg.getSchedulerecordsList(),
+    proto.kzgame.svrcli.msg.RlScheduleRecords.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleRecordsList}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlScheduleRecordsList;
+  return proto.kzgame.svrcli.msg.RlScheduleRecordsList.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleRecordsList} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleRecordsList}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setListdesc(value);
+      break;
+    case 2:
+      var value = new proto.kzgame.svrcli.msg.RlScheduleRecords;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlScheduleRecords.deserializeBinaryFromReader);
+      msg.getSchedulerecordsList().push(value);
+      msg.setSchedulerecordsList(msg.getSchedulerecordsList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleRecordsList} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getListdesc();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = this.getSchedulerecordsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.kzgame.svrcli.msg.RlScheduleRecords.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleRecordsList} The clone.
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlScheduleRecordsList} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional string listDesc = 1;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.getListdesc = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.setListdesc = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * repeated RlScheduleRecords scheduleRecords = 2;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlScheduleRecords>}
+ */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.getSchedulerecordsList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlScheduleRecords>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlScheduleRecords, 2));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlScheduleRecords>} value  */
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.setSchedulerecordsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+proto.kzgame.svrcli.msg.RlScheduleRecordsList.prototype.clearSchedulerecordsList = function() {
+  this.setSchedulerecordsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Ask_RealFootRecords, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Ask_RealFootRecords.displayName = 'proto.kzgame.svrcli.msg.Ask_RealFootRecords';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Ask_RealFootRecords.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootRecords} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootRecords}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Ask_RealFootRecords;
+  return proto.kzgame.svrcli.msg.Ask_RealFootRecords.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootRecords} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootRecords}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Ask_RealFootRecords} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Ask_RealFootRecords} The clone.
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Ask_RealFootRecords} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootRecords.Type = {
+  UNSET: 0,
+  ID: 30011
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Res_RealFootRecords.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Res_RealFootRecords, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Res_RealFootRecords.displayName = 'proto.kzgame.svrcli.msg.Res_RealFootRecords';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Res_RealFootRecords.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootRecords} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    listtotal: msg.getListtotal(),
+    schedulerecordslistList: jspb.Message.toObjectList(msg.getSchedulerecordslistList(),
+    proto.kzgame.svrcli.msg.RlScheduleRecordsList.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootRecords}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Res_RealFootRecords;
+  return proto.kzgame.svrcli.msg.Res_RealFootRecords.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootRecords} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootRecords}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setListtotal(value);
+      break;
+    case 2:
+      var value = new proto.kzgame.svrcli.msg.RlScheduleRecordsList;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlScheduleRecordsList.deserializeBinaryFromReader);
+      msg.getSchedulerecordslistList().push(value);
+      msg.setSchedulerecordslistList(msg.getSchedulerecordslistList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Res_RealFootRecords} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getListtotal();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getSchedulerecordslistList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.kzgame.svrcli.msg.RlScheduleRecordsList.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Res_RealFootRecords} The clone.
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Res_RealFootRecords} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 listTotal = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.getListtotal = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.setListtotal = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * repeated RlScheduleRecordsList scheduleRecordsList = 2;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlScheduleRecordsList>}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.getSchedulerecordslistList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlScheduleRecordsList>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlScheduleRecordsList, 2));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlScheduleRecordsList>} value  */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.setSchedulerecordslistList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.clearSchedulerecordslistList = function() {
+  this.setSchedulerecordslistList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootRecords.Type = {
+  UNSET: 0,
+  ID: 30012
 };
 
 goog.object.extend(exports, proto.kzgame.svrcli.msg);

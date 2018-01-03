@@ -20,6 +20,7 @@ function VirtualFootballTimeAgent(){
     var self = this;
     self.matchState = 0;  
     self.matchStateLastTime = 0;
+    self.matchStateEndTime = 0;
     self.no = '';
 
     //初始化函数
@@ -92,6 +93,7 @@ function VirtualFootballTimeAgent(){
     
         self.matchState = 0;
         self.matchStateLastTime = curTimeRange[self.matchState+1]-timestamp;
+        self.matchStateEndTime = curTimeRange[self.matchState+1];
     }
     //获得当前的需要的事件与时间距离
     self.updateCurEvent = function(timestamp){
@@ -106,6 +108,7 @@ function VirtualFootballTimeAgent(){
             bRet = true;
         }
         self.matchStateLastTime = curTimeRange[self.matchState+1]-timestamp;
+        self.matchStateEndTime = curTimeRange[self.matchState+1];
         return bRet;
     };
     //获得比赛的开始与结束时间

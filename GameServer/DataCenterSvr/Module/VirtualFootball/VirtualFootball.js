@@ -16,6 +16,7 @@ var Schema = require('../../../db_structure');
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 
 function VirtualFootball(){
+    var self = this;
     var conf = new VirtualFootballConf();
     var timeAgent = new VirtualFootballTimeAgent();
     var updateTimer = new SingleTimer();
@@ -44,6 +45,17 @@ function VirtualFootball(){
 
     this.run = function(timestamp){
         //游戏记录(优先),查询是否已经都结算完成
+        if(!checkEndMatchUpdate(timestamp))
+            return;
+        //时间代理更新
+        timeAgentUpdate(timestamp);
+        //比赛代理更新
+        matchAgentUpdate(timestamp);
+        //投注信息更新
+        betItemUpdate(timestamp);
+    };
+
+    function checkEndMatchUpdate(timestamp){
         if(null != endMatchUpdateTimer){
             if(endMatchUpdateTimer.toNextTime()){
                 var findParam = {
@@ -53,10 +65,10 @@ function VirtualFootball(){
                 classLogVirtualBet.find(findParam, function(err, data){
                     if(err){
                         console.log(err);
-                        return;
+                        return false;
                     }
                     if(data.length != 0)
-                        return;
+                        return false;
                     endMatchUpdateTimer = null;
                     //当所有记录都被结算以后，就可以生成游戏记录了
                     findParam = {
@@ -66,7 +78,7 @@ function VirtualFootball(){
                     classLogVirtualBet.find(findParam, function(err, data2){
                         if(err){
                             console.log(err);
-                            return;
+                            return false;
                         }
                         var all_bet = 0;
                         var distribution = 0;
@@ -90,7 +102,7 @@ function VirtualFootball(){
                         classVirtualSchedule.collection.insert(insertValue, function(err){
                             if(err){
                                 console.log(err);
-                                return;
+                                return false;
                             }
                         });
                         //赢钱推送
@@ -101,8 +113,12 @@ function VirtualFootball(){
                     });
                 });
             }  
-            return;
+            return false;
         }
+        return true;
+    }
+
+    function timeAgentUpdate(timestamp){
         if(timeAgent.updateCurEvent(timestamp)){
             console.log('当前期号：'+timeAgent.no+' 当前事件：'+timeAgent.matchState+' 该事件剩余时间：'+timeAgent.matchStateLastTime/1000);
             OBJ('GameSvrAgentModule').broadcastGameServer({
@@ -111,7 +127,7 @@ function VirtualFootball(){
                 data:{
                     no:timeAgent.no,
                     matchState:timeAgent.matchState,
-                    lastTime:timeAgent.matchStateLastTime,
+                    stateEndTime:timeAgent.matchStateEndTime,
                     hostWinNum:matchAgent.hostWinNum,
                     drawNum:matchAgent.drawNum,
                     guestWinNum:matchAgent.guestWinNum
@@ -136,12 +152,15 @@ function VirtualFootball(){
                 matchAgent.stopMatch();
                 //如果没有游戏服连着，就直接计算结果
                 if(OBJ('GameSvrAgentModule').getServerCount() == 0){
-                    this.canSettlement(null, null);
+                    self.canSettlement(null, null);
                 }
                 endMatchUpdateTimer = new SingleTimer();
                 endMatchUpdateTimer.startup(500);
             }
         }
+    }
+
+    function matchAgentUpdate(timestamp){
         if(null != matchAgent){
             if(waitNextGoalSettlement){
                 //等待时不进行更新操作
@@ -191,7 +210,9 @@ function VirtualFootball(){
                 }
             }
         }
+    }
 
+    function betItemUpdate(timestamp){
         if(null != betItemUpdateTimer && betItemUpdateTimer.toNextTime()){
             //发送投注项数据
             OBJ('GameSvrAgentModule').broadcastGameServer({
@@ -204,7 +225,7 @@ function VirtualFootball(){
                 }
             });
         }
-    };
+    }
 
     this.getCurData = function(source, data){
         OBJ('GameSvrAgentModule').send(source, {
@@ -213,7 +234,7 @@ function VirtualFootball(){
             data:{
                 no:timeAgent.no,
                 matchState:timeAgent.matchState,
-                lastTime:timeAgent.matchStateLastTime,
+                stateEndTime:timeAgent.matchStateEndTime,
                 event:matchAgent==null?0:matchAgent.curEvent,
                 hostTeamId:matchAgent==null?0:matchAgent.hostTeam.ID,
                 hostTeamGoal:matchAgent==null?0:matchAgent.hostTeamGoal,

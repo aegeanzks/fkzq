@@ -74,6 +74,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     var scheduleArr = [];
 
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
+
     //获取两队的对战历史
     initBattleHistory();
     function initBattleHistory() {

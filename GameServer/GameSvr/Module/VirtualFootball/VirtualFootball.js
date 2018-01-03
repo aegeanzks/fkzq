@@ -9,7 +9,7 @@ function VirtualFootball(){
 
     var no = '';             //场次
     var matchState = 0;
-    var lastTime = 0;
+    var stateEndTime = 0;
     var event = 0;
     var hostTeamId = 0;
     var hostTeamGoal = 0;
@@ -49,7 +49,7 @@ function VirtualFootball(){
     this.resCurData = function(source, data){
         no = data.no;
         matchState = data.matchState;
-        lastTime = data.lastTime;
+        stateEndTime = data.stateEndTime;
         event = data.event;
         hostTeamId = data.hostTeamId;
         hostTeamGoal = data.hostTeamGoal;
@@ -99,9 +99,7 @@ function VirtualFootball(){
         //广播
         var push = new pbSvrcli.Push_GoalAndBetArea();
         var goalAndBetArea = new pbSvrcli.GoalAndBetArea();
-        goalAndBetArea.setHostteamid(hostTeamId);
         goalAndBetArea.setHostteamgoal(hostTeamGoal);
-        goalAndBetArea.setGuestteamid(guestTeamId);
         goalAndBetArea.setGuestteamgoal(guestTeamGoal);
         goalAndBetArea.setHostwintimes(hostWinTimes);
         goalAndBetArea.setHostwinsupport(hostWinSupport);
@@ -123,7 +121,7 @@ function VirtualFootball(){
     //刷新比赛状态
     this.refreshMatchState = function(source, data){
         matchState = data.matchState;
-        lastTime = data.lastTime;
+        stateEndTime = data.stateEndTime;
         no = data.no;
         hostWinNum = data.hostWinNum;
         drawNum = data.drawNum;
@@ -143,10 +141,12 @@ function VirtualFootball(){
         var push = new pbSvrcli.Push_MatchInfo();
         var matchInfo = new pbSvrcli.MatchInfo();
         matchInfo.setMatchstate(matchState);
-        matchInfo.setLastsecond(parseInt(lastTime/1000));
+        matchInfo.setLastsecond(parseInt((stateEndTime-Date.now())/1000));
         matchInfo.setHostwinnum(hostWinNum);
         matchInfo.setDrawnum(drawNum);
         matchInfo.setGuestwinnum(guestWinNum);
+        matchInfo.setHostteamid(hostTeamId);
+        matchInfo.setGuestteamid(guestTeamId);
         push.setMatchinfo(matchInfo);
         var buf = push.serializeBinary();
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, buf, buf.length);
@@ -164,15 +164,15 @@ function VirtualFootball(){
         var res = new pbSvrcli.Res_VirtualFootMainInfo();
         var matchInfo = new pbSvrcli.MatchInfo();
         matchInfo.setMatchstate(matchState);
-        matchInfo.setLastsecond(parseInt(lastTime/1000));
-        matchInfo.setHostwinnum(0);
-        matchInfo.setDrawnum(0);
-        matchInfo.setGuestwinnum(0);
+        matchInfo.setLastsecond(parseInt((stateEndTime-Date.now())/1000));
+        matchInfo.setHostwinnum(hostWinNum);
+        matchInfo.setDrawnum(drawNum);
+        matchInfo.setGuestwinnum(guestWinNum);
+        matchInfo.setHostteamid(hostTeamId);
+        matchInfo.setGuestteamid(guestTeamId);
         res.setMatchinfo(matchInfo);
         var goalAndBetArea = new pbSvrcli.GoalAndBetArea();
-        goalAndBetArea.setHostteamid(hostTeamId);
         goalAndBetArea.setHostteamgoal(hostTeamGoal);
-        goalAndBetArea.setGuestteamid(guestTeamId);
         goalAndBetArea.setGuestteamgoal(guestTeamGoal);
         goalAndBetArea.setHostwintimes(hostWinTimes);
         goalAndBetArea.setHostwinsupport(hostWinSupport);

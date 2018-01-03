@@ -13,7 +13,7 @@ exports.mongodb = function(){
 //rpc
 exports.rpc = function(){
     return {
-        RPCURL:'amqp://localhost', //RPC
+        RPCURL:'amqp://zks:zks@192.168.0.63', //RPC
     };
 };
 
