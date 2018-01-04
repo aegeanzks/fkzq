@@ -312,6 +312,7 @@ function VirtualFootballConf(){
                 insertInfo(classConfVirtualEvent,dataConfig,function(dataCnf){
                     func({
                         curStock:dataCnf[0].cur_stock,
+                        stockInitialValue:dataCnf[0].stock_initial_value,
                         cheatChange1:dataCnf[0].cheat_chance_1,
                         stockThreshold1:dataCnf[0].stock_threshold_1,
                         cheatChange2:dataCnf[0].cheat_chance_2,
@@ -323,6 +324,7 @@ function VirtualFootballConf(){
                 if (func)
                     func({
                         curStock:data.cur_stock,
+                        stockInitialValue:data.stock_initial_value,
                         cheatChange1:data.cheat_chance_1,
                         stockThreshold1:data.stock_threshold_1,
                         cheatChange2:data.cheat_chance_2,

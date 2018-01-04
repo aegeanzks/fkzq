@@ -38,7 +38,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
 
     //猜胜负平
 	self.hostWinTimes = 0;		    //主胜倍数
-	self.hostWinSupport = 0;	        //主胜支持率
+	self.hostWinSupport = 0;	    //主胜支持率
 	self.drawTimes = 0;		        //平  倍数
 	self.drawSupport = 0;		    //平  支持率
 	self.guestWinTimes = 0;	        //客胜倍数
@@ -48,8 +48,15 @@ function VirtualFootballMatch(conf, beginTime, endTime){
 	self.hostNextGoalSupport = 0;	//主队进球支持率
 	self.zeroGoalTimes = 0;	        //无进球  倍数
 	self.zeroGoalSupport = 0;	    //无进球  支持率
-	self.guestNextGoalTimes = 0;	    //客队进球倍数
+	self.guestNextGoalTimes = 0;	//客队进球倍数
     self.guestNextGoalSupport = 0;   //客队进球支持率
+
+    var hostWinDistributeCoin = 0;          //主胜将派发奖金
+    var drawDistributeCoin = 0;             //平将派发奖金
+    var guestWinDistributeCoin = 0;         //客胜将派发奖金
+    var hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金
+    var zeroGoalDistributeCoin = 0;         //不进球将派发奖金
+    var guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金
     
     var allGoal = 0;                //总进球数
     var beginTime = beginTime;      //比赛开始时间
@@ -82,6 +89,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
 
     //库存
     var curStock = 0;
+    var stockInitialValue = 0;
     var cheatChange1 = 0;
     var stockThreshold1 = 0;
     var cheatChange2 = 0;
@@ -89,11 +97,15 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     var cheatChange3 = 0;
     conf.getStock(function(stockConf){
         curStock = stockConf.curStock;
+        stockInitialValue = stockConf.stockInitialValue;
         cheatChange1 = stockConf.cheatChange1;
         stockThreshold1 = stockConf.stockThreshold1;
         cheatChange2 = stockConf.cheatChange2;
         stockThreshold2 = stockConf.stockThreshold2;
         cheatChange3 = stockConf.cheatChange3;
+
+        //判断是否作弊
+        checkCheat();
     });
 
     //获取两队的对战历史
@@ -129,7 +141,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             }
         });
     }
-    
+    //初始化下注区域
     initBetArea();
     function initBetArea(){
         conf.randOdds(self.hostTeam.Level, self.guestTeam.Level, function(odds){
@@ -141,7 +153,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             self.guestNextGoalTimes = odds.guest_goal;
         });
     }
-
+    //初始化进球数
     initAllGoal();
     function initAllGoal(){
         conf.randGoal(function(goal){
@@ -150,7 +162,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             initEvents();
         });
     }
-
+    //初始化赛程事件
     function initEvents(){
         conf.getEvents(function(events){
             confMatchEvent = events;
@@ -273,7 +285,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     //返回 0不进球 1主队进球 2客队进球
     function judgeWhichGoal(){
         if(bCheat){         //需要作弊
-
+            if()
         }else{              //不需要作弊
             var allScore = self.hostTeam.Score + self.guestTeam.Score;
             var randNum = Functions.getRandomNum(1, allScore);
@@ -309,12 +321,19 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             self.hostNextGoalSupport = 0;	//主队进球支持率
             self.zeroGoalSupport = 0;	    //无进球  支持率
             self.guestNextGoalSupport = 0;   //客队进球支持率
+            hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金
+            zeroGoalDistributeCoin = 0;         //不进球将派发奖金
+            guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金
+            
         } else if(scheduleArr[playerIndex].event == GUEST_GOAL){
             self.guestTeamGoal++;
             //猜下一队进球
             self.hostNextGoalSupport = 0;	//主队进球支持率
             self.zeroGoalSupport = 0;	    //无进球  支持率
             self.guestNextGoalSupport = 0;   //客队进球支持率
+            hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金
+            zeroGoalDistributeCoin = 0;         //不进球将派发奖金
+            guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金
         }
         self.curEvent = scheduleArr[playerIndex].event;
         self.nextEventTime = scheduleArr[playerIndex].endTime;
@@ -373,36 +392,42 @@ function VirtualFootballMatch(conf, beginTime, endTime){
         return false;
     };
 
-    self.supportArea = function(area){
-        switch(area){
+    self.supportArea = function(data){
+        switch(data.area){
             case 1:
             {
                 hostWinSupport++;
+                hostWinDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 2:
             {
                 drawSupport++;
+                drawDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 3:
             {
                 guestWinSupport++;
+                guestWinDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 4:
             {
                 hostNextGoalSupport++;
+                hostNextGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 5:
             {
                 zeroGoalSupport++;
+                zeroGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 6:
             {
                 guestNextGoalSupport++;
+                guestNextGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
         }
@@ -432,6 +457,25 @@ function VirtualFootballMatch(conf, beginTime, endTime){
                 arrAddStock.shift();
                 addStock();
             });
+        } else {
+            //判断是否作弊
+            checkCheat();
         }
+    }
+    //判断是否作弊
+    function checkCheat() {
+        var cheatChange = 0;
+        if(curStock <= stockThreshold1)
+            cheatChange = cheatChange1;
+        else if(curStock <= stockThreshold2)
+            cheatChange = cheatChange2;
+        else
+            cheatChange = cheatChange3;
+
+        var randValue = Functions.getRandomNum(1, 100);
+        if(randValue <= cheatChange)
+            bCheat = true;
+        else
+            bCheat = false;
     }
 }

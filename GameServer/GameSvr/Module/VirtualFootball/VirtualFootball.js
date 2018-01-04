@@ -345,7 +345,10 @@ function VirtualFootball(){
         });
 
         //告诉数据中心修改支持率
-        OBJ('DataCenterModule').send({module:'VirtualFootball', func:'supportArea', data:{area:waitValue.betArea}});
+        OBJ('DataCenterModule').send({module:'VirtualFootball', func:'supportArea', data:{
+            area:waitValue.betArea, 
+            distributeCoin:modelLogVirtualBet.bet_distribute_coin
+        }});
     };
 
     function getCurAreaTimes(area){

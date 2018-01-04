@@ -325,10 +325,10 @@ function VirtualFootball(){
                             console.log(err);
                         }
                     });
-                    //修改库存
-                    if(matchAgent)
-                        matchAgent.addCurStock(bet_coin);
                 }
+                //修改库存
+                if(matchAgent)
+                matchAgent.addCurStock(item.bet_coin);
             }
         });
     }
@@ -376,11 +376,11 @@ function VirtualFootball(){
                         if(err){
                             console.log(err);
                         }
-                        //修改库存
-                        if(matchAgent)
-                            matchAgent.addCurStock(bet_coin);
                     });
                 }
+                //修改库存
+                if(matchAgent)
+                matchAgent.addCurStock(item.bet_coin);
             }
         });
     }
@@ -400,55 +400,47 @@ function VirtualFootball(){
                     console.log(err);
                 }
             });
-            //修改库存
-            if(matchAgent)
-                matchAgent.addCurStock(-waitValue.bet_distribute_coin);
-            return;
-        }
-        
-        //生成投注记录
-        var updateValue = {
-            'distribute_coin':waitValue.bet_distribute_coin,
-            'settlement_out_trade_no':data.uuid,
-            'settlement_trade_no':data.trade_no,
-            'status':2
-        };
-        classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
-            if(err){
-                console.log(err);
-            }
-            //检查是否结算完成，并且要等待完成
-            if(waitValue.settlementType == 2){
-                var findParam = {
-                    'status':0,
-                    'balance_schedule_id':timeAgent.no,
-                    'bet_area':{ $in: [4,5,6] }
-                };
-                classLogVirtualBet.find(findParam, function(err, data){
-                    if(data.length != 0)
-                        waitNextGoalSettlement = true;
-                    else{
-                        waitNextGoalSettlement = false;
-                        //下一球赢钱推送
-                        OBJ('GameSvrAgentModule').broadcastGameServer({
-                            module:'VirtualFootball',
-                            func:'updateMoney'
-                        });
-                        //更新库存
-                        if(matchAgent)
-                            matchAgent.updateCurStock();
-                    }
-                });
-            }
-            //加库存
 
-        });
+        } else {
+            //生成投注记录
+            var updateValue = {
+                'distribute_coin':waitValue.bet_distribute_coin,
+                'settlement_out_trade_no':data.uuid,
+                'settlement_trade_no':data.trade_no,
+                'status':2
+            };
+            classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
+                if(err){
+                    console.log(err);
+                }
+                //检查是否结算完成，并且要等待完成
+                if(waitValue.settlementType == 2){
+                    var findParam = {
+                        'status':0,
+                        'balance_schedule_id':timeAgent.no,
+                        'bet_area':{ $in: [4,5,6] }
+                    };
+                    classLogVirtualBet.find(findParam, function(err, data){
+                        if(data.length != 0)
+                            waitNextGoalSettlement = true;
+                        else{
+                            waitNextGoalSettlement = false;
+                            //下一球赢钱推送
+                            OBJ('GameSvrAgentModule').broadcastGameServer({
+                                module:'VirtualFootball',
+                                func:'updateMoney'
+                            });
+                        }
+                    });
+                }
+            });
+        }
         //修改库存
         if(matchAgent)
             matchAgent.addCurStock(-waitValue.bet_distribute_coin);
     };
     this.supportArea = function(source, data){
         if(null != matchAgent)
-            matchAgent.supportArea(data.area);
+            matchAgent.supportArea(data);
     };
 }
