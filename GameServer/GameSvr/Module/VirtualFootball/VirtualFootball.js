@@ -200,7 +200,7 @@ function VirtualFootball(){
         if(null == player)
             return;
         var page = askGuessingRecord.getPage();
-        classLogVirtualBetclassLogVirtualBet.find({'user_id':player.userId}, null, 
+        classLogVirtualBet.find({'user_id':player.userId}, null, 
             {skip:page*12, limit:12, sort:{'bet_date':-1}}, function(err, data){
                 if(err){
                     console.log(err);
@@ -343,6 +343,9 @@ function VirtualFootball(){
                 console.log(err);
             }
         });
+
+        //告诉数据中心修改支持率
+        OBJ('DataCenterModule').send({module:'VirtualFootball', func:'supportArea', data:{area:waitValue.betArea}});
     };
 
     function getCurAreaTimes(area){

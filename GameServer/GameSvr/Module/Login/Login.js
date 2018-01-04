@@ -23,9 +23,12 @@ function Login(){
     };
 
     self.login = function(askLogin, socket){
-        var userid = 1;
-        var userName = '用户1';
-        waitMap.set(userid, [socket, userName, Date.now()+10000]);//超时10秒
+        var strIp = socket.conn.remoteAddress;
+        var arr = strIp.split('.');
+        var realIp = strIp.split(':')[3];
+        var userid = arr[arr.length-1];
+        var userName = userid;
+        waitMap.set(userid, [socket, userName, Date.now()+10000, realIp]);//超时10秒
         OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:{
             userid:userid, 
             cbModule:'Login',
@@ -39,6 +42,7 @@ function Login(){
         //console.log('resGetCoin:'+data);
         var res = new pbSvrcli.Res_Login();
         var userArr = waitMap.get(data.userid);
+        waitMap.delete(data.userid);
         if(userArr){
             var socket = userArr[0];
             var userName = userArr[1];
@@ -54,7 +58,7 @@ function Login(){
             }else{
                 OBJ('PlayerContainer').addPlayer(socket, player);
             }
-            player.updateLoginDb();
+            player.updateLoginDb(userArr[3]);
 
             //告诉其他游戏服，该用户在这台上线
             var servers = gamesvrConfig.servers;
@@ -70,8 +74,10 @@ function Login(){
 
     self.reqPlayerLogin = function(source, data) {
         var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data);
-        if(oldSocket)
+        if(oldSocket){
+            oldSocket.disconnect();
             OBJ('PlayerContainer').delete(oldSocket);
+        }
     };
     
     self.run = function(timestamp){

@@ -11,6 +11,7 @@ var Functions = require('../../../Utils/Functions');
 var shuffle = require('knuth-shuffle').knuthShuffle;
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var Schema = require('../../../db_structure');
+var VirtualFootballOddsAgent = require('./VirtualFootballOddsAgent');
 
 const HOST_BALL_HANDING = 1;            //主队控球
 const HOST_ATTACK = 2;                  //主队进攻
@@ -25,9 +26,12 @@ const GOAL = 10;                        //自己用，代表还未决定是哪�
 
 function VirtualFootballMatch(conf, beginTime, endTime){
     var self = this;
+    var conf = conf;
     //球队信息
     self.hostTeam = conf.randATeam(-1);
     self.guestTeam = conf.randATeam(self.hostTeam.ID);
+
+    //var oddsAgent = VirtualFootballOddsAgent(conf, self.hostTeam, self.guestTeam, beginTime, endTime);
 
     self.hostTeamGoal = 0;   //比分
     self.guestTeamGoal = 0;  
@@ -74,6 +78,23 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     var scheduleArr = [];
 
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
+    var classConfVirtualStock = OBJ('DbMgr').getStatement(Schema.ConfStock());
+
+    //库存
+    var curStock = 0;
+    var cheatChange1 = 0;
+    var stockThreshold1 = 0;
+    var cheatChange2 = 0;
+    var stockThreshold2 = 0;
+    var cheatChange3 = 0;
+    conf.getStock(function(stockConf){
+        curStock = stockConf.curStock;
+        cheatChange1 = stockConf.cheatChange1;
+        stockThreshold1 = stockConf.stockThreshold1;
+        cheatChange2 = stockConf.cheatChange2;
+        stockThreshold2 = stockConf.stockThreshold2;
+        cheatChange3 = stockConf.cheatChange3;
+    });
 
     //获取两队的对战历史
     initBattleHistory();
@@ -284,8 +305,16 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             scheduleArr[playerIndex+1].goal = judge;
         } else if(scheduleArr[playerIndex].event == HOST_GOAL){
             self.hostTeamGoal++;
+            //猜下一队进球
+            self.hostNextGoalSupport = 0;	//主队进球支持率
+            self.zeroGoalSupport = 0;	    //无进球  支持率
+            self.guestNextGoalSupport = 0;   //客队进球支持率
         } else if(scheduleArr[playerIndex].event == GUEST_GOAL){
             self.guestTeamGoal++;
+            //猜下一队进球
+            self.hostNextGoalSupport = 0;	//主队进球支持率
+            self.zeroGoalSupport = 0;	    //无进球  支持率
+            self.guestNextGoalSupport = 0;   //客队进球支持率
         }
         self.curEvent = scheduleArr[playerIndex].event;
         self.nextEventTime = scheduleArr[playerIndex].endTime;
@@ -343,4 +372,66 @@ function VirtualFootballMatch(conf, beginTime, endTime){
         }
         return false;
     };
+
+    self.supportArea = function(area){
+        switch(area){
+            case 1:
+            {
+                hostWinSupport++;
+                break;
+            }
+            case 2:
+            {
+                drawSupport++;
+                break;
+            }
+            case 3:
+            {
+                guestWinSupport++;
+                break;
+            }
+            case 4:
+            {
+                hostNextGoalSupport++;
+                break;
+            }
+            case 5:
+            {
+                zeroGoalSupport++;
+                break;
+            }
+            case 6:
+            {
+                guestNextGoalSupport++;
+                break;
+            }
+        }
+    };
+
+    function setCurStock(curStock, func){
+        classConfVirtualStock.findOneAndUpdate({'game_id':1}, {'cur_stock':curStock}, function(err, data){
+            if(err){
+                console.log(err);
+                return;
+            }
+            func(data.cur_stock);
+        });
+    }
+    //加库存(用队列操作)
+    var arrAddStock = [];
+    this.addCurStock = function(addNum){
+        arrAddStock.push(addNum);
+        if(arrAddStock.length == 1){
+            addStock();
+        }
+    };
+    function addStock(){
+        if(arrAddStock.length > 0){
+            setCurStock(curStock+arrAddStock[0], function(data){
+                curStock = data;
+                arrAddStock.shift();
+                addStock();
+            });
+        }
+    }
 }

@@ -185,7 +185,7 @@ function VirtualFootballConf(){
                 console.log(err);
                 return;
             }
-            if(data.length == 0){
+            if(null == data || data.length == 0){
                 var dataConfig = [];
                 for(var key in oddsInfo){
                     var item = oddsInfo[key];
@@ -207,7 +207,7 @@ function VirtualFootballConf(){
                 console.log(err);
                 return;
             }
-            if(0 == data.length){
+            if(null == data || 0 == data.length){
                 var dataConfig = [];
                 for(var key in goalInfo){
                     var item = goalInfo[key];
@@ -241,7 +241,7 @@ function VirtualFootballConf(){
                 console.log(err);
                 return;
             }
-            if(0 == data.length){
+            if(null == data || 0 == data.length){
                 var dataConfig = [];
                 for(var key in eventInfo){
                     var item = eventInfo[key];
@@ -293,6 +293,44 @@ function VirtualFootballConf(){
             change_rate3: oddsChangeBaseValueInfo["1"].change_rate3,
             base_value: oddsChangeBaseValueInfo["1"].base_value,
         };
+    };
+    this.getOddsChangeRatioMap = function(){
+        return mapOddsChangeRatio;
+    };
+    this.getOddsChangeMap = function(){
+        return mapOddsChange;
+    };
+    this.getStock = function(func){
+        classConfVirtualStock.findOne({'game_id':1}, function(err, data){
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(null == data || 0 == data.length){
+                var dataConfig = [];
+                dataConfig.push(stockDeal(stockInfo["1"]));
+                insertInfo(classConfVirtualEvent,dataConfig,function(dataCnf){
+                    func({
+                        curStock:dataCnf[0].cur_stock,
+                        cheatChange1:dataCnf[0].cheat_chance_1,
+                        stockThreshold1:dataCnf[0].stock_threshold_1,
+                        cheatChange2:dataCnf[0].cheat_chance_2,
+                        stockThreshold2:dataCnf[0].stock_threshold_2,
+                        cheatChange3:dataCnf[0].cheat_chance_3
+                    });
+                });
+            } else {
+                if (func)
+                    func({
+                        curStock:data.cur_stock,
+                        cheatChange1:data.cheat_chance_1,
+                        stockThreshold1:data.stock_threshold_1,
+                        cheatChange2:data.cheat_chance_2,
+                        stockThreshold2:data.stock_threshold_2,
+                        cheatChange3:data.cheat_chance_3
+                    });
+            }
+        });
     };
 }
 

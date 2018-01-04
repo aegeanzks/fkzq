@@ -34,6 +34,8 @@ function GameSvrAgent(){
                     mod.logic.getCurData(source, msg.data);
                 } else if(msg.func == 'canSettlement'){
                     mod.logic.canSettlement(source, msg.data);
+                } else if(msg.func == 'supportArea'){
+                    mod.logic.supportArea(source, msg.data);
                 }
             }break;
         }

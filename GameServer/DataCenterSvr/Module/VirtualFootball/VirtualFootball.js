@@ -105,6 +105,7 @@ function VirtualFootball(){
                                 return false;
                             }
                         });
+
                         //赢钱推送
                         OBJ('GameSvrAgentModule').broadcastGameServer({
                             module:'VirtualFootball',
@@ -324,6 +325,9 @@ function VirtualFootball(){
                             console.log(err);
                         }
                     });
+                    //修改库存
+                    if(matchAgent)
+                        matchAgent.addCurStock(bet_coin);
                 }
             }
         });
@@ -372,6 +376,9 @@ function VirtualFootball(){
                         if(err){
                             console.log(err);
                         }
+                        //修改库存
+                        if(matchAgent)
+                            matchAgent.addCurStock(bet_coin);
                     });
                 }
             }
@@ -393,6 +400,9 @@ function VirtualFootball(){
                     console.log(err);
                 }
             });
+            //修改库存
+            if(matchAgent)
+                matchAgent.addCurStock(-waitValue.bet_distribute_coin);
             return;
         }
         
@@ -424,9 +434,21 @@ function VirtualFootball(){
                             module:'VirtualFootball',
                             func:'updateMoney'
                         });
+                        //更新库存
+                        if(matchAgent)
+                            matchAgent.updateCurStock();
                     }
                 });
             }
+            //加库存
+
         });
+        //修改库存
+        if(matchAgent)
+            matchAgent.addCurStock(-waitValue.bet_distribute_coin);
+    };
+    this.supportArea = function(source, data){
+        if(null != matchAgent)
+            matchAgent.supportArea(data.area);
     };
 }

@@ -32,14 +32,14 @@ function Player(userId, userName, gameCoin, socket){
         invented_profitrate: Number, //虚拟场盈利率
         invented_slew_rate: Number,   //虚拟场杀率
      */
-    self.updateLoginDb = function(){
+    self.updateLoginDb = function(ip){
         class_Users.find({'user_id':self.userId}, function(err, data){
             if(data.length == 0){   //没有记录的就创建
                 model_Users = OBJ('DbMgr').getModel(UserSchema);
                 model_Users.user_id = self.userId;
                 model_Users.user_name = self.userName;
                 model_Users.last_login_date = Date.now();
-                model_Users.last_login_ip = '';
+                model_Users.last_login_ip = ip;
                 model_Users.login_count = 1;
                 model_Users.status = 0;
                 model_Users.invented_profitrate = 0;
@@ -49,7 +49,7 @@ function Player(userId, userName, gameCoin, socket){
                 var updateVar = {
                     user_name : self.userName,
                     last_login_date : Date.now(),
-                    last_login_ip : '',
+                    last_login_ip : ip,
                     login_count : data[0].login_count+1,
                 };
                 class_Users.update({'user_id':self.userId}, {$set:updateVar}, function(err){

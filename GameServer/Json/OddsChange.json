@@ -1,4 +1,16 @@
 {
+  "0": {
+    "time_scale": 0,
+    "host1": 1,
+    "draw1": 1,
+    "guest1": 1,
+    "host2": 1,
+    "draw2": 1,
+    "guest2": 1,
+    "host3": 1,
+    "draw3": 1,
+    "guest3": 1
+  },
   "1": {
     "time_scale": 1,
     "host1": 1,
@@ -1417,18 +1429,6 @@
   },
   "119": {
     "time_scale": 119,
-    "host1": 1,
-    "draw1": 1,
-    "guest1": 1,
-    "host2": 1,
-    "draw2": 1,
-    "guest2": 1,
-    "host3": 1,
-    "draw3": 1,
-    "guest3": 1
-  },
-  "120": {
-    "time_scale": 120,
     "host1": 1,
     "draw1": 1,
     "guest1": 1,
