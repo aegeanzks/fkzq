@@ -1,7 +1,7 @@
 module.exports = DataPull;
 
 //加载模块
-var SingleTimer = require('../../../Utils/SingleTimer');
+//var SingleTimer = require('../../../Utils/SingleTimer');
 var config = require('../../../config').dataCenterSvrConfig();
 var Schema = require('../../../db_structure');
 var OBJ = require('../../../Utils/ObjRoot').getObj;
@@ -12,7 +12,7 @@ var Func = require('../../../Utils/Functions');
 //数据拉取
 function DataPull(){
     //变量定义
-    var _pullTimer;                             //定时器
+    //var _pullTimer;                             //定时器
     var _phaseday = 0;                          //请求的期号时间戳
     var _pageUrl ;                              //请求数据网址
     var _freq ;                                 //请求时间间隔
@@ -22,6 +22,7 @@ function DataPull(){
     var _switch = 1;                            //获取历史数据开关
     var _beginTime ='';                         //获取历史数据起始时间
     var _endTime = '';                          //获取历史数据截止时间
+    var _startSvrflag = 1;                     //是否重启服务标识
     //var _path = '';                             
     //end 变量定义
 
@@ -29,11 +30,19 @@ function DataPull(){
     var _ScheduleStatement = OBJ('DbMgr').getStatement(Schema.Schedule());
     //end 数据库statement
 
+    var mapScheduleList = new Map();           //当前时刻赛事列表
+    var mapAddSchedule = new Map();            //新增赛事
+    var mapDeleteSchedule = new Map();         //开始赛事
+    var mapUpdateSchedule = new Map();         //赛事信息更新     
+
+    var scehduleSelect = {"_id":0,"id":1,"weekday":1,"official_num":1,"phase":1,"match_date":1,"status":1,"first_half":1,"final_score":1,
+    "match_name":1,"home_team":1,"away_team":1,"odds_jingcai":1,"handicap":1,"odds_rangqiu":1,"display_flag":1,"hot_flag":1};
+
     //初始化
     init();
 
     //数据拉取入口
-    this.run = function(timestamp){
+    /*this.run = function(timestamp){
         if(null != _pullTimer && _pullTimer.toNextTime()){
             //console.log('DataPull...'+timestamp);
             //获取期号
@@ -47,18 +56,36 @@ function DataPull(){
                 OBJ('HttpClientMgr').Get(_pageUrl+phase,reqCallBack);
             }
         }
-    };
+    };*/
+
+    /*
+        @func 数据拉取路口
+    */
+    this.dataToPull = function(){
+        //获取期号
+        var phase= Func.getDate(_phaseday);
+        //获取历史数据完成
+        if(0 == _switch && (phase - _endTime >0)){
+            console.log('-----Pull history of data is finished!-----');
+        }
+        else{
+            console.log('期号:'+phase);
+            OBJ('HttpClientMgr').Get(_pageUrl+phase,reqCallBack);
+        }
+    }
+
+    
 
 
 /*
     @func 初始化函数
 */
 function init(){
-    _pullTimer = new SingleTimer();
+    //_pullTimer = new SingleTimer();
     _switch = (_switch = parseInt(config['switch']))?_switch:0;
     _beginTime =  config['beginTime'];
     _endTime = parseInt(config['endTime']);
-    _pullTimer.startup(config.pullInterval*1000);
+    //_pullTimer.startup(config.pullInterval*1000);
     _phaseday = _switch?Date.now():Func.getStamp(_beginTime);
     _freq = (_freq = parseInt(config['pullInterval'])*1000)?_freq:6000;
     _noDataTotal = (_noDataTotal = parseInt(config['noDataTotal']))?_noDataTotal:3;
@@ -97,13 +124,28 @@ function dataStatus(html){
         var finishNum = 0;
         var dataArr = JSON.parse(html);
         var len = dataArr.length;
+        var idArr = [];
         for(var i=0;i<len;i++){
             if(dataArr[i]['status'] == '4'){
                 finishNum++;
             }
+            //mapDeleteSchedule 赋值
+            var id = parseInt(dataArr[i]['id']);
+            idArr.push(id);
+            if(Date.parse(data['match_date']).getTime() > Date.now().getTime()){
+                if(mapDeleteSchedule.get(id) == null){
+                    mapDeleteSchedule.set(parseInt(dataArr[i]['id']),0);
+                }
+            }
+            //end mapDeleteSchedule 赋值
         }
         //本期号比赛结束
         if(finishNum == len){
+            //删除mapDeleteSchedule 值
+            for(var i =0;i<idArr.length;i++){
+                mapDeleteSchedule.delete(idArr[i]);
+            }
+            //end 删除mapDeleteSchedule 值
             return 1;
         }
         return 2;
@@ -137,6 +179,10 @@ function SetNextPhase(status){
         //连续_noDataNum期取到空数据,不再往下判断
         _phaseday = _phaseday-_totalNum*24*60*60*1000;  
         _totalNum = 0;
+        if(_startSvrflag){
+            _startSvrflag = 0;
+            getCurData();
+        }
     }else if(1 == status && _switch){
         _totalNum = 0;
         _noDataNum = 0;
@@ -460,6 +506,95 @@ function dataDeal(html){
     }catch(error){
         console.log('dataDeal err ', error);
     }
+}
+
+/*
+    @func 获取所有比赛的赛事列表
+*/
+function getCurData(){
+    var filter ={"match_date":{"$gte":Date.now()},"display_flag":1};
+    try{
+        _ScheduleStatement.find(filter,scehduleSelect,
+            {sort:{'match_num':1}},function(error,docs){
+                if(error){
+                    console.log('Module DataPull getCurData() _ScheduleStatement.find :',error);
+                    return;
+                }else if(0 == docs.length){
+                    return;
+                }
+                var arr ={};
+                for(var i= 0;i<docs.length;i++){
+                    arr['sceheduleId'] = parseInt(docs[i]['id']);
+                    arr['phase'] = docs[i]['phase'];
+                    arr['matchName'] = docs[i]['match_name'];
+                    arr['weekday'] = docs[i]['weekday'];
+                    arr['officialNum'] = docs[i]['weekday']+docs[i]['official_num'];
+                    arr['endSale'] = docs[i]['match_date'].toLocaleString();
+                    arr['homeName'] = docs[i]['home_team'];
+                    arr['awayName'] = docs[i]['away_team'];
+                    arr['handicap'] = docs[i]['handicap'];
+                    if(docs[i]['input_flag']){
+                        arr['oddsJingcai'] = docs[i]['odds_jingcai_admin'];
+                        arr['oddsRangqiu'] = docs[i]['odds_rangqiu_admin'];
+                    }else{
+                        arr['oddsJingcai'] = docs[i]['odds_jingcai'];
+                        arr['oddsRangqiu'] = docs[i]['odds_rangqiu'];
+                    }
+                    arr['hotFlag'] = docs[i]['hot_flag'];
+
+                    mapScheduleList.set(arr['sceheduleId'],arr);
+                }
+            OBJ('GameSvrAgentModule').send(source, {
+                module:'RealFootball',
+                func:'resCurData',
+                data:{
+                    map:mapScheduleList.values()
+                }
+            });
+            mapScheduleList.clear();
+        });
+    }catch(err){
+        console.log('DataPull getCurData() :', err);
+    }
+}
+
+/*
+    @func 
+ */
+function addCurData(){
+
+}
+
+/*
+    @func 比赛开始删除相应的赛事信息
+*/
+function deleteCurData(){
+    var idArr = [];
+    for(var key in mapDeleteSchedule){
+        var item = mapDeleteSchedule[key];
+            if(0 == item){
+                var tmp = key;
+                mapDeleteSchedule.delete(key);
+                mapDeleteSchedule.set(tmp,1);
+                idArr.push(tmp);
+            }
+    }
+
+    OBJ('GameSvrAgentModule').send(source, {
+        module:'RealFootball',
+        func:'refreshStopBetSchedule',
+        data:{
+            id:idArr
+        }
+    });
+
+}
+
+/*
+    @func 
+*/
+function updateCurData(){
+
 }
 
 }

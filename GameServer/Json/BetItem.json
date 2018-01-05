@@ -9,6 +9,8 @@
     "game_id": 2,
     "item1": 100,
     "item2": 1000,
-    "item3": 10000
+    "item3": 10000,
+    "numLimit":4,
+    "coinLimit":100000
   }
 }

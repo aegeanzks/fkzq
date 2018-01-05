@@ -20,8 +20,10 @@ var mongoCfg = configs.mongodb();
 var config = configs.adminSvrConfig();
 
 var RlRaceController = require('./Controller/RealFootball/RaceController');
+var RlRecordsController = require('./Controller/RealFootball/RecordsController');
 var GameConfigController = require('./Controller/SystemManage/GameConfigController');
-
+var RlVirtualRaceController = require('./Controller/VirtualFootball/VirtualRaceController');
+var RlVirtualRecordsController = require('./Controller/VirtualFootball/VirtualRecordsController');
 function AdminSvr(){
 }
 
@@ -41,7 +43,11 @@ AdminSvr.start = function () {
 AdminSvr.regsterFun = function(){
     //用户组件
     new RlRaceController();
+    new RlRecordsController();
     new GameConfigController();
+
+    new RlVirtualRaceController();
+    new RlVirtualRecordsController();
 };
 
 

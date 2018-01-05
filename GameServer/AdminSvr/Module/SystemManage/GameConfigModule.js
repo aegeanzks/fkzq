@@ -227,7 +227,7 @@ function GameConfigModule(){
                         })
                         .skip((page-1) * limit)
                         .limit(limit)
-                        .sort({'id':1});
+                        .sort({'id':-1});
                     }else{
                         res.send({
                             status: 0,
@@ -293,8 +293,8 @@ function GameConfigModule(){
                                 console.log('Module of GameConfigModule '+funcname +' err :'+error);
                             }
                         })
-                        .skip((page-1) * limit)
-                        .limit(limit)
+                      //  .skip((page-1) * limit)
+                      //  .limit(limit)
                         .sort({'all_goal_num':1});
                     }else{
                         res.send({
@@ -387,7 +387,45 @@ function GameConfigModule(){
         findOdds(filter,page,res,funcname);
     }
 
-    
+      /*
+        @func     根据游戏id获取库存信息
+        @gameid   游戏id
+     */
+    this.getoodInfoById = function(id,res){
+        var filter = {"id":id};
+        var funcname = 'getoodById';
+        var page = 1;
+        findOdds(filter,page,res,funcname,1);
+    }
+
+      /*
+        @func    删除赔率配置通过id
+        @id  标识id
+     */
+    this.deloodInfoById=function(id,res){
+        var condition = {"id":id};
+        try{
+            oddsStatement.collection.remove(condition,function(error){
+                 if(!error){
+                     res.send({
+                         status: 200,
+                         type: 'DEL_DATA_SUCESS',
+                         message: '删除数据成功'
+                     });
+                 }else{
+                     console.log('Module of RaceModule deloodInfoById err :'+error);
+                 }
+             });
+         }catch(err){
+             console.log('删除数据失败', err);
+             res.send({
+                 status: 1,
+                 type: 'DEL_DATA_ERROR',
+                 message: '删除数据失败'
+             })
+         }
+    }
+
     /*
         @func   获取进球配置
      */
@@ -411,4 +449,157 @@ function GameConfigModule(){
         updateStock(condition,values,res);
     }
 
+
+       /*
+        @func    更新游戏的事件信息
+        @fields  字段
+     */
+    this.updateEventInfoById = function(fields,res){
+        var condition = {"event_id":fields.event_id};
+        var values = {"host_ball_handling":fields.host_ball_handling,"host_attack":fields.host_attack,
+                      "host_dangerous_attack":fields.host_dangerous_attack,"guest_ball_handling":fields.guest_ball_handling,
+                      "guest_attack":fields.guest_attack,"guest_dangerous_attack":fields.guest_dangerous_attack,
+                      "animation_time":fields.animation_time,   "blockade":fields.blockade};
+                      updateEvent(condition,values,res);
+    }
+
+
+
+        /*
+        @func        更新库存数据库
+        @condition   条件
+        @values      待更新的值
+     */
+    function updateEvent(condition,values,res){
+        try{
+           eventStatement.findOneAndUpdate(condition,{$set:values},function(error,docs){
+                if(!error){
+                    res.send({
+                        status: 200,
+                        type: 'UPDATE_DATA_SUCESS',
+                        message: '数据更新成功'
+                    });
+                }else{
+                    console.log('Module of RaceModule updateListById err :'+error);
+                }
+            });
+        }catch(err){
+            console.log('更新数据失败', err);
+            res.send({
+                status: 1,
+                type: 'UPDATE_DATA_ERROR',
+                message: '更新数据失败'
+            })
+        }
+    }
+
+       /*
+        @func    更新游戏的事件信息
+        @fields  字段
+     */
+    this.addoodInfo = function(fields,res){
+     $id=0;
+     $dataarray={};
+        try{
+            oddsStatement.find({},function(finderr,docs){
+                if(!finderr){
+                    $dataarray=docs;
+                    if($dataarray.length>0){
+                        $id=$dataarray[0]['id']+1;
+                    }
+               
+                       var values = {"id":$id,"host_win":fields.host_win,"drawn":fields.drawn,"guest_win":fields.guest_win,"both_sides":fields.both_sides,"sides_dvalue":-1,
+                                     "host_goal":fields.host_goal,"zero":fields.zero,
+                                     "guest_goal":fields.guest_goal};
+                                     addnewoodinfo(values,res);
+                }
+            })
+            .sort({'id':-1});
+        }catch(err){
+        }
+   
+    }
+
+   function addnewoodinfo(values,res){
+        try{
+            oddsStatement.collection.insert(values,function(error){
+                 if(!error){
+                     res.send({
+                         status: 200,
+                         type: 'ADD_DATA_SUCESS',
+                         message: '添加数据成功'
+                     });
+                 }else{
+                     console.log('Module of RaceModule updateListById err :'+error);
+                 }
+             });
+         }catch(err){
+             console.log('添加数据失败', err);
+             res.send({
+                 status: 1,
+                 type: 'ADD_DATA_ERROR',
+                 message: '添加数据失败'
+             })
+         }
+    }
+    /*
+        @func    更新游戏的赔率
+        @fields  字段
+     */
+ this.updateOodInfo=function(fields,res){
+
+            var condition = {"id":fields.id};
+            var values = {"host_win":fields.host_win,"drawn":fields.drawn,"guest_win":fields.guest_win,"both_sides":fields.both_sides,
+            "host_goal":fields.host_goal,"zero":fields.zero,
+            "guest_goal":fields.guest_goal};
+        try{
+            oddsStatement.findOneAndUpdate(condition,{$set:values},function(error,docs){
+                if(!error){
+                    res.send({
+                        status: 200,
+                        type: 'UPDATE_DATA_SUCESS',
+                        message: '数据更新成功'
+                    });
+                }else{
+                    console.log('Module of RaceModule updateOodInfo err :'+error);
+                }
+            });
+        }catch(err){
+            console.log('更新数据失败', err);
+            res.send({
+                status: 1,
+                type: 'UPDATE_DATA_ERROR',
+                message: '更新数据失败'
+            })
+        }
+     }
+
+
+          /*
+        @func    更新游戏的事件信息
+        @fields  字段
+     */
+    this.addgoalsInfo = function(fields,res){
+             var values = {"all_goal_num":fields.all_goal_num,"chance":fields.chance};
+            try{
+               goalStatement.collection.insert(values,function(error){
+                     if(!error){
+                         res.send({
+                             status: 200,
+                             type: 'ADD_DATA_SUCESS',
+                             message: '添加数据成功'
+                         });
+                     }else{
+                         console.log('Module of RaceModule addgoalsInfo err :'+error);
+                     }
+                 });
+             }catch(err){
+                 console.log('添加数据失败', err);
+                 res.send({
+                     status: 1,
+                     type: 'ADD_DATA_ERROR',
+                     message: '添加数据失败'
+                 })
+             }
+        }
 }

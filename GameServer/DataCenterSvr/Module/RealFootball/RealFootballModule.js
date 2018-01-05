@@ -9,13 +9,16 @@ module.exports = RealFootballModule;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var BaseModule = require("../BaseModule");
-var DataPull = require("./DataPull");
+//var DataPull = require("./DataPull");
+var RealFootball = require("./RealFootball");
 
 function RealFootballModule(){
     BaseModule.call(this);
-    var dataPull = new DataPull();
+    //var dataPull = new DataPull();
+    this.logic = new RealFootball();
     //一帧
     this.run = function(timestamp){
-        dataPull.run(timestamp);
+        this.logic.run(timestamp);
+        //dataPull.run(timestamp);
     };
 }

@@ -326,9 +326,9 @@ function VirtualFootball(){
                         }
                     });
                 }
-                //修改库存
-                if(matchAgent)
-                matchAgent.addCurStock(item.bet_coin);
+                ////修改库存
+                //if(matchAgent)
+                //matchAgent.addCurStock(item.bet_coin);
             }
         });
     }
@@ -378,9 +378,9 @@ function VirtualFootball(){
                         }
                     });
                 }
-                //修改库存
-                if(matchAgent)
-                matchAgent.addCurStock(item.bet_coin);
+                ////修改库存
+                //if(matchAgent)
+                //matchAgent.addCurStock(item.bet_coin);
             }
         });
     }

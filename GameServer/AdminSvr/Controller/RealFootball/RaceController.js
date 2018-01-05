@@ -280,7 +280,7 @@ RlRaceController.updateRaceInfo = function(req,res,next){
 			case '3':
 				{
 					//校验sign
-					var sign = signValue+req.query.id+input_flag+type;
+					var sign = signValue+req.query.id+req.query.input_flag+type;
 					if(!checkSign(sign,req.query.sign)){
 						res.send({
 							status:2,

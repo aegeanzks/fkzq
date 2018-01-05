@@ -1,6 +1,7 @@
-module.exports = RlRecordsController;
 
-var RecordsModule = require('../../Module/RealFootball/RecordsModule');
+module.exports = RlVirtualRecordsController;
+
+var VirtualRecordsModule = require('../../Module/VirtualFootball/VirtualRaceModule');
 //var formidable = require('formidable');
 var checkSign  = require('../Sign').checkSign;
 var signValue = require('../../../config').adminSvrConfig()['sign'];
@@ -8,12 +9,12 @@ var signValue = require('../../../config').adminSvrConfig()['sign'];
 /*  
     Real比赛记录管理controller类
  */
-function RlRecordsController(){
-	recordsModule = new RecordsModule();
+function RlVirtualRecordsController(){
+	VRecordsModule = new VirtualRecordsModule();
 }
 
 
-RlRecordsController.recordslist=function(req,res,next){
+RlVirtualRecordsController.recordslist=function(req,res,next){
 	const type = req.query.type;
 	//校验sign
 	var sign ;
@@ -41,7 +42,7 @@ RlRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-				recordsModule.recordListByPage(page1,res);
+				VRecordsModule.vrecordListByPage(page1,res);
 				break;
 			case '2':
 				//校验参数合法性 
@@ -56,7 +57,7 @@ RlRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-				recordsModule.recordListByName(user_name,page2,res);
+				recordsModule.vrecordListByName(user_name,page2,res);
 				break;
 			case '3': 
 				//校验参数合法性 
@@ -71,7 +72,7 @@ RlRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-				recordsModule.recordListByStatus(status3,page3,res);
+				recordsModule.vrecordListByStatus(status3,page3,res);
 				break;
 			case '4': 
 				//校验参数合法性
@@ -88,7 +89,7 @@ RlRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-				recordsModule.recordListBytime(begin_time4,end_time4,page4,res);
+				recordsModule.vrecordListBytime(begin_time4,end_time4,page4,res);
 				break;
 		
 			case '5': 
@@ -107,7 +108,7 @@ RlRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-				recordsModule.recordListBystatusandtime(status5,begin_time5,end_time5,page5,res);
+				recordsModule.vrecordListBystatusandtime(status5,begin_time5,end_time5,page5,res);
 				break;
 			default: 
 				res.json({

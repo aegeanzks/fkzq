@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "GameSvr",
-            "program": "${workspaceFolder}/GameSvr\\App.js"
+            "program": "${workspaceFolder}/GameSvr\\App.js",
             "args": [
                 "server2"
             ]

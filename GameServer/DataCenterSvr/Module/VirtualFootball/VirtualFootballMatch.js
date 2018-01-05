@@ -282,10 +282,89 @@ function VirtualFootballMatch(conf, beginTime, endTime){
         return randArr;
     }
 
+    function HandicapCompare(a, b, c){
+        var min = a;
+        if(a >= b){
+            min = b;
+        }
+        if(min >= c){
+            min = c;
+        }
+        var arr = [];
+        if(a == min){
+            arr.push(1);    //主队进球
+        }
+        if(b == min){
+            arr.push(0);    //不进球
+        }
+        if(c == min){
+            arr.push(2);    //客队进球
+        }
+        arr = shuffle(arr.slice(0));
+        if(arr[0] == 0){
+            console.log('HandicapCompare：不进球');
+        }else if(arr[0] == 1){
+            console.log('HandicapCompare：主队进球');
+        }else{
+            console.log('HandicapCompare：客队进球');
+        }
+        return arr[0];
+    }
+    /***
+     *  var hostWinDistributeCoin = 0;          //主胜将派发奖金          A
+        var drawDistributeCoin = 0;             //平将派发奖金            B
+        var guestWinDistributeCoin = 0;         //客胜将派发奖金          C
+        var hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金     A1
+        var zeroGoalDistributeCoin = 0;         //不进球将派发奖金       B1
+        var guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金     C1
+     */
     //返回 0不进球 1主队进球 2客队进球
     function judgeWhichGoal(){
         if(bCheat){         //需要作弊
-            if()
+            console.log('A:'+hostWinDistributeCoin+' B:'+drawDistributeCoin+' C:'+guestWinDistributeCoin);
+            console.log('A1:'+hostNextGoalDistributeCoin+' B1:'+zeroGoalDistributeCoin+' C1:'+guestNextGoalDistributeCoin);
+            var goalDif = self.hostTeamGoal - self.guestTeamGoal;
+            if(goalDif == 0){       //进球差==0时 A+A1 B+B1 C+C1
+                console.log('进球差：'+goalDif+ ' 公式：A+A1 B+B1 C+C1');
+                return HandicapCompare(
+                    hostWinDistributeCoin+hostNextGoalDistributeCoin,
+                    drawDistributeCoin+zeroGoalDistributeCoin,
+                    guestWinDistributeCoin+guestNextGoalDistributeCoin
+                );
+            }
+            if(goalDif == 1){       //进球差==1时 A+A1 A+B1 B+C1
+                console.log('进球差：'+goalDif+ ' 公式：A+A1 A+B1 B+C1');
+                return HandicapCompare(
+                    hostWinDistributeCoin+hostNextGoalDistributeCoin,
+                    hostWinDistributeCoin+zeroGoalDistributeCoin,
+                    drawDistributeCoin+guestNextGoalDistributeCoin
+                );
+            }
+            if(goalDif >= 2){       //进球差>=2时 A+A1 A+B1 A+C1
+                console.log('进球差：'+goalDif+ ' 公式：A+A1 A+B1 A+C1');
+                return HandicapCompare(
+                    hostWinDistributeCoin+hostNextGoalDistributeCoin,
+                    hostWinDistributeCoin+zeroGoalDistributeCoin,
+                    hostWinDistributeCoin+guestNextGoalDistributeCoin
+                );
+            }
+            if(goalDif == -1){      //进球差==-1时 B+A1 C+B1 C+C1
+                console.log('进球差：'+goalDif+ ' 公式：B+A1 C+B1 C+C1');
+                return HandicapCompare(
+                    drawDistributeCoin+hostNextGoalDistributeCoin,
+                    guestWinDistributeCoin+zeroGoalDistributeCoin,
+                    guestWinDistributeCoin+guestNextGoalDistributeCoin
+                );
+            }
+            if(goalDif <= -2){      //进球差<=-2时 C+A1 C+B1 C+C1
+                console.log('进球差：'+goalDif+ ' 公式：C+A1 C+B1 C+C1');
+                return HandicapCompare(
+                    guestWinDistributeCoin+hostNextGoalDistributeCoin,
+                    guestWinDistributeCoin+zeroGoalDistributeCoin,
+                    guestWinDistributeCoin+guestNextGoalDistributeCoin
+                );
+            }
+
         }else{              //不需要作弊
             var allScore = self.hostTeam.Score + self.guestTeam.Score;
             var randNum = Functions.getRandomNum(1, allScore);
@@ -334,7 +413,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金
             zeroGoalDistributeCoin = 0;         //不进球将派发奖金
             guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金
-        }
+        } 
         self.curEvent = scheduleArr[playerIndex].event;
         self.nextEventTime = scheduleArr[playerIndex].endTime;
 
@@ -393,59 +472,61 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     };
 
     self.supportArea = function(data){
+        this.addCurStock(data.betCoin); //添加库存
         switch(data.area){
             case 1:
             {
-                hostWinSupport++;
+                self.hostWinSupport++;
                 hostWinDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 2:
             {
-                drawSupport++;
+                self.drawSupport++;
                 drawDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 3:
             {
-                guestWinSupport++;
+                self.guestWinSupport++;
                 guestWinDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 4:
             {
-                hostNextGoalSupport++;
+                self.hostNextGoalSupport++;
                 hostNextGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 5:
             {
-                zeroGoalSupport++;
+                self.zeroGoalSupport++;
                 zeroGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 6:
             {
-                guestNextGoalSupport++;
+                self.guestNextGoalSupport++;
                 guestNextGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
         }
     };
 
-    function setCurStock(curStock, func){
-        classConfVirtualStock.findOneAndUpdate({'game_id':1}, {'cur_stock':curStock}, function(err, data){
+    function setCurStock(stockNum, func){
+        classConfVirtualStock.update({'game_id':1}, {'cur_stock':stockNum}, function(err, data){
             if(err){
                 console.log(err);
                 return;
             }
-            func(data.cur_stock);
+            console.log('setCurStock:'+stockNum);
+            func(stockNum);
         });
     }
     //加库存(用队列操作)
     var arrAddStock = [];
     this.addCurStock = function(addNum){
-        arrAddStock.push(addNum);
+        arrAddStock.push(parseInt(addNum));
         if(arrAddStock.length == 1){
             addStock();
         }
@@ -471,11 +552,12 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             cheatChange = cheatChange2;
         else
             cheatChange = cheatChange3;
-
+        console.log('库存:'+curStock+' 作弊触发概率:'+cheatChange+'%');
         var randValue = Functions.getRandomNum(1, 100);
         if(randValue <= cheatChange)
             bCheat = true;
         else
             bCheat = false;
+        console.log('是否作弊:'+bCheat);
     }
 }

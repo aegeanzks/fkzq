@@ -309,7 +309,7 @@ function VirtualFootballConf(){
             if(null == data || 0 == data.length){
                 var dataConfig = [];
                 dataConfig.push(stockDeal(stockInfo["1"]));
-                insertInfo(classConfVirtualEvent,dataConfig,function(dataCnf){
+                insertInfo(classConfVirtualStock,dataConfig,function(dataCnf){
                     func({
                         curStock:dataCnf[0].cur_stock,
                         stockInitialValue:dataCnf[0].stock_initial_value,

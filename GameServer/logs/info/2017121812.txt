@@ -1,1 +1,0 @@
-[2017-12-18 12:00:28.629] [INFO] logInfo - errReferenceError: logic is not defined

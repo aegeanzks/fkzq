@@ -1,0 +1,734 @@
+{
+  "英超": {
+    "match_name": "英超",
+    "league_id": 1
+  },
+  "英冠": {
+    "match_name": "英冠",
+    "league_id": 2
+  },
+  "英甲": {
+    "match_name": "英甲",
+    "league_id": 3
+  },
+  "英乙": {
+    "match_name": "英乙",
+    "league_id": 4
+  },
+  "英足总杯": {
+    "match_name": "英足总杯",
+    "league_id": 5
+  },
+  "英联赛杯": {
+    "match_name": "英联赛杯",
+    "league_id": 6
+  },
+  "英竞标赛": {
+    "match_name": "英竞标赛",
+    "league_id": 7
+  },
+  "社区盾杯": {
+    "match_name": "社区盾杯",
+    "league_id": 8
+  },
+  "意甲": {
+    "match_name": "意甲",
+    "league_id": 9
+  },
+  "意乙": {
+    "match_name": "意乙",
+    "league_id": 10
+  },
+  "意大利杯": {
+    "match_name": "意大利杯",
+    "league_id": 11
+  },
+  "意超杯": {
+    "match_name": "意超杯",
+    "league_id": 12
+  },
+  "西甲": {
+    "match_name": "西甲",
+    "league_id": 13
+  },
+  "西乙": {
+    "match_name": "西乙",
+    "league_id": 14
+  },
+  "国王杯": {
+    "match_name": "国王杯",
+    "league_id": 15
+  },
+  "西超杯": {
+    "match_name": "西超杯",
+    "league_id": 16
+  },
+  "德甲": {
+    "match_name": "德甲",
+    "league_id": 17
+  },
+  "得乙": {
+    "match_name": "得乙",
+    "league_id": 18
+  },
+  "德国杯": {
+    "match_name": "德国杯",
+    "league_id": 19
+  },
+  "德超杯": {
+    "match_name": "德超杯",
+    "league_id": 20
+  },
+  "法甲": {
+    "match_name": "法甲",
+    "league_id": 21
+  },
+  "法乙": {
+    "match_name": "法乙",
+    "league_id": 22
+  },
+  "法联赛杯": {
+    "match_name": "法联赛杯",
+    "league_id": 23
+  },
+  "法国杯": {
+    "match_name": "法国杯",
+    "league_id": 24
+  },
+  "法超杯": {
+    "match_name": "法超杯",
+    "league_id": 25
+  },
+  "葡超": {
+    "match_name": "葡超",
+    "league_id": 26
+  },
+  "葡甲": {
+    "match_name": "葡甲",
+    "league_id": 27
+  },
+  "葡萄牙杯": {
+    "match_name": "葡萄牙杯",
+    "league_id": 28
+  },
+  "葡联赛杯": {
+    "match_name": "葡联赛杯",
+    "league_id": 29
+  },
+  "葡超杯": {
+    "match_name": "葡超杯",
+    "league_id": 30
+  },
+  "荷甲": {
+    "match_name": "荷甲",
+    "league_id": 31
+  },
+  "荷乙": {
+    "match_name": "荷乙",
+    "league_id": 32
+  },
+  "荷兰杯": {
+    "match_name": "荷兰杯",
+    "league_id": 33
+  },
+  "荷超杯": {
+    "match_name": "荷超杯",
+    "league_id": 34
+  },
+  "俄超": {
+    "match_name": "俄超",
+    "league_id": 35
+  },
+  "俄甲": {
+    "match_name": "俄甲",
+    "league_id": 36
+  },
+  "俄罗斯杯": {
+    "match_name": "俄罗斯杯",
+    "league_id": 37
+  },
+  "俄超杯": {
+    "match_name": "俄超杯",
+    "league_id": 38
+  },
+  "苏超": {
+    "match_name": "苏超",
+    "league_id": 39
+  },
+  "苏冠": {
+    "match_name": "苏冠",
+    "league_id": 40
+  },
+  "苏联赛杯": {
+    "match_name": "苏联赛杯",
+    "league_id": 41
+  },
+  "苏足总杯": {
+    "match_name": "苏足总杯",
+    "league_id": 42
+  },
+  "挪超": {
+    "match_name": "挪超",
+    "league_id": 43
+  },
+  "挪甲": {
+    "match_name": "挪甲",
+    "league_id": 44
+  },
+  "挪威杯": {
+    "match_name": "挪威杯",
+    "league_id": 45
+  },
+  "挪超杯": {
+    "match_name": "挪超杯",
+    "league_id": 46
+  },
+  "瑞超": {
+    "match_name": "瑞超",
+    "league_id": 47
+  },
+  "瑞甲": {
+    "match_name": "瑞甲",
+    "league_id": 48
+  },
+  "瑞典杯": {
+    "match_name": "瑞典杯",
+    "league_id": 49
+  },
+  "瑞超杯": {
+    "match_name": "瑞超杯",
+    "league_id": 50
+  },
+  "比甲": {
+    "match_name": "比甲",
+    "league_id": 51
+  },
+  "比乙": {
+    "match_name": "比乙",
+    "league_id": 52
+  },
+  "比利时杯": {
+    "match_name": "比利时杯",
+    "league_id": 53
+  },
+  "比超杯": {
+    "match_name": "比超杯",
+    "league_id": 54
+  },
+  "捷甲": {
+    "match_name": "捷甲",
+    "league_id": 55
+  },
+  "捷乙": {
+    "match_name": "捷乙",
+    "league_id": 56
+  },
+  "捷克杯": {
+    "match_name": "捷克杯",
+    "league_id": 57
+  },
+  "捷超杯": {
+    "match_name": "捷超杯",
+    "league_id": 58
+  },
+  "土超": {
+    "match_name": "土超",
+    "league_id": 59
+  },
+  "土甲": {
+    "match_name": "土甲",
+    "league_id": 60
+  },
+  "土耳其杯": {
+    "match_name": "土耳其杯",
+    "league_id": 61
+  },
+  "土超杯": {
+    "match_name": "土超杯",
+    "league_id": 62
+  },
+  "希超": {
+    "match_name": "希超",
+    "league_id": 63
+  },
+  "希甲": {
+    "match_name": "希甲",
+    "league_id": 64
+  },
+  "希腊杯": {
+    "match_name": "希腊杯",
+    "league_id": 65
+  },
+  "瑞士超": {
+    "match_name": "瑞士超",
+    "league_id": 66
+  },
+  "瑞士甲": {
+    "match_name": "瑞士甲",
+    "league_id": 67
+  },
+  "瑞士杯": {
+    "match_name": "瑞士杯",
+    "league_id": 68
+  },
+  "以超": {
+    "match_name": "以超",
+    "league_id": 69
+  },
+  "以甲": {
+    "match_name": "以甲",
+    "league_id": 70
+  },
+  "以色列杯": {
+    "match_name": "以色列杯",
+    "league_id": 71
+  },
+  "丹超": {
+    "match_name": "丹超",
+    "league_id": 72
+  },
+  "丹甲": {
+    "match_name": "丹甲",
+    "league_id": 73
+  },
+  "丹麦杯": {
+    "match_name": "丹麦杯",
+    "league_id": 74
+  },
+  "奥甲": {
+    "match_name": "奥甲",
+    "league_id": 75
+  },
+  "奥乙": {
+    "match_name": "奥乙",
+    "league_id": 76
+  },
+  "奥地利杯": {
+    "match_name": "奥地利杯",
+    "league_id": 77
+  },
+  "波甲": {
+    "match_name": "波甲",
+    "league_id": 78
+  },
+  "波乙": {
+    "match_name": "波乙",
+    "league_id": 79
+  },
+  "波兰杯": {
+    "match_name": "波兰杯",
+    "league_id": 80
+  },
+  "波超杯": {
+    "match_name": "波超杯",
+    "league_id": 81
+  },
+  "爱超": {
+    "match_name": "爱超",
+    "league_id": 82
+  },
+  "爱甲": {
+    "match_name": "爱甲",
+    "league_id": 83
+  },
+  "爱联赛杯": {
+    "match_name": "爱联赛杯",
+    "league_id": 84
+  },
+  "爱足总杯": {
+    "match_name": "爱足总杯",
+    "league_id": 85
+  },
+  "匈甲": {
+    "match_name": "匈甲",
+    "league_id": 86
+  },
+  "匈乙": {
+    "match_name": "匈乙",
+    "league_id": 87
+  },
+  "匈牙利杯": {
+    "match_name": "匈牙利杯",
+    "league_id": 88
+  },
+  "匈联赛杯": {
+    "match_name": "匈联赛杯",
+    "league_id": 89
+  },
+  "芬超": {
+    "match_name": "芬超",
+    "league_id": 90
+  },
+  "芬甲": {
+    "match_name": "芬甲",
+    "league_id": 91
+  },
+  "芬联赛杯": {
+    "match_name": "芬联赛杯",
+    "league_id": 92
+  },
+  "芬兰杯": {
+    "match_name": "芬兰杯",
+    "league_id": 93
+  },
+  "罗甲": {
+    "match_name": "罗甲",
+    "league_id": 94
+  },
+  "罗乙": {
+    "match_name": "罗乙",
+    "league_id": 95
+  },
+  "罗杯": {
+    "match_name": "罗杯",
+    "league_id": 96
+  },
+  "罗超杯": {
+    "match_name": "罗超杯",
+    "league_id": 97
+  },
+  "塞超": {
+    "match_name": "塞超",
+    "league_id": 98
+  },
+  "塞甲": {
+    "match_name": "塞甲",
+    "league_id": 99
+  },
+  "塞北": {
+    "match_name": "塞北",
+    "league_id": 100
+  },
+  "克甲": {
+    "match_name": "克甲",
+    "league_id": 101
+  },
+  "克乙": {
+    "match_name": "克乙",
+    "league_id": 102
+  },
+  "克杯": {
+    "match_name": "克杯",
+    "league_id": 103
+  },
+  "乌超": {
+    "match_name": "乌超",
+    "league_id": 104
+  },
+  "乌甲": {
+    "match_name": "乌甲",
+    "league_id": 105
+  },
+  "乌克兰杯": {
+    "match_name": "乌克兰杯",
+    "league_id": 106
+  },
+  "乌超杯": {
+    "match_name": "乌超杯",
+    "league_id": 107
+  },
+  "冰超": {
+    "match_name": "冰超",
+    "league_id": 108
+  },
+  "冰甲": {
+    "match_name": "冰甲",
+    "league_id": 109
+  },
+  "冰岛杯": {
+    "match_name": "冰岛杯",
+    "league_id": 110
+  },
+  "冰超杯": {
+    "match_name": "冰超杯",
+    "league_id": 111
+  },
+  "巴甲": {
+    "match_name": "巴甲",
+    "league_id": 112
+  },
+  "巴乙": {
+    "match_name": "巴乙",
+    "league_id": 113
+  },
+  "圣保罗锦": {
+    "match_name": "圣保罗锦",
+    "league_id": 114
+  },
+  "巴西杯": {
+    "match_name": "巴西杯",
+    "league_id": 115
+  },
+  "阿甲": {
+    "match_name": "阿甲",
+    "league_id": 116
+  },
+  "阿乙": {
+    "match_name": "阿乙",
+    "league_id": 117
+  },
+  "阿根廷杯": {
+    "match_name": "阿根廷杯",
+    "league_id": 118
+  },
+  "阿超杯": {
+    "match_name": "阿超杯",
+    "league_id": 119
+  },
+  "智利甲": {
+    "match_name": "智利甲",
+    "league_id": 120
+  },
+  "智利杯": {
+    "match_name": "智利杯",
+    "league_id": 121
+  },
+  "智超杯": {
+    "match_name": "智超杯",
+    "league_id": 122
+  },
+  "美职足": {
+    "match_name": "美职足",
+    "league_id": 123
+  },
+  "公开赛杯": {
+    "match_name": "公开赛杯",
+    "league_id": 124
+  },
+  "墨超": {
+    "match_name": "墨超",
+    "league_id": 125
+  },
+  "墨西哥杯": {
+    "match_name": "墨西哥杯",
+    "league_id": 126
+  },
+  "墨超杯": {
+    "match_name": "墨超杯",
+    "league_id": 127
+  },
+  "中超": {
+    "match_name": "中超",
+    "league_id": 128
+  },
+  "中甲": {
+    "match_name": "中甲",
+    "league_id": 129
+  },
+  "中足杯": {
+    "match_name": "中足杯",
+    "league_id": 130
+  },
+  "中超杯": {
+    "match_name": "中超杯",
+    "league_id": 131
+  },
+  "日职": {
+    "match_name": "日职",
+    "league_id": 132
+  },
+  "日乙": {
+    "match_name": "日乙",
+    "league_id": 133
+  },
+  "天皇杯": {
+    "match_name": "天皇杯",
+    "league_id": 134
+  },
+  "日联赛杯": {
+    "match_name": "日联赛杯",
+    "league_id": 135
+  },
+  "日超杯": {
+    "match_name": "日超杯",
+    "league_id": 136
+  },
+  "韩职": {
+    "match_name": "韩职",
+    "league_id": 137
+  },
+  "韩挑战联": {
+    "match_name": "韩挑战联",
+    "league_id": 138
+  },
+  "韩足总杯": {
+    "match_name": "韩足总杯",
+    "league_id": 139
+  },
+  "澳超": {
+    "match_name": "澳超",
+    "league_id": 140
+  },
+  "澳杯": {
+    "match_name": "澳杯",
+    "league_id": 141
+  },
+  "欧洲杯": {
+    "match_name": "欧洲杯",
+    "league_id": 142
+  },
+  "欧冠": {
+    "match_name": "欧冠",
+    "league_id": 143
+  },
+  "世欧预": {
+    "match_name": "世欧预",
+    "league_id": 144
+  },
+  "欧预赛": {
+    "match_name": "欧预赛",
+    "league_id": 145
+  },
+  "欧罗巴": {
+    "match_name": "欧罗巴",
+    "league_id": 146
+  },
+  "欧超杯": {
+    "match_name": "欧超杯",
+    "league_id": 147
+  },
+  "欧青赛": {
+    "match_name": "欧青赛",
+    "league_id": 148
+  },
+  "女欧洲杯": {
+    "match_name": "女欧洲杯",
+    "league_id": 149
+  },
+  "美洲杯": {
+    "match_name": "美洲杯",
+    "league_id": 150
+  },
+  "解放者杯": {
+    "match_name": "解放者杯",
+    "league_id": 151
+  },
+  "世南美预": {
+    "match_name": "世南美预",
+    "league_id": 152
+  },
+  "俱乐部杯": {
+    "match_name": "俱乐部杯",
+    "league_id": 153
+  },
+  "优胜者杯": {
+    "match_name": "优胜者杯",
+    "league_id": 154
+  },
+  "世中北美预": {
+    "match_name": "世中北美预",
+    "league_id": 155
+  },
+  "中美洲杯": {
+    "match_name": "中美洲杯",
+    "league_id": 156
+  },
+  "中北美冠": {
+    "match_name": "中北美冠",
+    "league_id": 157
+  },
+  "金杯赛": {
+    "match_name": "金杯赛",
+    "league_id": 158
+  },
+  "亚洲杯": {
+    "match_name": "亚洲杯",
+    "league_id": 159
+  },
+  "亚冠": {
+    "match_name": "亚冠",
+    "league_id": 160
+  },
+  "世亚预": {
+    "match_name": "世亚预",
+    "league_id": 161
+  },
+  "亚预赛": {
+    "match_name": "亚预赛",
+    "league_id": 162
+  },
+  "四强赛": {
+    "match_name": "四强赛",
+    "league_id": 163
+  },
+  "亚青赛": {
+    "match_name": "亚青赛",
+    "league_id": 164
+  },
+  "亚运男足": {
+    "match_name": "亚运男足",
+    "league_id": 165
+  },
+  "亚运女足": {
+    "match_name": "亚运女足",
+    "league_id": 166
+  },
+  "西亚锦": {
+    "match_name": "西亚锦",
+    "league_id": 167
+  },
+  "东南亚锦": {
+    "match_name": "东南亚锦",
+    "league_id": 168
+  },
+  "女亚洲杯": {
+    "match_name": "女亚洲杯",
+    "league_id": 169
+  },
+  "女四强赛": {
+    "match_name": "女四强赛",
+    "league_id": 170
+  },
+  "非洲杯": {
+    "match_name": "非洲杯",
+    "league_id": 171
+  },
+  "世非杯": {
+    "match_name": "世非杯",
+    "league_id": 172
+  },
+  "非预赛": {
+    "match_name": "非预赛",
+    "league_id": 173
+  },
+  "非国锦": {
+    "match_name": "非国锦",
+    "league_id": 174
+  },
+  "世界杯": {
+    "match_name": "世界杯",
+    "league_id": 175
+  },
+  "女世界杯": {
+    "match_name": "女世界杯",
+    "league_id": 176
+  },
+  "奥运男足": {
+    "match_name": "奥运男足",
+    "league_id": 177
+  },
+  "奥运女足": {
+    "match_name": "奥运女足",
+    "league_id": 178
+  },
+  "联合会杯": {
+    "match_name": "联合会杯",
+    "league_id": 179
+  },
+  "世预附加": {
+    "match_name": "世预附加",
+    "league_id": 180
+  },
+  "世青赛": {
+    "match_name": "世青赛",
+    "league_id": 181
+  },
+  "世俱杯": {
+    "match_name": "世俱杯",
+    "league_id": 182
+  },
+  "国冠杯": {
+    "match_name": "国冠杯",
+    "league_id": 183
+  }
+}

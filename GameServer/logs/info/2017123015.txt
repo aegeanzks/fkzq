@@ -1,1 +1,0 @@
-[2017-12-30 15:14:07.970] [INFO] logInfo - errReferenceError: player is not defined

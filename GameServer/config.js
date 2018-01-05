@@ -46,7 +46,8 @@ exports.dataCenterSvrConfig = function(){
         noDataTotal:'3',             
         switch:'1',                 
         beginTime:'',                
-        endTime:'',      
+        endTime:'', 
+        limit:12,     
     };
 };
 

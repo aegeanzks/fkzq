@@ -133,17 +133,20 @@ exports.LogRealBet = function(){
                 type: String,
                 index: true,
             },
-            bet_scheduleid:String,   //投注赛事id列表
-            bet_date: Date,          //下注时间
+            bet_date: {          //下注时间
+                type: Date,
+                default: Date.now,
+                index: true,
+            },
+            bet_scheduleid:Array,   //投注赛事id列表
             bet_num: Number,         //注数
-            multiple: Number,       //倍数
             bet_type: Number,       //投注类型   
             jingcai_type:Number,     //竞猜类型  1胜平负  2让球胜平负 3混合过关
             bet_coin: Number,        //下注金额
             distribute_coin: Number, //派发金额
             before_bet_coin: Number,  //下注前金额
             status: Number,         //状态 0未开奖 1不中 2中 3结算失败
-            bet_plan: String         //投注方案,格式为{'schedule_id':,'team_name':,'match_date':,'bet_info':,'odds':,'bet_result':} 
+            bet_plan: Array,         //投注方案,格式为{'schedule_id':,'match_date':,'team_name':,'bet_info':,'odds':,'schedule_result':} 
 
         }
     };

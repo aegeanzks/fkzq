@@ -35,6 +35,13 @@ function WalletAgent(){
                     mod.logic.resUpdateMoney(source, msg.data);
                 }
             }break;
+            case 'RealFootBall':
+            {
+                var mod = OBJ('RealFootballModule');
+                if (msg.func == 'resRealBet'){
+                    mod.logic.resRealBet(source, msg.data);
+                }
+            }break;
         }
     }
 

@@ -147,6 +147,7 @@ function VirtualFootball(){
         matchInfo.setGuestwinnum(guestWinNum);
         matchInfo.setHostteamid(hostTeamId);
         matchInfo.setGuestteamid(guestTeamId);
+        matchInfo.setIssue(no);
         push.setMatchinfo(matchInfo);
         var buf = push.serializeBinary();
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, buf, buf.length);
@@ -170,6 +171,7 @@ function VirtualFootball(){
         matchInfo.setGuestwinnum(guestWinNum);
         matchInfo.setHostteamid(hostTeamId);
         matchInfo.setGuestteamid(guestTeamId);
+        matchInfo.setIssue(no);
         res.setMatchinfo(matchInfo);
         var goalAndBetArea = new pbSvrcli.GoalAndBetArea();
         goalAndBetArea.setHostteamgoal(hostTeamGoal);
@@ -347,7 +349,8 @@ function VirtualFootball(){
         //告诉数据中心修改支持率
         OBJ('DataCenterModule').send({module:'VirtualFootball', func:'supportArea', data:{
             area:waitValue.betArea, 
-            distributeCoin:modelLogVirtualBet.bet_distribute_coin
+            distributeCoin:modelLogVirtualBet.bet_distribute_coin,
+            betCoin:data.betCoin
         }});
     };
 

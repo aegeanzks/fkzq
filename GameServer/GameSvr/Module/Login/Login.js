@@ -23,12 +23,14 @@ function Login(){
     };
 
     self.login = function(askLogin, socket){
-        var strIp = socket.conn.remoteAddress;
-        var arr = strIp.split('.');
-        var realIp = strIp.split(':')[3];
-        var userid = arr[arr.length-1];
-        var userName = userid;
-        waitMap.set(userid, [socket, userName, Date.now()+10000, realIp]);//超时10秒
+        var headers = socket.conn.request.headers;
+        var userid = headers['user-id'];
+        var userName = headers['username'];
+        if(null == userid)
+            userid = 1;
+        if(null == userName)
+            userName = '1';
+        waitMap.set(userid, [socket, userName, Date.now()+10000, headers.ip]);//超时10秒
         OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:{
             userid:userid, 
             cbModule:'Login',
@@ -75,6 +77,7 @@ function Login(){
     self.reqPlayerLogin = function(source, data) {
         var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data);
         if(oldSocket){
+            OBJ('WsMgr').send(oldSocket, pbSvrcli.Push_OtherLogin.Type.ID, null);
             oldSocket.disconnect();
             OBJ('PlayerContainer').delete(oldSocket);
         }

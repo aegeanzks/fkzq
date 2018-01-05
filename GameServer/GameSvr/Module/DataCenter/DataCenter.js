@@ -46,6 +46,21 @@ function DataCenter(){
                     mod.logic.updateMoney(source, msg.data);
                 }
             }break;
+            case 'RealFootball':
+            {
+                var mod = OBJ('RealFootballModule');
+                if(msg.func == 'resCurData'){
+                    mod.logic.resCurData(source, msg.data);
+                }else if(msg.func == 'refreshScheduleList'){
+                    mod.logic.refreshScheduleList(source, msg.data);
+                }else if(msg.func == 'refreshStopBetSchedule'){
+                    mod.logic.refreshSchedule(source, msg.data);
+                }else if(msg.func == 'refreshSchedule'){
+                    mod.logic.refreshSchedule(source,msg.data);
+                }else if(msg.func == 'refreshBetItem'){
+                    mod.logic.refreshBetItem(source, msg.data);
+                }
+            }break;
         }
     }
 

@@ -1,4 +1,4 @@
-module.exports = WalletSvrAgent;
+﻿module.exports = WalletSvrAgent;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var pbWallet = require('../../../Msg/MsgFile/wallet_pb');
@@ -161,7 +161,7 @@ function WalletSvrAgent(){
         rb.setOutTradeNo(data.uuid);
         rb.setType(1);
         rb.setOutType(data.outType);
-        //rb.setOutTypeDescription(data.outTypeDescription);
+        rb.setOutTypeDescription(data.outTypeDescription);
         rb.setUserId(data.userid);
         rb.setMoney(data.addCoin);
         req(2010001, rb, function(msg){
