@@ -223,9 +223,8 @@ function VirtualFootball(){
             });
         }
     }
-    OBJ('RpcModule').registerInitFun(this.getCurData);
-    this.getCurData = function(source, data){
-        OBJ('RpcModule').send(source, 'VirtualFootball', 'resCurData', {
+    this.getCurData = function(target, data){
+        OBJ('RpcModule').send(target, 'VirtualFootball', 'resCurData', {
             no:timeAgent.no,
             matchState:timeAgent.matchState,
             stateEndTime:timeAgent.matchStateEndTime,
@@ -251,15 +250,16 @@ function VirtualFootball(){
             guestWinNum:matchAgent==null?0:matchAgent.guestWinNum
         });
         //发送投注项数据
-        OBJ('RpcModule').send(source, 'VirtualFootball', 'refreshBetItem', {
+        OBJ('RpcModule').send(target, 'VirtualFootball', 'refreshBetItem', {
             betItem1:betItem1,
             betItem2:betItem2,
             betItem3:betItem3,
         });
     };
+    OBJ('RpcModule').registerInitFun(this.getCurData);
 
     var settlementCount = 0;    //结算回调
-    this.canSettlement = function(source, data){
+    this.canSettlement = function(data){
         settlementCount++;
         if(settlementCount >= OBJ('RpcModule').getServerCount()){
             //开始结算
@@ -294,12 +294,42 @@ function VirtualFootball(){
                         bet_distribute_coin:item.bet_distribute_coin,
                         settlementType:1
                     });
-                    OBJ('RpcModule').send2Wallet('WalletSvrAgent', 'reqAddMoney', {
+                    OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqAddMoney', {
                         userid:item.user_id, 
                         outType:2, 
                         outTypeDescription:'足球竞猜', 
                         uuid:uid, 
                         addCoin:item.bet_distribute_coin.toString(),
+                    }, function(data){
+                        if(data.res != 0){
+                            //生成投注记录
+                            var updateValue = {
+                                'settlement_out_trade_no':data.uuid,
+                                'status':3          //系统错误
+                            };
+                            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            });
+                
+                        } else {
+                            //生成投注记录
+                            var updateValue = {
+                                'distribute_coin':item.bet_distribute_coin,
+                                'settlement_out_trade_no':data.uuid,
+                                'settlement_trade_no':data.trade_no,
+                                'status':2
+                            };
+                            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            });
+                        }
+                        //修改库存
+                        if(matchAgent)
+                            matchAgent.addCurStock(-waitValue.bet_distribute_coin);
                     });
                 } else {
                     //生成投注记录
@@ -338,17 +368,57 @@ function VirtualFootball(){
                 if(item.bet_area == winArea){
                     //发送钱包加钱
                     var uid = uuid.v4();
-                    waitMap.set(uid, {
-                        out_trade_no:item.out_trade_no, 
-                        bet_distribute_coin:item.bet_distribute_coin,
-                        settlementType:2
-                    });
-                    OBJ('RpcModule').send2Wallet('WalletSvrAgent', 'reqAddMoney', {
+                    OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqAddMoney', {
                         userid:item.user_id, 
                         outType:2, 
                         outTypeDescription:'足球竞猜', 
                         uuid:uid, 
                         addCoin:item.bet_distribute_coin.toString(),
+                    }, function(data){
+                        if(data.res != 0){
+                            //生成投注记录
+                            var updateValue = {
+                                'settlement_out_trade_no':data.uuid,
+                                'status':3          //系统错误
+                            };
+                            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            });
+                
+                        } else {
+                            //生成投注记录
+                            var updateValue = {
+                                'distribute_coin':item.bet_distribute_coin,
+                                'settlement_out_trade_no':data.uuid,
+                                'settlement_trade_no':data.trade_no,
+                                'status':2
+                            };
+                            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                                //检查是否结算完成，并且要等待完成
+                                var findParam = {
+                                    'status':0,
+                                    'balance_schedule_id':timeAgent.no,
+                                    'bet_area':{ $in: [4,5,6] }
+                                };
+                                classLogVirtualBet.find(findParam, function(err, data){
+                                    if(data.length != 0)
+                                        waitNextGoalSettlement = true;
+                                    else{
+                                        waitNextGoalSettlement = false;
+                                        //下一球赢钱推送
+                                        OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'updateMoney');
+                                    }
+                                });
+                            });
+                        }
+                        //修改库存
+                        if(matchAgent)
+                            matchAgent.addCurStock(-waitValue.bet_distribute_coin);
                     });
                 } else {
                     //生成投注记录
@@ -366,59 +436,7 @@ function VirtualFootball(){
             }
         });
     }
-    this.resAddTrade = function(source, data){
-        var waitValue = waitMap.get(data.uuid);
-        waitMap.delete(data.uuid);
-        if(null == waitValue)
-            return;
-        if(data.res != 0){
-            //生成投注记录
-            var updateValue = {
-                'settlement_out_trade_no':data.uuid,
-                'status':3          //系统错误
-            };
-            classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
-                if(err){
-                    console.log(err);
-                }
-            });
-
-        } else {
-            //生成投注记录
-            var updateValue = {
-                'distribute_coin':waitValue.bet_distribute_coin,
-                'settlement_out_trade_no':data.uuid,
-                'settlement_trade_no':data.trade_no,
-                'status':2
-            };
-            classLogVirtualBet.update({ "out_trade_no": waitValue.out_trade_no }, updateValue, function(err){
-                if(err){
-                    console.log(err);
-                }
-                //检查是否结算完成，并且要等待完成
-                if(waitValue.settlementType == 2){
-                    var findParam = {
-                        'status':0,
-                        'balance_schedule_id':timeAgent.no,
-                        'bet_area':{ $in: [4,5,6] }
-                    };
-                    classLogVirtualBet.find(findParam, function(err, data){
-                        if(data.length != 0)
-                            waitNextGoalSettlement = true;
-                        else{
-                            waitNextGoalSettlement = false;
-                            //下一球赢钱推送
-                            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'updateMoney');
-                        }
-                    });
-                }
-            });
-        }
-        //修改库存
-        if(matchAgent)
-            matchAgent.addCurStock(-waitValue.bet_distribute_coin);
-    };
-    this.supportArea = function(source, data){
+    this.supportArea = function(data){
         if(null != matchAgent)
             matchAgent.supportArea(data);
     };

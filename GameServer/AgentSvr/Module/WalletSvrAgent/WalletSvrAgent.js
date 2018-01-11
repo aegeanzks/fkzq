@@ -16,28 +16,6 @@ function WalletSvrAgent(){
         return Math.floor(Date.now()%100000)*10000+uniqueId++;
     }
 
-    //rpc路由
-    //注册函数
-    (function registerRpc(){
-        OBJ('RpcMgr').register('GameSvrReq', rpcRoot);
-        OBJ('RpcMgr').register('DataCenterReq', rpcRoot);
-    })();
-    function rpcRoot(source, msg){
-        switch(msg.module){
-            case 'WalletSvrAgent':
-            {
-                var mod = OBJ('WalletSvrAgentModule');
-                if(msg.func == 'reqGetCoin'){
-                    mod.logic.reqGetCoin(source, msg.data);
-                }else if(msg.func == 'reqBet'){
-                    mod.logic.reqBet(source, msg.data);
-                }else if(msg.func == 'reqAddMoney'){
-                    mod.logic.reqAddMoney(source, msg.data);
-                }
-            }break;
-        }
-    }
-
     //ws连接
     var connWalletTimer = new SingleTimer();
     //self.ws = new WebSocket.Client("ws://120.78.166.241:4181?platform_id=20");
@@ -99,7 +77,7 @@ function WalletSvrAgent(){
         }
     }
     //获取用户金额
-    this.reqGetCoin = function(source, msg){
+    this.reqGetCoin = function(msg, response){
         console.log('reqGetCoin');
         var rgc = new pbWallet.GetUserBalance();
         rgc.setUserId(msg.userid);
@@ -108,13 +86,11 @@ function WalletSvrAgent(){
             try {
                 var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
 
-                self.send(source, {module:msg.cbModule, func:msg.cbFunc, 
-                    data:{
-                        userid:msg.userid, 
+                response.rsp({
+                    userid:msg.userid, 
                         res: res.getRet(), 
                         msg: res.getMsg(), 
                         balance: res.getBalance()
-                    }
                 });
             
             } catch (error) {
@@ -124,7 +100,7 @@ function WalletSvrAgent(){
     };
 
     //投注
-    this.reqBet = function(source, data){
+    this.reqBet = function(data, response){
         console.log('reqBet');
         var rb = new pbWallet.AddTrade();
         rb.setOutTradeNo(data.uuid);
@@ -138,16 +114,15 @@ function WalletSvrAgent(){
             try {
                 var res = pbWallet.RspAddTrade.deserializeBinary(msg);
 
-                self.send(source, {module:'VirtualFootball', func:'resVirtualBet',
-                    data:{
-                        uuid:data.uuid,
-                        res: res.getRet(),
-                        msg: res.getMsg(),
-                        trade_no: res.getTradeNo(),
-                        balance: res.getBalance(),
-                        betCoin: data.betCoin,             
-                    }
+                response.rsp({
+                    uuid:data.uuid,
+                    res: res.getRet(),
+                    msg: res.getMsg(),
+                    trade_no: res.getTradeNo(),
+                    balance: res.getBalance(),
+                    betCoin: data.betCoin,
                 });
+
             }catch(error){
                 console.log(error);
             }
@@ -155,7 +130,7 @@ function WalletSvrAgent(){
     };
 
     //投注奖励
-    this.reqAddMoney = function(source, data){
+    this.reqAddMoney = function(data, response){
         console.log('reqAddMoney');
         var rb = new pbWallet.AddTrade();
         rb.setOutTradeNo(data.uuid);
@@ -169,16 +144,15 @@ function WalletSvrAgent(){
             try {
                 var res = pbWallet.RspAddTrade.deserializeBinary(msg);
 
-                self.send(source, {module:'VirtualFootball', func:'resAddTrade',
-                    data:{
-                        uuid:data.uuid,
-                        res: res.getRet(),
-                        msg: res.getMsg(),
-                        trade_no: res.getTradeNo(),
-                        balance: res.getBalance(),
-                        addCoin: data.addCoin               
-                    }
+                response.rsp({
+                    uuid:data.uuid,
+                    res: res.getRet(),
+                    msg: res.getMsg(),
+                    trade_no: res.getTradeNo(),
+                    balance: res.getBalance(),
+                    addCoin: data.addCoin
                 });
+
             }catch(error){
                 console.log(error);
             }
@@ -196,9 +170,5 @@ function WalletSvrAgent(){
                 console.error('连接钱包失败...');
             }
         }
-    };
-
-    this.send = function(target, msg){
-        OBJ('RpcMgr').send(target, 'WalletSvrReq', msg);
     };
 }

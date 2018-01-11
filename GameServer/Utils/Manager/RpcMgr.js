@@ -31,25 +31,29 @@ function RpcMgr(){
                     var type = json['msgData'].type;
                     var msg = json['msgData'].msgData;
                     if(0 == type){
-                        var moduleName = json['msgData'].moduleName;
+                        var moduleName = json['msgData'].moduleName+'Module';
                         var moduleObj = OBJ(moduleName);
                         if(null != moduleObj){
                             var func = json['msgData'].funcName;
-                            if(moduleObj.hasOwnProperty(func)){
-                                var strExe = 'moduleObj.'+func+'(json[\'source\'], msg)';
-                                eval(strExe);
+                            if(moduleObj.hasOwnProperty('logic')){
+                                if(moduleObj.logic.hasOwnProperty(func)){
+                                    var strExe = 'moduleObj.logic.'+func+'(msg)';
+                                    eval(strExe);
+                                }
                             }
                         }
                     }else if(1 == type){
                         var id = json['msgData'].id;
-                        var moduleName = json['msgData'].moduleName;
+                        var moduleName = json['msgData'].moduleName+'Module';
                         var moduleObj = OBJ(moduleName);
                         if(null != moduleObj){
                             var func = json['msgData'].funcName;
-                            if(moduleObj.hasOwnProperty(func)){
-                                var strExe = 'moduleObj.'+func+'(json[\'source\'], msg, new Response(json[\'source\'], id))';
-                                eval(strExe);
-                            } 
+                            if(moduleObj.hasOwnProperty('logic')){
+                                if(moduleObj.logic.hasOwnProperty(func)){
+                                    var strExe = 'moduleObj.logic.'+func+'(msg, new Response(json[\'source\'], id))';
+                                    eval(strExe);
+                                } 
+                            }
                         }
                     }else{
                         var id = json['msgData'].id;

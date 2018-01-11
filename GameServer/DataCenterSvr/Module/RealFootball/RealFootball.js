@@ -62,10 +62,9 @@ function RealFootball(){
     }
 
     //投注信息配置
-    OBJ('RpcModule').registerInitFun(this.getRealBetConf);
-    this.getRealBetConf = function(source, data){
+    this.getRealBetConf = function(source){
         //发送投注项数据
-        OBJ('RpcModule').broadcastGameServer('RealFootball', 'refreshBetItem', {
+        OBJ('RpcModule').send(source, 'RealFootball', 'refreshBetItem', {
             betItem1:betItem1,
             betItem2:betItem2,
             betItem3:betItem3,
@@ -73,11 +72,13 @@ function RealFootball(){
             betCoinLimit:betCoinLimit
         });
     };
+    OBJ('RpcModule').registerInitFun(this.getRealBetConf);
 
     //游戏服重新启动请求数据
-    this.reGetCurData = function(source,data){
-        dataPull.reGetCurData(source,data);
+    this.reGetCurData = function(source){
+        dataPull.reGetCurData(source);
     }
+    OBJ('RpcModule').registerInitFun(this.reGetCurData);
 
     /* 
         @func 数据拉取

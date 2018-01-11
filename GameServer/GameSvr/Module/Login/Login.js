@@ -30,24 +30,11 @@ function Login(){
             userid = 1;
         if(null == userName)
             userName = '1';
-        waitMap.set(userid, [socket, userName, Date.now()+10000, headers.ip]);//超时10秒
-        OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:{
-            userid:userid, 
-            cbModule:'Login',
-            cbFunc:'resGetCoin'
-        }});
-        //self.resGetCoin({'userid':userid, 'coin':100000});
-        console.log('用户:' + userid + ' 登录成功!');
-    };
-    
-    self.resGetCoin = function(source, data){
-        //console.log('resGetCoin:'+data);
-        var res = new pbSvrcli.Res_Login();
-        var userArr = waitMap.get(data.userid);
-        waitMap.delete(data.userid);
-        if(userArr){
-            var socket = userArr[0];
-            var userName = userArr[1];
+
+        OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqGetCoin', {
+            userid:userid
+        }, function(data){
+            var res = new pbSvrcli.Res_Login();
             res.setResult(data.res);
             res.setCoin(data.balance);
             //登录成功返回金币
@@ -60,7 +47,7 @@ function Login(){
             }else{
                 OBJ('PlayerContainer').addPlayer(socket, player);
             }
-            player.updateLoginDb(userArr[3]);
+            player.updateLoginDb(headers.ip);
 
             //告诉其他游戏服，该用户在这台上线
             var servers = gamesvrConfig.servers;
@@ -69,12 +56,15 @@ function Login(){
                 var serverId = 'server'+i;
                 if(serverId == SERVERID)
                     continue;
-                OBJ('RpcMgr').send(serverId, 'GameSvrReq', {module:'Login', func:'reqPlayerLogin', data:data.userid});
+                OBJ('RpcModule').send(serverId, 'Login', 'reqPlayerLogin', {
+                    data:userid
+                });
             }
-        }
+        });
+        console.log('用户:' + userid + ' 登录成功!');
     };
 
-    self.reqPlayerLogin = function(source, data) {
+    self.reqPlayerLogin = function(data) {
         var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data);
         if(oldSocket){
             OBJ('WsMgr').send(oldSocket, pbSvrcli.Push_OtherLogin.Type.ID, null);

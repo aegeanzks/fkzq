@@ -789,7 +789,7 @@ function getCurData(){
 }
 
 //游戏服重新重启请求赛事信息
-this.reGetCurData = function(source,data){
+this.reGetCurData = function(source){
     if(1 == _startSvrflag){
         return ;
     }

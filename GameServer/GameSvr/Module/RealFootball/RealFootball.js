@@ -12,8 +12,7 @@ function RealFootball(){
     var mapScheduleList = new Map();     //当前时刻赛事列表
     var mapLeagueIdList = new Map();     //联赛id列表
     var mapBetClass = new Map();         //投注类型
-    var mapBetArea = new Map();          //投注区域
-    var waitMap = new Map();             
+    var mapBetArea = new Map();          //投注区域           
 
     var betItem1 = 0;
     var betItem2 = 0;
@@ -40,9 +39,9 @@ function RealFootball(){
         initLeagueIdList();
         limit = Config['limit']?Config['limit']:12;
         //申请投注信息
-        OBJ('DataCenterModule').send({module:'RealFootball', func:'getRealBetConf'});
+        //OBJ('RpcModule').send2DataCenter('RealFootball', 'getRealBetConf');
         //游戏服重启主动申请
-        OBJ('DataCenterModule').send({module:'RealFootball', func:'reGetCurData'});
+        //OBJ('RpcModule').send2DataCenter('RealFootball', 'reGetCurData');
     }
 
     //初始化 mapLeagueIdList
@@ -66,14 +65,14 @@ function RealFootball(){
     }
 
     //初始化话scheduleList
-    this.resCurData = function(source,data){
+    this.resCurData = function(data){
         for(var i = 0;i<data.map.length;i++){
             mapScheduleList.set(data.map[i]['sceheduleId'],data.map[i]);
         }
     }
 
     //刷新betItem数据
-    this.refreshBetItem =function(source,data){
+    this.refreshBetItem =function(data){
         betItem1 = data.betItem1;
         betItem2 = data.betItem2;
         betItem3 = data.betItem3;
@@ -82,7 +81,7 @@ function RealFootball(){
     }
 
     //刷新scheduleList数据
-    this.refreshSchedule = function(source,data){
+    this.refreshSchedule = function(data){
         var arr = [];
         for(var i = 0;i<data.map.length;i++){
             var item = data.map[i];
@@ -133,7 +132,7 @@ function RealFootball(){
     }
 
     //刷新停止下注的赛程列表
-    this.refreshStopBetSchedule = function(source,data){
+    this.refreshStopBetSchedule = function(data){
         for(var i = 0;i<data.id.length;i++){
             mapScheduleList.delete(data.id[i]);
         }
@@ -153,7 +152,7 @@ function RealFootball(){
     }
 
     //刷新比赛状态
-    this.refreshScheduleState = function(source,data){
+    this.refreshScheduleState = function(data){
         for(var i = 0;i<data.id.length;i++){
             var score = data.score[i].split(":");
             var homeScore = parseInt(score[0]);
@@ -165,7 +164,7 @@ function RealFootball(){
                     if(error){
                         console.log('Module RealFootball refreshScheduleState classLogRealBet.find() :', error);
                     }else if(0 == docs.length){
-                        continue ;
+                        return;
                     }
                     updateLogRealBetStatus(value,docs,data.id[i]);
                 });
@@ -173,7 +172,7 @@ function RealFootball(){
                 console.log('Module RealFootball refreshScheduleState() :', err);
             }
         }
-    }
+    };
 
 
     //请求竞彩足球主页面
@@ -483,10 +482,8 @@ function RealFootball(){
                 mapBetArea.clear();
                 //生成唯一ID
                 var uid = uuid.v4();
-                waitMap.set(uid, {player:player, betBeforeCoin: player.gameCoin, 
-                        betScheduleId: betScheduleId,betNum:betNum,betType:betType,
-                        jingcaiType:jingcaiType,betCoin:betCoin,distributeCoin:distributeCoin,betPlan:betPlan,betRate:betRate});
-                OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqBet', data:{
+
+                OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqBet', {
                     userid:player.userId, 
                     outType:11, 
                     outTypeDescription:'足球竞猜', 
@@ -494,51 +491,43 @@ function RealFootball(){
                     betCoin:betCoin.toString(),
                     cbModule:'RealFootball',
                     cbFunc:'resRealBet'
-                }});
+                }, function(data){
+                    var res = new pbSvrcli.Res_RealFootBetInfo();
+                    player.gameCoin = data.balance;
+                    res.setStatus(data.res);
+                    res.setCoin(data.balance);
+                    //投注
+                    player.send(pbSvrcli.Res_RealFootBetInfo.Type.ID, res.serializeBinary());
+
+                    //生成投注记录
+                    var modelLogRealBet = OBJ('DbMgr').getModel(Schema.LogRealBet());
+                    modelLogRealBet.out_trade_no = data.uuid;
+                    modelLogRealBet.user_id = player.userId;
+                    modelLogRealBet.user_name = player.userName;
+                    modelLogRealBet.bet_date = Date.now();
+                    modelLogRealBet.bet_coin = data.betCoin;
+                    modelLogRealBet.bet_scheduleid = betScheduleId;
+                    modelLogRealBet.bet_num = betNum;
+                    modelLogRealBet.bet_type = betType;
+                    modelLogRealBet.jingcai_type = jingcaiType;
+                    modelLogRealBet.bet_coin = betCoin;
+                    modelLogRealBet.distribute_coin = distributeCoin;
+                    modelLogRealBet.status = 0;
+                    modelLogRealBet.bet_plan = betPlan;
+                    modelLogRealBet.save(function(err){
+                        if(err){
+                            console.log('Module RealFootball resRealBet() :', err);
+                        }
+                    });
+
+                    //更新投注比例
+                    updateBetRateInfo(waitValue.betScheduleId,waitValue.betRate);
+                });
 
             });
         }catch(err){
             console.log('RealFootball askRealFootBetInfo() :', err);
         }  
-    }
-
-    //投注钱包回执
-    this.resRealBet = function(source, data){
-        var res = new pbSvrcli.Res_RealFootBetInfo();
-        var waitValue = waitMap.get(data.uuid);
-        waitMap.delete(data.uuid);
-        if(null == waitValue.player)
-        return; //扣了钱但是投注会失败，正常情况下不会出现，除非钱包挂掉
-        var player = waitValue.player;
-        player.gameCoin = data.balance;
-        res.setStatus(data.res);
-        res.setCoin(data.balance);
-        //投注
-        player.send(pbSvrcli.Res_RealFootBetInfo.Type.ID, res.serializeBinary());
-
-        //生成投注记录
-        var modelLogRealBet = OBJ('DbMgr').getModel(Schema.LogRealBet());
-        modelLogRealBet.out_trade_no = data.uuid;
-        modelLogRealBet.user_id = player.userId;
-        modelLogRealBet.user_name = player.userName;
-        modelLogRealBet.bet_date = Date.now();
-        modelLogRealBet.bet_coin = data.betCoin;
-        modelLogRealBet.bet_scheduleid = waitValue.betScheduleId;
-        modelLogRealBet.bet_num = waitValue.betNum;
-        modelLogRealBet.bet_type = waitValue.betType;
-        modelLogRealBet.jingcai_type = waitValue.jingcaiType;
-        modelLogRealBet.bet_coin = waitValue.betCoin;
-        modelLogRealBet.distribute_coin = waitValue.distributeCoin;
-        modelLogRealBet.status = 0;
-        modelLogRealBet.bet_plan = waitValue.betPlan;
-        modelLogRealBet.save(function(err){
-            if(err){
-                console.log('Module RealFootball resRealBet() :', err);
-            }
-        });
-
-        //更新投注比例
-        updateBetRateInfo(waitValue.betScheduleId,waitValue.betRate);
     }
 
 
@@ -777,7 +766,7 @@ function RealFootball(){
                 }
                 //更新用户金币
                 if(1 == status){
-                    OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqAddMoney', data:{
+                    OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqAddMoney', {
                         userid:docs[i]['user_id'], 
                         outType:12, 
                         outTypeDescription:'足球竞猜', 
@@ -785,7 +774,23 @@ function RealFootball(){
                         betCoin:docs[i].distribute_coin.toString(),
                         cbModule:'RealFootball',
                         cbFunc:'resAddTrade'
-                    }});
+                    }, function(data){
+                        if(data.res != 0){
+                            //生成投注记录
+                            var updateValue = {
+                                'status':3          //系统错误
+                            };
+                            try{
+                                classLogRealBet.update({'out_trade_no':data.uuid}, updateValue, function(error){
+                                    if(error){
+                                        console.log('Module RealFootball resAddTrade() update:', error);
+                                    }
+                                });
+                            }catch(err){
+                                console.log('Module RealFootball resAddTrade() :', err);
+                            }
+                        }
+                    });
                 }
                 var logRealBetValue = {"status":status,"bet_plan":{"$elemMatch":{"schedule_id":scheduleId,"status":result['result']}}};
                 classLogRealBet.update({out_trade_no:recordId},{$set:logRealBetValue},false,true);
@@ -801,27 +806,6 @@ function RealFootball(){
             console.log('Module RealFootball updateLogRealBetStatus() :', err);
         }
     }
-
-    //结算钱包回执
-    this.resAddTrade = function(source, data){
-        if(data.res != 0){
-            //生成投注记录
-            var updateValue = {
-                'status':3          //系统错误
-            };
-            try{
-                classLogRealBet.update({'out_trade_no':data.uuid}, updateValue, function(error){
-                    if(error){
-                        console.log('Module RealFootball resAddTrade() update:', error);
-                    }
-                });
-            }catch(err){
-                console.log('Module RealFootball resAddTrade() :', err);
-            }
-        }
-        
-    }
-
 
     //开奖结果
     function scheduleResult(score,betPlan){

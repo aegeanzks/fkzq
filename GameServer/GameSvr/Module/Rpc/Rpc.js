@@ -5,28 +5,35 @@
 // +----------------------------------------------------------------------
 // | Author: Zhengks
 // +----------------------------------------------------------------------
-module.exports = Common;
+module.exports = Rpc;
 
 var OBJ = require('../../../Utils/ObjRoot').getObj;
-var GameServerInfosSchema = require('../../../db_structure').GameServerInfos();
 var SingleTimer = require('../../../Utils/SingleTimer');
+var configDataCenter = require('../../../config').dataCenterSvrConfig();
+var configWallet = require('../../../config').agentSvrConfig();
+var GameServerInfosSchema = require('../../../db_structure').GameServerInfos();
 
-function Common(){
+function Rpc(){
+    var self = this;
+    var gamePingMap = new Map();
+    var pingTimer = new SingleTimer();
+    pingTimer.startup(1000);
     var registerTimer = new SingleTimer();
     registerTimer.startup(5000);
 
     var class_GameServerInfos = OBJ('DbMgr').getStatement(GameServerInfosSchema);
+    
     this.run = function(timestamp){
+        //ping到数据中心
+        if(null != pingTimer && pingTimer.toNextTime())
+        {
+            self.send2DataCenter('Rpc', 'gameServerPing', {
+                source:SERVERID
+            });
+        }
         //注册服务器
         if(null != registerTimer && registerTimer.toNextTime())
         {
-            /**
-             *  server_id: String,
-                ip: String,           //ip                
-                port: Number,         //端口                           
-                on_line_num: Number,    //当前在线数         
-                update_time: Date,
-             */
             class_GameServerInfos.find({'server_id':SERVERID}, function(err, data){
                 if(data.length == 0){
                     var model_GameServerInfos = OBJ('DbMgr').getModel(GameServerInfosSchema);
@@ -51,21 +58,25 @@ function Common(){
                 }
             });
         }
-    }
-    //注册函数
-    function registerRpc(){
-        OBJ('RpcMgr').register('GameSvrReq', rpcRoot);
-    }
-    registerRpc();
-    function rpcRoot(source, msg){
-        switch(msg.module){
-            case 'Login':
-            {
-                var mod = OBJ('LoginModule');
-                if(msg.func == 'reqPlayerLogin'){
-                    mod.logic.reqPlayerLogin(source, msg.data);
-                }
-            }break;
-        }
-    }
+    };
+
+    this.send2DataCenter = function(moduleName, funcName, msg){
+        OBJ('RpcMgr').send(configDataCenter.serverId, moduleName, funcName, msg);
+    };
+
+    this.send2Wallet = function(moduleName, funcName, msg){
+        OBJ('RpcMgr').send(configWallet.serverId, moduleName, funcName, msg);
+    };
+
+    this.req2DataCenter = function(moduleName, funcName, msg, func){
+        OBJ('RpcMgr').req(configDataCenter.serverId, moduleName, funcName, msg, func);
+    };
+
+    this.req2Wallet = function(moduleName, funcName, msg, func){
+        OBJ('RpcMgr').req(configWallet.serverId, moduleName, funcName, msg, func);
+    };
+
+    this.send = function(target, moduleName, funcName, msg){
+        OBJ('RpcMgr').send(target, moduleName, funcName, msg);
+    };
 }

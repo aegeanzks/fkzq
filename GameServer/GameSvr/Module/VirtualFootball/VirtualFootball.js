@@ -40,13 +40,8 @@ function VirtualFootball(){
     var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
 
-    init();
-    function init(){
-        //申请虚拟足球数据
-        OBJ('DataCenterModule').send({module:'VirtualFootball', func:'getCurData'});
-    }
     //当前比较数据数据中心回执
-    this.resCurData = function(source, data){
+    this.resCurData = function(data){
         no = data.no;
         matchState = data.matchState;
         stateEndTime = data.stateEndTime;
@@ -77,7 +72,7 @@ function VirtualFootball(){
             canBet = false;
     };
     //刷新比赛事件
-    this.refreshMatchEvent = function(source, data){
+    this.refreshMatchEvent = function(data){
         event = data.event;
         hostTeamId = data.hostTeamId;
         hostTeamGoal = data.hostTeamGoal;
@@ -124,7 +119,7 @@ function VirtualFootball(){
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_GoalAndBetArea.Type.ID, buf, buf.length);
     };
     //刷新比赛状态
-    this.refreshMatchState = function(source, data){
+    this.refreshMatchState = function(data){
         matchState = data.matchState;
         stateEndTime = data.stateEndTime;
         no = data.no;
@@ -137,7 +132,7 @@ function VirtualFootball(){
             canBet = false;
         if(matchState == 2){
             //关闭投注状态，告诉数据中心可以开始结算了
-            OBJ('DataCenterModule').send({module:'VirtualFootball', func:'canSettlement'});
+            OBJ('RpcModule').send2DataCenter('VirtualFootball', 'canSettlement');
         }
         broacastMatchInfo();
     };
@@ -158,7 +153,7 @@ function VirtualFootball(){
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, buf, buf.length);
     }
     //刷新投注项
-    this.refreshBetItem = function(source, data){
+    this.refreshBetItem = function(data){
         betItem1 = data.betItem1;
         betItem2 = data.betItem2;
         betItem3 = data.betItem3;
@@ -275,7 +270,6 @@ function VirtualFootball(){
         });
     };
     //投注请求
-    var waitMap = new Map();
     this.askVirtualBet = function(askVirtualBet, socket){
         if(!canBet)
             return;
@@ -301,62 +295,53 @@ function VirtualFootball(){
         player.gameCoin -= betCoin;
         //生成唯一ID
         var uid = uuid.v4();
-        waitMap.set(uid, {player:player, betBeforeCoin: player.gameCoin, betArea: betArea, betItem:betItem});
-        OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqBet', data:{
+        OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqBet', {
             userid:player.userId, 
             outType:1, 
             outTypeDescription:'足球竞猜', 
             uuid:uid, 
             betCoin:betCoin.toString()
-        }});
-    };
-    //投注钱包回执
-    this.resVirtualBet = function(source, data){
-        var res = new pbSvrcli.Res_VirtualBet();
-        var waitValue = waitMap.get(data.uuid);
-        waitMap.delete(data.uuid);
-        if(null == waitValue.player)
-            return; //扣了钱但是投注会失败，正常情况下不会出现，除非钱包挂掉
-        var player = waitValue.player;
-        //player.gameCoin = data.balance;
-        res.setResult(data.res);
-        res.setCoin(data.balance);
-        res.setBetarea(waitValue.betArea);
-        res.setCoinitem(waitValue.betItem);
-        //投注
-        player.send(pbSvrcli.Res_VirtualBet.Type.ID, res.serializeBinary());
-        //生成投注记录
-        var modelLogVirtualBet = OBJ('DbMgr').getModel(Schema.LogVirtualBet());
-        modelLogVirtualBet.user_id = player.userId;
-        modelLogVirtualBet.user_name = player.userName;
-        modelLogVirtualBet.bet_date = Date.now();
-        modelLogVirtualBet.bet_coin = data.betCoin;
-        modelLogVirtualBet.bet_area = waitValue.betArea;
-        modelLogVirtualBet.bet_times = getCurAreaTimes(waitValue.betArea);
-        modelLogVirtualBet.bet_distribute_coin = parseInt(modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times);
-        modelLogVirtualBet.distribute_coin = 0;
-        modelLogVirtualBet.before_bet_coin = waitValue.betBeforeCoin;
-        modelLogVirtualBet.status = 0;
-        modelLogVirtualBet.balance_schedule_id = no;
-        modelLogVirtualBet.server_id = SERVERID;
-        modelLogVirtualBet.out_trade_no = data.uuid;
-        modelLogVirtualBet.trade_no = data.trade_no;
-        modelLogVirtualBet.settlement_out_trade_no = '';
-        modelLogVirtualBet.settlement_trade_no = '';
-        modelLogVirtualBet.host_team_id = hostTeamId;
-        modelLogVirtualBet.guest_team_id = guestTeamId;
-        modelLogVirtualBet.save(function(err){
-            if(err){
-                console.log(err);
-            }
-        });
+        }, function(data){
+            var res = new pbSvrcli.Res_VirtualBet();
+            res.setResult(data.res);
+            res.setCoin(data.balance);
+            res.setBetarea(betArea);
+            res.setCoinitem(betItem);
+            //投注
+            player.send(pbSvrcli.Res_VirtualBet.Type.ID, res.serializeBinary());
+            //生成投注记录
+            var modelLogVirtualBet = OBJ('DbMgr').getModel(Schema.LogVirtualBet());
+            modelLogVirtualBet.user_id = player.userId;
+            modelLogVirtualBet.user_name = player.userName;
+            modelLogVirtualBet.bet_date = Date.now();
+            modelLogVirtualBet.bet_coin = data.betCoin;
+            modelLogVirtualBet.bet_area = betArea;
+            modelLogVirtualBet.bet_times = getCurAreaTimes(betArea);
+            modelLogVirtualBet.bet_distribute_coin = parseInt(modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times);
+            modelLogVirtualBet.distribute_coin = 0;
+            modelLogVirtualBet.before_bet_coin = player.gameCoin;
+            modelLogVirtualBet.status = 0;
+            modelLogVirtualBet.balance_schedule_id = no;
+            modelLogVirtualBet.server_id = SERVERID;
+            modelLogVirtualBet.out_trade_no = data.uuid;
+            modelLogVirtualBet.trade_no = data.trade_no;
+            modelLogVirtualBet.settlement_out_trade_no = '';
+            modelLogVirtualBet.settlement_trade_no = '';
+            modelLogVirtualBet.host_team_id = hostTeamId;
+            modelLogVirtualBet.guest_team_id = guestTeamId;
+            modelLogVirtualBet.save(function(err){
+                if(err){
+                    console.log(err);
+                }
+            });
 
-        //告诉数据中心修改支持率
-        OBJ('DataCenterModule').send({module:'VirtualFootball', func:'supportArea', data:{
-            area:waitValue.betArea, 
-            distributeCoin:modelLogVirtualBet.bet_distribute_coin,
-            betCoin:data.betCoin
-        }});
+            //告诉数据中心修改支持率
+            OBJ('RpcModule').send2DataCenter('VirtualFootball', 'supportArea', {
+                area:betArea, 
+                distributeCoin:modelLogVirtualBet.bet_distribute_coin,
+                betCoin:data.betCoin
+            });
+        });
     };
 
     function getCurAreaTimes(area){
@@ -375,26 +360,22 @@ function VirtualFootball(){
     this.updateMoney = function(){
         var playerMap = OBJ('PlayerContainer').getAllPlayer();
         for(var player of playerMap.values()){
-            OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqGetCoin', data:{
-                userid:player.userId, 
-                cbModule:'VirtualFootball',
-                cbFunc:'resUpdateMoney'
-            }});
-        }
-    };
-    //统计用户是否中奖且对中奖的进行推送回调
-    this.resUpdateMoney = function(source, data){
-        var player = OBJ('PlayerContainer').findPlayerByUserId(data.userid);
-        if(null != player && data.balance != player.gameCoin){
-            var push = new pbSvrcli.Push_WinBet();
-            push.setWincoin(parseInt(data.balance - player.gameCoin + 0.1));    //0.1是为了修正浮点值精度问题
-            push.setCoin(data.balance);
-            player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
+            OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqGetCoin', {
+                userid:player.userId
+            }, function(data){
+                var player = OBJ('PlayerContainer').findPlayerByUserId(data.userid);
+                if(null != player && data.balance != player.gameCoin){
+                    var push = new pbSvrcli.Push_WinBet();
+                    push.setWincoin(parseInt(data.balance - player.gameCoin + 0.1));    //0.1是为了修正浮点值精度问题
+                    push.setCoin(data.balance);
+                    player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
+                }
+            });
         }
     };
 
     //更新投注区域
-    this.updateArea = function(source, data){
+    this.updateArea = function(data){
         hostWinTimes = data.hostWinTimes;
         drawTimes = data.drawTimes;
         guestWinTimes = data.guestWinTimes;

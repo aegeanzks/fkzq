@@ -16,11 +16,9 @@ var ModuleMgr = require('../Utils/Manager/ModuleMgr');
 var DbMgr = require('../Utils/Manager/DbMgr');
 var LogMgr = require('../Utils/Manager/LogMgr');
 
+var RpcModule = require('./Module/Rpc/RpcModule');
 var PlayerModule = require('./Module/Player/PlayerModule');
-var WalletAgentModule = require('./Module/WalletAgent/WalletAgentModule');
 var LoginModule = require('./Module/Login/LoginModule');
-var CommonModule = require('./Module/Common/CommonModule');
-var DataCenterModule = require('./Module/DataCenter/DataCenterModule');
 var VirtualFootModule = require('./Module/VirtualFootball/VirtualFootballModule');
 var RealFootModule = require('./Module/RealFootball/RealFootballModule');
 
@@ -55,18 +53,15 @@ GameSvr.run = function() {
 
 //所有用户模块注册
 GameSvr.registerModule = function(){
-    new WalletAgentModule();
-    new CommonModule();
+    new RpcModule();
     new LoginModule();
     new PlayerModule();
-    new DataCenterModule();
     new VirtualFootModule();
     new RealFootModule();
 }
 
 //与客户端交互的模块这边还需要注册socket事件
 GameSvr.regsterFun = function(socket){
-    OBJ('CommonModule').registerFun(socket);
     OBJ('LoginModule').registerFun(socket);
     OBJ('PlayerModule').registerFun(socket);
     OBJ('VirtualFootballModule').registerFun(socket);
