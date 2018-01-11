@@ -288,10 +288,10 @@ function VirtualFootballConf(){
     };
     this.getOddsChangeBaseValue = function(){
         return {
-            change_rate1: oddsChangeBaseValueInfo["1"].change_rate1,
-            change_rate2: oddsChangeBaseValueInfo["1"].change_rate2,
-            change_rate3: oddsChangeBaseValueInfo["1"].change_rate3,
+            change_rate: oddsChangeBaseValueInfo["1"].change_rate,
             base_value: oddsChangeBaseValueInfo["1"].base_value,
+            max_reward: oddsChangeBaseValueInfo["1"].max_reward,
+            min_reward: oddsChangeBaseValueInfo["1"].min_reward
         };
     };
     this.getOddsChangeRatioMap = function(){

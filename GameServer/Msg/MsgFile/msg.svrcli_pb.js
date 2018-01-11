@@ -32,14 +32,20 @@ goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_VirtualHistory.Type', null, globa
 goog.exportSymbol('proto.kzgame.svrcli.msg.GoalAndBetArea', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.GuessingRecord', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.MatchInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_AddScheduleInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_AddScheduleInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_BetArea', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_BetArea.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_GoalAndBetArea', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_GoalAndBetArea.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_MatchInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_MatchInfo.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_OtherLogin', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_OtherLogin.Type', null, global);
-goog.exportSymbol('proto.kzgame.svrcli.msg.Push_SchedulInfo', null, global);
-goog.exportSymbol('proto.kzgame.svrcli.msg.Push_SchedulInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_ScheduleInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_ScheduleInfo.Type', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_StopBetSchedules', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.Push_StopBetSchedules.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_WinBet', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Push_WinBet.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Res_GuessingRecord', null, global);
@@ -65,7 +71,8 @@ goog.exportSymbol('proto.kzgame.svrcli.msg.Res_VirtualHistory.Type', null, globa
 goog.exportSymbol('proto.kzgame.svrcli.msg.RlBetConfig', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.RlBetInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.RlBetRecordInfo', null, global);
-goog.exportSymbol('proto.kzgame.svrcli.msg.RlSchedulInfo', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlScheduleId', null, global);
+goog.exportSymbol('proto.kzgame.svrcli.msg.RlScheduleInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.RlScheduleRecords', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.VirtualHistory', null, global);
 
@@ -4215,12 +4222,12 @@ proto.kzgame.svrcli.msg.Push_WinBet.Type = {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo = function(opt_data) {
+proto.kzgame.svrcli.msg.Push_BetArea = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.kzgame.svrcli.msg.RlSchedulInfo, jspb.Message);
+goog.inherits(proto.kzgame.svrcli.msg.Push_BetArea, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.kzgame.svrcli.msg.RlSchedulInfo.displayName = 'proto.kzgame.svrcli.msg.RlSchedulInfo';
+  proto.kzgame.svrcli.msg.Push_BetArea.displayName = 'proto.kzgame.svrcli.msg.Push_BetArea';
 }
 
 
@@ -4235,8 +4242,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.toObject = function(opt_includeInstance) {
-  return proto.kzgame.svrcli.msg.RlSchedulInfo.toObject(opt_includeInstance, this);
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Push_BetArea.toObject(opt_includeInstance, this);
 };
 
 
@@ -4245,10 +4252,312 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.toObject = function(opt_includeI
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.kzgame.svrcli.msg.RlSchedulInfo} msg The msg instance to transform.
+ * @param {!proto.kzgame.svrcli.msg.Push_BetArea} msg The msg instance to transform.
  * @return {!Object}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.toObject = function(includeInstance, msg) {
+proto.kzgame.svrcli.msg.Push_BetArea.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    hostwintimes: msg.getHostwintimes(),
+    drawtimes: msg.getDrawtimes(),
+    guestwintimes: msg.getGuestwintimes(),
+    hostnextgoaltimes: msg.getHostnextgoaltimes(),
+    zerogoaltimes: msg.getZerogoaltimes(),
+    guestnextgoaltimes: msg.getGuestnextgoaltimes()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Push_BetArea}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Push_BetArea;
+  return proto.kzgame.svrcli.msg.Push_BetArea.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Push_BetArea} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Push_BetArea}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setHostwintimes(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setDrawtimes(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setGuestwintimes(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setHostnextgoaltimes(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setZerogoaltimes(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setGuestnextgoaltimes(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Push_BetArea} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getHostwintimes();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      1,
+      f
+    );
+  }
+  f = this.getDrawtimes();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      2,
+      f
+    );
+  }
+  f = this.getGuestwintimes();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      3,
+      f
+    );
+  }
+  f = this.getHostnextgoaltimes();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      4,
+      f
+    );
+  }
+  f = this.getZerogoaltimes();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      5,
+      f
+    );
+  }
+  f = this.getGuestnextgoaltimes();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      6,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Push_BetArea} The clone.
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Push_BetArea} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional float hostWinTimes = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.getHostwintimes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.setHostwintimes = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional float drawTimes = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.getDrawtimes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.setDrawtimes = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional float guestWinTimes = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.getGuestwintimes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.setGuestwintimes = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional float hostNextGoalTimes = 4;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.getHostnextgoaltimes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 4, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.setHostnextgoaltimes = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional float zeroGoalTimes = 5;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.getZerogoaltimes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 5, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.setZerogoaltimes = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional float guestNextGoalTimes = 6;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.getGuestnextgoaltimes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 6, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Push_BetArea.prototype.setGuestnextgoaltimes = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Push_BetArea.Type = {
+  UNSET: 0,
+  ID: 20011
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlScheduleInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlScheduleInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlScheduleInfo.displayName = 'proto.kzgame.svrcli.msg.RlScheduleInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlScheduleInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     sceheduleid: msg.getSceheduleid(),
     phase: msg.getPhase(),
@@ -4276,23 +4585,23 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.toObject = function(includeInstance, msg) 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.kzgame.svrcli.msg.RlSchedulInfo}
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleInfo}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinary = function(bytes) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.kzgame.svrcli.msg.RlSchedulInfo;
-  return proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.kzgame.svrcli.msg.RlScheduleInfo;
+  return proto.kzgame.svrcli.msg.RlScheduleInfo.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.kzgame.svrcli.msg.RlSchedulInfo} msg The message object to deserialize into.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleInfo} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.kzgame.svrcli.msg.RlSchedulInfo}
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleInfo}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader = function(msg, reader) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -4363,10 +4672,10 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader = function(msg
 /**
  * Class method variant: serializes the given message to binary data
  * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.kzgame.svrcli.msg.RlSchedulInfo} message
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleInfo} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter = function(message, writer) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.serializeBinaryToWriter = function(message, writer) {
   message.serializeBinaryToWriter(writer);
 };
 
@@ -4375,7 +4684,7 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter = function(message
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.serializeBinary = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
@@ -4387,7 +4696,7 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.serializeBinary = function() {
  * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.serializeBinaryToWriter = function (writer) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
   f = this.getSceheduleid();
   if (f !== 0) {
@@ -4485,10 +4794,10 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.serializeBinaryToWriter = functi
 
 /**
  * Creates a deep clone of this proto. No data is shared with the original.
- * @return {!proto.kzgame.svrcli.msg.RlSchedulInfo} The clone.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleInfo} The clone.
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.cloneMessage = function() {
-  return /** @type {!proto.kzgame.svrcli.msg.RlSchedulInfo} */ (jspb.Message.cloneMessage(this));
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlScheduleInfo} */ (jspb.Message.cloneMessage(this));
 };
 
 
@@ -4496,13 +4805,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.cloneMessage = function() {
  * optional int32 sceheduleId = 1;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getSceheduleid = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getSceheduleid = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setSceheduleid = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setSceheduleid = function(value) {
   jspb.Message.setField(this, 1, value);
 };
 
@@ -4511,13 +4820,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setSceheduleid = function(value)
  * optional int32 phase = 2;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getPhase = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getPhase = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setPhase = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setPhase = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 
@@ -4526,13 +4835,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setPhase = function(value) {
  * optional int32 leagueId = 3;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getLeagueid = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getLeagueid = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setLeagueid = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setLeagueid = function(value) {
   jspb.Message.setField(this, 3, value);
 };
 
@@ -4541,13 +4850,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setLeagueid = function(value) {
  * optional string matchName = 4;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getMatchname = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getMatchname = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setMatchname = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setMatchname = function(value) {
   jspb.Message.setField(this, 4, value);
 };
 
@@ -4556,13 +4865,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setMatchname = function(value) {
  * optional string weekday = 5;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getWeekday = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getWeekday = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setWeekday = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setWeekday = function(value) {
   jspb.Message.setField(this, 5, value);
 };
 
@@ -4571,13 +4880,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setWeekday = function(value) {
  * optional string officialNum = 6;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOfficialnum = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getOfficialnum = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 6, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOfficialnum = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setOfficialnum = function(value) {
   jspb.Message.setField(this, 6, value);
 };
 
@@ -4586,13 +4895,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOfficialnum = function(value)
  * optional string endSale = 7;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getEndsale = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getEndsale = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 7, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setEndsale = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setEndsale = function(value) {
   jspb.Message.setField(this, 7, value);
 };
 
@@ -4601,13 +4910,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setEndsale = function(value) {
  * optional string homeName = 8;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHomename = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getHomename = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 8, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHomename = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setHomename = function(value) {
   jspb.Message.setField(this, 8, value);
 };
 
@@ -4616,13 +4925,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHomename = function(value) {
  * optional string awayName = 9;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getAwayname = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getAwayname = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 9, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setAwayname = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setAwayname = function(value) {
   jspb.Message.setField(this, 9, value);
 };
 
@@ -4631,13 +4940,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setAwayname = function(value) {
  * optional string handicap = 10;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHandicap = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getHandicap = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 10, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHandicap = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setHandicap = function(value) {
   jspb.Message.setField(this, 10, value);
 };
 
@@ -4646,13 +4955,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHandicap = function(value) {
  * optional string oddsJingcai = 11;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOddsjingcai = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getOddsjingcai = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 11, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsjingcai = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setOddsjingcai = function(value) {
   jspb.Message.setField(this, 11, value);
 };
 
@@ -4661,13 +4970,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsjingcai = function(value)
  * optional string oddsRangqiu = 12;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getOddsrangqiu = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getOddsrangqiu = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 12, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsrangqiu = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setOddsrangqiu = function(value) {
   jspb.Message.setField(this, 12, value);
 };
 
@@ -4676,13 +4985,13 @@ proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setOddsrangqiu = function(value)
  * optional int32 hotFlag = 13;
  * @return {number}
  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.getHotflag = function() {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.getHotflag = function() {
   return /** @type {number} */ (jspb.Message.getFieldProto3(this, 13, 0));
 };
 
 
 /** @param {number} value  */
-proto.kzgame.svrcli.msg.RlSchedulInfo.prototype.setHotflag = function(value) {
+proto.kzgame.svrcli.msg.RlScheduleInfo.prototype.setHotflag = function(value) {
   jspb.Message.setField(this, 13, value);
 };
 
@@ -5148,8 +5457,8 @@ proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.toObject = function(opt_i
  */
 proto.kzgame.svrcli.msg.Res_RealFootMainInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    schedulinfoList: jspb.Message.toObjectList(msg.getSchedulinfoList(),
-    proto.kzgame.svrcli.msg.RlSchedulInfo.toObject, includeInstance),
+    rlscheduleinfoList: jspb.Message.toObjectList(msg.getRlscheduleinfoList(),
+    proto.kzgame.svrcli.msg.RlScheduleInfo.toObject, includeInstance),
     betconfig: (f = msg.getBetconfig()) && proto.kzgame.svrcli.msg.RlBetConfig.toObject(includeInstance, f),
     maxleagueid: msg.getMaxleagueid()
   };
@@ -5189,10 +5498,10 @@ proto.kzgame.svrcli.msg.Res_RealFootMainInfo.deserializeBinaryFromReader = funct
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new proto.kzgame.svrcli.msg.RlSchedulInfo;
-      reader.readMessage(value,proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader);
-      msg.getSchedulinfoList().push(value);
-      msg.setSchedulinfoList(msg.getSchedulinfoList());
+      var value = new proto.kzgame.svrcli.msg.RlScheduleInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlScheduleInfo.deserializeBinaryFromReader);
+      msg.getRlscheduleinfoList().push(value);
+      msg.setRlscheduleinfoList(msg.getRlscheduleinfoList());
       break;
     case 2:
       var value = new proto.kzgame.svrcli.msg.RlBetConfig;
@@ -5241,12 +5550,12 @@ proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.serializeBinary = functio
  */
 proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = this.getSchedulinfoList();
+  f = this.getRlscheduleinfoList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       1,
       f,
-      proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter
+      proto.kzgame.svrcli.msg.RlScheduleInfo.serializeBinaryToWriter
     );
   }
   f = this.getBetconfig();
@@ -5277,25 +5586,25 @@ proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.cloneMessage = function()
 
 
 /**
- * repeated RlSchedulInfo schedulInfo = 1;
+ * repeated RlScheduleInfo rlScheduleInfo = 1;
  * If you change this array by adding, removing or replacing elements, or if you
  * replace the array itself, then you must call the setter to update it.
- * @return {!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>}
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>}
  */
-proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.getSchedulinfoList = function() {
-  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlSchedulInfo, 1));
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.getRlscheduleinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlScheduleInfo, 1));
 };
 
 
-/** @param {Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} value  */
-proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.setSchedulinfoList = function(value) {
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>} value  */
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.setRlscheduleinfoList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
-proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.clearSchedulinfoList = function() {
-  this.setSchedulinfoList([]);
+proto.kzgame.svrcli.msg.Res_RealFootMainInfo.prototype.clearRlscheduleinfoList = function() {
+  this.setRlscheduleinfoList([]);
 };
 
 
@@ -5398,7 +5707,8 @@ proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.toObject = function(op
  */
 proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sceheduleid: msg.getSceheduleid()
+    sceheduleid: msg.getSceheduleid(),
+    betclass: msg.getBetclass()
   };
 
   if (includeInstance) {
@@ -5438,6 +5748,10 @@ proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.deserializeBinaryFromReader = fu
     case 1:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setSceheduleid(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetclass(value);
       break;
     default:
       reader.skipField();
@@ -5484,6 +5798,13 @@ proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.serializeBinaryToWrite
       f
     );
   }
+  f = this.getBetclass();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -5508,6 +5829,21 @@ proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.getSceheduleid = funct
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.setSceheduleid = function(value) {
   jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 betClass = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.getBetclass = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Ask_RealFootBetRateInfo.prototype.setBetclass = function(value) {
+  jspb.Message.setField(this, 2, value);
 };
 
 
@@ -5565,6 +5901,7 @@ proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.toObject = function(op
  */
 proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
+    sceheduleid: msg.getSceheduleid(),
     historyinfo: msg.getHistoryinfo(),
     lastesinfo: msg.getLastesinfo(),
     oddsavg: msg.getOddsavg(),
@@ -5606,18 +5943,22 @@ proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.deserializeBinaryFromReader = fu
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setHistoryinfo(value);
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSceheduleid(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setLastesinfo(value);
+      msg.setHistoryinfo(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setOddsavg(value);
+      msg.setLastesinfo(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOddsavg(value);
+      break;
+    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setBetrate(value);
       break;
@@ -5659,31 +6000,38 @@ proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.serializeBinary = func
  */
 proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = this.getHistoryinfo();
-  if (f.length > 0) {
-    writer.writeString(
+  f = this.getSceheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
       1,
       f
     );
   }
-  f = this.getLastesinfo();
+  f = this.getHistoryinfo();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = this.getOddsavg();
+  f = this.getLastesinfo();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = this.getBetrate();
+  f = this.getOddsavg();
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = this.getBetrate();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -5700,62 +6048,77 @@ proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.cloneMessage = functio
 
 
 /**
- * optional string historyInfo = 1;
- * @return {string}
+ * optional int32 sceheduleId = 1;
+ * @return {number}
  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getHistoryinfo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getSceheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
 };
 
 
-/** @param {string} value  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setHistoryinfo = function(value) {
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setSceheduleid = function(value) {
   jspb.Message.setField(this, 1, value);
 };
 
 
 /**
- * optional string lastesInfo = 2;
+ * optional string historyInfo = 2;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getLastesinfo = function() {
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getHistoryinfo = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 2, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setLastesinfo = function(value) {
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setHistoryinfo = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 
 
 /**
- * optional string oddsAvg = 3;
+ * optional string lastesInfo = 3;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getOddsavg = function() {
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getLastesinfo = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 3, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setOddsavg = function(value) {
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setLastesinfo = function(value) {
   jspb.Message.setField(this, 3, value);
 };
 
 
 /**
- * optional string betRate = 4;
+ * optional string oddsAvg = 4;
  * @return {string}
  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getBetrate = function() {
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getOddsavg = function() {
   return /** @type {string} */ (jspb.Message.getFieldProto3(this, 4, ""));
 };
 
 
 /** @param {string} value  */
-proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setBetrate = function(value) {
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setOddsavg = function(value) {
   jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional string betRate = 5;
+ * @return {string}
+ */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.getBetrate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 5, ""));
+};
+
+
+/** @param {string} value  */
+proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.prototype.setBetrate = function(value) {
+  jspb.Message.setField(this, 5, value);
 };
 
 
@@ -5778,19 +6141,19 @@ proto.kzgame.svrcli.msg.Res_RealFootBetRateInfo.Type = {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Push_SchedulInfo.repeatedFields_, null);
+proto.kzgame.svrcli.msg.Push_ScheduleInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Push_ScheduleInfo.repeatedFields_, null);
 };
-goog.inherits(proto.kzgame.svrcli.msg.Push_SchedulInfo, jspb.Message);
+goog.inherits(proto.kzgame.svrcli.msg.Push_ScheduleInfo, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.kzgame.svrcli.msg.Push_SchedulInfo.displayName = 'proto.kzgame.svrcli.msg.Push_SchedulInfo';
+  proto.kzgame.svrcli.msg.Push_ScheduleInfo.displayName = 'proto.kzgame.svrcli.msg.Push_ScheduleInfo';
 }
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.repeatedFields_ = [1];
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.repeatedFields_ = [1];
 
 
 
@@ -5805,8 +6168,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.toObject = function(opt_includeInstance) {
-  return proto.kzgame.svrcli.msg.Push_SchedulInfo.toObject(opt_includeInstance, this);
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Push_ScheduleInfo.toObject(opt_includeInstance, this);
 };
 
 
@@ -5815,13 +6178,13 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.toObject = function(opt_inclu
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.kzgame.svrcli.msg.Push_SchedulInfo} msg The msg instance to transform.
+ * @param {!proto.kzgame.svrcli.msg.Push_ScheduleInfo} msg The msg instance to transform.
  * @return {!Object}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.toObject = function(includeInstance, msg) {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    scheduleinfoList: jspb.Message.toObjectList(msg.getScheduleinfoList(),
-    proto.kzgame.svrcli.msg.RlSchedulInfo.toObject, includeInstance)
+    rlscheduleinfoList: jspb.Message.toObjectList(msg.getRlscheduleinfoList(),
+    proto.kzgame.svrcli.msg.RlScheduleInfo.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -5835,23 +6198,23 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.toObject = function(includeInstance, ms
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.kzgame.svrcli.msg.Push_SchedulInfo}
+ * @return {!proto.kzgame.svrcli.msg.Push_ScheduleInfo}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinary = function(bytes) {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.kzgame.svrcli.msg.Push_SchedulInfo;
-  return proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.kzgame.svrcli.msg.Push_ScheduleInfo;
+  return proto.kzgame.svrcli.msg.Push_ScheduleInfo.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.kzgame.svrcli.msg.Push_SchedulInfo} msg The message object to deserialize into.
+ * @param {!proto.kzgame.svrcli.msg.Push_ScheduleInfo} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.kzgame.svrcli.msg.Push_SchedulInfo}
+ * @return {!proto.kzgame.svrcli.msg.Push_ScheduleInfo}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinaryFromReader = function(msg, reader) {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -5859,10 +6222,10 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinaryFromReader = function(
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new proto.kzgame.svrcli.msg.RlSchedulInfo;
-      reader.readMessage(value,proto.kzgame.svrcli.msg.RlSchedulInfo.deserializeBinaryFromReader);
-      msg.getScheduleinfoList().push(value);
-      msg.setScheduleinfoList(msg.getScheduleinfoList());
+      var value = new proto.kzgame.svrcli.msg.RlScheduleInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlScheduleInfo.deserializeBinaryFromReader);
+      msg.getRlscheduleinfoList().push(value);
+      msg.setRlscheduleinfoList(msg.getRlscheduleinfoList());
       break;
     default:
       reader.skipField();
@@ -5876,10 +6239,10 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.deserializeBinaryFromReader = function(
 /**
  * Class method variant: serializes the given message to binary data
  * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.kzgame.svrcli.msg.Push_SchedulInfo} message
+ * @param {!proto.kzgame.svrcli.msg.Push_ScheduleInfo} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.serializeBinaryToWriter = function(message, writer) {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.serializeBinaryToWriter = function(message, writer) {
   message.serializeBinaryToWriter(writer);
 };
 
@@ -5888,7 +6251,7 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.serializeBinaryToWriter = function(mess
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.serializeBinary = function() {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
@@ -5900,14 +6263,14 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.serializeBinary = function() 
  * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.serializeBinaryToWriter = function (writer) {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = this.getScheduleinfoList();
+  f = this.getRlscheduleinfoList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       1,
       f,
-      proto.kzgame.svrcli.msg.RlSchedulInfo.serializeBinaryToWriter
+      proto.kzgame.svrcli.msg.RlScheduleInfo.serializeBinaryToWriter
     );
   }
 };
@@ -5915,40 +6278,40 @@ proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.serializeBinaryToWriter = fun
 
 /**
  * Creates a deep clone of this proto. No data is shared with the original.
- * @return {!proto.kzgame.svrcli.msg.Push_SchedulInfo} The clone.
+ * @return {!proto.kzgame.svrcli.msg.Push_ScheduleInfo} The clone.
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.cloneMessage = function() {
-  return /** @type {!proto.kzgame.svrcli.msg.Push_SchedulInfo} */ (jspb.Message.cloneMessage(this));
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Push_ScheduleInfo} */ (jspb.Message.cloneMessage(this));
 };
 
 
 /**
- * repeated RlSchedulInfo scheduleInfo = 1;
+ * repeated RlScheduleInfo rlScheduleInfo = 1;
  * If you change this array by adding, removing or replacing elements, or if you
  * replace the array itself, then you must call the setter to update it.
- * @return {!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>}
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.getScheduleinfoList = function() {
-  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlSchedulInfo, 1));
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.getRlscheduleinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlScheduleInfo, 1));
 };
 
 
-/** @param {Array.<!proto.kzgame.svrcli.msg.RlSchedulInfo>} value  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.setScheduleinfoList = function(value) {
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>} value  */
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.setRlscheduleinfoList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
-proto.kzgame.svrcli.msg.Push_SchedulInfo.prototype.clearScheduleinfoList = function() {
-  this.setScheduleinfoList([]);
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.prototype.clearRlscheduleinfoList = function() {
+  this.setRlscheduleinfoList([]);
 };
 
 
 /**
  * @enum {number}
  */
-proto.kzgame.svrcli.msg.Push_SchedulInfo.Type = {
+proto.kzgame.svrcli.msg.Push_ScheduleInfo.Type = {
   UNSET: 0,
   ID: 30004
 };
@@ -8055,6 +8418,537 @@ proto.kzgame.svrcli.msg.Res_RealFootRecords.prototype.clearSchedulerecordsList =
 proto.kzgame.svrcli.msg.Res_RealFootRecords.Type = {
   UNSET: 0,
   ID: 30010
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.RlScheduleId = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.RlScheduleId, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.RlScheduleId.displayName = 'proto.kzgame.svrcli.msg.RlScheduleId';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.RlScheduleId.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleId} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    scheduleid: msg.getScheduleid()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleId}
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.RlScheduleId;
+  return proto.kzgame.svrcli.msg.RlScheduleId.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleId} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleId}
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setScheduleid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.RlScheduleId} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getScheduleid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.RlScheduleId} The clone.
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.RlScheduleId} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 scheduleId = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.RlScheduleId.prototype.getScheduleid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.RlScheduleId.prototype.setScheduleid = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Push_StopBetSchedules.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Push_StopBetSchedules, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Push_StopBetSchedules.displayName = 'proto.kzgame.svrcli.msg.Push_StopBetSchedules';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Push_StopBetSchedules.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Push_StopBetSchedules} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    rlscheduleidList: jspb.Message.toObjectList(msg.getRlscheduleidList(),
+    proto.kzgame.svrcli.msg.RlScheduleId.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Push_StopBetSchedules}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Push_StopBetSchedules;
+  return proto.kzgame.svrcli.msg.Push_StopBetSchedules.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Push_StopBetSchedules} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Push_StopBetSchedules}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.kzgame.svrcli.msg.RlScheduleId;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlScheduleId.deserializeBinaryFromReader);
+      msg.getRlscheduleidList().push(value);
+      msg.setRlscheduleidList(msg.getRlscheduleidList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Push_StopBetSchedules} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getRlscheduleidList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.kzgame.svrcli.msg.RlScheduleId.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Push_StopBetSchedules} The clone.
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Push_StopBetSchedules} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * repeated RlScheduleId rlScheduleId = 1;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlScheduleId>}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.getRlscheduleidList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlScheduleId>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlScheduleId, 1));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlScheduleId>} value  */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.setRlscheduleidList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.prototype.clearRlscheduleidList = function() {
+  this.setRlscheduleidList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Push_StopBetSchedules.Type = {
+  UNSET: 0,
+  ID: 30011
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Push_AddScheduleInfo.repeatedFields_, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.Push_AddScheduleInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.Push_AddScheduleInfo.displayName = 'proto.kzgame.svrcli.msg.Push_AddScheduleInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.Push_AddScheduleInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    rlscheduleinfoList: jspb.Message.toObjectList(msg.getRlscheduleinfoList(),
+    proto.kzgame.svrcli.msg.RlScheduleInfo.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.Push_AddScheduleInfo;
+  return proto.kzgame.svrcli.msg.Push_AddScheduleInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.kzgame.svrcli.msg.RlScheduleInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.RlScheduleInfo.deserializeBinaryFromReader);
+      msg.getRlscheduleinfoList().push(value);
+      msg.setRlscheduleinfoList(msg.getRlscheduleinfoList());
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getRlscheduleinfoList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.kzgame.svrcli.msg.RlScheduleInfo.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.Push_AddScheduleInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * repeated RlScheduleInfo rlscheduleInfo = 1;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.getRlscheduleinfoList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.RlScheduleInfo, 1));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.RlScheduleInfo>} value  */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.setRlscheduleinfoList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.prototype.clearRlscheduleinfoList = function() {
+  this.setRlscheduleinfoList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.kzgame.svrcli.msg.Push_AddScheduleInfo.Type = {
+  UNSET: 0,
+  ID: 30012
 };
 
 goog.object.extend(exports, proto.kzgame.svrcli.msg);

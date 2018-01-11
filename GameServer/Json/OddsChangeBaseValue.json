@@ -1,9 +1,9 @@
 {
   "1": {
     "id": 1,
-    "change_rate1": 5,
-    "change_rate2": 5,
-    "change_rate3": 5,
-    "base_value": 0.01
+    "change_rate": 6,
+    "base_value": 0.01,
+    "max_reward": 0.9,
+    "min_reward": 0.895
   }
 }

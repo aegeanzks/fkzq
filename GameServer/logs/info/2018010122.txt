@@ -1,0 +1,1 @@
+[2018-01-01 22:19:55.006] [INFO] logInfo - errReferenceError: winArea is not defined

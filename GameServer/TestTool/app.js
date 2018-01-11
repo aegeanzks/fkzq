@@ -156,6 +156,46 @@ function start() {
                 var buf = askVirtualHistory.serializeBinary();
                 console.log('申请虚拟赛局记录');
                 socket.emit(pbLogin.Ask_VirtualHistory.Type.ID, buf, buf.length);
+            }else if(key == '20'){
+                var askRealFootMainInfo = new pbLogin.Ask_RealFootMainInfo();
+                console.log('申请真实主页消息');
+                socket.emit(pbLogin.Ask_RealFootMainInfo.Type.ID, "", 0);
+            }else if(key == '21'){
+                var askRealFootBetRateInfo = new pbLogin.Ask_RealFootBetRateInfo();
+                askRealFootBetRateInfo.setSceheduleid(51434);     //赛事id
+                askRealFootBetRateInfo.setBetclass(1);
+
+                var buf = askRealFootBetRateInfo.serializeBinary();
+                console.log('真实胜平负投注比例');
+                socket.emit(pbLogin.Ask_RealFootBetRateInfo.Type.ID, buf, buf.length);
+
+            }else if(key == '22'){
+                var askRealFootBetRateInfo = new pbLogin.Ask_RealFootBetRateInfo();
+                askRealFootBetRateInfo.setSceheduleid(51434);     //赛事id
+                askRealFootBetRateInfo.setBetclass(2);
+
+                var buf = askRealFootBetRateInfo.serializeBinary();
+                console.log('真实让球胜平负投注比例');
+                socket.emit(pbLogin.Ask_RealFootBetRateInfo.Type.ID, buf, buf.length);
+            }else if(key == '23'){
+                var askRealFootBetInfo = new pbLogin.Ask_RealFootBetInfo();
+                askRealFootBetInfo.setBettype(1);
+                askRealFootBetInfo.setBetnum(1);
+                askRealFootBetInfo.setBettime(2);
+                askRealFootBetInfo.setBetcoinarea(1);
+                
+                var arr = [];
+                var betInfo = new  pbLogin.RlBetInfo();
+
+                betInfo.setSceheduleid(51434);                    //赛事id
+                betInfo.setBetclass(1);
+                betInfo.setBetarea(1);
+                arr.push(betInfo);
+
+                askRealFootBetInfo.setBetinfoList(arr);
+                var buf = askRealFootBetInfo.serializeBinary();
+                console.log('真实单场投注');
+                socket.emit(pbLogin.Ask_RealFootBetInfo.Type.ID, buf, buf.length);
             }
 
             questtion();

@@ -71,7 +71,7 @@ function VirtualFootball(){
         drawNum = data.drawNum;
         guestWinNum = data.guestWinNum;
 
-        if(matchState == 0 || matchState == 1)
+        if(matchState == 0 || matchState == 1 || drawTimes != 0)
             canBet = true;
         else
             canBet = false;
@@ -95,6 +95,11 @@ function VirtualFootball(){
         zeroGoalSupport = data.zeroGoalSupport;
         guestNextGoalTimes = data.guestNextGoalTimes;
         guestNextGoalSupport = data.guestNextGoalSupport;
+
+        if(drawTimes != 0)
+            canBet = true;
+        else
+            canBet = false;
 
         //广播
         var push = new pbSvrcli.Push_GoalAndBetArea();
@@ -293,7 +298,7 @@ function VirtualFootball(){
         
         if(player.gameCoin < betCoin)
             return;
-
+        player.gameCoin -= betCoin;
         //生成唯一ID
         var uid = uuid.v4();
         waitMap.set(uid, {player:player, betBeforeCoin: player.gameCoin, betArea: betArea, betItem:betItem});
@@ -313,7 +318,7 @@ function VirtualFootball(){
         if(null == waitValue.player)
             return; //扣了钱但是投注会失败，正常情况下不会出现，除非钱包挂掉
         var player = waitValue.player;
-        player.gameCoin = data.balance;
+        //player.gameCoin = data.balance;
         res.setResult(data.res);
         res.setCoin(data.balance);
         res.setBetarea(waitValue.betArea);
@@ -382,10 +387,35 @@ function VirtualFootball(){
         var player = OBJ('PlayerContainer').findPlayerByUserId(data.userid);
         if(null != player && data.balance != player.gameCoin){
             var push = new pbSvrcli.Push_WinBet();
-            push.setWincoin(data.balance - player.gameCoin);
+            push.setWincoin(parseInt(data.balance - player.gameCoin + 0.1));    //0.1是为了修正浮点值精度问题
             push.setCoin(data.balance);
             player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
         }
+    };
+
+    //更新投注区域
+    this.updateArea = function(source, data){
+        hostWinTimes = data.hostWinTimes;
+        drawTimes = data.drawTimes;
+        guestWinTimes = data.guestWinTimes;
+        hostNextGoalTimes = data.hostNextGoalTimes;
+        zeroGoalTimes = data.zeroGoalTimes;
+        guestNextGoalTimes = data.guestNextGoalTimes;
+
+        if(drawTimes != 0)
+            canBet = true;
+        else
+            canBet = false;
+
+        var push = new pbSvrcli.Push_BetArea();
+        push.setHostwintimes(hostWinTimes);
+        push.setDrawtimes(drawTimes);
+        push.setGuestwintimes(guestWinTimes);
+        push.setHostnextgoaltimes(hostNextGoalTimes);
+        push.setZerogoaltimes(zeroGoalTimes);
+        push.setGuestnextgoaltimes(guestNextGoalTimes);
+        var buf = push.serializeBinary();
+        io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_BetArea.Type.ID, buf, buf.length);
     };
 
     this.run = function(Timestamp){

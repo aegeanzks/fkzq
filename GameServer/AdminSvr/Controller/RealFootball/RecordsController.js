@@ -47,7 +47,7 @@ RlRecordsController.recordslist=function(req,res,next){
 				//校验参数合法性 
 				const user_name = req.query.user_name;
 				const page2 = req.query.page;
-				if(!user_name && !Number(phase) || !page2 && !Number(page2)){
+				if(!user_name || !page2 && !Number(page2)){
 					res.send({
 						status:2,
 						type: 'ERROR_PHASE',

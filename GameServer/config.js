@@ -41,13 +41,13 @@ exports.dataCenterSvrConfig = function(){
     return {
         serverId:'dataCenter',
         //数据采集频率
-        pullInterval:6,
+        pullInterval:8,
         runInterval:3, //帧率
         noDataTotal:'3',             
         switch:'1',                 
         beginTime:'',                
         endTime:'', 
-        limit:12,     
+        limit:12,   
     };
 };
 

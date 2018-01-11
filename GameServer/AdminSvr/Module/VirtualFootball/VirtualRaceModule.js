@@ -1,6 +1,6 @@
 module.exports =VirtualRaceModule;
 
-var VirtualScheduleSchema = require('../../../db_structure').VirtualSchedule;
+var Schema = require('../../../db_structure');
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var config = require('../../../config').adminSvrConfig();
 var Func = require('../../../Utils/Functions');
@@ -22,7 +22,7 @@ function VirtualRaceModule(){
     // all_bet: Number,         //下注金额
     // distribution: Number,   //派发金额 包含下注金额
     var limit = config.limit;
-    var virtualScheduleStatement = OBJ('DbMgr').getStatement(VirtualScheduleSchema);
+    var virtualScheduleStatement = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
     var findSelectList = {"date":1,"date_num":1,"host_team_id":1,"host":1,"host_team_goal":1,"guest_team_id":1,"guest":1,"guest_team_goal":1,"score":1,"all_bet":1,
                           "distribution":1};
     //end 定义变量
@@ -65,10 +65,10 @@ function VirtualRaceModule(){
      */
     function findList(filter,page,res,funcname){
         try{
-            logRealBetStatement.count(filter,function(error,count){
+            virtualScheduleStatement.count(filter,function(error,count){
                 if(!error){
                     if(count >0){
-                        scheduleStatement.find(filter,findSelectList,function(finderr,docs){
+                        virtualScheduleStatement.find(filter,findSelectList,function(finderr,docs){
                             if(!finderr){
                                 packages(docs,count,res);     
                             }else{
@@ -77,7 +77,7 @@ function VirtualRaceModule(){
                         })
                         .skip((page-1) * limit)
                         .limit(limit)
-                        .sort({'match_num':-1});
+                        //.sort({'date_num':-1});
                     }else{
                         res.send({
                             status: 0,
@@ -126,9 +126,19 @@ function VirtualRaceModule(){
         @id     赛事id
      */
     this.vraceListBydatenum= function(date_num,page,res){
-        var filter = {"date_num":date_num};
+        eval('var tmp = /'+date_num+'/');
+        var filter = {"user_name":tmp};
         var funcname = 'vraceListBydatenum';
         findList(filter,page,res,funcname);
     }
    
+    // this.vraceListByTime=function(start_time,end_time,page,res){
+    //     var beginStamp = Func.getStamp(begin_time);
+    //     var endStamp = Func.getStamp(end_time);
+    //     var begin = new Date(beginStamp);
+    //     var end = new Date(endStamp+24*60*60*1000);
+    //     var filter={"status":status,"match_date":{"$gte":begin,"$lt":end}};
+    //     var funcname = 'getListByStatusAndTime';
+    //     findList(filter,page,res,funcname); 
+    // }
 }

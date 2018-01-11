@@ -22,6 +22,7 @@ var LoginModule = require('./Module/Login/LoginModule');
 var CommonModule = require('./Module/Common/CommonModule');
 var DataCenterModule = require('./Module/DataCenter/DataCenterModule');
 var VirtualFootModule = require('./Module/VirtualFootball/VirtualFootballModule');
+var RealFootModule = require('./Module/RealFootball/RealFootballModule');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
@@ -60,6 +61,7 @@ GameSvr.registerModule = function(){
     new PlayerModule();
     new DataCenterModule();
     new VirtualFootModule();
+    new RealFootModule();
 }
 
 //与客户端交互的模块这边还需要注册socket事件

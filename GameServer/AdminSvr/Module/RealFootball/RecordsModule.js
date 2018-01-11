@@ -134,7 +134,8 @@ function RecordsModule(){
         @id     赛事id
      */
     this.recordListByName = function(user_name,page,res){
-        var filter = {"user_name":user_name};
+        eval('var tmp = /'+user_name+'/');
+        var filter = {"user_name":tmp};
         var funcname = 'recordListByName';
         findList(filter,page,res,funcname);
     }

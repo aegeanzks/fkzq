@@ -31,7 +31,7 @@ function VirtualFootballMatch(conf, beginTime, endTime){
     self.hostTeam = conf.randATeam(-1);
     self.guestTeam = conf.randATeam(self.hostTeam.ID);
 
-    //var oddsAgent = VirtualFootballOddsAgent(conf, self.hostTeam, self.guestTeam, beginTime, endTime);
+    var oddsAgent;                  //赔率
 
     self.hostTeamGoal = 0;   //比分
     self.guestTeamGoal = 0;  
@@ -151,6 +151,14 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             self.hostNextGoalTimes = odds.host_goal;
             self.zeroGoalTimes = odds.zero;
             self.guestNextGoalTimes = odds.guest_goal;
+            oddsAgent = new VirtualFootballOddsAgent(conf, self.hostTeam, self.guestTeam, beginTime, endTime, {
+                hostWinTimes: self.hostWinTimes,
+                drawTimes: self.drawTimes,
+                guestWinTimes: self.guestWinTimes,
+                hostNextGoalTimes: self.hostNextGoalTimes,
+                zeroGoalTimes: self.zeroGoalTimes,
+                guestNextGoalTimes: self.guestNextGoalTimes
+            });     //初始化赔率代理
         });
     }
     //初始化进球数
@@ -310,14 +318,6 @@ function VirtualFootballMatch(conf, beginTime, endTime){
         }
         return arr[0];
     }
-    /***
-     *  var hostWinDistributeCoin = 0;          //主胜将派发奖金          A
-        var drawDistributeCoin = 0;             //平将派发奖金            B
-        var guestWinDistributeCoin = 0;         //客胜将派发奖金          C
-        var hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金     A1
-        var zeroGoalDistributeCoin = 0;         //不进球将派发奖金       B1
-        var guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金     C1
-     */
     //返回 0不进球 1主队进球 2客队进球
     function judgeWhichGoal(){
         if(bCheat){         //需要作弊
@@ -403,7 +403,8 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金
             zeroGoalDistributeCoin = 0;         //不进球将派发奖金
             guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金
-            
+            oddsAgent.setGoalNum(self.hostTeamGoal, self.guestTeamGoal);
+            refreshOdds();
         } else if(scheduleArr[playerIndex].event == GUEST_GOAL){
             self.guestTeamGoal++;
             //猜下一队进球
@@ -413,6 +414,8 @@ function VirtualFootballMatch(conf, beginTime, endTime){
             hostNextGoalDistributeCoin = 0;     //主队进球将派发奖金
             zeroGoalDistributeCoin = 0;         //不进球将派发奖金
             guestNextGoalDistributeCoin = 0;    //客队进球将派发奖金
+            oddsAgent.setGoalNum(self.hostTeamGoal, self.guestTeamGoal);
+            refreshOdds();
         } 
         self.curEvent = scheduleArr[playerIndex].event;
         self.nextEventTime = scheduleArr[playerIndex].endTime;
@@ -559,5 +562,28 @@ function VirtualFootballMatch(conf, beginTime, endTime){
         else
             bCheat = false;
         console.log('是否作弊:'+bCheat);
+    }
+    //赔率代理更新
+    this.oddsRun = function(timestamp){
+        if(oddsAgent){
+            if(oddsAgent.update(timestamp)){
+                refreshOdds();
+                return true;
+            }
+        }
+        return false;
+    };
+    //更新赔率
+    function refreshOdds(){
+        if(oddsAgent){
+            var arr = oddsAgent.getCurOdds();
+            self.hostWinTimes = arr[0];
+            self.drawTimes = arr[1];
+            self.guestWinTimes = arr[2];
+            self.hostNextGoalTimes = arr[3];
+            self.zeroGoalTimes = arr[4];
+            self.guestNextGoalTimes = arr[5];
+            console.log('赢:'+self.hostWinTimes+' 平:'+self.drawTimes+' 负:'+self.guestWinTimes);
+        }
     }
 }

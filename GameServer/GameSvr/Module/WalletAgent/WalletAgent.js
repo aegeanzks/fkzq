@@ -40,6 +40,8 @@ function WalletAgent(){
                 var mod = OBJ('RealFootballModule');
                 if (msg.func == 'resRealBet'){
                     mod.logic.resRealBet(source, msg.data);
+                }else if(msg.func == 'resAddTrade'){
+                    mod.logic.resAddTrade(source,msg.data);
                 }
             }break;
         }

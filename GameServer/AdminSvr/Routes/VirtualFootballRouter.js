@@ -7,7 +7,7 @@ const router = express.Router();
 
 //比赛管理
 router.get('/list', RlVRaceController.getList);            //获取赛事列表
-router.get('/records', RlVRaceController.recordslist);                            //获取赛事记录列表
+router.get('/records', RlVRecordsontroller.recordslist);                            //获取赛事记录列表
 //end 比赛管理
 
 //全部竞猜记录

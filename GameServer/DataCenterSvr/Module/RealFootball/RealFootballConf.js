@@ -17,6 +17,8 @@ function RealFootballConf(){
     var betItemInfo;
     var classConfBetItem = OBJ('DbMgr').getStatement(Schema.ConfBetItem());
 
+    init();
+
     /*
         @func 初始化
      */
@@ -31,7 +33,7 @@ function RealFootballConf(){
         betItemDoc.item2 = data['item2'];
         betItemDoc.item3 = data['item3'];
         betItemDoc.num_limit = data['numLimit'];
-        betItemDoc.coin_limit = data['coin_limit'];
+        betItemDoc.coin_limit = data['coinLimit'];
         return betItemDoc;
     }
 

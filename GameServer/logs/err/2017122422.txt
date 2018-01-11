@@ -1,0 +1,216 @@
+[2017-12-24 22:07:01.094] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "on_line_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "on_line_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'on_line_num',
+  reason: undefined }
+[2017-12-24 22:07:06.184] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "on_line_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "on_line_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'on_line_num',
+  reason: undefined }
+[2017-12-24 22:07:11.284] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "on_line_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "on_line_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'on_line_num',
+  reason: undefined }
+[2017-12-24 22:08:38.523] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "online_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "online_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'online_num',
+  reason: undefined }
+[2017-12-24 22:08:43.600] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "online_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "online_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'online_num',
+  reason: undefined }
+[2017-12-24 22:08:48.708] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "online_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "online_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'online_num',
+  reason: undefined }
+[2017-12-24 22:08:53.809] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "online_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "online_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'online_num',
+  reason: undefined }
+[2017-12-24 22:08:58.920] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "online_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "online_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'online_num',
+  reason: undefined }
+[2017-12-24 22:09:52.317] [ERROR] logErr - { CastError: Cast to number failed for value "undefined" at path "online_num"
+    at new CastError (d:\study\fkzq\GameServer\node_modules\mongoose\lib\error\cast.js:27:11)
+    at SchemaNumber.cast (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:231:9)
+    at SchemaNumber.SchemaType._castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1088:15)
+    at SchemaNumber.castForQuery (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schema\number.js:282:14)
+    at SchemaNumber.SchemaType.castForQueryWrapper (d:\study\fkzq\GameServer\node_modules\mongoose\lib\schematype.js:1045:15)
+    at castUpdateVal (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:346:19)
+    at walkUpdatePath (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:229:22)
+    at castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\services\query\castUpdate.js:72:18)
+    at model.Query._castUpdate (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3178:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:3028:23)
+    at model.Query.Query.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\query.js:2808:10)
+    at _update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2618:16)
+    at Function.update (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:2525:10)
+    at d:\study\fkzq\GameServer\GameSvr\Module\Common\Common.js:45:43
+    at model.Query.<anonymous> (d:\study\fkzq\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\study\fkzq\GameServer\node_modules\kareem\index.js:273:21
+  message: 'Cast to number failed for value "undefined" at path "online_num"',
+  name: 'CastError',
+  stringValue: '"undefined"',
+  kind: 'number',
+  value: undefined,
+  path: 'online_num',
+  reason: undefined }

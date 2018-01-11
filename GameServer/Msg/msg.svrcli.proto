@@ -163,13 +163,25 @@ message Push_WinBet
 	int32 winCoin = 1;		//赢得钱
 	double coin = 2;			//赢钱之后剩多少钱
 }
-
+//盘口修改推送
+message Push_BetArea
+{
+	enum Type {UNSET = 0; ID = 20011;}
+	//猜胜负平
+	float hostWinTimes = 1;		//主胜倍数
+	float drawTimes = 2;		//平  倍数
+	float guestWinTimes = 3;	//客胜倍数
+	//猜下一队进球
+	float hostNextGoalTimes = 4;	//主队进球倍数
+	float zeroGoalTimes = 5;	//无进球  倍数
+	float guestNextGoalTimes = 6;	//客队进球倍数
+}
 
 ///////////////////////////////////////////////////////////////////////////
 //真实足球
 ///////////////////////////////////////////////////////////////////////////
 //比赛信息
-message RlSchedulInfo
+message RlScheduleInfo
 {
 	int32  sceheduleId = 1;      //赛事id
 	int32  phase = 2;            //期号
@@ -206,7 +218,7 @@ message Ask_RealFootMainInfo
 message Res_RealFootMainInfo
 {
 	enum Type {UNSET = 0; ID = 30001;}
-	repeated RlSchedulInfo schedulInfo =1;     //列表的比赛信息
+	repeated RlScheduleInfo rlScheduleInfo =1;     //列表的比赛信息
 	RlBetConfig betConfig = 2;                  //投注配置
 	int32 maxLeagueId = 3;                     //最大联赛id
 }
@@ -218,23 +230,25 @@ message Ask_RealFootBetRateInfo
 {
 	enum Type {UNSET = 0; ID = 30002;}
 	int32 sceheduleId = 1;                           //赛事id
+	int32 betClass = 2;                              //1 胜平负投注比例 2 让球胜平负投注比例
 }
 
 //真实足球比赛赛事投注比例回复
 message Res_RealFootBetRateInfo
 {
 	enum Type {UNSET = 0; ID = 30003;}
-	string historyInfo = 1;                //历史交锋
-	string lastesInfo = 2;                 //最近战绩
-	string oddsAvg = 3;		               //平均赔率
-	string betRate = 4;         		   //投注比例
+	int32 sceheduleId = 1;                 //赛事id 
+	string historyInfo = 2;                //历史交锋    {"warTotal":,"homename":,"win":,"flat":,"lose":};
+	string lastesInfo = 3;                 //最近战绩	 {"homeWin":,"homeFlat":,"homeLose":,"awayWin":,"awayFlat":,"awayLose":}
+	string oddsAvg = 4;		               //平均赔率
+	string betRate = 5;         		   //投注比例    {"h":,"d":,"a":}
 }
 
 //服务端主动通知客户端---真实足球赛事信息变化推送
-message Push_SchedulInfo
+message Push_ScheduleInfo
 {
 	enum Type {UNSET = 0; ID = 30004;}
-	repeated RlSchedulInfo scheduleInfo = 1;	//赛事信息
+	repeated RlScheduleInfo rlScheduleInfo = 1;	//赛事信息
 }
 
 //投注信息
@@ -272,8 +286,8 @@ message RlBetRecordInfo
 	int32   jingcaiType = 3;      //竞猜类型: 1 胜平负 2让球胜平负  3 混合过关
 	string  betDate = 4;          //投注时间
 	int32   betCoin = 5;          //投注金币
-	int32   distributeCoin= 6;   //猜中获取金币
-	int32   betStatus = 7;        //竞猜状态  1 等待开奖  2未中奖   3 猜中
+	int32   distributeCoin= 6;    //猜中获取金币
+	int32   betStatus = 7;        //竞猜状态  0 等待开奖  1中奖   2不中  
 	string  betContents = 8;      //投注内容
 }
 
@@ -327,10 +341,17 @@ message RlScheduleId
 }
 
 //服务端主动通知客户端--停止下注的比赛
-message Push_StopBetScheduls
+message Push_StopBetSchedules
 {
 	enum Type {UNSET = 0; ID = 30011;} 
-	repeated RlScheduleId scheduleId = 1;
+	repeated RlScheduleId rlScheduleId = 1;
+}
+
+//服务端主动通知客户端---新增赛事
+message Push_AddScheduleInfo
+{
+	enum Type {UNSET = 0; ID = 30012;}
+	repeated RlScheduleInfo rlscheduleInfo = 1;	//赛事信息
 }
 
 

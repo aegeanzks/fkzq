@@ -44,6 +44,8 @@ function DataCenter(){
                     mod.logic.refreshBetItem(source, msg.data);
                 }else if(msg.func == 'updateMoney'){
                     mod.logic.updateMoney(source, msg.data);
+                }else if(msg.func == 'updateArea'){
+                    mod.logic.updateArea(source, msg.data);
                 }
             }break;
             case 'RealFootball':
@@ -51,14 +53,14 @@ function DataCenter(){
                 var mod = OBJ('RealFootballModule');
                 if(msg.func == 'resCurData'){
                     mod.logic.resCurData(source, msg.data);
-                }else if(msg.func == 'refreshScheduleList'){
-                    mod.logic.refreshScheduleList(source, msg.data);
                 }else if(msg.func == 'refreshStopBetSchedule'){
                     mod.logic.refreshSchedule(source, msg.data);
                 }else if(msg.func == 'refreshSchedule'){
                     mod.logic.refreshSchedule(source,msg.data);
                 }else if(msg.func == 'refreshBetItem'){
                     mod.logic.refreshBetItem(source, msg.data);
+                }else if(msg.func == 'refreshScheduleState'){
+                    mod.logic.refreshScheduleState(source, msg.data);
                 }
             }break;
         }

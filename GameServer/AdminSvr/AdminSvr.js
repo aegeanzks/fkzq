@@ -24,6 +24,8 @@ var RlRecordsController = require('./Controller/RealFootball/RecordsController')
 var GameConfigController = require('./Controller/SystemManage/GameConfigController');
 var RlVirtualRaceController = require('./Controller/VirtualFootball/VirtualRaceController');
 var RlVirtualRecordsController = require('./Controller/VirtualFootball/VirtualRecordsController');
+var RlAnnounceController = require('./Controller/SystemManage/AnnounceController');
+var RlAccountController = require('./Controller/Accounts/AccountController');
 function AdminSvr(){
 }
 
@@ -45,9 +47,10 @@ AdminSvr.regsterFun = function(){
     new RlRaceController();
     new RlRecordsController();
     new GameConfigController();
-
     new RlVirtualRaceController();
     new RlVirtualRecordsController();
+    new RlAnnounceController();
+    new RlAccountController();
 };
 
 

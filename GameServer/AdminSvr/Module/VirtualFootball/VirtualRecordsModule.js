@@ -1,6 +1,6 @@
 module.exports =VirtualRecordsModule;
 
-var LogVirtualBetSchema = require('../../../db_structure').LogVirtualBet;
+var Schema = require('../../../db_structure');
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var config = require('../../../config').adminSvrConfig();
 var Func = require('../../../Utils/Functions');
@@ -9,50 +9,10 @@ var Func = require('../../../Utils/Functions');
     Real比赛记录管理module
  */
 function VirtualRecordsModule(){
-    // 'schema':{
-    //     user_id: {           //用户ID
-    //         type: Number,
-    //         index: true,
-    //     },
-    //     user_name: {         //用户账号
-    //         type: String,
-    //         index: true,
-    //     },
-    //     bet_date: {          //下注时间
-    //         type: Date,
-    //         default: Date.now,
-    //         index: true,
-    //     },
-    //     bet_coin: Number,          //下注金额
-    //     bet_times: Number,			//下注时的赔率
-    //     bet_distribute_coin: Number,		//将配发的金额（先计算在这边，不显示给后台）
-    //     bet_area: Number,			//下注区域
-    //     distribute_coin: Number,   //派发金额
-    //     before_bet_coin: Number,    //下注前金额
-    //     status: {           //状态 0未开奖 1不中 2中
-    //         type: Number,
-    //         index: true,     
-    //     },
-    //     balance_schedule_id: {    //结算场次，如果是单场下注，则这个值就是这场比赛的id，如果是二串一或三串一，则这个值就是最后一场的id
-    //         type: String,
-    //         index: true,
-    //     },
-    //     server_id: String,
-    //     out_trade_no: {
-    //         type: String,
-    //         unique: true,
-    //     },
-    //     trade_no: String,
-    //     settlement_out_trade_no:String,
-    //     settlement_trade_no:String,
-    //     host_team_id:Number,
-    //     guest_team_id:Number
-  
-
     var limit = config.limit;
-    var logVirtualBetStatement = OBJ('DbMgr').getStatement(LogVirtualBetSchema);
+    var logVirtualBetStatement = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
     var findSelectList = {"user_name":1,"bet_date":1,"bet_coin":1,"bet_times":1,"bet_distribute_coin":1,
-                          "bet_area":1,"distribute_coin":1,"before_bet_coin":1,"status":1};
+                          "bet_area":1,"distribute_coin":1,"before_bet_coin":1,"status":1,"balance_schedule_id":1};
     //end 定义变量
 
     /*
@@ -70,7 +30,6 @@ function VirtualRecordsModule(){
 
         for(var i = 0;i<len;i++){
             var listOne ={};
-           
             listOne['user_name'] = docs[i]['user_name'];
             listOne['bet_date'] = docs[i]['bet_date'].toLocaleString();
             listOne['bet_coin'] = docs[i]['bet_coin'];
@@ -80,6 +39,7 @@ function VirtualRecordsModule(){
             listOne['distribute_coin'] = docs[i]['distribute_coin'];
             listOne['before_bet_coin'] = docs[i]['before_bet_coin'];
             listOne['status'] = docs[i]['status'];
+            listOne['balance_schedule_id'] = docs[i]['balance_schedule_id'];
             list.push(listOne);
         }
         data.push(list);
@@ -92,10 +52,10 @@ function VirtualRecordsModule(){
      */
     function findList(filter,page,res,funcname){
         try{
-            logRealBetStatement.count(filter,function(error,count){
+            logVirtualBetStatement.count(filter,function(error,count){
                 if(!error){
                     if(count >0){
-                        scheduleStatement.find(filter,findSelectList,function(finderr,docs){
+                        logVirtualBetStatement.find(filter,findSelectList,function(finderr,docs){
                             if(!finderr){
                                 packages(docs,count,res);     
                             }else{
@@ -143,8 +103,19 @@ function VirtualRecordsModule(){
         @id     赛事id
      */
     this.vrecordListByName = function(user_name,page,res){
-        var filter = {"user_name":user_name};
+        eval('var tmp = /'+user_name+'/');
+        var filter = {"user_name":tmp};
         var funcname = 'vrecordListByName';
+        findList(filter,page,res,funcname);
+    }
+          /*
+        @func   根据期号记录
+        @id     赛事id
+     */
+    this.vrecordListBydatanum = function(balance_schedule_id,page,res){
+        eval('var tmp = /'+balance_schedule_id+'/');
+        var filter = {"balance_schedule_id":tmp};
+        var funcname = 'vrecordListBydatanum';
         findList(filter,page,res,funcname);
     }
 
@@ -181,7 +152,66 @@ function VirtualRecordsModule(){
         var begin = new Date(beginStamp);
         var end = new Date(endStamp+24*60*60*1000);
         var filter={"status":status,"bet_date":{"$gte":begin,"$lt":end}};
-        var funcname = 'vrecordListBytime';
+        var funcname = 'vrecordListBystatusandtime';
+        findList(filter,page,res,funcname); 
+    }
+
+      /*
+        @func   根据账号时间记录
+        @id     赛事id
+     */
+    this.vrecordListBynameandtime= function(user_name,begin_time,end_time,page,res){
+        eval('var tmp = /'+user_name+'/');
+        var beginStamp = Func.getStamp(begin_time);
+        var endStamp = Func.getStamp(end_time);
+        var begin = new Date(beginStamp);
+        var end = new Date(endStamp+24*60*60*1000);
+        var filter={"user_name":tmp,"bet_date":{"$gte":begin,"$lt":end}};
+        var funcname = 'vrecordListByusernameandtime';
+        findList(filter,page,res,funcname); 
+    }
+      /*
+        @func   根据期号时间记录
+        @id     赛事id
+     */
+    this.vrecordListBydatenumandtime= function(balance_schedule_id,begin_time,end_time,page,res){
+        var beginStamp = Func.getStamp(begin_time);
+        var endStamp = Func.getStamp(end_time);
+        var begin = new Date(beginStamp);
+        var end = new Date(endStamp+24*60*60*1000);
+        var filter={"balance_schedule_id":balance_schedule_id,"bet_date":{"$gte":begin,"$lt":end}};
+        var funcname = 'vrecordListByusernameandtime';
+        findList(filter,page,res,funcname); 
+    }
+    
+          /*
+        @func   根据期号状态时间记录
+        @id     赛事id
+     */
+    this.vrecordListBydatenumtimestaus= function(balance_schedule_id,status,begin_time,end_time,page,res){
+        eval('var tmp = /'+balance_schedule_id+'/');
+        var beginStamp = Func.getStamp(begin_time);
+        var endStamp = Func.getStamp(end_time);
+        var begin = new Date(beginStamp);
+        var end = new Date(endStamp+24*60*60*1000);
+        var filter={"balance_schedule_id":tmp,"status":status,"bet_date":{"$gte":begin,"$lt":end}};
+        var funcname = 'vrecordListByusertimestaus';
+        findList(filter,page,res,funcname); 
+    }
+
+        
+          /*
+        @func   根据账号状态时间记录
+        @id     赛事id
+     */
+    this.vrecordListByusertimestaus= function(user_name,status,begin_time,end_time,page,res){
+        eval('var tmp = /'+user_name+'/');
+        var beginStamp = Func.getStamp(begin_time);
+        var endStamp = Func.getStamp(end_time);
+        var begin = new Date(beginStamp);
+        var end = new Date(endStamp+24*60*60*1000);
+        var filter={"user_name":tmp,"status":status,"bet_date":{"$gte":begin,"$lt":end}};
+        var funcname = 'vrecordListByusertimestaus';
         findList(filter,page,res,funcname); 
     }
 }

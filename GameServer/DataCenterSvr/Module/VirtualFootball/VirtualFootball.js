@@ -107,10 +107,7 @@ function VirtualFootball(){
                         });
 
                         //赢钱推送
-                        OBJ('GameSvrAgentModule').broadcastGameServer({
-                            module:'VirtualFootball',
-                            func:'updateMoney'
-                        });
+                        OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'updateMoney');
                     });
                 });
             }  
@@ -121,19 +118,6 @@ function VirtualFootball(){
 
     function timeAgentUpdate(timestamp){
         if(timeAgent.updateCurEvent(timestamp)){
-            console.log('当前期号：'+timeAgent.no+' 当前事件：'+timeAgent.matchState+' 该事件剩余时间：'+timeAgent.matchStateLastTime/1000);
-            OBJ('GameSvrAgentModule').broadcastGameServer({
-                module:'VirtualFootball',
-                func:'refreshMatchState',
-                data:{
-                    no:timeAgent.no,
-                    matchState:timeAgent.matchState,
-                    stateEndTime:timeAgent.matchStateEndTime,
-                    hostWinNum:matchAgent.hostWinNum,
-                    drawNum:matchAgent.drawNum,
-                    guestWinNum:matchAgent.guestWinNum
-                }
-            });
             if(timeAgent.matchState == 0) {
                 var matchBeginEndTime = timeAgent.getCurMatchStartEndTime();
                 matchAgent = new VirtualFootballMatch(conf, matchBeginEndTime[0], matchBeginEndTime[1]);
@@ -152,12 +136,21 @@ function VirtualFootball(){
             else if(timeAgent.matchState == 2) {
                 matchAgent.stopMatch();
                 //如果没有游戏服连着，就直接计算结果
-                if(OBJ('GameSvrAgentModule').getServerCount() == 0){
+                if(OBJ('RpcModule').getServerCount() == 0){
                     self.canSettlement(null, null);
                 }
                 endMatchUpdateTimer = new SingleTimer();
                 endMatchUpdateTimer.startup(500);
             }
+            console.log('当前期号：'+timeAgent.no+' 当前事件：'+timeAgent.matchState+' 该事件剩余时间：'+timeAgent.matchStateLastTime/1000);
+            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchState', {
+                no:timeAgent.no,
+                matchState:timeAgent.matchState,
+                stateEndTime:timeAgent.matchStateEndTime,
+                hostWinNum:matchAgent.hostWinNum,
+                drawNum:matchAgent.drawNum,
+                guestWinNum:matchAgent.guestWinNum
+            });
         }
     }
 
@@ -166,48 +159,55 @@ function VirtualFootball(){
             if(waitNextGoalSettlement){
                 //等待时不进行更新操作
             }
-            else if(matchAgent.update(timestamp)){
-                var strMatchEvent = '';
-                switch(matchAgent.curEvent){
-                    case 0: strMatchEvent = '无事件'; break;
-                    case 1: strMatchEvent = '主队控球'; break;
-                    case 2: strMatchEvent = '主队进攻'; break;
-                    case 3: strMatchEvent = '主队危险进攻'; break;
-                    case 4: strMatchEvent = '客队控球'; break;
-                    case 5: strMatchEvent = '客队进攻'; break;
-                    case 6: strMatchEvent = '客队危险进攻'; break;
-                    case 7: strMatchEvent = '主队进球'; break;
-                    case 8: strMatchEvent = '客队进球'; break;
-                }
-                console.log('战场事件2：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
-                //OBJ('GameSvrAgentModule').broadcastGameServer({type:2,value:matchAgent.getCurEvent()});
-                OBJ('GameSvrAgentModule').broadcastGameServer({
-                    module:'VirtualFootball',
-                    func:'refreshMatchEvent',
-                    data:{
-                        event:matchAgent==null?0:matchAgent.curEvent,
-                        hostTeamId:matchAgent==null?0:matchAgent.hostTeam.ID,
-                        hostTeamGoal:matchAgent==null?0:matchAgent.hostTeamGoal,
-                        guestTeamId:matchAgent==null?0:matchAgent.guestTeam.ID,
-                        guestTeamGoal:matchAgent==null?0:matchAgent.guestTeamGoal,
-                        hostWinTimes:matchAgent==null?0:matchAgent.hostWinTimes,
-                        hostWinSupport:matchAgent==null?0:matchAgent.hostWinSupport,
-                        drawTimes:matchAgent==null?0:matchAgent.drawTimes,
-                        drawSupport:matchAgent==null?0:matchAgent.drawSupport,
-                        guestWinTimes:matchAgent==null?0:matchAgent.guestWinTimes,
-                        guestWinSupport:matchAgent==null?0:matchAgent.guestWinSupport,
-                        hostNextGoalTimes:matchAgent==null?0:matchAgent.hostNextGoalTimes,
-                        hostNextGoalSupport:matchAgent==null?0:matchAgent.hostNextGoalSupport,
-                        zeroGoalTimes:matchAgent==null?0:matchAgent.zeroGoalTimes,
-                        zeroGoalSupport:matchAgent==null?0:matchAgent.zeroGoalSupport,
-                        guestNextGoalTimes:matchAgent==null?0:matchAgent.guestNextGoalTimes,
-                        guestNextGoalSupport:matchAgent==null?0:matchAgent.guestNextGoalSupport,
+            else{
+                if(matchAgent.update(timestamp)){
+                    var strMatchEvent = '';
+                    switch(matchAgent.curEvent){
+                        case 0: strMatchEvent = '无事件'; break;
+                        case 1: strMatchEvent = '主队控球'; break;
+                        case 2: strMatchEvent = '主队进攻'; break;
+                        case 3: strMatchEvent = '主队危险进攻'; break;
+                        case 4: strMatchEvent = '客队控球'; break;
+                        case 5: strMatchEvent = '客队进攻'; break;
+                        case 6: strMatchEvent = '客队危险进攻'; break;
+                        case 7: strMatchEvent = '主队进球'; break;
+                        case 8: strMatchEvent = '客队进球'; break;
                     }
-                });
-
-                //如果是进球，则结算下一球竞猜的投注
-                if(matchAgent.curEvent == 7 || matchAgent.curEvent == 8){
-                    SettlementNextGoal();
+                    console.log('战场事件2：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
+                    OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchEvent', {
+                        event:matchAgent.curEvent,
+                        hostTeamId:matchAgent.hostTeam.ID,
+                        hostTeamGoal:matchAgent.hostTeamGoal,
+                        guestTeamId:matchAgent.guestTeam.ID,
+                        guestTeamGoal:matchAgent.guestTeamGoal,
+                        hostWinTimes:matchAgent.hostWinTimes,
+                        hostWinSupport:matchAgent.hostWinSupport,
+                        drawTimes:matchAgent.drawTimes,
+                        drawSupport:matchAgent.drawSupport,
+                        guestWinTimes:matchAgent.guestWinTimes,
+                        guestWinSupport:matchAgent.guestWinSupport,
+                        hostNextGoalTimes:matchAgent.hostNextGoalTimes,
+                        hostNextGoalSupport:matchAgent.hostNextGoalSupport,
+                        zeroGoalTimes:matchAgent.zeroGoalTimes,
+                        zeroGoalSupport:matchAgent.zeroGoalSupport,
+                        guestNextGoalTimes:matchAgent.guestNextGoalTimes,
+                        guestNextGoalSupport:matchAgent.guestNextGoalSupport,
+                    });
+                    //如果是进球，则结算下一球竞猜的投注
+                    if(matchAgent.curEvent == 7 || matchAgent.curEvent == 8){
+                        SettlementNextGoal();
+                    }
+                }
+                if(matchAgent.oddsRun(timestamp)){
+                    //下一球赢钱推送
+                    OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'updateArea',{
+                        hostWinTimes : matchAgent.hostWinTimes,
+                        drawTimes : matchAgent.drawTimes,
+                        guestWinTimes : matchAgent.guestWinTimes,
+                        hostNextGoalTimes : matchAgent.hostNextGoalTimes,
+                        zeroGoalTimes : matchAgent.zeroGoalTimes,
+                        guestNextGoalTimes : matchAgent.guestNextGoalTimes,
+                    });
                 }
             }
         }
@@ -216,64 +216,52 @@ function VirtualFootball(){
     function betItemUpdate(timestamp){
         if(null != betItemUpdateTimer && betItemUpdateTimer.toNextTime()){
             //发送投注项数据
-            OBJ('GameSvrAgentModule').broadcastGameServer({
-                module:'VirtualFootball',
-                func:'refreshBetItem',
-                data:{
-                    betItem1:betItem1,
-                    betItem2:betItem2,
-                    betItem3:betItem3,
-                }
-            });
-        }
-    }
-
-    this.getCurData = function(source, data){
-        OBJ('GameSvrAgentModule').send(source, {
-            module:'VirtualFootball',
-            func:'resCurData',
-            data:{
-                no:timeAgent.no,
-                matchState:timeAgent.matchState,
-                stateEndTime:timeAgent.matchStateEndTime,
-                event:matchAgent==null?0:matchAgent.curEvent,
-                hostTeamId:matchAgent==null?0:matchAgent.hostTeam.ID,
-                hostTeamGoal:matchAgent==null?0:matchAgent.hostTeamGoal,
-                guestTeamId:matchAgent==null?0:matchAgent.guestTeam.ID,
-                guestTeamGoal:matchAgent==null?0:matchAgent.guestTeamGoal,
-                hostWinTimes:matchAgent==null?0:matchAgent.hostWinTimes,
-                hostWinSupport:matchAgent==null?0:matchAgent.hostWinSupport,
-                drawTimes:matchAgent==null?0:matchAgent.drawTimes,
-                drawSupport:matchAgent==null?0:matchAgent.drawSupport,
-                guestWinTimes:matchAgent==null?0:matchAgent.guestWinTimes,
-                guestWinSupport:matchAgent==null?0:matchAgent.guestWinSupport,
-                hostNextGoalTimes:matchAgent==null?0:matchAgent.hostNextGoalTimes,
-                hostNextGoalSupport:matchAgent==null?0:matchAgent.hostNextGoalSupport,
-                zeroGoalTimes:matchAgent==null?0:matchAgent.zeroGoalTimes,
-                zeroGoalSupport:matchAgent==null?0:matchAgent.zeroGoalSupport,
-                guestNextGoalTimes:matchAgent==null?0:matchAgent.guestNextGoalTimes,
-                guestNextGoalSupport:matchAgent==null?0:matchAgent.guestNextGoalSupport,
-                hostWinNum:matchAgent==null?0:matchAgent.hostWinNum,
-                drawNum:matchAgent==null?0:matchAgent.drawNum,
-                guestWinNum:matchAgent==null?0:matchAgent.guestWinNum
-            }
-        });
-        //发送投注项数据
-        OBJ('GameSvrAgentModule').send(source, {
-            module:'VirtualFootball',
-            func:'refreshBetItem',
-            data:{
+            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshBetItem', {
                 betItem1:betItem1,
                 betItem2:betItem2,
                 betItem3:betItem3,
-            }
+            });
+        }
+    }
+    OBJ('RpcModule').registerInitFun(this.getCurData);
+    this.getCurData = function(source, data){
+        OBJ('RpcModule').send(source, 'VirtualFootball', 'resCurData', {
+            no:timeAgent.no,
+            matchState:timeAgent.matchState,
+            stateEndTime:timeAgent.matchStateEndTime,
+            event:matchAgent==null?0:matchAgent.curEvent,
+            hostTeamId:matchAgent==null?0:matchAgent.hostTeam.ID,
+            hostTeamGoal:matchAgent==null?0:matchAgent.hostTeamGoal,
+            guestTeamId:matchAgent==null?0:matchAgent.guestTeam.ID,
+            guestTeamGoal:matchAgent==null?0:matchAgent.guestTeamGoal,
+            hostWinTimes:matchAgent==null?0:matchAgent.hostWinTimes,
+            hostWinSupport:matchAgent==null?0:matchAgent.hostWinSupport,
+            drawTimes:matchAgent==null?0:matchAgent.drawTimes,
+            drawSupport:matchAgent==null?0:matchAgent.drawSupport,
+            guestWinTimes:matchAgent==null?0:matchAgent.guestWinTimes,
+            guestWinSupport:matchAgent==null?0:matchAgent.guestWinSupport,
+            hostNextGoalTimes:matchAgent==null?0:matchAgent.hostNextGoalTimes,
+            hostNextGoalSupport:matchAgent==null?0:matchAgent.hostNextGoalSupport,
+            zeroGoalTimes:matchAgent==null?0:matchAgent.zeroGoalTimes,
+            zeroGoalSupport:matchAgent==null?0:matchAgent.zeroGoalSupport,
+            guestNextGoalTimes:matchAgent==null?0:matchAgent.guestNextGoalTimes,
+            guestNextGoalSupport:matchAgent==null?0:matchAgent.guestNextGoalSupport,
+            hostWinNum:matchAgent==null?0:matchAgent.hostWinNum,
+            drawNum:matchAgent==null?0:matchAgent.drawNum,
+            guestWinNum:matchAgent==null?0:matchAgent.guestWinNum
+        });
+        //发送投注项数据
+        OBJ('RpcModule').send(source, 'VirtualFootball', 'refreshBetItem', {
+            betItem1:betItem1,
+            betItem2:betItem2,
+            betItem3:betItem3,
         });
     };
 
     var settlementCount = 0;    //结算回调
     this.canSettlement = function(source, data){
         settlementCount++;
-        if(settlementCount >= OBJ('GameSvrAgentModule').getServerCount()){
+        if(settlementCount >= OBJ('RpcModule').getServerCount()){
             //开始结算
             SettlementWinLose();
         }
@@ -306,13 +294,13 @@ function VirtualFootball(){
                         bet_distribute_coin:item.bet_distribute_coin,
                         settlementType:1
                     });
-                    OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqAddMoney', data:{
+                    OBJ('RpcModule').send2Wallet('WalletSvrAgent', 'reqAddMoney', {
                         userid:item.user_id, 
                         outType:2, 
                         outTypeDescription:'足球竞猜', 
                         uuid:uid, 
-                        addCoin:item.bet_distribute_coin.toString(), 
-                    }});
+                        addCoin:item.bet_distribute_coin.toString(),
+                    });
                 } else {
                     //生成投注记录
                     var updateValue = {
@@ -326,9 +314,6 @@ function VirtualFootball(){
                         }
                     });
                 }
-                ////修改库存
-                //if(matchAgent)
-                //matchAgent.addCurStock(item.bet_coin);
             }
         });
     }
@@ -358,13 +343,13 @@ function VirtualFootball(){
                         bet_distribute_coin:item.bet_distribute_coin,
                         settlementType:2
                     });
-                    OBJ('WalletAgentModule').send({module:'WalletSvrAgent', func:'reqAddMoney', data:{
+                    OBJ('RpcModule').send2Wallet('WalletSvrAgent', 'reqAddMoney', {
                         userid:item.user_id, 
                         outType:2, 
                         outTypeDescription:'足球竞猜', 
                         uuid:uid, 
-                        addCoin:item.bet_distribute_coin.toString(), 
-                    }});
+                        addCoin:item.bet_distribute_coin.toString(),
+                    });
                 } else {
                     //生成投注记录
                     var updateValue = {
@@ -378,9 +363,6 @@ function VirtualFootball(){
                         }
                     });
                 }
-                ////修改库存
-                //if(matchAgent)
-                //matchAgent.addCurStock(item.bet_coin);
             }
         });
     }
@@ -426,10 +408,7 @@ function VirtualFootball(){
                         else{
                             waitNextGoalSettlement = false;
                             //下一球赢钱推送
-                            OBJ('GameSvrAgentModule').broadcastGameServer({
-                                module:'VirtualFootball',
-                                func:'updateMoney'
-                            });
+                            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'updateMoney');
                         }
                     });
                 }

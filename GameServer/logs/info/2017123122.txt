@@ -1,0 +1,1 @@
+[2017-12-31 22:10:04.280] [INFO] logInfo - errTypeError: res.setGuessingrecords is not a function

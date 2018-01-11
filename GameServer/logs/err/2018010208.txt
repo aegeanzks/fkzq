@@ -1,0 +1,20 @@
+[2018-01-02 08:49:04.305] [ERROR] logErr - TypeError: Cannot read property 'createChannel' of undefined
+    at D:\myGit\fkzq\GameServer\Utils\Manager\RpcMgr.js:31:17
+    at D:\myGit\fkzq\GameServer\node_modules\amqplib\callback_api.js:16:10
+    at Socket.<anonymous> (D:\myGit\fkzq\GameServer\node_modules\amqplib\lib\connect.js:187:18)
+    at Socket.g (events.js:292:16)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at emitErrorNT (net.js:1277:8)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+[2018-01-02 08:49:04.311] [ERROR] logErr - TypeError: Cannot read property 'createChannel' of undefined
+    at D:\myGit\fkzq\GameServer\Utils\Manager\RpcMgr.js:31:17
+    at D:\myGit\fkzq\GameServer\node_modules\amqplib\callback_api.js:16:10
+    at Socket.<anonymous> (D:\myGit\fkzq\GameServer\node_modules\amqplib\lib\connect.js:187:18)
+    at Socket.g (events.js:292:16)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at emitErrorNT (net.js:1277:8)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)

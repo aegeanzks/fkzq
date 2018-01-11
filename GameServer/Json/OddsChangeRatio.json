@@ -7,38 +7,38 @@
   },
   "1": {
     "goal_dif": 1,
-    "win_ratio": 0.6,
-    "draw_ratio": 1.5,
-    "lose_ratio": 1.5
+    "win_ratio": 0.7,
+    "draw_ratio": 4,
+    "lose_ratio": 5
   },
   "2": {
     "goal_dif": 2,
-    "win_ratio": 1,
-    "draw_ratio": 1,
-    "lose_ratio": 1
+    "win_ratio": 0.55,
+    "draw_ratio": 4,
+    "lose_ratio": 5
   },
   "3": {
     "goal_dif": 3,
-    "win_ratio": 1,
-    "draw_ratio": 1,
-    "lose_ratio": 1
+    "win_ratio": 0.45,
+    "draw_ratio": 4,
+    "lose_ratio": 5
   },
   "-1": {
     "goal_dif": -1,
-    "win_ratio": 1,
-    "draw_ratio": 1,
-    "lose_ratio": 1
+    "win_ratio": 5,
+    "draw_ratio": 4,
+    "lose_ratio": 0.6
   },
   "-2": {
     "goal_dif": -2,
-    "win_ratio": 1,
-    "draw_ratio": 1,
-    "lose_ratio": 1
+    "win_ratio": 5,
+    "draw_ratio": 4,
+    "lose_ratio": 0.45
   },
   "-3": {
     "goal_dif": -3,
-    "win_ratio": 1,
-    "draw_ratio": 1,
-    "lose_ratio": 1
+    "win_ratio": 5,
+    "draw_ratio": 4,
+    "lose_ratio": 0.35
   }
 }

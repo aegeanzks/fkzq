@@ -35,6 +35,10 @@ exports.Schedule = function(){
             first_half:String,           //半场比分
             final_score:String,          //全场比分
             status:Number,               //状态
+            lottery_status:{             //开奖状态  0未开始  1 等待开奖  2 已开奖
+                type:Number,
+                default:0,
+            },      
             fx_id:Number,
             priority:String,
             ext:String,
@@ -54,7 +58,14 @@ exports.Schedule = function(){
                 type:Number,
                 default:0,              //0  不录入  1录入    
             },
-            bet_rate:Array,              //投注比例
+            bet_num:{                  //胜平负  投注人数
+               type: Array,
+               default:{"h":0,"d":0,"a":0},    
+            },            
+            bet_num1:{                //让球胜平负 投注人数
+                type:Array,
+                default:{"h":0,"d":0,"a":0},
+            },             
             //欧赔
             odds_jingcai:Array,           //竞彩官方        
             odds_avg:Array,               //平均欧赔
@@ -138,15 +149,15 @@ exports.LogRealBet = function(){
                 default: Date.now,
                 index: true,
             },
-            bet_scheduleid:Array,   //投注赛事id列表
-            bet_num: Number,         //注数
-            bet_type: Number,       //投注类型   
-            jingcai_type:Number,     //竞猜类型  1胜平负  2让球胜平负 3混合过关
-            bet_coin: Number,        //下注金额
-            distribute_coin: Number, //派发金额
+            bet_scheduleid:Array,     //投注赛事id列表
+            bet_num: Number,          //注数
+            bet_type: Number,         //投注类型   1 场 2 2串1 3 3串1 4 4串1
+            jingcai_type:Number,      //竞猜类型  1胜平负  2让球胜平负 3混合过关
+            bet_coin: Number,         //下注金额
+            distribute_coin: Number,  //派发金额
             before_bet_coin: Number,  //下注前金额
-            status: Number,         //状态 0未开奖 1不中 2中 3结算失败
-            bet_plan: Array,         //投注方案,格式为{'schedule_id':,'match_date':,'team_name':,'bet_info':,'odds':,'schedule_result':} 
+            status: Number,           //状态 0未开奖 1中 2不中 3结算失败
+            bet_plan: Array,          //投注方案,格式为{'schedule_id':,'match_date':,'team_name':,'odds':,"betClass":,"betArea":,"handicap":,'schedule_result':,'status':} 
 
         }
     };
@@ -315,3 +326,26 @@ exports.ConfBetItem = function(){
         }
     };
 };
+
+//创建公告
+exports.Announcement=function(){
+    return {
+        'name':'conf_announcements',
+        'schema':{
+            a_id: {                   //公告id
+                type:Number,
+                unique: true,
+                index: true,
+            },
+            type:Number,      //0-系统公告 1--弹窗公告
+            createtime:{          //创建时间
+                type: Date,
+                default: Date.now,
+                index: true,
+            },
+            starttime:Date,
+            endtime:Date,
+            content:String
+        }
+     } 
+    }
