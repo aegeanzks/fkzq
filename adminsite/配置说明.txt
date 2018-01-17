@@ -1,0 +1,1 @@
+将.env.now复制一份，去掉.now后缀，修改.env文件中的数据库相关配置。修改app/Common/function.php中“获得提交的主站地址”一项地址为游戏服的adminsvr的地址

@@ -27,6 +27,8 @@ function Rpc(){
             for(var func of listInitFunc){
                 func(msg.source);
             }
+        }else{
+            gamePingMap.set(msg.source, Date.now()+5000);
         }
         
     };

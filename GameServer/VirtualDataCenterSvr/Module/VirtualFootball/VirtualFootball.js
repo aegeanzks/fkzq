@@ -99,6 +99,23 @@ function VirtualFootball(){
                     case 4: strMatchEvent = '客队控球'; break;
                 }
                 console.log('战场事件1：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
+                OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchEvent', {
+                    event:matchAgent.curEvent,
+                    hostTeamGoal:matchAgent.hostTeamGoal,
+                    guestTeamGoal:matchAgent.guestTeamGoal,
+                    hostWinTimes:matchAgent.hostWinTimes,
+                    hostWinSupport:matchAgent.hostWinSupport,
+                    drawTimes:matchAgent.drawTimes,
+                    drawSupport:matchAgent.drawSupport,
+                    guestWinTimes:matchAgent.guestWinTimes,
+                    guestWinSupport:matchAgent.guestWinSupport,
+                    hostNextGoalTimes:matchAgent.hostNextGoalTimes,
+                    hostNextGoalSupport:matchAgent.hostNextGoalSupport,
+                    zeroGoalTimes:matchAgent.zeroGoalTimes,
+                    zeroGoalSupport:matchAgent.zeroGoalSupport,
+                    guestNextGoalTimes:matchAgent.guestNextGoalTimes,
+                    guestNextGoalSupport:matchAgent.guestNextGoalSupport,
+                });
             }
             else if(timeAgent.matchState == 2) {
                 matchAgent.stopMatch();

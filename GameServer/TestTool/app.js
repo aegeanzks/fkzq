@@ -65,6 +65,11 @@ function start() {
 
         socket.on(pbLogin.Push_GoalAndBetArea.Type.ID, function(msg, length){
             console.log('Push_GoalAndBetArea');
+			msg.length = length;
+            var res = pbLogin.Push_GoalAndBetArea.deserializeBinary(new Uint8Array(msg));
+			var goalAndBetArea = res.getGoalandbetarea();
+			var event = goalAndBetArea.getEvent();
+			console.error('event:'+event);
         });
 
         socket.on(pbLogin.Res_GuessingRecord.Type.ID, function(msg, length){

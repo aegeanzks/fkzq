@@ -109,6 +109,24 @@ exports.Schedule = function(){
     };
 };
 
+//真实数据赛事
+exports.RealInfo = function(){
+    return{
+        'name':'realInfo',
+        'schema':{
+            status_name:{
+                type:String,
+                index:true,
+                unique: true,
+            },
+            status_value:{
+                type:Number,
+                default:0
+            }
+        }
+    }
+}
+
 
 //用户
 exports.User = function(){              //用户表

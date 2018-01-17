@@ -24,6 +24,7 @@ function DataPull() {
     //数据库statement
     var scheduleStatement = OBJ('DbMgr').getStatement(Schema.Schedule());
     var logRealBetStatement = OBJ('DbMgr').getStatement(Schema.LogRealBet());
+    var realInfoStatement = OBJ('DbMgr').getStatement(Schema.RealInfo());
     //end 数据库statement
 
     var mapDeleteSchedule = new Map();         //开始赛事
@@ -38,7 +39,8 @@ function DataPull() {
 
     var startSvrflag = 1;                      //是否重启服务标识
     var incrementalFlag = 0;                   //增量推送的标识  
-    var endPhaseFlag = 0;                      //本期号所有赛事比赛结束 
+    var endPhaseFlag = 0;                      //本期号所有赛事比赛结束
+    var hasHistoryFlag = 0;                    // RealInfo是否有maxPhase字段
 
     //mongodb find 输出字段列表
     var scehduleSelect = {
@@ -62,6 +64,8 @@ function DataPull() {
         //获取历史数据完成
         if (0 == switchOn && (phase - endTime > 0)) {
             console.log('-----Pull history of data is finished!-----');
+            switchOn = 1;
+            console.log('-----Start pull online of data .....------');
         }
         else {
             console.log('期号:' + phase);
@@ -69,21 +73,85 @@ function DataPull() {
         }
     }
 
+    /*
+        @func 判断是否拉取历史数据
+     */
+    function getMaxPhase(){
+        try{ 
+            var filter = {"status_name":"maxPhase"};
+            var select = {"_id": 0, "status_value": 1};
+            realInfoStatement.findOne(filter,select,function(error,docs){
+                if(error){
+                    OBJ('LogMgr').error(error);
+                }
+                if(null == docs){
+                    hasHistoryFlag = 0;
+                }else{
+                    hasHistoryFlag = 1;
+                    var curTimeStamp = Func.getStamp(docs['status_value'].toString());
+                    var before1day = curTimeStamp - 24 * 60 *60 *1000;
+                    var before1Phase = parseInt(Func.getDate(before1day));
+                    if(before1Phase > parseInt(config['beginTime'])){
+                        phaseday = before1day;
+                        var today = parseInt(Func.getDate(Date.now()));
+                        if(before1Phase ==  today){
+                            console.log('-----Start Pull online of data .....------');
+                            switchOn = 1;
+                        }else{
+                            console.log('-----Start pull history of data .....------');
+                        }
+                    }
+                }
+            });
+        }catch(err){
+            OBJ('LogMgr').error(err);
+        }
+    }
 
+    /*
+        @func 更新maxPhase值
+    */
+    function setMaxPhase(phase){
+        try{
+            if(hasHistoryFlag){
+                var updateValue = {
+                    'status_value':phase
+                };
+                realInfoStatement.update({ "status_name":"maxPhase"}, updateValue, function(error){
+                    if(error){
+                            OBJ('LogMgr').error(err);
+                    }
+                });
+            }else{
+                hasHistoryFlag = 1;
+                var docRealInfo = OBJ('DbMgr').getModel(Schema.RealInfo());
+                docRealInfo.status_name = "maxPhase";
+                docRealInfo.status_value = phase;
+                docRealInfo.save(function(error){
+                    if(error){
+                        OBJ('LogMgr').error(error);
+                    }
+                });
+            }
+        }catch(err){
+            OBJ('LogMgr').error(err);
+        }
+    }
 
 
     /*
         @func 初始化函数
     */
-    function init() {
+    function init(){
         switchOn = (switchOn = parseInt(config['switch'])) ? switchOn : 0;
         beginTime = config['beginTime'];
-        endTime = parseInt(config['endTime']);
+        endTime = parseInt(Func.getDate(Date.now() -24*60*60*1000));
         phaseday = switchOn ? Date.now() : Func.getStamp(beginTime);
         freq = (freq = parseInt(config['pullInterval']) * 1000) ? freq : 6000;
         noDataTotal = (noDataTotal = parseInt(config['noDataTotal'])) ? noDataTotal : 3;
         pageUrl = 'http://api.caipiaokong.com/live/?name=jczq&format=json&uid=889953&token=007a12e40291b9b6d4a6516afcd79f58b059f2fc&phase=';
-
+        getMaxPhase();
+        
     }
 
     /*
@@ -120,59 +188,64 @@ function DataPull() {
             return 0;
         }
         if (html.indexOf('{"id":"') > 0) {
-            var finishNum = 0;                                                                                          //用于判断phaseday是否可以跳出轮询
+            var finishNum = 0;                                                                          //用于判断phaseday是否可以跳出轮询
             var dataArr = JSON.parse(html);
             var len = dataArr.length;
             var nowTime = Date.now();
             for (var i = 0; i < len; i++) {
                 var id = parseInt(dataArr[i]['id']);
                 phaseScheduleIdArr.push(id);
-
-                if (dataArr[i]['status'] == 6 || dataArr[i]['status'] == 7) {                                            //取消比赛 status=6 status =7
-                    if (incrementalFlag){
-                        //取消比赛不能下注了
-                        if (mapDeleteSchedule.get(id) == null) {
-                            mapDeleteSchedule.set(parseInt(dataArr[i]['id']), 0);
-                            deleteScheduleFlag = 1;
+                if(switchOn){                                                                           //在线数据                                                                 
+                    if(dataArr[i]['status'] == 6 || dataArr[i]['status'] == 7) {                        //取消比赛 status=6 status =7
+                        if (incrementalFlag){
+                            //取消比赛不能下注了
+                            if (mapDeleteSchedule.get(id) == null) {
+                                mapDeleteSchedule.set(parseInt(dataArr[i]['id']), 0);
+                                deleteScheduleFlag = 1;
+                            }
+                            //取消的比赛按比赛结束来算,比分0:0
+                            if(mapEndSchedule.get(id) == null){
+                                var final_score = "0:0";
+                                mapEndSchedule.set(parseInt(dataArr[i]['id']), -1);
+                                mapScheduleScore.set(parseInt(dataArr[i]['id']), final_score);
+                                endScheduleFlag = 1;
+                            }
                         }
-                        //取消的比赛按比赛结束来算,比分0:0
-                        if(mapEndSchedule.get(id) == null){
-                            var final_score = "0:0";
-                            mapEndSchedule.set(parseInt(dataArr[i]['id']), -1);
-                            mapScheduleScore.set(parseInt(dataArr[i]['id']), final_score);
-                            endScheduleFlag = 1;
+                        finishNum++;
+                    }else if (dataArr[i]['status'] == '3' || dataArr[i]['status'] == '4'                //比赛结束 
+                        || dataArr[i]['status'] == '5') {
+                        finishNum++;
+                        //mapEndSchedule mapScheduleScore 赋值
+                        if (incrementalFlag && dataArr[i]['final_score'] != "") {
+                            if (mapEndSchedule.get(id) == null) {
+                                //用于比赛结束，数据正常的结算
+                                mapEndSchedule.set(parseInt(dataArr[i]['id']), 0);
+                                mapScheduleScore.set(parseInt(dataArr[i]['id']), dataArr[i]['final_score']);
+                                endScheduleFlag = 1;
+                            }
+                        }
+                        //end mapEndSchedule mapScheduleScore 赋值
+                    }
+                    //mapDeleteSchedule 赋值
+                    if(incrementalFlag) {
+                        if (Date.parse(dataArr[i]['match_date']) > Date.now()) {
+                            if (mapDeleteSchedule.get(id) == null) {
+                                mapDeleteSchedule.set(parseInt(dataArr[i]['id']), 0);
+                                deleteScheduleFlag = 1;
+                            }
                         }
                     }
-                    finishNum++;
-                } else if (dataArr[i]['status'] == '3' || dataArr[i]['status'] == '4'                                    //比赛结束 
-                    || dataArr[i]['status'] == '5') {
-                    finishNum++;
-                    //mapEndSchedule mapScheduleScore 赋值
-                    if (incrementalFlag && dataArr[i]['final_score'] != "") {
-                        if (mapEndSchedule.get(id) == null) {
-                            //用于比赛结束，数据正常的结算
-                            mapEndSchedule.set(parseInt(dataArr[i]['id']), 0);
-                            mapScheduleScore.set(parseInt(dataArr[i]['id']), dataArr[i]['final_score']);
-                            endScheduleFlag = 1;
-                        }
-                    }
-                    //end mapEndSchedule mapScheduleScore 赋值
+                    //end mapDeleteSchedule 赋值
                 }
-                //mapDeleteSchedule 赋值
-                if (incrementalFlag) {
-                    if (Date.parse(dataArr[i]['match_date']) > Date.now()) {
-                        if (mapDeleteSchedule.get(id) == null) {
-                            mapDeleteSchedule.set(parseInt(dataArr[i]['id']), 0);
-                            deleteScheduleFlag = 1;
-                        }
-                    }
-                }
-                //end mapDeleteSchedule 赋值
             }
+            var phase = Func.getDate(phaseday);
             //本期号比赛结束
             if (finishNum == len) {
                 endPhaseFlag = 1;
+                setMaxPhase(phase);
                 return 1;
+            }else if(0 == switchOn){
+                setMaxPhase(phase);
             }
             return 2;
         } else {

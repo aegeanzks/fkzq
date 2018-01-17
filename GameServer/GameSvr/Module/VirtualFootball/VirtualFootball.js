@@ -187,7 +187,6 @@ function VirtualFootball(){
         matchInfo.setIssue(no);
         push.setMatchinfo(matchInfo);
         var buf = push.serializeBinary();
-        console.error(matchState);
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, buf, buf.length);
     }
     //刷新投注项
@@ -379,7 +378,7 @@ function VirtualFootball(){
             modelLogVirtualBet.bet_coin = data.betCoin;
             modelLogVirtualBet.bet_area = betArea;
             modelLogVirtualBet.bet_times = getCurAreaTimes(betArea);
-            modelLogVirtualBet.bet_distribute_coin = parseInt(modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times);
+            modelLogVirtualBet.bet_distribute_coin = parseInt(modelLogVirtualBet.bet_coin*modelLogVirtualBet.bet_times+0.1);//0.1是考虑浮点值精度问题
             modelLogVirtualBet.distribute_coin = 0;
             modelLogVirtualBet.before_bet_coin = player.gameCoin;
             modelLogVirtualBet.status = 0;

@@ -44,8 +44,8 @@ exports.realDataCenterSvrConfig = function(){
         pullInterval:8,
         runInterval:3, //帧率
         noDataTotal:'3',             
-        switch:'1',                 
-        beginTime:'',                
+        switch:'0',                 
+        beginTime:'20150412',                
         endTime:'', 
         limit:12,   
     };

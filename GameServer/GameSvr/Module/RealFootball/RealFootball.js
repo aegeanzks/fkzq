@@ -241,7 +241,7 @@ function RealFootball(){
                 if(error){
                     OBJ('LogMgr').error(error);
                     return ;
-                }else if(0 == docs.length){
+                }else if(null == docs){
                     return ;
                 }
                 res.setSceheduleid(scheduleId);
@@ -615,7 +615,7 @@ function RealFootball(){
                     OBJ('LogMgr').error(error);
                 }
                 
-                if(0 == docs.length){
+                if(null == docs){
                     return ;
                 }
                 //计算5天前的phase
