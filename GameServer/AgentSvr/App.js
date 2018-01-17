@@ -25,10 +25,7 @@ process.on('exit', function(){
 });
 
 process.on('uncaughtException', function (err) {
-    OBJ('LogMgr').writeErr(err);
-    OBJ('LogMgr').writeErr(err.stack);
-    console.log(err);
-    console.log(err.stack);
+    OBJ('LogMgr').error(err);
 });
 
 function startSvr(){

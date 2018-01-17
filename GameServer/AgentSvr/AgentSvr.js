@@ -24,10 +24,11 @@ function AgentSvr(){}
 
 AgentSvr.start = function () {
     //管理器初始化
-    new LogMgr();
     console.log('开始启动服务('+config.serverId+')...');
+    new LogMgr();
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
+    AgentSvr.regsterFun();
     new RpcMgr().run(config.serverId, AgentSvr.run);
 };
 
@@ -40,7 +41,6 @@ AgentSvr.regsterFun = function(){
 //运行
 AgentSvr.run = function() {
     console.log('服务已启动...');
-    AgentSvr.regsterFun();
     OBJ('ModuleMgr').run(config.runInterval);
 };
 

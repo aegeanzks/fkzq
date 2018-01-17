@@ -16,8 +16,14 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "DataCenterSvr",
-            "program": "${workspaceFolder}/DataCenterSvr\\App.js"
+            "name": "VirtualDataCenterSvr",
+            "program": "${workspaceFolder}/VirtualDataCenterSvr\\App.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "RealDataCenterSvr",
+            "program": "${workspaceFolder}/RealDataCenterSvr\\App.js"
         },
         {
             "type": "node",

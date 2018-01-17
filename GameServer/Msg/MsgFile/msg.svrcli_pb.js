@@ -9,6 +9,7 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+goog.exportSymbol('proto.kzgame.svrcli.msg.AreaBettedInfo', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_GuessingRecord', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_GuessingRecord.Type', null, global);
 goog.exportSymbol('proto.kzgame.svrcli.msg.Ask_Login', null, global);
@@ -1588,13 +1589,233 @@ proto.kzgame.svrcli.msg.GoalAndBetArea.prototype.setEvent = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo = function(opt_data) {
+proto.kzgame.svrcli.msg.AreaBettedInfo = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.kzgame.svrcli.msg.AreaBettedInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.kzgame.svrcli.msg.AreaBettedInfo.displayName = 'proto.kzgame.svrcli.msg.AreaBettedInfo';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.kzgame.svrcli.msg.AreaBettedInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.kzgame.svrcli.msg.AreaBettedInfo} msg The msg instance to transform.
+ * @return {!Object}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    betarea: msg.getBetarea(),
+    betnum: msg.getBetnum(),
+    allcoin: msg.getAllcoin()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.kzgame.svrcli.msg.AreaBettedInfo}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.kzgame.svrcli.msg.AreaBettedInfo;
+  return proto.kzgame.svrcli.msg.AreaBettedInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.kzgame.svrcli.msg.AreaBettedInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.kzgame.svrcli.msg.AreaBettedInfo}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetarea(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBetnum(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setAllcoin(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.kzgame.svrcli.msg.AreaBettedInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  this.serializeBinaryToWriter(writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.serializeBinaryToWriter = function (writer) {
+  var f = undefined;
+  f = this.getBetarea();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = this.getBetnum();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = this.getAllcoin();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.kzgame.svrcli.msg.AreaBettedInfo} The clone.
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.cloneMessage = function() {
+  return /** @type {!proto.kzgame.svrcli.msg.AreaBettedInfo} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
+ * optional int32 betArea = 1;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.getBetarea = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 1, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.setBetarea = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 betNum = 2;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.getBetnum = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 2, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.setBetnum = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 allCoin = 3;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.getAllcoin = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 3, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.AreaBettedInfo.prototype.setAllcoin = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.repeatedFields_, null);
 };
 goog.inherits(proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.displayName = 'proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo';
 }
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.repeatedFields_ = [6];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1627,7 +1848,9 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.toObject = function(includeInsta
     goalandbetarea: (f = msg.getGoalandbetarea()) && proto.kzgame.svrcli.msg.GoalAndBetArea.toObject(includeInstance, f),
     betitem1: msg.getBetitem1(),
     betitem2: msg.getBetitem2(),
-    betitem3: msg.getBetitem3()
+    betitem3: msg.getBetitem3(),
+    areabettedinfolistList: jspb.Message.toObjectList(msg.getAreabettedinfolistList(),
+    proto.kzgame.svrcli.msg.AreaBettedInfo.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -1685,6 +1908,12 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.deserializeBinaryFromReader = fu
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setBetitem3(value);
+      break;
+    case 6:
+      var value = new proto.kzgame.svrcli.msg.AreaBettedInfo;
+      reader.readMessage(value,proto.kzgame.svrcli.msg.AreaBettedInfo.deserializeBinaryFromReader);
+      msg.getAreabettedinfolistList().push(value);
+      msg.setAreabettedinfolistList(msg.getAreabettedinfolistList());
       break;
     default:
       reader.skipField();
@@ -1759,6 +1988,14 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.serializeBinaryToWrite
     writer.writeInt32(
       5,
       f
+    );
+  }
+  f = this.getAreabettedinfolistList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      6,
+      f,
+      proto.kzgame.svrcli.msg.AreaBettedInfo.serializeBinaryToWriter
     );
   }
 };
@@ -1875,6 +2112,29 @@ proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.getBetitem3 = function
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.setBetitem3 = function(value) {
   jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * repeated AreaBettedInfo areaBettedInfoList = 6;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
+ * @return {!Array.<!proto.kzgame.svrcli.msg.AreaBettedInfo>}
+ */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.getAreabettedinfolistList = function() {
+  return /** @type{!Array.<!proto.kzgame.svrcli.msg.AreaBettedInfo>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.kzgame.svrcli.msg.AreaBettedInfo, 6));
+};
+
+
+/** @param {Array.<!proto.kzgame.svrcli.msg.AreaBettedInfo>} value  */
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.setAreabettedinfolistList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 6, value);
+};
+
+
+proto.kzgame.svrcli.msg.Res_VirtualFootMainInfo.prototype.clearAreabettedinfolistList = function() {
+  this.setAreabettedinfolistList([]);
 };
 
 

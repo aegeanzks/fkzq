@@ -23,13 +23,19 @@ exports.Schedule = function(){
                 unique: true,
             },                   
             match_num:String,            //场次
-            phase:Number,                //期号
+            phase:{                      //期号
+                type:Number,
+                index:true,
+            },             
             official_date:Date,          //正式时间
             official_num:String,                    
             create_at:Date,              //创建时间
             time_endsale:Date,           //停在时间
             match_name:String,           //赛事名
-            match_date:Date,             //比赛时间
+            match_date:{                 //比赛时间
+                type:Date,
+                index:true,
+            },             
             home_team:String,            //主队名称
             away_team:String,            //客队名称
             first_half:String,           //半场比分
@@ -144,21 +150,28 @@ exports.LogRealBet = function(){
                 type: String,
                 index: true,
             },
-            bet_date: {          //下注时间
+            bet_date: {              //下注时间
                 type: Date,
                 default: Date.now,
                 index: true,
             },
+            bet_server:String,        //对应的游戏服
             bet_scheduleid:Array,     //投注赛事id列表
             bet_num: Number,          //注数
-            bet_type: Number,         //投注类型   1 场 2 2串1 3 3串1 4 4串1
+            bet_type: Number,         //投注类型   1场 2(2串1) 3(3串1) 4(4串1)
             jingcai_type:Number,      //竞猜类型  1胜平负  2让球胜平负 3混合过关
             bet_coin: Number,         //下注金额
-            distribute_coin: Number,  //派发金额
+            distribute_coin: Number,  //预派发金额
+            realDistrobute_coin:{     //实际派发金额  可能有赛事取消
+                type:Number,
+                default:0,
+            },
             before_bet_coin: Number,  //下注前金额
             status: Number,           //状态 0未开奖 1中 2不中 3结算失败
-            bet_plan: Array,          //投注方案,格式为{'schedule_id':,'match_date':,'team_name':,'odds':,"betClass":,"betArea":,"handicap":,'schedule_result':,'status':} 
-
+            bet_plan: Array,          //投注方案,格式为{'schedule_id':,'match_date':,'team_name':,'odds':,"betClass":,"betArea":,"handicap":,'schedule_result':,'status':}数组
+                                      //schedule_id 赛事id,match_date 比赛时间,team_name 比赛队伍,odds 下注时赔率,betClass 下注类型 1胜平负 2让球胜平负
+                                      //betArea 投注区域 1主 2平 3客，handicap 让球数, schedule_result 比赛结果 -1 取消比赛 0未知 1主胜 2平 3客胜
+                                      //status竞猜状态  0未开奖  1中奖   2不中
         }
     };
 };
@@ -224,7 +237,11 @@ exports.LogVirtualBet = function(){
             settlement_out_trade_no:String,
             settlement_trade_no:String,
             host_team_id:Number,
-            guest_team_id:Number
+            guest_team_id:Number,
+            bet_server:{
+                type:String,
+                index: true,
+            }
         }
     };
 };

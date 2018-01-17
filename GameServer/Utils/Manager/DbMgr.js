@@ -31,13 +31,6 @@ function DbMgr(){
     this.model = function(name, sche){
         return mongoose.model(name, sche);
     };
-    /*this.save = function(node){
-        node.save(function(err){
-            if(err){
-                OBJ('LogMgr').writeErr(err);
-            }
-        });
-    };*/
     var scheMap = new Map();
     this.getStatement = function(dbStructure){
         var name = dbStructure.name;

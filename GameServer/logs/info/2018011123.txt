@@ -1,2 +1,0 @@
-[2018-01-11 23:06:07.197] [INFO] logInfo - errReferenceError: waitValue is not defined
-[2018-01-11 23:50:13.997] [INFO] logInfo - errSyntaxError: Illegal continue statement: no surrounding iteration statement

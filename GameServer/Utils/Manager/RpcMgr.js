@@ -23,7 +23,15 @@ function RpcMgr(){
         
         thisServerId = serverId;
         amqp.connect(RpcConfig.RPCURL, function (err, conn) {
+            if(err){
+                console.error('rpc连接失败！！！');
+                return;
+            }
             conn.createChannel(function (err, ch) {
+                if(err){
+                    console.error('rpc创建隧道失败！！！');
+                    return;
+                }
                 rpcCh = ch;
                 ch.assertQueue(serverId, { durable: false });
                 ch.consume(serverId, function(msg) {

@@ -65,6 +65,7 @@ GameSvr.regsterFun = function(socket){
     OBJ('LoginModule').registerFun(socket);
     OBJ('PlayerModule').registerFun(socket);
     OBJ('VirtualFootballModule').registerFun(socket);
+    OBJ('RealFootballModule').registerFun(socket);
 };
 
 

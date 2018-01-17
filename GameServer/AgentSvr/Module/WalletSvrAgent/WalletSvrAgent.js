@@ -73,7 +73,7 @@ function WalletSvrAgent(){
             reqBuf.copy(buf, 9);
             self.ws.send(buf);
         }catch(err){
-            console.log(err);
+            OBJ('LogMgr').error(err);
         }
     }
     //获取用户金额
@@ -140,7 +140,7 @@ function WalletSvrAgent(){
         rb.setUserId(data.userid);
         rb.setMoney(data.addCoin);
         req(2010001, rb, function(msg){
-            console.log('reqAddMoney');
+            console.log('resAddMoney');
             try {
                 var res = pbWallet.RspAddTrade.deserializeBinary(msg);
 

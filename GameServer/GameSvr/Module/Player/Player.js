@@ -15,23 +15,7 @@ function Player(userId, userName, gameCoin, socket){
     self.send = function(msgid, data){
         OBJ('WsMgr').send(self.socket, msgid, data);
     };
-
-    /**
-     *  user_id: {                   //用户ID
-            type: Number,
-            index: true,
-        },
-        user_name: {                 //用户账号
-            type: String,
-            index: true,
-        },
-        last_login_date: Date,        //最后登录时间
-        last_login_ip: String,        //最后登录IP
-        login_count: Number,         //登录次数
-        status: Number,             //状态 0启用，1不启用
-        invented_profitrate: Number, //虚拟场盈利率
-        invented_slew_rate: Number,   //虚拟场杀率
-     */
+    
     self.updateLoginDb = function(ip){
         class_Users.find({'user_id':self.userId}, function(err, data){
             if(data.length == 0){   //没有记录的就创建
@@ -54,11 +38,15 @@ function Player(userId, userName, gameCoin, socket){
                 };
                 class_Users.update({'user_id':self.userId}, {$set:updateVar}, function(err){
                     if(err){
-                        console.log(err);
-                        OBJ('LogMgr').writeErr(err);
+                        OBJ('LogMgr').error(err);
                     }
                 });
             }
         });
+    };
+    //离开所有广播组
+    self.outAllGroup = function(){
+        socket.leave('VirtualFootMainInfo');
+        socket.leave('RealFootMainInfo');
     };
 }

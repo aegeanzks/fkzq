@@ -13,7 +13,7 @@ exports.mongodb = function(){
 //rpc
 exports.rpc = function(){
     return {
-        RPCURL:'amqp://localhost', //RPC
+        RPCURL:'amqp://zks:zks@192.168.0.63', //RPC
     };
 };
 
@@ -37,9 +37,9 @@ exports.gameSvrConfig = function(){
 	@beginTime    获取历史数据起始时间,@switch=1 设为空 ,other样式 20171216
 	@endTime      获取历史数据截止时间,@switch=1 设为空 ,other样式 20171231
 */
-exports.dataCenterSvrConfig = function(){
+exports.realDataCenterSvrConfig = function(){
     return {
-        serverId:'dataCenter',
+        serverId:'realDataCenter',
         //数据采集频率
         pullInterval:8,
         runInterval:3, //帧率
@@ -48,6 +48,13 @@ exports.dataCenterSvrConfig = function(){
         beginTime:'',                
         endTime:'', 
         limit:12,   
+    };
+};
+
+exports.virtualDataCenterSvrConfig = function(){
+    return {
+        serverId:'virtualDataCenter',
+	runInterval:3, //帧率
     };
 };
 

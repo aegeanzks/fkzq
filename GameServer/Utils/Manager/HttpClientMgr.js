@@ -17,7 +17,7 @@ function HttpClientMgr(){
     ObjRoot.call(this, this.constructor.name);
 
     this.Get = function(PageUrl,callBack){
-        http.get(PageUrl, function(res) {
+       var req =http.get(PageUrl, function(res) {
             var html = '';
             res.setEncoding('utf-8');
             res.on('data', function(data) {
@@ -30,6 +30,9 @@ function HttpClientMgr(){
             res.on('error',function(e){
                 console.log('-----'+e.message);
             });
+        }).on('error', function (e) {
+            console.log("Got error: " + e.message);
         });
+        req.end();
     };
 }

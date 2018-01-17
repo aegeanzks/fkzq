@@ -6,6 +6,7 @@ var Schema = require('../../../db_structure');
 var PlayerContainer = require('../Player/PlayerContainer');
 
 function VirtualFootball(){
+    var self = this;
 
     var no = '';             //场次
     var matchState = 0;
@@ -35,10 +36,21 @@ function VirtualFootball(){
     var betItem2 = 0;
     var betItem3 = 0;
 
-    var canBet = true;
+    var canBetWinLose = true;
+    var canBetNext = true;
 
     var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
+
+    var mapOneMatchBet = new Map();//某一局某个人在某个区域下了多少次注和下注总额
+
+    init();
+    function init(){
+        //申请虚拟足球数据
+        OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'getCurData', 
+            SERVERID
+        );
+    }
 
     //当前比较数据数据中心回执
     this.resCurData = function(data){
@@ -66,17 +78,26 @@ function VirtualFootball(){
         drawNum = data.drawNum;
         guestWinNum = data.guestWinNum;
 
-        if(matchState == 0 || matchState == 1 || drawTimes != 0)
-            canBet = true;
-        else
-            canBet = false;
+        if(matchState == 0 || matchState == 1){
+            if(drawTimes != 0){
+                canBetWinLose = true;
+            }else{
+                canBetWinLose = false;
+            }
+            if(zeroGoalTimes != 0){
+                canBetNext = true;
+            }else{
+                canBetNext = false;
+            }
+        }else{
+            canBetWinLose = false;
+            canBetNext = false;
+        }
     };
     //刷新比赛事件
     this.refreshMatchEvent = function(data){
         event = data.event;
-        hostTeamId = data.hostTeamId;
         hostTeamGoal = data.hostTeamGoal;
-        guestTeamId = data.guestTeamId;
         guestTeamGoal = data.guestTeamGoal;
         hostWinTimes = data.hostWinTimes;
         hostWinSupport = data.hostWinSupport;
@@ -91,10 +112,16 @@ function VirtualFootball(){
         guestNextGoalTimes = data.guestNextGoalTimes;
         guestNextGoalSupport = data.guestNextGoalSupport;
 
-        if(drawTimes != 0)
-            canBet = true;
-        else
-            canBet = false;
+        if(drawTimes != 0){
+            canBetWinLose = true;
+        }else{
+            canBetWinLose = false;
+        }
+        if(zeroGoalTimes != 0){
+            canBetNext = true;
+        }else{
+            canBetNext = false;
+        }
 
         //广播
         var push = new pbSvrcli.Push_GoalAndBetArea();
@@ -117,6 +144,11 @@ function VirtualFootball(){
         push.setGoalandbetarea(goalAndBetArea);
         var buf = push.serializeBinary();
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_GoalAndBetArea.Type.ID, buf, buf.length);
+
+        //结算
+        if(7 == event || 8 == event){   //如果进球
+            settlementNextGoal(event);
+        }
     };
     //刷新比赛状态
     this.refreshMatchState = function(data){
@@ -126,13 +158,18 @@ function VirtualFootball(){
         hostWinNum = data.hostWinNum;
         drawNum = data.drawNum;
         guestWinNum = data.guestWinNum;
-        if(matchState == 0 || matchState == 1)
-            canBet = true;
-        else
-            canBet = false;
+        hostTeamId = data.hostTeamId;
+        guestTeamId = data.guestTeamId;
+        if(matchState == 0 || matchState == 1){
+            canBetWinLose = true;
+            canBetNext = true;
+        }else{
+            canBetWinLose = false;
+            canBetNext = false;
+        }
         if(matchState == 2){
-            //关闭投注状态，告诉数据中心可以开始结算了
-            OBJ('RpcModule').send2DataCenter('VirtualFootball', 'canSettlement');
+            //结算
+            settlementWinLose();
         }
         broacastMatchInfo();
     };
@@ -150,6 +187,7 @@ function VirtualFootball(){
         matchInfo.setIssue(no);
         push.setMatchinfo(matchInfo);
         var buf = push.serializeBinary();
+        console.error(matchState);
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_MatchInfo.Type.ID, buf, buf.length);
     }
     //刷新投注项
@@ -160,6 +198,10 @@ function VirtualFootball(){
     };
     //获取主页请求
     this.askVirtualFootMainInfo = function(askVirtualFootMainInfo, socket){
+        var player = OBJ('PlayerContainer').findPlayer(socket);
+        if(null == player)
+            return;
+        player.outAllGroup();
         socket.join('VirtualFootMainInfo');
 
         var res = new pbSvrcli.Res_VirtualFootMainInfo();
@@ -193,6 +235,19 @@ function VirtualFootball(){
         res.setBetitem1(betItem1);
         res.setBetitem2(betItem2);
         res.setBetitem3(betItem3);
+
+        var mapAreaBetParam = mapOneMatchBet.get(player.userId);
+        if(null != mapAreaBetParam){
+            var arr = [];
+            for (var item of mapAreaBetParam.entries()) {
+                var row = new pbSvrcli.AreaBettedInfo();
+                row.setBetarea(item[0]);
+                row.setBetnum(item[1].betNum);
+                row.setAllcoin(item[1].allCoin);
+                arr.push(row);
+            }
+            res.setAreabettedinfolistList(arr);
+        }
         OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualFootMainInfo.Type.ID, res.serializeBinary());
     };
     //获取竞猜记录请求
@@ -205,7 +260,7 @@ function VirtualFootball(){
         classLogVirtualBet.find({'user_id':player.userId}, null, 
             {skip:page*12, limit:12, sort:{'bet_date':-1}}, function(err, data){
                 if(err){
-                    console.log(err);
+                    OBJ('LogMgr').error(err);
                     return;
                 }
                 if(data.length == 0)
@@ -238,7 +293,7 @@ function VirtualFootball(){
         classVirtualSchedule.find(null, null, 
             {skip:page*12, limit:12, sort:{'date_num':-1}}, function(err, data){
                 if(err){
-                    console.log(err);
+                    OBJ('LogMgr').error(err);
                     return;
                 }
                 if(data.length == 0)
@@ -247,17 +302,6 @@ function VirtualFootball(){
                 var arr = [];
                 for(var item of data){
                     var row = new pbSvrcli.VirtualHistory();
-                    /**
-                     var insertValue = {
-                            'date':timeAgent.no.substr(0, timeAgent.no.length-3),
-                            'date_num':timeAgent.no,
-                            'host':matchAgent.hostTeam.Team,
-                            'guest':matchAgent.guestTeam.Team,
-                            'score':matchAgent.hostTeamGoal+':'+matchAgent.guestTeamGoal,
-                            'all_bet':all_bet,
-                            'distribution':distribution
-                        };
-                     */
                     row.setIssue(item.date_num);
                     row.setHostteamid(item.host_team_id);
                     row.setGuestteamid(item.guest_team_id);
@@ -269,10 +313,32 @@ function VirtualFootball(){
                 player.send(pbSvrcli.Res_VirtualHistory.Type.ID, res.serializeBinary());
         });
     };
+    //下注时发现赔率是0，则视为无效
+    function judgeBet(betArea){
+        switch(betArea){
+            case 1:return hostWinTimes!=0;
+            case 2:return drawTimes!=0;
+            case 3:return guestWinTimes!=0;
+            case 4:return hostNextGoalTimes!=0;
+            case 5:return zeroGoalTimes!=0;
+            case 6:return guestNextGoalTimes!=0;
+        }
+        return false;
+    }
+    
     //投注请求
     this.askVirtualBet = function(askVirtualBet, socket){
-        if(!canBet)
+        var betArea = askVirtualBet.getBetarea();
+        if(!judgeBet(betArea))
             return;
+        if(betArea==1||betArea==2||betArea==3){
+            if(!canBetWinLose)
+                return;
+        }else{
+            if(!canBetNext)
+                return;
+        }
+        
         var player = OBJ('PlayerContainer').findPlayer(socket);
         if (null == player)
             return;
@@ -285,10 +351,6 @@ function VirtualFootball(){
             betCoin = betItem2;
         else if(3 == betItem)
             betCoin = betItem3;
-
-        var betArea = askVirtualBet.getBetarea();
-        if(betArea <= 1 && betArea >=6)
-            return;
         
         if(player.gameCoin < betCoin)
             return;
@@ -329,20 +391,40 @@ function VirtualFootball(){
             modelLogVirtualBet.settlement_trade_no = '';
             modelLogVirtualBet.host_team_id = hostTeamId;
             modelLogVirtualBet.guest_team_id = guestTeamId;
+            modelLogVirtualBet.bet_server = SERVERID;
             modelLogVirtualBet.save(function(err){
                 if(err){
-                    console.log(err);
+                    OBJ('LogMgr').error(err);
                 }
             });
 
             //告诉数据中心修改支持率
-            OBJ('RpcModule').send2DataCenter('VirtualFootball', 'supportArea', {
+            OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'supportArea', {
                 area:betArea, 
                 distributeCoin:modelLogVirtualBet.bet_distribute_coin,
-                betCoin:data.betCoin
+                betCoin:data.betCoin,
+                userid:player.userId
             });
+
+            addBetInfo(player.userId, betArea, betCoin);//记录投注信息，用于客户端显示
         });
     };
+    //记录投注信息，用于客户端显示
+    function addBetInfo(userid, betArea, betCoin){
+        //当局下注记录
+        var mapAreaBetParam = mapOneMatchBet.get(userid);
+        if(null == mapAreaBetParam){
+            mapAreaBetParam = new Map();
+            mapOneMatchBet.set(userid, mapAreaBetParam);
+        }
+        var areaBetParam = mapAreaBetParam.get(betArea);
+        if(null == areaBetParam){
+            areaBetParam = {betNum:0, allCoin:0};
+            mapAreaBetParam.set(betArea, areaBetParam);
+        }
+        areaBetParam.betNum++;
+        areaBetParam.allCoin+=betCoin;
+    }
 
     function getCurAreaTimes(area){
         switch(area){
@@ -356,20 +438,24 @@ function VirtualFootball(){
                 return 0;
         }
     }
-    //下一球结算完成，统计用户是否中奖且对中奖的进行推送
-    this.updateMoney = function(){
-        var playerMap = OBJ('PlayerContainer').getAllPlayer();
-        for(var player of playerMap.values()){
+
+    //中奖信息接收
+    this.dealWinning = function(data){
+        var player = data.player;
+        //本机上搜索一遍
+        if(null == player){
+            var userid = data.userid;
+            player = OBJ('PlayerContainer').findPlayerByUserId(userid);
+        }
+        //在本机上
+        if(null != player){
             OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqGetCoin', {
                 userid:player.userId
             }, function(data){
-                var player = OBJ('PlayerContainer').findPlayerByUserId(data.userid);
-                if(null != player && data.balance != player.gameCoin){
-                    var push = new pbSvrcli.Push_WinBet();
-                    push.setWincoin(parseInt(data.balance - player.gameCoin + 0.1));    //0.1是为了修正浮点值精度问题
-                    push.setCoin(data.balance);
-                    player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
-                }
+                var push = new pbSvrcli.Push_WinBet();
+                push.setWincoin(parseInt(data.balance - player.gameCoin + 0.1));    //0.1是为了修正浮点值精度问题
+                push.setCoin(data.balance);
+                player.send(pbSvrcli.Push_WinBet.Type.ID, push.serializeBinary());
             });
         }
     };
@@ -383,10 +469,16 @@ function VirtualFootball(){
         zeroGoalTimes = data.zeroGoalTimes;
         guestNextGoalTimes = data.guestNextGoalTimes;
 
-        if(drawTimes != 0)
-            canBet = true;
-        else
-            canBet = false;
+        if(drawTimes != 0){
+            canBetWinLose = true;
+        }else{
+            canBetWinLose = false;
+        }
+        if(zeroGoalTimes != 0){
+            canBetNext = true;
+        }else{
+            canBetNext = false;
+        }
 
         var push = new pbSvrcli.Push_BetArea();
         push.setHostwintimes(hostWinTimes);
@@ -398,6 +490,228 @@ function VirtualFootball(){
         var buf = push.serializeBinary();
         io.sockets.in('VirtualFootMainInfo').emit(pbSvrcli.Push_BetArea.Type.ID, buf, buf.length);
     };
+
+    //下一球结算
+    function settlementNextGoal(eventId){
+        var findParam = {
+            'status':0,
+            'balance_schedule_id':no,
+            'bet_server':SERVERID,
+            'bet_area':{ $in: [4,5,6] }
+        };
+        classLogVirtualBet.find(findParam, function(err, data){
+            if(data.length == 0)
+                return;
+
+            var winArea = 0;
+            if(7 == eventId)
+                winArea = 4;       //主队进球
+            else
+                winArea = 6;       //客队进球
+            for(var item of data){
+                dealNextGoalSettlement(winArea, item);
+            }
+        });
+        clearNextGoalBetInfo();
+    }
+    //清除用户下一球的投注内存记录
+    function clearNextGoalBetInfo(){
+        for(var mapAreaBetParam of mapOneMatchBet.values()){
+            mapAreaBetParam.delete(4);
+            mapAreaBetParam.delete(5);
+            mapAreaBetParam.delete(6);
+        }
+    }
+
+    //清除用户下一球的投注内存记录
+    function clearWinLoseBetInfo(){
+        mapOneMatchBet.clear();
+    }
+
+    function dealNextGoalSettlement(winArea, item){
+        if(item.bet_area == winArea){
+            //生成投注记录
+            var updateValue = {
+                'status':2
+            };
+            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                if(err){
+                    OBJ('LogMgr').error(err);
+                }
+            });
+            //发送钱包加钱
+            var uid = uuid.v4();
+            OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqAddMoney', {
+                userid:item.user_id, 
+                outType:2, 
+                outTypeDescription:'足球竞猜', 
+                uuid:uid, 
+                addCoin:item.bet_distribute_coin.toString(),
+            }, function(data){
+                if(data.res != 0){
+                    //生成投注记录
+                    var updateValue = {
+                        'settlement_out_trade_no':data.uuid,
+                        'status':3          //系统错误
+                    };
+                    classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                        if(err){
+                            OBJ('LogMgr').error(err);
+                        }
+                    });
+        
+                } else {
+                    //生成投注记录
+                    var updateValue = {
+                        'distribute_coin':item.bet_distribute_coin,
+                        'settlement_out_trade_no':data.uuid,
+                        'settlement_trade_no':data.trade_no,
+                    };
+                    classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                        if(err){
+                            OBJ('LogMgr').error(err);
+                        }
+                        //广播中奖信息
+                        var player = OBJ('PlayerContainer').findPlayerByUserId(item.user_id);
+                        if(null == player){
+                            //如果不在线或在其他游戏服上，则广播
+                            OBJ('RpcModule').broadcastOtherGameServer('VirtualFootball', 'dealWinning', {
+                                userid:item.user_id,
+                                player:null
+                            });
+                        } else {
+                            //在这台机子上，则直接处理
+                            self.dealWinning({
+                                userid:item.user_id,
+                                player:player
+                            });
+                        }
+                        //修改库存
+                        OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'changeStock', {
+                            num:-item.bet_distribute_coin
+                        });
+                    });
+                }
+            });
+        } else {
+            //生成投注记录
+            var updateValue = {
+                'settlement_out_trade_no':'',
+                'settlement_trade_no':'',
+                'status':1
+            };
+            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                if(err){
+                    OBJ('LogMgr').error(err);
+                }
+            });
+        }
+    }
+
+    //结算
+    function settlementWinLose(){
+        var findParam = {
+            'status':0,
+            'balance_schedule_id':no,
+            'bet_server':SERVERID
+        };
+        classLogVirtualBet.find(findParam, function(err, data){
+            if(data.length == 0)
+                return;
+
+            var winArea = 0;
+            if(hostTeamGoal > guestTeamGoal)
+                winArea = 1;       //主胜
+            else if(hostTeamGoal == guestTeamGoal)
+                winArea = 2;       //平
+            else
+                winArea = 3;       //客胜
+            for(var item of data){
+                dealWinLoseSettlement(winArea, item);
+            }
+        });
+        clearWinLoseBetInfo();
+    }
+
+    function dealWinLoseSettlement(winArea, item){
+        if(item.bet_area == winArea || item.bet_area == 5){   //主胜，平，客胜中了，或者不进球中了
+            //生成投注记录
+            var updateValue = {
+                'status':2
+            };
+            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                if(err){
+                    OBJ('LogMgr').error(err);
+                }
+            });
+            //发送钱包加钱
+            var uid = uuid.v4();
+            OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqAddMoney', {
+                userid:item.user_id, 
+                outType:2, 
+                outTypeDescription:'足球竞猜', 
+                uuid:uid, 
+                addCoin:item.bet_distribute_coin.toString(),
+            }, function(data){
+                if(data.res != 0){
+                    //生成投注记录
+                    var updateValue = {
+                        'settlement_out_trade_no':data.uuid,
+                        'status':3          //系统错误
+                    };
+                    classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                        if(err){
+                            OBJ('LogMgr').error(err);
+                        }
+                    });
+        
+                } else {
+                    //生成投注记录
+                    var updateValue = {
+                        'distribute_coin':item.bet_distribute_coin,
+                        'settlement_out_trade_no':data.uuid,
+                        'settlement_trade_no':data.trade_no,
+                    };
+                    classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                        if(err){
+                            OBJ('LogMgr').error(err);
+                        }
+                        //广播中奖信息
+                        var player = OBJ('PlayerContainer').findPlayerByUserId(item.user_id);
+                        if(null == player){
+                            //如果不在线或在其他游戏服上，则广播
+                            OBJ('RpcModule').broadcastOtherGameServer('VirtualFootball', 'dealWinning', {
+                                userid:item.user_id,
+                                player:null
+                            });
+                        } else {
+                            //在这台机子上，则直接处理
+                            self.dealWinning({
+                                userid:item.user_id,
+                                player:player
+                            });
+                        }
+                        //修改库存
+                        OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'changeStock', {
+                            num:-item.bet_distribute_coin
+                        });
+                    });
+                }
+            });
+        } else {
+            //生成投注记录
+            var updateValue = {
+                'settlement_out_trade_no':'',
+                'settlement_trade_no':'',
+                'status':1
+            };
+            classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                if(err){
+                    OBJ('LogMgr').error(err);
+                }
+            });
+        }
+    }
 
     this.run = function(Timestamp){
         

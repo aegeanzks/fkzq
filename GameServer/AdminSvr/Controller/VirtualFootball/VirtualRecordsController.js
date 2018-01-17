@@ -131,11 +131,11 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 				const begin_time6 = req.query.begin_time;
 				const end_time6 = req.query.end_time;
 				const page6 = req.query.page;
-				if(!user_name6 || !status6 ||(!begin_time6 && !Number(begin_time6))|| (!end_time6 && !Number(end_time6))|| (!page6 && !Number(page6))){
+				if(!user_name6 ||(!begin_time6 && !Number(begin_time6))|| (!end_time6 && !Number(end_time6))|| (!page6 && !Number(page6))){
 					res.send({
 						status:2,
-						type: 'ERROR_USERNAME_STATUS_BEGINTIME_ENDTIME_PAGE',
-						message: 'username||status||begin_time||end_time||page参数错误',
+						type: 'ERROR_USERNAME_BEGINTIME_ENDTIME_PAGE',
+						message: 'username||begin_time||end_time||page参数错误',
 					})
 					return 
 				}

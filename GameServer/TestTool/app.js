@@ -49,7 +49,18 @@ function start() {
         });
 
         socket.on(pbLogin.Push_MatchInfo.Type.ID, function(msg, length){
-            console.log('Push_MatchInfo');
+            msg.length = length;
+            var res = pbLogin.Push_MatchInfo.deserializeBinary(new Uint8Array(msg));
+            var matchInfo = res.getMatchinfo();
+            console.log(Date.now());
+            console.log('Matchstate:'+matchInfo.getMatchstate());
+            console.log('Lastsecond:'+matchInfo.getLastsecond());
+            console.log('Hostwinnum:'+matchInfo.getHostwinnum());
+            console.log('Drawnum:'+matchInfo.getDrawnum());
+            console.log('Guestwinnum:'+matchInfo.getGuestwinnum());
+            console.log('Hostteamid:'+matchInfo.getHostteamid());
+            console.log('Guestteamid:'+matchInfo.getGuestteamid());
+            console.log('Issue:'+matchInfo.getIssue());
         });
 
         socket.on(pbLogin.Push_GoalAndBetArea.Type.ID, function(msg, length){
@@ -69,6 +80,12 @@ function start() {
             var res = pbLogin.Res_VirtualHistory.deserializeBinary(new Uint8Array(msg));
             var arr = res.getVirtualhistoryList();
             console.log('arr[0].getIssue():' + arr[0].getIssue());
+        });
+
+        socket.on(pbLogin.Push_WinBet.Type.ID, function(msg, length){
+            msg.length = length;
+            var res = pbLogin.Push_WinBet.deserializeBinary(new Uint8Array(msg));
+            console.log('winCoin:'+res.getWincoin()+' coin:'+res.getCoin());
         });
     });
 
@@ -162,7 +179,7 @@ function start() {
                 socket.emit(pbLogin.Ask_RealFootMainInfo.Type.ID, "", 0);
             }else if(key == '21'){
                 var askRealFootBetRateInfo = new pbLogin.Ask_RealFootBetRateInfo();
-                askRealFootBetRateInfo.setSceheduleid(51434);     //赛事id
+                askRealFootBetRateInfo.setSceheduleid(51437);     //赛事id
                 askRealFootBetRateInfo.setBetclass(1);
 
                 var buf = askRealFootBetRateInfo.serializeBinary();
@@ -171,7 +188,7 @@ function start() {
 
             }else if(key == '22'){
                 var askRealFootBetRateInfo = new pbLogin.Ask_RealFootBetRateInfo();
-                askRealFootBetRateInfo.setSceheduleid(51434);     //赛事id
+                askRealFootBetRateInfo.setSceheduleid(51437);     //赛事id
                 askRealFootBetRateInfo.setBetclass(2);
 
                 var buf = askRealFootBetRateInfo.serializeBinary();
@@ -196,8 +213,20 @@ function start() {
                 var buf = askRealFootBetInfo.serializeBinary();
                 console.log('真实单场投注');
                 socket.emit(pbLogin.Ask_RealFootBetInfo.Type.ID, buf, buf.length);
-            }
+            }else if(key == '24'){
+                var askRealFootballBetRecords = new pbLogin.Ask_RealFootballBetRecords();
+                askRealFootballBetRecords.setPage(1);
 
+                var buf = askRealFootballBetRecords.serializeBinary();
+                console.log('真实我的竞猜请求');
+                socket.emit(pbLogin.Ask_RealFootballBetRecords.Type.ID, buf, buf.length);
+            }else if(key == '25'){
+                var askRealFootRecords = new pbLogin.Ask_RealFootRecords();
+
+                var buf = askRealFootRecords.serializeBinary();
+                console.log('真实足球比赛记录请求');
+                socket.emit(pbLogin.Ask_RealFootRecords.Type.ID, buf, buf.length);                
+            }
             questtion();
         });
     }

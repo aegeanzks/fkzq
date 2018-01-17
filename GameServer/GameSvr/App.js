@@ -31,11 +31,6 @@ process.on('exit', function(){
     });
 });
 
-process.on('uncaughtException', function (err) {
-    OBJ('LogMgr').writeInfo('err'+err);
-    console.log('err'+err);
-});
-
 //从配置文件获取服务器信息
 var configs = require("../config");
 var config = configs.gameSvrConfig();

@@ -14,9 +14,8 @@ function RlRaceModule(){
     var limit = config.limit;
     var scheduleStatement = OBJ('DbMgr').getStatement(ScheduleSchema);
     var findSelectList = {"_id":0,"id":1,"weekday":1,"official_num":1,"phase":1,"match_date":1,"status":1,"first_half":1,"final_score":1,
-                          "match_name":1,"home_team":1,"away_team":1,"odds_jingcai":1,"handicap":1,"odds_rangqiu":1,"display_flag":1,"hot_flag":1,"input_flag":1};
+                          "match_name":1,"home_team":1,"away_team":1,"odds_jingcai":1,"handicap":1,"odds_rangqiu":1,"display_flag":1,"hot_flag":1,"input_flag":1,"lottery_status":1};
     //end 定义变量
-
     /*
         @func    组包
         @count   总条数
@@ -47,6 +46,7 @@ function RlRaceModule(){
             listOne['display_flag'] = docs[i]['display_flag'];
             listOne['hot_flag'] = docs[i]['hot_flag'];
             listOne['input_flag'] = docs[i]['input_flag'];
+            listOne['lottery_status'] = docs[i]['lottery_status'];
             list.push(listOne);
         }
         data.push(list);
@@ -292,7 +292,7 @@ function RlRaceModule(){
             values = {"hot_flag":hot_flag};
         }else{
             values = {"home_team":fields.home_team,"away_team":fields.away_team,
-                      "odds_jingcai":fields.odds_jingcai,"odds_rangqiu":fields.odds_rangqiu,
+                      "odds_jingcai":fields.odds_jingcai,"odds_rangqiu":fields.odds_rangqiu,"final_score":fields.final_score,
                       "input_flag":fields.input_flag};
 
         }

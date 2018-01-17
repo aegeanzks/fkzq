@@ -73,6 +73,12 @@ message GoalAndBetArea
 	//当前事件(matchState为1时才有效)
 	int32 event = 15;		//0无事件 1主队控球 2主队进攻 3主队危险进攻 4客队控球 5客队进攻 6客队危险进攻 7主队进球 8客队进球
 }
+//盘口已投注记录
+message AreaBettedInfo{
+	int32 betArea = 1;		//该用户已下注区域
+	int32 betNum = 2;		//该用户已下注次数
+	int32 allCoin = 3;		//该用户已下注所有金额
+}
 //虚拟足球页面信息回应(回复当前信息)
 message Res_VirtualFootMainInfo
 {
@@ -82,6 +88,7 @@ message Res_VirtualFootMainInfo
 	int32 betItem1 = 3;		//下注项1金额
 	int32 betItem2 = 4;
 	int32 betItem3 = 5;
+	repeated AreaBettedInfo areaBettedInfoList = 6;
 }
 //虚拟足球比赛状态推送(服务端主动通知客户端)
 message Push_MatchInfo
@@ -240,8 +247,8 @@ message Res_RealFootBetRateInfo
 	int32 sceheduleId = 1;                 //赛事id 
 	string historyInfo = 2;                //历史交锋    {"warTotal":,"homename":,"win":,"flat":,"lose":};
 	string lastesInfo = 3;                 //最近战绩	 {"homeWin":,"homeFlat":,"homeLose":,"awayWin":,"awayFlat":,"awayLose":}
-	string oddsAvg = 4;		               //平均赔率
-	string betRate = 5;         		   //投注比例    {"h":,"d":,"a":}
+	string oddsAvg = 4;		               //平均赔率	 {"h":,"d":,"a":}
+	string betRate = 5;         		   //投注比例    {"h":,"d":,"a":}人数,具体比例客户端算
 }
 
 //服务端主动通知客户端---真实足球赛事信息变化推送
@@ -264,7 +271,7 @@ message Ask_RealFootBetInfo
 {
 	enum Type {UNSET = 0; ID = 30005;}
 	int32 betType = 1;               //投注类型    1  1场     2 2串1    3 3串1  4 4串1
-	int32 betNum = 2;                //投注数目
+	int32 betNum = 2;                //投注数目   
 	int32 betTime = 3;               //投注倍数
 	int32 betCoinArea = 4;           //投注金币区域  1  100 2 1000 3 10000
 	repeated RlBetInfo betInfo = 5;  //投注详情     
@@ -274,7 +281,7 @@ message Ask_RealFootBetInfo
 message Res_RealFootBetInfo
 {
 	enum Type {UNSET = 0; ID = 30006;}
-	int32 status = 1;		//0成功 其它参数错误  (一场比赛只能压一次 /下注金额超过最大下注金额/最多压4场比赛等)
+	int32 status = 1;		//0成功 -1操作数据库失败 其它参数错误  (一场比赛只能压一次 /下注金额超过最大下注金额/最多压4场比赛等)
 	double coin = 2;		//游戏币
 }
 
@@ -288,7 +295,11 @@ message RlBetRecordInfo
 	int32   betCoin = 5;          //投注金币
 	int32   distributeCoin= 6;    //猜中获取金币
 	int32   betStatus = 7;        //竞猜状态  0 等待开奖  1中奖   2不中  
-	string  betContents = 8;      //投注内容
+	string  betContents = 8;      //投注内容  
+								  //格式为{'schedule_id':,'match_date':,'team_name':,'odds':,"betClass":,"betArea":,"handicap":,'schedule_result':,'status':}数组
+                                  //schedule_id赛事id, match_date比赛时间, team_name比赛队伍, odds下注时赔率, betClass下注类型 1胜平负 2让球胜平负
+                                  //betArea投注区域 1主 2平 3客，handicap让球数, schedule_result比赛结果 -1 取消比赛 0未知 1主胜 2平 3客胜
+                                  //status竞猜状态 0未开奖  1中奖   2不中
 }
 
 //真实足球我的竞猜请求

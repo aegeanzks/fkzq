@@ -19,16 +19,24 @@ function RpcModule(){
         self.logic.run(timestamp);
     };
 
-    this.send2DataCenter = function(moduleName, funcName, msg){
-        self.logic.send2DataCenter(moduleName, funcName, msg);
+    this.send2VirtualDataCenter = function(moduleName, funcName, msg){
+        self.logic.send2VirtualDataCenter(moduleName, funcName, msg);
+    };
+
+    this.send2RealDataCenter = function(moduleName, funcName, msg){
+        self.logic.send2RealDataCenter(moduleName, funcName, msg);
     };
 
     this.send2Wallet = function(moduleName, funcName, msg){
         self.logic.send2Wallet(moduleName, funcName, msg);
     };
 
-    this.req2DataCenter = function(moduleName, funcName, msg, func){
-        self.logic.req2DataCenter(moduleName, funcName, msg, func);
+    this.req2VirtualDataCenter = function(moduleName, funcName, msg, func){
+        self.logic.req2VirtualDataCenter(moduleName, funcName, msg, func);
+    };
+
+    this.req2RealDataCenter = function(moduleName, funcName, msg, func){
+        self.logic.req2RealDataCenter(moduleName, funcName, msg, func);
     };
 
     this.req2Wallet = function(moduleName, funcName, msg, func){
@@ -37,5 +45,9 @@ function RpcModule(){
 
     this.send = function(target, moduleName, funcName, msg){
         self.logic.send(target, moduleName, funcName, msg);
+    };
+
+    this.broadcastOtherGameServer = function(moduleName, funcName, msg){
+        self.logic.broadcastOtherGameServer(moduleName, funcName, msg);
     };
 }
