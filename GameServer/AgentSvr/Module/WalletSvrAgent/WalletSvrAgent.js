@@ -6,169 +6,172 @@ var WebSocket = require('ws');
 var SingleTimer = require('../../../Utils/SingleTimer');
 var UtilFun = require('../../../Utils/Functions');
 
-function WalletSvrAgent(){
+function WalletSvrAgent() {
     var self = this;
 
     var uniqueId = 0;
-    function getUniqueId(){
-        if(uniqueId >= 10000)
+    function getUniqueId() {
+        if (uniqueId >= 10000)
             uniqueId = 0;
-        return Math.floor(Date.now()%100000)*10000+uniqueId++;
+        return Math.floor(Date.now() % 100000) * 10000 + uniqueId++;
     }
 
     //ws连接
-    var connWalletTimer = new SingleTimer();
+    //var connWalletTimer = new SingleTimer();
     //self.ws = new WebSocket.Client("ws://120.78.166.241:4181?platform_id=20");
     try {
         self.ws = new WebSocket("ws://120.79.91.250:4181?platform_id=51", [], {
-            origin:'http://120.79.91.250:4181/'
+            origin: 'http://120.79.91.250:4181/'
         });
+
+        self.ws.binaryType = "arraybuffer";
+        self.ws.onopen = function () {
+            //connWalletTimer.clear();
+
+            self.ws.onmessage = function (evt) {
+
+                var data = new Buffer(evt.data);
+                var msgType = data.readInt8(0);
+
+                if (msgType == 2) {
+                    var requistId = data.readUInt32BE(1);
+                    var cbFunc = cbMap.get(requistId);
+                    cbMap.delete(requistId);
+                    if (cbFunc) {
+                        var cbData = new Buffer(data.length - 5);
+                        data.copy(cbData, 0, 5);
+                        cbFunc.func(new Uint8Array(cbData));
+                    }
+                }
+            };
+            self.ws.onclose = function (evt) {
+                console.log('钱包连接关闭...');
+                self.ws = null;
+                //connWalletTimer.startup(2000);
+            };
+            self.ws.onerror = function (evt) {
+                console.log('钱包连接错误...');
+                //console.log(evt);
+                //connWalletTimer.startup(2000);
+            };
+        };
+
+        var cbMap = new Map();
+        function req(funcId, data, func) {
+            var cbId = 0;
+            if (func) {
+                cbId = getUniqueId();
+                cbMap.set(cbId, { 'func': func, 'overdueTime': Date.now() + 10000 });
+            }
+            try {
+                var reqBuf = new Buffer(data.serializeBinary());
+                var buf = new Buffer(9 + reqBuf.byteLength);
+                buf.writeInt8(1, 0);
+                buf.writeUInt32BE(cbId, 1);
+                buf.writeUInt32BE(funcId, 5);
+                reqBuf.copy(buf, 9);
+                self.ws.send(buf);
+            } catch (err) {
+                OBJ('LogMgr').error(err);
+            }
+        }
+        //获取用户金额
+        this.reqGetCoin = function (msg, response) {
+            console.log('reqGetCoin');
+            var rgc = new pbWallet.GetUserBalance();
+            rgc.setUserId(msg.userid);
+            req(2010002, rgc, function (data) {
+                console.log('resGetCoin');
+                try {
+                    var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
+
+                    response.rsp({
+                        userid: msg.userid,
+                        res: res.getRet(),
+                        msg: res.getMsg(),
+                        balance: res.getBalance()
+                    });
+
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        };
+
+        //投注
+        this.reqBet = function (data, response) {
+            console.log('reqBet');
+            var rb = new pbWallet.AddTrade();
+            rb.setOutTradeNo(data.uuid);
+            rb.setType(2);
+            rb.setOutType(data.outType);
+            rb.setOutTypeDescription(data.outTypeDescription);
+            rb.setUserId(data.userid);
+            rb.setMoney(data.betCoin);
+            req(2010001, rb, function (msg) {
+                console.log('resBet');
+                try {
+                    var res = pbWallet.RspAddTrade.deserializeBinary(msg);
+
+                    response.rsp({
+                        uuid: data.uuid,
+                        res: res.getRet(),
+                        msg: res.getMsg(),
+                        trade_no: res.getTradeNo(),
+                        balance: res.getBalance(),
+                        betCoin: data.betCoin,
+                    });
+
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        };
+
+        //投注奖励
+        this.reqAddMoney = function (data, response) {
+            console.log('reqAddMoney');
+            var rb = new pbWallet.AddTrade();
+            rb.setOutTradeNo(data.uuid);
+            rb.setType(1);
+            rb.setOutType(data.outType);
+            rb.setOutTypeDescription(data.outTypeDescription);
+            rb.setUserId(data.userid);
+            rb.setMoney(data.addCoin);
+            req(2010001, rb, function (msg) {
+                console.log('resAddMoney');
+                try {
+                    var res = pbWallet.RspAddTrade.deserializeBinary(msg);
+
+                    response.rsp({
+                        uuid: data.uuid,
+                        res: res.getRet(),
+                        msg: res.getMsg(),
+                        trade_no: res.getTradeNo(),
+                        balance: res.getBalance(),
+                        addCoin: data.addCoin
+                    });
+
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        };
+
+        this.run = function (timestamp) {
+            /*if(null != connWalletTimer && connWalletTimer.toNextTime()){
+                try {
+                    self.ws = null;
+                    self.ws = new WebSocket("ws://120.78.166.241:4181?platform_id=20", [], {
+                        origin:'http://120.78.166.241:4181/'
+                    });
+                } catch (error) {
+                    console.error('连接钱包失败...');
+                }
+            }*/
+        };
     } catch (error) {
         console.error('连接钱包失败...');
     }
-    self.ws.binaryType = "arraybuffer";
-    self.ws.onerror = function(evt) {  
-        console.log(evt);
-        connWalletTimer.startup(2000);
-    };
-    self.ws.onopen = function() {
-        connWalletTimer.clear();
-    
-        self.ws.onmessage = function(evt) {
-            
-            var data = new Buffer(evt.data);
-            var msgType = data.readInt8(0);
 
-            if(msgType == 2){
-                var requistId = data.readUInt32BE(1);
-                var cbFunc = cbMap.get(requistId);
-                cbMap.delete(requistId);
-                if(cbFunc){
-                    var cbData = new Buffer(data.length - 5);
-                    data.copy(cbData, 0, 5);
-                    cbFunc.func(new Uint8Array(cbData));
-                }
-            }
-        };  
-        self.ws.onclose = function(evt) {  
-            console.log("WebSocket关闭...");
-            console.error('连接钱包失败...');
-            connWalletTimer.startup(2000);
-        };  
-    };  
-    
-    var cbMap = new Map();
-    function req(funcId, data, func){
-        var cbId = 0;
-        if(func){
-            cbId = getUniqueId();
-            cbMap.set(cbId, {'func':func, 'overdueTime':Date.now()+10000});
-        }
-        try{
-            var reqBuf = new Buffer(data.serializeBinary());
-            var buf=new Buffer(9+reqBuf.byteLength);
-            buf.writeInt8(1, 0);
-            buf.writeUInt32BE(cbId, 1);
-            buf.writeUInt32BE(funcId,5);
-            reqBuf.copy(buf, 9);
-            self.ws.send(buf);
-        }catch(err){
-            OBJ('LogMgr').error(err);
-        }
-    }
-    //获取用户金额
-    this.reqGetCoin = function(msg, response){
-        console.log('reqGetCoin');
-        var rgc = new pbWallet.GetUserBalance();
-        rgc.setUserId(msg.userid);
-        req(2010002, rgc, function(data){
-            console.log('resGetCoin');
-            try {
-                var res = pbWallet.RspGetUserBalance.deserializeBinary(data);
-
-                response.rsp({
-                    userid:msg.userid, 
-                        res: res.getRet(), 
-                        msg: res.getMsg(), 
-                        balance: res.getBalance()
-                });
-            
-            } catch (error) {
-                console.log(error);
-            }
-        });
-    };
-
-    //投注
-    this.reqBet = function(data, response){
-        console.log('reqBet');
-        var rb = new pbWallet.AddTrade();
-        rb.setOutTradeNo(data.uuid);
-        rb.setType(2);
-        rb.setOutType(data.outType);
-        rb.setOutTypeDescription(data.outTypeDescription);
-        rb.setUserId(data.userid);
-        rb.setMoney(data.betCoin);
-        req(2010001, rb, function(msg){
-            console.log('resBet');
-            try {
-                var res = pbWallet.RspAddTrade.deserializeBinary(msg);
-
-                response.rsp({
-                    uuid:data.uuid,
-                    res: res.getRet(),
-                    msg: res.getMsg(),
-                    trade_no: res.getTradeNo(),
-                    balance: res.getBalance(),
-                    betCoin: data.betCoin,
-                });
-
-            }catch(error){
-                console.log(error);
-            }
-        });
-    };
-
-    //投注奖励
-    this.reqAddMoney = function(data, response){
-        console.log('reqAddMoney');
-        var rb = new pbWallet.AddTrade();
-        rb.setOutTradeNo(data.uuid);
-        rb.setType(1);
-        rb.setOutType(data.outType);
-        rb.setOutTypeDescription(data.outTypeDescription);
-        rb.setUserId(data.userid);
-        rb.setMoney(data.addCoin);
-        req(2010001, rb, function(msg){
-            console.log('resAddMoney');
-            try {
-                var res = pbWallet.RspAddTrade.deserializeBinary(msg);
-
-                response.rsp({
-                    uuid:data.uuid,
-                    res: res.getRet(),
-                    msg: res.getMsg(),
-                    trade_no: res.getTradeNo(),
-                    balance: res.getBalance(),
-                    addCoin: data.addCoin
-                });
-
-            }catch(error){
-                console.log(error);
-            }
-        });
-    };
-
-    this.run = function(timestamp){
-        if(null != connWalletTimer && connWalletTimer.toNextTime()){
-            try {
-                self.ws = null;
-                self.ws = new WebSocket("ws://120.78.166.241:4181?platform_id=20", [], {
-                    origin:'http://120.78.166.241:4181/'
-                });
-            } catch (error) {
-                console.error('连接钱包失败...');
-            }
-        }
-    };
 }

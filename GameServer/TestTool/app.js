@@ -92,6 +92,14 @@ function start() {
             var res = pbLogin.Push_WinBet.deserializeBinary(new Uint8Array(msg));
             console.log('winCoin:'+res.getWincoin()+' coin:'+res.getCoin());
         });
+
+        socket.on('disconnect', function(){
+            console.log('disconnect');
+        });
+
+        socket.on(pbLogin.Push_OtherLogin.Type.ID, function(msg, length){
+            console.log('在其他地方登陆');
+        });
     });
 
     // 引入readline模块

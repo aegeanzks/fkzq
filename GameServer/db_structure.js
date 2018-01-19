@@ -22,7 +22,10 @@ exports.Schedule = function(){
                 index:true,
                 unique: true,
             },                   
-            match_num:String,            //场次
+            match_num:{                   //场次
+                type:Number,
+                index:true,
+            }, 
             phase:{                      //期号
                 type:Number,
                 index:true,
@@ -145,6 +148,8 @@ exports.User = function(){              //用户表
             last_login_ip: String,        //最后登录IP
             login_count: Number,         //登录次数
             status: Number,             //状态 0启用，1不启用
+            all_distribute_coin: Number,    //所有派奖金额
+            all_bet_coin: Number,           //所有下注金额
             invented_profitrate: Number, //虚拟场盈利率
             invented_slew_rate: Number,   //虚拟场杀率
         }
@@ -382,5 +387,5 @@ exports.Announcement=function(){
             endtime:Date,
             content:String
         }
-     } 
-    }
+    };
+};

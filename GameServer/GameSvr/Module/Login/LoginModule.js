@@ -20,14 +20,18 @@ function LoginModule(){
     self.run = function(timestamp){
         self.logic.run(timestamp);
     };
-    //特殊处理的两个消息
-    self.setDisconnectFunc(self.logic.disconnect);
-    self.setPingFunc(self.logic.ping);
-
     //注册消息
     self.registerMsg(pbSvrcli.Ask_Login, self.logic.login);  //登录
-    
     self.registerMsgToMgr();
+    self.registerMsg(createId('disconnect'), self.logic.disconnect);
+    self.registerMsg(createId('ping'), self.logic.ping);
+
+    function createId(strID){
+        var varID = {};
+        varID.Type = {};
+        varID.Type.ID = strID;
+        return varID;
+    }
 }
 
 

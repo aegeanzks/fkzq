@@ -265,7 +265,9 @@ function DataPull() {
         if (-1 == status) {
             return;
         }
-        totalNum++;
+        if(switchOn){
+            totalNum++;
+        }
         if (0 == status) {
             noDataNum++;
         } else {
@@ -365,7 +367,7 @@ function DataPull() {
         scheduleDoc.id = parseInt(data['id']);
         
         //赔率为空的默认不显示
-        if(data['odds_jingcai'] == null || data['odds_rangqiu'] || data['odds_avg']){
+        if(data['odds_jingcai'] == null || data['odds_rangqiu'] == null || data['odds_avg'] == null){
             scheduleDoc.display_flag = 0;
         }
 

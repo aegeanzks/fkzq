@@ -77,7 +77,7 @@ function VirtualRaceModule(){
                         })
                         .skip((page-1) * limit)
                         .limit(limit)
-                        //.sort({'date_num':-1});
+                        .sort({'date_num':-1});
                     }else{
                         res.send({
                             status: 0,
@@ -126,19 +126,19 @@ function VirtualRaceModule(){
         @id     赛事id
      */
     this.vraceListBydatenum= function(date_num,page,res){
-        eval('var tmp = /'+date_num+'/');
-        var filter = {"user_name":tmp};
+        //eval('var tmp = /'+date_num+'/');
+        var filter = {"date_num":date_num};
         var funcname = 'vraceListBydatenum';
         findList(filter,page,res,funcname);
     }
    
-    // this.vraceListByTime=function(start_time,end_time,page,res){
-    //     var beginStamp = Func.getStamp(begin_time);
-    //     var endStamp = Func.getStamp(end_time);
-    //     var begin = new Date(beginStamp);
-    //     var end = new Date(endStamp+24*60*60*1000);
-    //     var filter={"status":status,"match_date":{"$gte":begin,"$lt":end}};
-    //     var funcname = 'getListByStatusAndTime';
-    //     findList(filter,page,res,funcname); 
-    // }
+    /*
+        @func   根据期号记录
+        @id     赛事id
+     */
+     this.vraceListByTime=function(start_time,end_time,page,res){
+         var filter={"date":{"$gte":start_time,"$lte":end_time}};
+         var funcname = 'vraceListByTime';
+        findList(filter,page,res,funcname); 
+     }
 }

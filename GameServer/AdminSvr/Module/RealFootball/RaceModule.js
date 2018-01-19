@@ -36,7 +36,17 @@ function RlRaceModule(){
             listOne['official_num'] = docs[i]['weekday']+docs[i]['official_num'];
             listOne['phase'] = docs[i]['phase'];
             listOne['match_date'] = docs[i]['match_date'].toLocaleString();
-            listOne['status'] = docs[i]['status'];
+            if(docs[i]['status'] == 0){
+                listOne['status'] = 0;
+            }else if(docs[i]['status'] == 3 || docs[i]['status'] == 4 || docs[i]['status'] == 5){
+                listOne['status'] = 1;
+            }else if(docs[i]['status'] == 1){
+                listOne['status'] = 2;
+            }else if(docs[i]['status'] == 6 || docs[i]['status'] == 7){
+                listOne['status'] = 3;
+            }else{
+                listOne['status'] = docs[i]['status'];
+            }
             listOne['home_team'] = docs[i]['home_team'];
             listOne['final_score'] = docs[i]['final_score'] == ""?docs[i]['first_half']:docs[i]['final_score'];
             listOne['away_team'] = docs[i]['away_team'];
@@ -169,7 +179,16 @@ function RlRaceModule(){
         @page     当前页数
     */
     this.getListByStatus = function(status,page,res){
-        var filter={"status":status};
+        var filter = {};
+        if(1 == status){
+            filter = {"status":{"$in":[3,4,5]}};
+        }else if(2 == status){
+            filter = {"status":1}
+        }else if(3 == status){
+            filter = {"status":{"$in":[6,7]}};
+        }else if(0 == status){
+            filter = {"status":status};
+        }
         var funcname = 'getListByStatus';
         findList(filter,page,res,funcname);
 

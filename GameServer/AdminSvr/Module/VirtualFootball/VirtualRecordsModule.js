@@ -35,7 +35,20 @@ function VirtualRecordsModule(){
             listOne['bet_coin'] = docs[i]['bet_coin'];
             listOne['bet_times'] = docs[i]['bet_times'];
             listOne['bet_distribute_coin'] = docs[i]['bet_distribute_coin'];
-            listOne['bet_area'] = docs[i]['bet_area'];
+            var odds = '('+listOne['bet_times']+')';
+            if(docs[i]['bet_area'] == 1){
+                listOne['bet_area'] = '主胜'+ odds;
+            }else if(docs[i]['bet_area']  == 2){
+                listOne['bet_area'] = '平'+odds;
+            }else if(docs[i]['bet_area']  == 3){
+                listOne['bet_area'] = '客胜'+odds;
+            }else if(docs[i]['bet_area']  == 4){
+                listOne['bet_area'] = '主队进球'+odds;
+            }else if(docs[i]['bet_area']  == 5){
+                listOne['bet_area'] = '无进球'+odds;
+            }else if(docs[i]['bet_area']  == 6){
+                listOne['bet_area'] = '客队进球'+odds;
+            }
             listOne['distribute_coin'] = docs[i]['distribute_coin'];
             listOne['before_bet_coin'] = docs[i]['before_bet_coin'];
             listOne['status'] = docs[i]['status'];
@@ -64,7 +77,7 @@ function VirtualRecordsModule(){
                         })
                         .skip((page-1) * limit)
                         .limit(limit)
-                        .sort({'match_num':-1});
+                        .sort({'balance_schedule_id':-1});
                     }else{
                         res.send({
                             status: 0,

@@ -349,6 +349,44 @@ GameConfigController.getGoalInfo = function(req,res,next){
 }
 
 /*
+    @func 根据id删除进球配置
+ */
+GameConfigController.delGoalInfoByID = function(req,res,next){
+    try{
+        //校验sign
+        var sign = req.query.id+signValue;
+        if(!checkSign(sign,req.query.sign)){
+            res.send({
+                status:2,
+                type: 'ERROR_SIGN',
+                message: 'sign错误',
+            })
+            return 
+        }
+   
+        if(!req.query.id &&  !Number(req.query.id)){
+                res.send({
+                    status:2,
+                    type: 'ERROR_PARAMS',
+                    message: '参数错误',
+                })
+                return 
+        }
+
+    
+        //更新数据
+		gameConfigModule.delGoalInfoByID(parseInt(req.query.id),res);
+    }catch(err){
+        console.log('delGoalInfoByID 删除数据失败', err);
+		res.send({
+			status: 1,
+			type: 'DEL_DATA_ERROR',
+			message: '更新数据失败'
+		})
+    }
+}
+
+/*
     @func 更新游戏库存信息
  */
 GameConfigController.updateStockInfo = function(req,res,next){

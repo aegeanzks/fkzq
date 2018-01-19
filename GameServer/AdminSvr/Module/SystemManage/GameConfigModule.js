@@ -436,6 +436,34 @@ function GameConfigModule(){
         findGoal(filter,page,res,funcname);
     }
 
+          /*
+        @func    删除赔率配置通过id
+        @id  标识id
+     */
+    this.delGoalInfoByID=function(id,res){
+        var condition = {"all_goal_num":id};
+        try{
+            goalStatement.collection.remove(condition,function(error){
+                 if(!error){
+                     res.send({
+                         status: 200,
+                         type: 'DEL_DATA_SUCESS',
+                         message: '删除数据成功'
+                     });
+                 }else{
+                     console.log('Module of GameConfig delGoalInfoByID err :'+error);
+                 }
+             });
+         }catch(err){
+             console.log('删除数据失败', err);
+             res.send({
+                 status: 1,
+                 type: 'DEL_DATA_ERROR',
+                 message: '删除数据失败'
+             })
+         }
+    }
+
     /*
         @func    更新游戏的库存信息
         @fields  字段
@@ -580,7 +608,7 @@ function GameConfigModule(){
         @fields  字段
      */
     this.addgoalsInfo = function(fields,res){
-             var values = {"all_goal_num":fields.all_goal_num,"chance":fields.chance};
+             var values = {"all_goal_num":parseInt(fields.all_goal_num),"chance":parseInt(fields.chance)};
             try{
                goalStatement.collection.insert(values,function(error){
                      if(!error){

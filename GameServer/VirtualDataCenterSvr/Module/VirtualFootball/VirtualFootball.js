@@ -26,6 +26,7 @@ function VirtualFootball(){
 
     var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
+    var classUser = OBJ('DbMgr').getStatement(Schema.User());
 
     var betItem1 = 0;
     var betItem2 = 0;
@@ -40,6 +41,13 @@ function VirtualFootball(){
     var matchBeginEndTime = timeAgent.getCurMatchStartEndTime();
     var matchAgent = new VirtualFootballMatch(conf, matchBeginEndTime[0], matchBeginEndTime[1], callBackStep);
 
+    //支持率更新频率
+    bSupportChange = false;
+    var updateSupportTimer = null;
+
+    //计算盈利率用的map
+    var mapJoinPlayerInfo = new Map();
+
     this.run = function(timestamp){
         //时间代理更新
         timeAgentUpdate(timestamp);
@@ -47,39 +55,27 @@ function VirtualFootball(){
         matchAgentUpdate(timestamp);
         //投注信息更新
         betItemUpdate(timestamp);
+        //准备时间段内支持率变化更新
+        supportUpdate(timestamp);
     };
+
+    function supportUpdate(timestamp){
+        if(null != updateSupportTimer && updateSupportTimer.toNextTime()){
+            if(0 == timeAgent.matchState && bSupportChange){
+                refreshMatchEvent();
+                bSupportChange = false;
+            }
+        }
+    }
 
     function callBackStep(number){
         if(1 == number){
-            console.error(timeAgent.matchState);
-            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchState', {
-                no:timeAgent.no,
-                matchState:timeAgent.matchState,
-                stateEndTime:timeAgent.matchStateEndTime,
-                hostWinNum:matchAgent.hostWinNum,
-                drawNum:matchAgent.drawNum,
-                guestWinNum:matchAgent.guestWinNum,
-                hostTeamId:matchAgent.hostTeam.ID,
-                guestTeamId:matchAgent.guestTeam.ID
-            });
+            updateSupportTimer = new SingleTimer();
+            updateSupportTimer.startup(1000);
+
+            refreshMatchState();
         }else if(2 == number){
-            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchEvent', {
-                event:matchAgent.curEvent,
-                hostTeamGoal:matchAgent.hostTeamGoal,
-                guestTeamGoal:matchAgent.guestTeamGoal,
-                hostWinTimes:matchAgent.hostWinTimes,
-                hostWinSupport:matchAgent.hostWinSupport,
-                drawTimes:matchAgent.drawTimes,
-                drawSupport:matchAgent.drawSupport,
-                guestWinTimes:matchAgent.guestWinTimes,
-                guestWinSupport:matchAgent.guestWinSupport,
-                hostNextGoalTimes:matchAgent.hostNextGoalTimes,
-                hostNextGoalSupport:matchAgent.hostNextGoalSupport,
-                zeroGoalTimes:matchAgent.zeroGoalTimes,
-                zeroGoalSupport:matchAgent.zeroGoalSupport,
-                guestNextGoalTimes:matchAgent.guestNextGoalTimes,
-                guestNextGoalSupport:matchAgent.guestNextGoalSupport,
-            });
+            refreshMatchEvent();
         }
     }
 
@@ -92,30 +88,6 @@ function VirtualFootball(){
             }
             else if(timeAgent.matchState == 1) {
                 matchAgent.startMatch();
-                var strMatchEvent = 0;
-                switch(matchAgent.curEvent){
-                    case 0: strMatchEvent = '无事件'; break;
-                    case 1: strMatchEvent = '主队控球'; break;
-                    case 4: strMatchEvent = '客队控球'; break;
-                }
-                console.log('战场事件1：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
-                OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchEvent', {
-                    event:matchAgent.curEvent,
-                    hostTeamGoal:matchAgent.hostTeamGoal,
-                    guestTeamGoal:matchAgent.guestTeamGoal,
-                    hostWinTimes:matchAgent.hostWinTimes,
-                    hostWinSupport:matchAgent.hostWinSupport,
-                    drawTimes:matchAgent.drawTimes,
-                    drawSupport:matchAgent.drawSupport,
-                    guestWinTimes:matchAgent.guestWinTimes,
-                    guestWinSupport:matchAgent.guestWinSupport,
-                    hostNextGoalTimes:matchAgent.hostNextGoalTimes,
-                    hostNextGoalSupport:matchAgent.hostNextGoalSupport,
-                    zeroGoalTimes:matchAgent.zeroGoalTimes,
-                    zeroGoalSupport:matchAgent.zeroGoalSupport,
-                    guestNextGoalTimes:matchAgent.guestNextGoalTimes,
-                    guestNextGoalSupport:matchAgent.guestNextGoalSupport,
-                });
             }
             else if(timeAgent.matchState == 2) {
                 matchAgent.stopMatch();
@@ -155,20 +127,19 @@ function VirtualFootball(){
                         }
                     });
                 });
+                //修改盈利率
+                changeProfitRate();
             }
             console.log('当前期号：'+timeAgent.no+' 当前事件：'+timeAgent.matchState+' 该事件剩余时间：'+timeAgent.matchStateLastTime/1000);
             if(timeAgent.matchState != 0){
-                console.error(timeAgent.matchState);
-                OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchState', {
-                    no:timeAgent.no,
-                    matchState:timeAgent.matchState,
-                    stateEndTime:timeAgent.matchStateEndTime,
-                    hostWinNum:matchAgent.hostWinNum,
-                    drawNum:matchAgent.drawNum,
-                    guestWinNum:matchAgent.guestWinNum,
-                    hostTeamId:matchAgent.hostTeam.ID,
-                    guestTeamId:matchAgent.guestTeam.ID
-                });
+                if(null != updateSupportTimer){
+                    updateSupportTimer.clear();
+                    updateSupportTimer = null;
+                }
+                refreshMatchState();
+            }
+            if(timeAgent.matchState == 1){
+                refreshMatchEvent();
             }
         }
     }
@@ -176,36 +147,7 @@ function VirtualFootball(){
     function matchAgentUpdate(timestamp){
         if(null != matchAgent){
             if(matchAgent.update(timestamp)){
-                var strMatchEvent = '';
-                switch(matchAgent.curEvent){
-                    case 0: strMatchEvent = '无事件'; break;
-                    case 1: strMatchEvent = '主队控球'; break;
-                    case 2: strMatchEvent = '主队进攻'; break;
-                    case 3: strMatchEvent = '主队危险进攻'; break;
-                    case 4: strMatchEvent = '客队控球'; break;
-                    case 5: strMatchEvent = '客队进攻'; break;
-                    case 6: strMatchEvent = '客队危险进攻'; break;
-                    case 7: strMatchEvent = '主队进球'; break;
-                    case 8: strMatchEvent = '客队进球'; break;
-                }
-                console.log('战场事件2：'+strMatchEvent+' 剩余时间：'+(matchAgent.nextEventTime-timestamp)/1000);
-                OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchEvent', {
-                    event:matchAgent.curEvent,
-                    hostTeamGoal:matchAgent.hostTeamGoal,
-                    guestTeamGoal:matchAgent.guestTeamGoal,
-                    hostWinTimes:matchAgent.hostWinTimes,
-                    hostWinSupport:matchAgent.hostWinSupport,
-                    drawTimes:matchAgent.drawTimes,
-                    drawSupport:matchAgent.drawSupport,
-                    guestWinTimes:matchAgent.guestWinTimes,
-                    guestWinSupport:matchAgent.guestWinSupport,
-                    hostNextGoalTimes:matchAgent.hostNextGoalTimes,
-                    hostNextGoalSupport:matchAgent.hostNextGoalSupport,
-                    zeroGoalTimes:matchAgent.zeroGoalTimes,
-                    zeroGoalSupport:matchAgent.zeroGoalSupport,
-                    guestNextGoalTimes:matchAgent.guestNextGoalTimes,
-                    guestNextGoalSupport:matchAgent.guestNextGoalSupport,
-                });
+                refreshMatchEvent();
             }
             if(matchAgent.oddsRun(timestamp)){
                 //下一球赢钱推送
@@ -267,12 +209,113 @@ function VirtualFootball(){
     OBJ('RpcModule').registerInitFun(this.getCurData);
 
     this.supportArea = function(data){
-        if(null != matchAgent)
-            matchAgent.supportArea(data);
+        if(null != matchAgent){
+            if(matchAgent.supportArea(data)){
+                bSupportChange = true;
+            }
+        }
+        //记录投注信息
+        var value = mapJoinPlayerInfo.get(parseInt(data.userid));
+        if(null == value){
+            value = {betCoin:0, distribution:0};
+            mapJoinPlayerInfo.set(parseInt(data.userid), value);
+        }
+        value.betCoin += parseInt(data.betCoin);
     };
 
     this.changeStock = function(data){
         if(null != matchAgent)
             matchAgent.changeStock(data);
+        //记录获奖信息
+        var value = mapJoinPlayerInfo.get(parseInt(data.userid));
+        if(null == value){
+            value = {betCoin:0, distribution:0};
+            mapJoinPlayerInfo.set(parseInt(data.userid), value);
+        }
+        value.distribution += -parseInt(data.num);
     };
+
+    function changeProfitRate(){
+        if(0 == mapJoinPlayerInfo.size)
+            return;
+        var filter = [];
+        for (var key of mapJoinPlayerInfo.keys()) {
+            filter.push(key);
+        }
+        classUser.find({user_id:{"$in":filter}}, function(err, data){
+            if(err){
+                OBJ('LogMgr').error(err);
+                return;
+            }
+            for(var item of data){
+                var value = mapJoinPlayerInfo.get(item.user_id);
+                var allBetCoin = (item.all_bet_coin)?item.all_bet_coin:0;
+                allBetCoin += value.betCoin;
+                var allDistributeCoin = (item.all_distribute_coin)?item.all_distribute_coin:0;
+                allDistributeCoin += value.distribution;
+                var inventedProfitrate = allBetCoin==0?0:((allDistributeCoin-allBetCoin)*100/allBetCoin).toFixed(2);
+                
+                var updateValue = {
+                    $set:{
+                        all_bet_coin:allBetCoin,
+                        all_distribute_coin:allDistributeCoin,
+                        invented_profitrate:inventedProfitrate
+                    }
+                };
+                classUser.update({"user_id":item.user_id}, updateValue, function(err){
+                    if(err){
+                        OBj('LogMgr').error(err);
+                    }
+                });
+            }
+            mapJoinPlayerInfo.clear();
+        });
+    }
+
+    function refreshMatchEvent(){
+        var strMatchEvent = '';
+        switch(matchAgent.curEvent){
+            case 0: strMatchEvent = '无事件'; break;
+            case 1: strMatchEvent = '主队控球'; break;
+            case 2: strMatchEvent = '主队进攻'; break;
+            case 3: strMatchEvent = '主队危险进攻'; break;
+            case 4: strMatchEvent = '客队控球'; break;
+            case 5: strMatchEvent = '客队进攻'; break;
+            case 6: strMatchEvent = '客队危险进攻'; break;
+            case 7: strMatchEvent = '主队进球'; break;
+            case 8: strMatchEvent = '客队进球'; break;
+        }
+        console.log('战场事件2：'+strMatchEvent);
+        OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchEvent', {
+            event:matchAgent.curEvent,
+            hostTeamGoal:matchAgent.hostTeamGoal,
+            guestTeamGoal:matchAgent.guestTeamGoal,
+            hostWinTimes:matchAgent.hostWinTimes,
+            hostWinSupport:matchAgent.hostWinSupport,
+            drawTimes:matchAgent.drawTimes,
+            drawSupport:matchAgent.drawSupport,
+            guestWinTimes:matchAgent.guestWinTimes,
+            guestWinSupport:matchAgent.guestWinSupport,
+            hostNextGoalTimes:matchAgent.hostNextGoalTimes,
+            hostNextGoalSupport:matchAgent.hostNextGoalSupport,
+            zeroGoalTimes:matchAgent.zeroGoalTimes,
+            zeroGoalSupport:matchAgent.zeroGoalSupport,
+            guestNextGoalTimes:matchAgent.guestNextGoalTimes,
+            guestNextGoalSupport:matchAgent.guestNextGoalSupport,
+        });
+    }
+
+    function refreshMatchState(){
+        //console.error(timeAgent.matchState);
+        OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshMatchState', {
+            no:timeAgent.no,
+            matchState:timeAgent.matchState,
+            stateEndTime:timeAgent.matchStateEndTime,
+            hostWinNum:matchAgent.hostWinNum,
+            drawNum:matchAgent.drawNum,
+            guestWinNum:matchAgent.guestWinNum,
+            hostTeamId:matchAgent.hostTeam.ID,
+            guestTeamId:matchAgent.guestTeam.ID
+        });
+    }
 }

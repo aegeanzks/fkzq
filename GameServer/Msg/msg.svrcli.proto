@@ -119,6 +119,7 @@ message GuessingRecord
 	float betTimes = 6;		//投注时的赔率
 	int32 betCoin = 7;		//投注金额
 	int32 getCoin = 8;		//获得金额
+	int32 status = 9;		//0未开奖 1不中 2中 3结算异常
 }
 //进入竞猜记录页面信息回应
 message Res_GuessingRecord

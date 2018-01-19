@@ -2734,7 +2734,8 @@ proto.kzgame.svrcli.msg.GuessingRecord.toObject = function(includeInstance, msg)
     betarea: msg.getBetarea(),
     bettimes: msg.getBettimes(),
     betcoin: msg.getBetcoin(),
-    getcoin: msg.getGetcoin()
+    getcoin: msg.getGetcoin(),
+    status: msg.getStatus()
   };
 
   if (includeInstance) {
@@ -2802,6 +2803,10 @@ proto.kzgame.svrcli.msg.GuessingRecord.deserializeBinaryFromReader = function(ms
     case 8:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setGetcoin(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStatus(value);
       break;
     default:
       reader.skipField();
@@ -2894,6 +2899,13 @@ proto.kzgame.svrcli.msg.GuessingRecord.prototype.serializeBinaryToWriter = funct
   if (f !== 0) {
     writer.writeInt32(
       8,
+      f
+    );
+  }
+  f = this.getStatus();
+  if (f !== 0) {
+    writer.writeInt32(
+      9,
       f
     );
   }
@@ -3026,6 +3038,21 @@ proto.kzgame.svrcli.msg.GuessingRecord.prototype.getGetcoin = function() {
 /** @param {number} value  */
 proto.kzgame.svrcli.msg.GuessingRecord.prototype.setGetcoin = function(value) {
   jspb.Message.setField(this, 8, value);
+};
+
+
+/**
+ * optional int32 status = 9;
+ * @return {number}
+ */
+proto.kzgame.svrcli.msg.GuessingRecord.prototype.getStatus = function() {
+  return /** @type {number} */ (jspb.Message.getFieldProto3(this, 9, 0));
+};
+
+
+/** @param {number} value  */
+proto.kzgame.svrcli.msg.GuessingRecord.prototype.setStatus = function(value) {
+  jspb.Message.setField(this, 9, value);
 };
 
 

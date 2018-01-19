@@ -63,7 +63,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 				//校验参数合法性 
 				const balance_schedule_id = req.query.balance_schedule_id;
 				const page = req.query.page;
-				if(!out_trade_no  || (!page && !Number(page))){
+				if(!balance_schedule_id  || (!page && !Number(page))){
 					res.send({
 						status:2,
 						type: 'ERROR_DATANUM_PAGE',
@@ -91,7 +91,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 				break;
 			case '5': 
 				//校验参数合法性
-				const begin_time4 = req.query.begin_time;
+				const begin_time4 = req.query.start_time;
 				const end_time4 = req.query.end_time;
 				const page4= req.query.page;
 				if(!begin_time4 && !Number(begin_time4) || (!end_time4 && !Number(end_time4))
@@ -110,7 +110,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 			case '6': 
 				//校验参数合法性
 				const status5 = req.query.status;
-				const begin_time5 = req.query.begin_time;
+				const begin_time5 = req.query.start_time;
 				const end_time5 = req.query.end_time;
 				const page5 = req.query.page;
 				if(!status5 ||(!begin_time5 && !Number(begin_time5)) 
@@ -128,7 +128,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
           case '7':
                 //校验参数合法性
                 const user_name6 = req.query.user_name;
-				const begin_time6 = req.query.begin_time;
+				const begin_time6 = req.query.start_time;
 				const end_time6 = req.query.end_time;
 				const page6 = req.query.page;
 				if(!user_name6 ||(!begin_time6 && !Number(begin_time6))|| (!end_time6 && !Number(end_time6))|| (!page6 && !Number(page6))){
@@ -145,7 +145,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
         case '8': 
                 //校验参数合法性
                 const balance_schedule_id7 = req.query.balance_schedule_id;
-				const begin_time7 = req.query.begin_time;
+				const begin_time7 = req.query.start_time;
 				const end_time7 = req.query.end_time;
 				const page7 = req.query.page;
 				if(!outtradeno|| !status7 ||(!begin_time7&& !Number(begin_time7)) 
@@ -164,7 +164,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
                 //校验参数合法性
                 const user_name9= req.query.user_name;
 				const status8 = req.query.status8;
-				const begin_time8 = req.query.begin_time;
+				const begin_time8 = req.query.start_time;
 				const end_time8 = req.query.end_time;
 				const page8 = req.query.page;
 				if(!user_name9 || !status8 ||(!begin_time8 && !Number(begin_time8)) || (!end_time8 && !Number(end_time8))|| (!page8 && !Number(page8))){
@@ -182,7 +182,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
                 //校验参数合法性
                 const balance_schedule_id10 = req.query.balance_schedule_id;
 				const status9 = req.query.status9;
-				const begin_time9 = req.query.begin_time;
+				const begin_time9 = req.query.start_time;
 				const end_time9 = req.query.end_time;
 				const page9 = req.query.page;
 				if(!balance_schedule_id10|| !status9 ||(!begin_time9&& !Number(begin_time9)) 

@@ -18,21 +18,17 @@ function BaseModule() {
 
     function register(socket, id, func) {
 
-        if (id == 'disconnect') {
-            if(null != disconnectFunc)
-                socket.on(id, disconnectFunc);
-        } else if (id == 'ping'){
-            if(null != pingFunc)
-                socket.on(id, pingFunc);
-        } else {
-            socket.on(id, function (data, length) {
-                //解析数据
-                var obj = OBJ('MsgMgr').getObject(id);
+        socket.on(id, function (data, length) {
+            //解析数据
+            var obj = OBJ('MsgMgr').getObject(id);
+            if(obj){
                 data.length = length;
                 var msg = obj.deserializeBinary(Uint8Array.from(data));
                 func(msg, socket);
-            });
-        }
+            }else{
+                func(socket);
+            }
+        });
     };
     this.registerFun = function(socket){
         mapMsgClass.forEach(function (value, key, map){
@@ -49,14 +45,5 @@ function BaseModule() {
         mapMsgClass.forEach(function (value, key, map){
             OBJ('MsgMgr').register(key.Type.ID, key);
         });
-    };
-
-    var disconnectFunc;
-    this.setDisconnectFunc = function(func){
-        disconnectFunc = func;
-    };
-    var pingFunc;
-    this.setPingFunc = function(func){
-        pingFunc = func;
     };
 }

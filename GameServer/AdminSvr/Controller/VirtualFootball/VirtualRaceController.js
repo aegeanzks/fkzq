@@ -76,25 +76,24 @@ RlVirtualRaceController.getList = function(req,res,next){
 				virtualRaceModule.vraceListBydatenum(date_num,page3,res);
                 break;
                 
-        //    case '4':
-		// 		{
-			
-        //             const begin_time4 = req.query.begin_time;
-        //             const end_time4 = req.query.end_time;
-        //             const page4 = req.query.page;
-        //             if( (!begin_time4 && !Number(begin_time4)) 
-        //                 || (!end_time4 && !Number(end_time4))|| (!page4 && !Number(page4))){
-        //                 res.send({
-        //                     status:2,
-        //                     type: 'ERROR_BEGINTIME_ENDTIME_PAGE',
-        //                     message: 'begin_time||end_time||page参数错误',
-        //                 })
-        //                 return 
-        //             }
-        //             //获取数据
-        //           virtualRaceModule.vraceListByTime(status9,display9,begin_time9,end_time9,page9,res);
-        //             break;
-		// 		}
+            case '4':
+		 		{
+                     const begin_time4 = req.query.start_time;
+                     const end_time4 = req.query.end_time;
+                     const page4 = req.query.page;
+                    if( (!begin_time4 && !Number(begin_time4)) 
+                         || (!end_time4 && !Number(end_time4))|| (!page4 && !Number(page4))){
+                         res.send({
+                             status:2,
+                             type: 'ERROR_BEGINTIME_ENDTIME_PAGE',
+                             message: 'begin_time||end_time||page参数错误',
+                         })
+                        return 
+                     }
+                     //获取数据
+                   virtualRaceModule.vraceListByTime(begin_time4,end_time4,page4,res);
+                     break;
+				}
 			default: 
 				res.json({
 					status:2,

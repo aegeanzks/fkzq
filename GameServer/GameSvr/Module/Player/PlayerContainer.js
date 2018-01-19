@@ -41,13 +41,13 @@ function PlayerContainer(){
 
     this.delete = function(socket) {
         playerMap.delete(socket);
-    }
+    };
 
     this.updatePlayer = function(oldSocket, newSocket, player) {
-        this.delete(oldSocket);
+        oldSocket.disconnect();
         playerMap.set(newSocket, player);
         player.socket = newSocket;
-    }
+    };
 
     this.getOnlineNum = function(){
         return playerMap.size;

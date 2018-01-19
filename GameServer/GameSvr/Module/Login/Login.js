@@ -16,7 +16,10 @@ function Login(){
     var self = this;
 
     this.disconnect = function(socket){
-        console.log('enter disconnect!');
+        var player = OBJ('PlayerContainer').findPlayer(socket);
+        if(player)
+            console.log('用户:' + player.userId + ' 用户名称:' + player.userName + ' 离开游戏!');
+        OBJ('PlayerContainer').delete(socket);
     };
     this.ping = function(socket){
         console.log('enter ping!');
@@ -43,6 +46,8 @@ function Login(){
             var player = new Player(data.userid, userName, data.balance, socket);
             var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data.userid);
             if(oldSocket){
+                var msg = new pbSvrcli.Push_OtherLogin();
+                OBJ('WsMgr').send(oldSocket, pbSvrcli.Push_OtherLogin.Type.ID, msg);
                 OBJ('PlayerContainer').updatePlayer(oldSocket, socket, player);
             }else{
                 OBJ('PlayerContainer').addPlayer(socket, player);
@@ -57,17 +62,18 @@ function Login(){
                 if(serverId == SERVERID)
                     continue;
                 OBJ('RpcModule').send(serverId, 'Login', 'reqPlayerLogin', {
-                    data:userid
+                    userid:userid
                 });
             }
+            console.log('用户ID:' + userid + ' 用户名称:' + userName + ' 登陆游戏!');
         });
-        console.log('用户:' + userid + ' 登录成功!');
     };
 
     self.reqPlayerLogin = function(data) {
-        var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data);
+        var oldSocket = OBJ('PlayerContainer').findSocketByUserId(data.userid);
         if(oldSocket){
-            OBJ('WsMgr').send(oldSocket, pbSvrcli.Push_OtherLogin.Type.ID, null);
+            var msg = new pbSvrcli.Push_OtherLogin();
+            OBJ('WsMgr').send(oldSocket, pbSvrcli.Push_OtherLogin.Type.ID, msg);
             oldSocket.disconnect();
             OBJ('PlayerContainer').delete(oldSocket);
         }

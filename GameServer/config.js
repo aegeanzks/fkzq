@@ -62,7 +62,7 @@ exports.adminSvrConfig = function(){
     return {
         serverId:'admin',
         port:9090,
-        limit:10,
+        limit:20,
         sign:'4A1fd0cEskf',
     }
 }

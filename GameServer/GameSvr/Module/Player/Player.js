@@ -26,6 +26,8 @@ function Player(userId, userName, gameCoin, socket){
                 model_Users.last_login_ip = ip;
                 model_Users.login_count = 1;
                 model_Users.status = 0;
+                model_Users.all_bet_coin = 0;
+                model_Users.all_distribute_coin = 0;
                 model_Users.invented_profitrate = 0;
                 model_Users.invented_slew_rate = 0;
                 model_Users.save();

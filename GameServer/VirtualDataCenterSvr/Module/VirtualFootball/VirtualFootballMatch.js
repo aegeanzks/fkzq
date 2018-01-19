@@ -122,7 +122,7 @@ function VirtualFootballMatch(conf, beginTime, endTime, callBackStep){
         classVirtualSchedule.find({
             "$or": [{ "host_team_id": self.hostTeam.ID, "guest_team_id": self.guestTeam.ID },
             { "host_team_id": self.guestTeam.ID, "guest_team_id": self.hostTeam.ID }]
-        }, function (err, data) {
+        }, null, {limit:10, sort:{'date_num':-1}}, function (err, data) {
             if (err) {
                 OBJ('LogMgr').error(err);
                 return;
@@ -494,8 +494,11 @@ function VirtualFootballMatch(conf, beginTime, endTime, callBackStep){
 
     self.startMatch = function(){
         //初始都是主队控球或者客队控球
-        self.curEvent = scheduleArr[0].event;
-        self.nextEventTime = scheduleArr[0].endTime;
+        if(scheduleArr.length > 0){
+            self.curEvent = scheduleArr[0].event;
+            self.nextEventTime = scheduleArr[0].endTime;
+        }
+        
         bStart = true;
     };
 
@@ -514,50 +517,64 @@ function VirtualFootballMatch(conf, beginTime, endTime, callBackStep){
 
     self.supportArea = function(data){
         this.addCurStock(data.betCoin); //添加库存
+        var bSupportChange = false;
         switch(data.area){
             case 1:
             {
                 setHostWinSupport.add(data.userid);
+                var oldSupport = self.hostWinSupport;
                 self.hostWinSupport = setHostWinSupport.size;
+                bSupportChange = oldSupport!=self.hostWinSupport;
                 hostWinDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 2:
             {
                 setDrawSupport.add(data.userid);
+                var oldSupport = self.drawSupport;
                 self.drawSupport = setDrawSupport.size;
+                bSupportChange = oldSupport!=self.drawSupport;
                 drawDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 3:
             {
                 setGuestWinSupport.add(data.userid);
+                var oldSupport = self.guestWinSupport;
                 self.guestWinSupport = setGuestWinSupport.size;
+                bSupportChange = oldSupport!=self.guestWinSupport;
                 guestWinDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 4:
             {
                 setHostNextGoalSupport.add(data.userid);
+                var oldSupport = self.hostNextGoalSupport;
                 self.hostNextGoalSupport = setHostNextGoalSupport.size;
+                bSupportChange = oldSupport!=self.hostNextGoalSupport;
                 hostNextGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 5:
             {
                 setZeroGoalSupport.add(data.userid);
+                var oldSupport = self.zeroGoalSupport;
                 self.zeroGoalSupport = setZeroGoalSupport.size;
+                bSupportChange = oldSupport!=self.zeroGoalSupport;
                 zeroGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
             case 6:
             {
                 setGuestNextGoalSupport.add(data.userid);
+                var oldSupport = self.guestNextGoalSupport;
                 self.guestNextGoalSupport = setGuestNextGoalSupport.size;
+                bSupportChange = oldSupport!=self.guestNextGoalSupport;
                 guestNextGoalDistributeCoin+=data.distributeCoin;
                 break;
             }
         }
+        return bSupportChange;
     };
     //修改库存
     this.changeStock = function(data){

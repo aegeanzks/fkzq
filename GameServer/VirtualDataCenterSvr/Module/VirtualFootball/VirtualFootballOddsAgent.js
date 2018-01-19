@@ -162,7 +162,7 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
         //模型1 负赔
         var Z1=optimizeFloat((X1/(X0/Z0)).toFixed(2));
         timeScale[0]['0_guest'] = Z1;
-        console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
+        //console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
         for(var i=1; i<timeScale.length; i++){
             if(i >= countQ) Q=0;
             //平赔
@@ -174,7 +174,7 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             //平赔
             var Y2 = (Y1-(b2*N+Q)).toFixed(2);
             if(Y1 == 1.01){
-                console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+                //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
                 break;
             }else if(Y2 <= 1.01){    //如果要封盘了，那值都设置为0
                 Y2 = 1.01;
@@ -187,9 +187,9 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             //负赔
             var Z2=optimizeFloat((X2/(X1/Z1)).toFixed(2));
             timeScale[i]['0_guest'] = Z2;
-            console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
-            if(i == timeScale.length-1)
-                console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
+            //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+            //if(i == timeScale.length-1)
+            //    console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
         }
     }
 
@@ -215,8 +215,8 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
         //模型1 负赔
         var Z1=optimizeFloat((X1/(X0/Z0)).toFixed(2));
         timeScale[0]['next_guest'] = Z1;
-        console.log('下一球：');
-        console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
+        //console.log('下一球：');
+        //console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
         for(var i=1; i<timeScale.length; i++){
             if(i >= countQ) Q=0;
             //平赔
@@ -228,7 +228,7 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             //平赔
             var Y2 = (Y1-(b2*N+Q)).toFixed(2);
             if(Y1 == 1.01){
-                console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+                //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
                 break;
             }else if(Y2 <= 1.01){    //如果要封盘了，那值都设置为0
                 Y2 = 1.01;
@@ -241,9 +241,9 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             //负赔
             var Z2=optimizeFloat((X2/(X1/Z1)).toFixed(2));
             timeScale[i]['next_guest'] = Z2;
-            console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
-            if(i == timeScale.length-1)
-                console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
+            //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+            //if(i == timeScale.length-1)
+            //    console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
         }
     }
 
@@ -288,8 +288,8 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             timeScale[0]['3_draw'] = Y1;
             timeScale[0]['3_guest'] = Z1;
         }
-        console.log('比分差:'+difNum+' countQ:'+countQ);
-        console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
+        //console.log('比分差:'+difNum+' countQ:'+countQ);
+        //console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
         for(var i=1; i<timeScale.length; i++){
             if(i >= countQ) Q=0;
             var X1 = timeScale[i-1]['1_host'];
@@ -308,7 +308,7 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             var p = Functions.getRandomNum(minReward, maxReward)/100000;
             var X2 = (X1-(a2*N+Q)).toFixed(2);
             if(X1 == 1.01){
-                console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+                //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
                 break;
             }else if(X2 <= 1.01){    //如果要封盘了，那值都设置为0
                 X2 = 1.01;
@@ -330,9 +330,9 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
                 timeScale[i]['3_draw'] = Y2;
                 timeScale[i]['3_guest'] = Z2;
             }
-            console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
-            if(i == timeScale.length-1)
-                console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
+            //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+            //if(i == timeScale.length-1)
+            //    console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
         }
     }
 
@@ -377,8 +377,8 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             timeScale[0]['-3_draw'] = Y1;
             timeScale[0]['-3_guest'] = Z1;
         }
-        console.log('比分差:'+difNum+' countQ:'+countQ);
-        console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
+        //console.log('比分差:'+difNum+' countQ:'+countQ);
+        //console.log('X0:'+X0+' Y0:'+Y0+' Z0:'+Z0+' p:'+p+' Q:'+Q);
         for(var i=1; i<timeScale.length; i++){
             if(i >= countQ) Q=0;
             var Z1 = timeScale[i-1]['-1_guest'];
@@ -397,7 +397,7 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             var p = Functions.getRandomNum(minReward, maxReward)/100000;
             var Z2 = (Z1-(c2*N+Q)).toFixed(2);
             if(Z1 == 1.01){
-                console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+                //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
                 break;
             }else if(Z2 <= 1.01){    //如果要封盘了，那值都设置为0
                 Z2 = 1.01;
@@ -418,9 +418,9 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
                 timeScale[i]['-3_draw'] = Y2;
                 timeScale[i]['-3_guest'] = Z2;
             }
-            console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
-            if(i == timeScale.length-1)
-                console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
+            //console.log('X'+i+':'+X1+' Y'+i+':'+Y1+' Z'+i+':'+Z1+' p:'+p+' Q:'+Q);
+            //if(i == timeScale.length-1)
+            //    console.log('X'+timeScale.length+':'+X2+' Y'+timeScale.length+':'+Y2+' Z'+timeScale.length+':'+Z2);
         }
     }
 

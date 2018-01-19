@@ -97,7 +97,7 @@ RlRaceController.getList = function(req,res,next){
 				break;
 			case '5': 
 				//校验参数合法性
-				const begin_time5 = req.query.begin_time;
+				const begin_time5 = req.query.start_time;
 				const end_time5 = req.query.end_time;
 				const page5 = req.query.page;
 				if(!begin_time5 && !Number(begin_time5) || (!end_time5 && !Number(end_time5))
@@ -131,7 +131,7 @@ RlRaceController.getList = function(req,res,next){
 			case '7': 
 				//校验参数合法性
 				const status7 = req.query.status;
-				const begin_time7 = req.query.begin_time;
+				const begin_time7 = req.query.start_time;
 				const end_time7 = req.query.end_time;
 				const page7 = req.query.page;
 				if(!status7 ||(!begin_time7 && !Number(begin_time7)) 
@@ -149,7 +149,7 @@ RlRaceController.getList = function(req,res,next){
 			case '8': 
 				//校验参数合法性
 				const display8 = req.query.display;
-				const begin_time8 = req.query.begin_time;
+				const begin_time8 = req.query.start_time;
 				const end_time8 = req.query.end_time;
 				const page8 = req.query.page;
 				if(!display8 ||(!begin_time8 && !Number(begin_time8)) 
@@ -168,7 +168,7 @@ RlRaceController.getList = function(req,res,next){
 				//校验参数合法性
 				const status9 = req.query.status;
 				const display9 = req.query.display;
-				const begin_time9 = req.query.begin_time;
+				const begin_time9 = req.query.start_time;
 				const end_time9 = req.query.end_time;
 				const page9 = req.query.page;
 				if(!status9 ||(!display9 && !Number(display9)) 

@@ -1,6 +1,6 @@
 module.exports =RecordsModule;
 
-var LogRealBetSchema = require('../../../db_structure').LogRealBet;
+var LogRealBetSchema = require('../../../db_structure').LogRealBet();
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var config = require('../../../config').adminSvrConfig();
 var Func = require('../../../Utils/Functions');
@@ -86,7 +86,7 @@ function RecordsModule(){
             logRealBetStatement.count(filter,function(error,count){
                 if(!error){
                     if(count >0){
-                        scheduleStatement.find(filter,findSelectList,function(finderr,docs){
+                        logRealBetStatement.find(filter,findSelectList,function(finderr,docs){
                             if(!finderr){
                                 packages(docs,count,res);     
                             }else{

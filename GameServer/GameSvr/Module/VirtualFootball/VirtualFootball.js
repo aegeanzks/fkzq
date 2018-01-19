@@ -42,8 +42,6 @@ function VirtualFootball(){
     var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
 
-    var mapOneMatchBet = new Map();//某一局某个人在某个区域下了多少次注和下注总额
-
     init();
     function init(){
         //申请虚拟足球数据
@@ -235,19 +233,37 @@ function VirtualFootball(){
         res.setBetitem2(betItem2);
         res.setBetitem3(betItem3);
 
-        var mapAreaBetParam = mapOneMatchBet.get(player.userId);
-        if(null != mapAreaBetParam){
-            var arr = [];
-            for (var item of mapAreaBetParam.entries()) {
-                var row = new pbSvrcli.AreaBettedInfo();
-                row.setBetarea(item[0]);
-                row.setBetnum(item[1].betNum);
-                row.setAllcoin(item[1].allCoin);
-                arr.push(row);
+        var findValue = {
+            'user_id':player.userId,
+            'status':0,
+            'balance_schedule_id':no
+        };
+        classLogVirtualBet.find(findValue, function(err, data){
+            if(err){
+                OBJ('LogMgr').error(err);
+            }else if(data.length > 0){
+                var mapAreaBetParam = new Map();
+                for(var item of data){
+                    var areaBetParam = mapAreaBetParam.get(item.bet_area);
+                    if(null == areaBetParam){
+                        areaBetParam = {betNum:0, allCoin:0};
+                        mapAreaBetParam.set(item.bet_area, areaBetParam);
+                    }
+                    areaBetParam.betNum++;
+                    areaBetParam.allCoin+=item.bet_coin;
+                }
+                var arr = [];
+                for (var item of mapAreaBetParam.entries()) {
+                    var row = new pbSvrcli.AreaBettedInfo();
+                    row.setBetarea(item[0]);
+                    row.setBetnum(item[1].betNum);
+                    row.setAllcoin(item[1].allCoin);
+                    arr.push(row);
+                }
+                res.setAreabettedinfolistList(arr);
             }
-            res.setAreabettedinfolistList(arr);
-        }
-        OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualFootMainInfo.Type.ID, res.serializeBinary());
+            OBJ('WsMgr').send(socket, pbSvrcli.Res_VirtualFootMainInfo.Type.ID, res.serializeBinary());
+        });
     };
     //获取竞猜记录请求
     this.askGuessingRecord = function(askGuessingRecord, socket){
@@ -276,6 +292,7 @@ function VirtualFootball(){
                     row.setBettimes(item.bet_times);
                     row.setBetcoin(item.bet_coin);
                     row.setGetcoin(parseInt(item.distribute_coin));
+                    row.setStatus(item.status);
                     arr.push(row);
                 }
                 res.setGuessingrecordsList(arr);
@@ -404,26 +421,8 @@ function VirtualFootball(){
                 betCoin:data.betCoin,
                 userid:player.userId
             });
-
-            addBetInfo(player.userId, betArea, betCoin);//记录投注信息，用于客户端显示
         });
     };
-    //记录投注信息，用于客户端显示
-    function addBetInfo(userid, betArea, betCoin){
-        //当局下注记录
-        var mapAreaBetParam = mapOneMatchBet.get(userid);
-        if(null == mapAreaBetParam){
-            mapAreaBetParam = new Map();
-            mapOneMatchBet.set(userid, mapAreaBetParam);
-        }
-        var areaBetParam = mapAreaBetParam.get(betArea);
-        if(null == areaBetParam){
-            areaBetParam = {betNum:0, allCoin:0};
-            mapAreaBetParam.set(betArea, areaBetParam);
-        }
-        areaBetParam.betNum++;
-        areaBetParam.allCoin+=betCoin;
-    }
 
     function getCurAreaTimes(area){
         switch(area){
@@ -511,20 +510,6 @@ function VirtualFootball(){
                 dealNextGoalSettlement(winArea, item);
             }
         });
-        clearNextGoalBetInfo();
-    }
-    //清除用户下一球的投注内存记录
-    function clearNextGoalBetInfo(){
-        for(var mapAreaBetParam of mapOneMatchBet.values()){
-            mapAreaBetParam.delete(4);
-            mapAreaBetParam.delete(5);
-            mapAreaBetParam.delete(6);
-        }
-    }
-
-    //清除用户下一球的投注内存记录
-    function clearWinLoseBetInfo(){
-        mapOneMatchBet.clear();
     }
 
     function dealNextGoalSettlement(winArea, item){
@@ -587,7 +572,8 @@ function VirtualFootball(){
                         }
                         //修改库存
                         OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'changeStock', {
-                            num:-item.bet_distribute_coin
+                            num:-item.bet_distribute_coin,
+                            userid:item.user_id
                         });
                     });
                 }
@@ -629,7 +615,6 @@ function VirtualFootball(){
                 dealWinLoseSettlement(winArea, item);
             }
         });
-        clearWinLoseBetInfo();
     }
 
     function dealWinLoseSettlement(winArea, item){
@@ -692,7 +677,8 @@ function VirtualFootball(){
                         }
                         //修改库存
                         OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'changeStock', {
-                            num:-item.bet_distribute_coin
+                            num:-item.bet_distribute_coin,
+                            userid:item.user_id
                         });
                     });
                 }

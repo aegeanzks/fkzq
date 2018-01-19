@@ -17,6 +17,7 @@ router.get('/delOddsById',GameConfigController.delOodInfoByID);
 router.get('/addOodInfo',GameConfigController.addOodInfo);
 router.get('/updateOodInfo',GameConfigController.updateOodInfo);
 router.get('/getGoalInfo',GameConfigController.getGoalInfo);
+router.get('/delGoalById',GameConfigController.delGoalInfoByID);
 
 router.get('/updateEventInfo',GameConfigController.updateEventInfo);
 //end 游戏配置
