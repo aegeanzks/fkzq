@@ -243,7 +243,7 @@ exports.LogVirtualBet = function(){
 			bet_area: Number,			//下注区域
             distribute_coin: Number,   //派发金额
             before_bet_coin: Number,    //下注前金额
-            status: {           //状态 0未开奖 1不中 2中
+            status: {           //状态 0未开奖 1不中 2中 3钱包返回异常 4服务器重启补充结算
                 type: Number,
                 index: true,     
             },

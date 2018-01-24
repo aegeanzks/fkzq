@@ -48,6 +48,82 @@ function VirtualFootball(){
         OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'getCurData', 
             SERVERID
         );
+        //对于之前因为服务端重启造成的没有结算的玩家进行金额退还
+        rollbackErrBet();
+    }
+
+    function rollbackErrBet(){
+        var findValue = {
+            'status':0,
+            'balance_schedule_id':{$ne:no}
+        };
+        classLogVirtualBet.find(findValue, function(err, data){
+            if(err){
+                OBJ('LogMgr').error(err);
+            }else if(data.length > 0){
+                for(var item of data){
+                    dealRollbackErrBet(item);
+                }
+            }
+        });
+    }
+
+    function dealRollbackErrBet(item){
+        //生成投注记录
+        var updateValue = {
+            'status':4
+        };
+        classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+            if(err){
+                OBJ('LogMgr').error(err);
+            }
+        });
+        //发送钱包加钱
+        var uid = uuid.v4();
+        OBJ('RpcModule').req2Wallet('WalletSvrAgent', 'reqAddMoney', {
+            userid:item.user_id, 
+            outType:2, 
+            outTypeDescription:'足球竞猜', 
+            uuid:uid, 
+            addCoin:item.bet_distribute_coin.toString(),
+        }, function(data){
+            if(data.res != 0){
+                //生成投注记录
+                var updateValue = {
+                    'settlement_out_trade_no':data.uuid,
+                    'status':3
+                };
+                classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                    if(err){
+                        OBJ('LogMgr').error(err);
+                    }
+                });
+    
+            } else {
+                //生成投注记录
+                var updateValue = {
+                    'distribute_coin':item.bet_coin,
+                    'settlement_out_trade_no':data.uuid,
+                    'settlement_trade_no':data.trade_no,
+                };
+                classLogVirtualBet.update({ "out_trade_no": item.out_trade_no }, updateValue, function(err){
+                    if(err){
+                        OBJ('LogMgr').error(err);
+                    }
+                    //广播中奖信息
+                    //如果不在线或在其他游戏服上，则广播
+                    OBJ('RpcModule').broadcastOtherGameServer('VirtualFootball', 'dealWinning', {
+                        userid:item.user_id,
+                        player:null
+                    });
+                    //修改库存
+                    OBJ('RpcModule').send2VirtualDataCenter('VirtualFootball', 'changeStock', {
+                        num:-item.bet_distribute_coin,
+                        userid:item.user_id
+                    });
+                });
+            }
+        });
     }
 
     //当前比较数据数据中心回执

@@ -23,10 +23,12 @@ function BaseModule() {
             var obj = OBJ('MsgMgr').getObject(id);
             if(obj){
                 data.length = length;
-                var msg = obj.deserializeBinary(Uint8Array.from(data));
-                func(msg, socket);
-            }else{
-                func(socket);
+                try {
+                    var msg = obj.deserializeBinary(Uint8Array.from(data));
+                    func(msg, socket);
+                } catch (error) {
+                    console.error('消息处理错误,ID:'+id);
+                }
             }
         });
     };
