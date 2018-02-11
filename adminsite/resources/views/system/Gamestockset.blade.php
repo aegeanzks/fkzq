@@ -2,11 +2,11 @@
 @section('content')
 <section class="content-header">
 <h1>
-编辑赛事
+库存配置
   </h1>
 <ol class="breadcrumb">
   <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> 首页</a></li>
-  <li><a href="{{url('/guess/competitionmanage')}}">游戏配置</a></li>
+  <li><a href="{{url('/system/gamelist')}}">游戏配置</a></li>
   <li class="active">库存配置</li>
 </ol>
 </section>
@@ -53,7 +53,12 @@
    <div class="row">
    <input  type="hidden" name="game_id" id="game_id" value="{{$data[0]['game_id']}}" />
    <button type="submit" id="savebtn" class="btn btn-primary" style="width:80px; margin-left:10px; float:left">保 存</button>
-   <button type="button" class="btn btn-danger"  style="width:80px; margin-left:10px; float:left">取 消</button>
+   <!-- <button type="button" class="btn btn-danger"  style="width:80px; margin-left:10px; float:left">取 消</button> -->
+   &nbsp; &nbsp; &nbsp;
+   <button class="btn" type="reset">
+								<i class="icon-undo bigger-110"></i>
+								重 置
+	</button>
    </div>
     </div>
 

@@ -12,6 +12,23 @@ var svr = require("./GameSvr");
 var http = require('http');
 var dbStructure = require('../db_structure');
 var UtilsFunc = require('../Utils/Functions');
+const easyMonitor = require('easy-monitor');
+easyMonitor('疯狂足球');
+/*var memwatch = require('memwatch-next');
+const heapdump = require('heapdump');
+
+dump();
+memwatch.on('leak', () => {
+    dump();
+});
+
+function dump() {
+    const filename = `./logs/heapdump-${process.pid}-${Date.now()}.heapsnapshot`;
+
+    heapdump.writeSnapshot(filename, () => {
+        console.log(`${filename} dump completed.`);
+    });
+}*/
 
 global.SERVERID = process.argv[2]; //获取服务端id
 

@@ -15,13 +15,13 @@
 <div class="box">
 <div style="margin:5px 0px;clear:both; height:40px;">
 <div class="col-sm-11">
-期号查询:<input type="text" class="form-control" id="balance_schedule_id" name="balance_schedule_id" placeholder="输入期数"  value="{{ $data['balance_schedule_id'] }}">
+期号查询:<input type="text" class="form-control" id="balance_schedule_id" name="balance_schedule_id" placeholder="输入期号"  value="{{ $data['balance_schedule_id'] }}">
 账号查询:<input type="text" class="form-control" id="user_name" name="user_name" placeholder="输入账号"  value="{{ $data['user_name'] }}">
 状态: <select id="status" name="status" class="form-control" style="width:180px" >
 <option value="">全部</option>
 <option value="0">未开奖</option>
-<option value="1">中</option> 
-<option value="2">不中</option>
+<option value="1">不中</option> 
+<option value="2">中</option>
 </select>
 开始时间：
 <div class="input-group date">
@@ -55,7 +55,8 @@
                         <th>账号</th>
                         <th>下注项</th>
                         <th>下注金额</th>               
-                        <th>派奖金额</th>      
+                        <th>派奖金额</th> 
+                        <th>下注前金额</th>     
                         <th>状态</th>    
                       </tr> 
                    
@@ -67,12 +68,13 @@
                       <td>{{$itemdata['bet_area']}}</td>
                       <td>{{$itemdata['bet_coin']}}</td>
                       <td>{{$itemdata['distribute_coin']}}</td>
+                      <td>{{$itemdata['before_bet_coin']}}</td>
                       @if($itemdata['status']==0)
                       <td>未开奖</td>
                       @elseif($itemdata['status']==1)
-                      <td>中</td>
-                      @elseif($itemdata['status']==2)
                       <td>不中</td>
+                      @elseif($itemdata['status']==2)
+                      <td>中</td>
                       @else
                       <td>--</td>
                       @endif
@@ -122,6 +124,7 @@ $(function(){
     }
     if(balance_schedule_id!=""){
      $("#typehidden").val(3)
+    
     }
     if(status!="")
     {
@@ -151,6 +154,25 @@ $(function(){
     {
         $("#typehidden").val(10)
     }
+    if(balance_schedule_id!=""&& status!="" && start_time!=""&& end_time !="" &&user_name!=""){
+        $("#typehidden").val(11)
+    }
+    if(balance_schedule_id!="" && user_name!=""){
+        $("#typehidden").val(12);
+    }
+    if(user_name!="" && status !=""){
+        $("#typehidden").val(14);
+    }
+    if(balance_schedule_id!="" && status !=""){
+        $("#typehidden").val(15);
+    }
+    if(balance_schedule_id!="" && user_name!="" && status !=""){
+        $("#typehidden").val(13);
+    }
+    if(balance_schedule_id==""&& status=="" && start_time=="" && end_time=="" && user_name ==""){
+      $("#typehidden").val(1)
+    }
+     $("#pagehidden").val(1);
     return true;
   }
 

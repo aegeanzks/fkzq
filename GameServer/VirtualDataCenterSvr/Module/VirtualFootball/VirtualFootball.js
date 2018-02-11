@@ -21,8 +21,6 @@ function VirtualFootball(){
     var timeAgent = new VirtualFootballTimeAgent();
     var updateTimer = new SingleTimer();
     updateTimer.startup(200);
-    var betItemUpdateTimer = new SingleTimer();
-    betItemUpdateTimer.startup(60000);
 
     var classLogVirtualBet = OBJ('DbMgr').getStatement(Schema.LogVirtualBet());
     var classVirtualSchedule = OBJ('DbMgr').getStatement(Schema.VirtualSchedule());
@@ -53,8 +51,6 @@ function VirtualFootball(){
         timeAgentUpdate(timestamp);
         //比赛代理更新
         matchAgentUpdate(timestamp);
-        //投注信息更新
-        betItemUpdate(timestamp);
         //准备时间段内支持率变化更新
         supportUpdate(timestamp);
     };
@@ -163,16 +159,18 @@ function VirtualFootball(){
         }
     }
 
-    function betItemUpdate(timestamp){
-        if(null != betItemUpdateTimer && betItemUpdateTimer.toNextTime()){
-            //发送投注项数据
-            OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshBetItem', {
-                betItem1:betItem1,
-                betItem2:betItem2,
-                betItem3:betItem3,
-            });
-        }
+    this.refreshBetItem = function(data){
+        betItem1 = data.betItem1;
+        betItem2 = data.betItem2;
+        betItem3 = data.betItem3;
+        //发送投注项数据
+        OBJ('RpcModule').broadcastGameServer('VirtualFootball', 'refreshBetItem', {
+            betItem1:betItem1,
+            betItem2:betItem2,
+            betItem3:betItem3,
+        });
     }
+
     this.getCurData = function(target, data){
         OBJ('RpcModule').send(target, 'VirtualFootball', 'resCurData', {
             no:timeAgent.no,

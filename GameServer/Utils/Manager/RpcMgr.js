@@ -18,6 +18,9 @@ function RpcMgr(){
     var amqp = require('amqplib/callback_api');
     var rpcCh;
     var thisServerId;
+    var waitArray = [];
+    var bStart = false;
+    var self = this;
 
     this.run = function(serverId, cbfunc){
         
@@ -71,31 +74,41 @@ function RpcMgr(){
                     }
                 }, {noAck: true});
                 console.log('rpc已连接...');
+                bStart = true;
                 cbfunc();
+                dealWaitArray();
             });
         });
     };
     this.send = function(target, moduleName, funcName, msgData){
-        var json = {'source':thisServerId, 'msgData':{
-            type:0,
-            moduleName:moduleName,
-            funcName:funcName,
-            msgData:msgData
-        }};
-        rpcCh.sendToQueue(target, new Buffer(JSON.stringify(json)));
+        if(bStart){
+            var json = {'source':thisServerId, 'msgData':{
+                type:0,
+                moduleName:moduleName,
+                funcName:funcName,
+                msgData:msgData
+            }};
+            rpcCh.sendToQueue(target, new Buffer(JSON.stringify(json)));
+        }else{
+            waitArray.push({operator:'send', target:target, moduleName:moduleName, funcName:funcName, msgData:msgData});
+        }
     };
     var reqMap = new Map();
     this.req = function(target, moduleName, funcName, msgData, func){
-        var id = uuid.v4();
-        var json = {'source':thisServerId, 'msgData':{
-            type:1,
-            moduleName:moduleName,
-            funcName:funcName,
-            id:id,
-            msgData:msgData
-        }};
-        reqMap.set(id, func);
-        rpcCh.sendToQueue(target, new Buffer(JSON.stringify(json)));
+        if(bStart){
+            var id = uuid.v4();
+            var json = {'source':thisServerId, 'msgData':{
+                type:1,
+                moduleName:moduleName,
+                funcName:funcName,
+                id:id,
+                msgData:msgData
+            }};
+            reqMap.set(id, func);
+            rpcCh.sendToQueue(target, new Buffer(JSON.stringify(json)));
+        }else{
+            waitArray.push({operator:'req', target:target, moduleName:moduleName, funcName:funcName, msgData:msgData, func:func});
+        }
     };
     function Response(source, id){
         var target = source;
@@ -108,5 +121,14 @@ function RpcMgr(){
             }};
             rpcCh.sendToQueue(target, new Buffer(JSON.stringify(json)));
         };
+    }
+    function dealWaitArray(){
+        for(var item of waitArray){
+            if('send' == item.operator){
+                self.send(item.target, item.moduleName, item.funcName, item.msgData);
+            } else if('req' == item.operator){
+                self.req(item.target, item.moduleName, item.funcName, item.msgData);
+            }
+        }
     }
 }

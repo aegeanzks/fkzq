@@ -20,6 +20,10 @@ router.get('/getGoalInfo',GameConfigController.getGoalInfo);
 router.get('/delGoalById',GameConfigController.delGoalInfoByID);
 
 router.get('/updateEventInfo',GameConfigController.updateEventInfo);
+router.get('/updateGoalInfo',GameConfigController.updateGoalInfo);
+router.get('/getRealBetItem',GameConfigController.getRealBetItem);
+router.get('/getVirtualBetItem',GameConfigController.getVirtualBetItem);
+router.get('/updateBetItem',GameConfigController.updateBetItem);
 //end 游戏配置
 
 

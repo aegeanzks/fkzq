@@ -34,9 +34,9 @@
                         <th>&nbsp;</th>
                         <th>用户ID</th>
                         <th>账号</th>
-                        <th>金币</th>
-                        <th>注册时间</th>
-                        <th>注册IP</th>
+                        <!-- <th>金币</th> -->
+                        <!-- <th>注册时间</th> -->
+                        <!-- <th>注册IP</th> -->
                         <th>最后登录时间</th>               
                         <th>最后登录IP</th>      
                         <th>登录次数</th>      
@@ -52,9 +52,9 @@
                       <td><input type="checkbox" name="selcheck_{{$itemdata['user_id']}}" id="selcheck_{{$itemdata['user_id']}}" value="{{$itemdata['user_id']}}" /></td>
                       <td>{{$itemdata['user_id']}}</td>
                       <td>{{$itemdata['user_name']}}</td>
-                      <td>0</td>
-                      <td>2017-1-1</td>
-                      <td>0.0.0.0</td>
+                      <!-- <td>0</td> -->
+                      <!-- <td>2017-1-1</td> -->
+                      <!-- <td>0.0.0.0</td> -->
                       <td>{{$itemdata['last_login_date']}}</td>
                       <td>{{$itemdata['last_login_ip']}}</td>
                       <td>{{$itemdata['login_count']}}</td>

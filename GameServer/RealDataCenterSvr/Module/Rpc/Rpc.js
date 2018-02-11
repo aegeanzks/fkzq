@@ -10,11 +10,15 @@ module.exports = Rpc;
 var OBJ = require('../../../Utils/ObjRoot').getObj;
 var SingleTimer = require('../../../Utils/SingleTimer');
 var configWallet = require('../../../config').agentSvrConfig();
+var configDaemon = require('../../../config').daemonSvrConfig();
 
 function Rpc(){
+    var self = this;
     var gamePingMap = new Map();
     var pingTimer = new SingleTimer();
     pingTimer.startup(5000);
+    var firePingTimer = new SingleTimer();
+    firePingTimer.startup(1000);
     var listInitFunc = [];
     this.registerInitFun = function(func){
         listInitFunc.push(func);
@@ -27,8 +31,9 @@ function Rpc(){
             for(var func of listInitFunc){
                 func(msg.source);
             }
+        }else{
+            gamePingMap.set(msg.source, Date.now()+5000);
         }
-        
     };
 
     this.run = function(timestamp){
@@ -40,7 +45,12 @@ function Rpc(){
                 }
             }
         }
-    }
+        if(null != firePingTimer && firePingTimer.toNextTime()){
+            self.send(configDaemon.serverId, 'Rpc', 'gameServerPing', {
+                source:SERVERID
+            });
+        }
+    };
 
     this.broadcastGameServer = function(moduleName, funcName, msg){
         for (var value of gamePingMap){
@@ -50,6 +60,10 @@ function Rpc(){
 
     this.send = function(target, moduleName, funcName, msg){
         OBJ('RpcMgr').send(target, moduleName, funcName, msg);
+    };
+
+    this.req = function(target, moduleName, funcName, msg, func){
+        OBJ('RpcMgr').req(target, moduleName, funcName, msg, func);
     };
 
     this.getServerCount = function(){
@@ -63,4 +77,12 @@ function Rpc(){
     this.req2Wallet = function(moduleName, funcName, msg, func){
         OBJ('RpcMgr').req(configWallet.serverId, moduleName, funcName, msg, func);
     };
+
+    function init(){
+        self.send(configDaemon.serverId, 'Rpc', 'reqApplyOpen', {
+            source:SERVERID, 
+            pid:process.pid
+        });
+    }
+    init();
 }

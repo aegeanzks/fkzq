@@ -20,7 +20,7 @@
 </ul>
 <div class="tab-content">
 <div class="tab-pane active" id="reparation">
-<div class="row" style="margin:8px;">
+<div class="row" style="margin:4px;">
 <a class="btn btn-info" href="{{ url('/system/addoodinfo')}}" >添加</a>
 </div>
   <div class="box">
@@ -48,8 +48,8 @@
                        <td><span>{{ $data['zero']}}</span></td>
                        <td><span>{{ $data['guest_goal']}}</span></td>
                        <td>
-                       <a class="btn btn-info" href="/system/gameoodloadinfo/{{$data['id']}}" style="width:80px; float:left;margin:0px 2px;">修改</a>
-                       <a class="btn btn-success delete-confirm" href="/system/gameoodinfodel/{{$data['id']}}" tip="确认删除吗？" style="width:80px; float:left;margin:0px 2px;">删除</a>
+                       <a class="btn btn-info" href="/system/gameoodloadinfo/{{$data['id']}}" style="width:80px; line-height:0.6;float:left;margin:0px 2px;">修改</a>
+                       <a class="btn btn-success delete-confirm" href="/system/gameoodinfodel/{{$data['id']}}" tip="确认删除吗？" style="width:80px; line-height:0.6;float:left;margin:0px 2px;">删除</a>
                        </td>
                       </tr>
                       @endforeach

@@ -9,15 +9,18 @@ module.exports = AdminSvr;
 
 var OBJ = require('../Utils/ObjRoot').getObj;
 
+var RpcMgr = require('../Utils/Manager/RpcMgr');
 var ModuleMgr = require('../Utils/Manager/ModuleMgr');
 var DbMgr = require('../Utils/Manager/DbMgr');
 var LogMgr = require('../Utils/Manager/LogMgr');
+var RpcModule = require('./Module/Rpc/RpcModule');
 var express = require('express');
 var Router = require('./Routes/index');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
 var config = configs.adminSvrConfig();
+global.SERVERID = config.serverId;
 
 var RlRaceController = require('./Controller/RealFootball/RaceController');
 var RlRecordsController = require('./Controller/RealFootball/RecordsController');
@@ -32,18 +35,19 @@ function AdminSvr(){
 AdminSvr.start = function () {
     //管理器初始化
     new LogMgr();
-    console.log('开始启动服务('+config.serverId+')...');
+    console.log('开始启动服务('+config.serverId+') pid('+process.pid+')...');
     new ModuleMgr();
+    new RpcMgr();
     new DbMgr().init(mongoCfg);
     AdminSvr.regsterFun();
-
-    AdminSvr.run();
+    OBJ('RpcMgr').run(SERVERID, AdminSvr.run);
     console.log('服务已启动...');
 };
 
 //注册
 AdminSvr.regsterFun = function(){
     //用户组件
+    new RpcModule();
     new RlRaceController();
     new RlRecordsController();
     new GameConfigController();

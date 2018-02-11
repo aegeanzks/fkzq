@@ -26,9 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $ip = $_SERVER["REMOTE_ADDR"];
         //return view('home');
         $isdel= Auth::user()->isdelete;
-        if($isdel==0){
+        if ($isdel == 0) {
+            $nuserinfo = [
+                'loginip' => $ip,
+            ];
+            User::where('id', Auth::user()->id)->update($nuserinfo);
             return view('home');
         }
         else{

@@ -23,7 +23,7 @@ exports.Schedule = function(){
                 unique: true,
             },                   
             match_num:{                   //场次
-                type:Number,
+                type:String,
                 index:true,
             }, 
             phase:{                      //期号
@@ -61,7 +61,7 @@ exports.Schedule = function(){
             },
             display_flag:{               //是否显示
                 type:Number,
-                default:1,               //0 不显示  1显示
+                default:0,               //0 不显示  1显示
             },
             input_flag:{                //是否录入管理员数据
                 type:Number,
@@ -179,22 +179,85 @@ exports.LogRealBet = function(){
                 index: true,
             },
             bet_server:String,        //对应的游戏服
-            bet_scheduleid:Array,     //投注赛事id列表
             bet_num: Number,          //注数
-            bet_type: Number,         //投注类型   1场 2(2串1) 3(3串1) 4(4串1)
+            win_num:{                 //中奖的注数
+                type:Number,
+                default:0
+            },          
+            multiple: Number,         //倍数
             jingcai_type:Number,      //竞猜类型  1胜平负  2让球胜平负 3混合过关
+            perbet_coin:Number,       //每注金额
             bet_coin: Number,         //下注金额
             distribute_coin: Number,  //预派发金额
-            realDistrobute_coin:{     //实际派发金额  可能有赛事取消
+            realDistrobute_coin:{     //实际派发金额  
                 type:Number,
                 default:0,
             },
             before_bet_coin: Number,  //下注前金额
-            status: Number,           //状态 0未开奖 1中 2不中 3结算失败
-            bet_plan: Array,          //投注方案,格式为{'schedule_id':,'match_date':,'team_name':,'odds':,"betClass":,"betArea":,"handicap":,'schedule_result':,'status':}数组
-                                      //schedule_id 赛事id,match_date 比赛时间,team_name 比赛队伍,odds 下注时赔率,betClass 下注类型 1胜平负 2让球胜平负
-                                      //betArea 投注区域 1主 2平 3客，handicap 让球数, schedule_result 比赛结果 -1 取消比赛 0未知 1主胜 2平 3客胜
-                                      //status竞猜状态  0未开奖  1中奖   2不中
+            status:{                  //总注竞猜状态 0未开奖 1中 2不中 3结算失败
+                type:Number,
+                default:0,
+            }, 
+            bet_types:[{              //串场类型   1(单场)  2(2串1)  3(3串1)  4(4串1)
+                judged:Number,
+            }],         
+            bet_items:[{              //投注赛事区域信息
+                schedule_id:Number,  
+                phase:Number,         //期号
+                official_num:String,  //场次  
+                match_date:Date,
+                team_name:String,
+                odds:{                //胜平负赔率
+                    h:Number,
+                    d:Number,
+                    a:Number,
+                },
+                rangqiu_odds:{       //让球胜平负赔率
+                    h:Number,
+                    d:Number,
+                    a:Number,
+                },
+                handicap:String,
+                is_settlement:{       //  0默认  1比赛结束
+                    type:Number,
+                    default:0
+                },
+                bet_content:[{
+                    bet_class:Number,
+                    schedule_result:{ // 1主胜 2平 3主负 -1取消赛事
+                        type:Number,
+                        default:0,
+                    },
+                    bet_area:{        //该订单该赛事有投过的区域
+                        h:Number,
+                        d:Number,
+                        a:Number,
+                    },
+                }],
+            }],          
+            bet_plan:[{               //投注计划   
+                bet_index:Number,     //第几注
+                total_odds:Number,    //该注赔率
+                status:{              //单注竞猜状态  0未开奖  1中奖   2不中
+                    type:Number,
+                    default:0,
+                }, 
+                total_num:{           //中几场赛事
+                    type:Number,
+                    default:0,
+                },       
+                bet_info:[{           //bet_items投注赛事排列组合
+                    schedule_id:Number,
+                    bet_class:Number,
+                    bet_area:Number,
+                    result:{          //用于单注结算 0默认值   1中奖    2不中  
+                        type:Number,
+                        default:0
+                    }
+                }],
+            }] ,  
+            trade_no:String,         //投注钱包返回的uuid
+            trade_endno:String,      //结算钱包返回的uuid
         }
     };
 };

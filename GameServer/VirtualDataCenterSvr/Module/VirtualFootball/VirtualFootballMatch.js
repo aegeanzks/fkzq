@@ -615,6 +615,11 @@ function VirtualFootballMatch(conf, beginTime, endTime, callBackStep){
     }
     //判断是否作弊
     function checkCheat() {
+        if(curStock < 0){
+            bCheat = true;
+            console.log('是否作弊:'+bCheat);
+            return;
+        }
         var cheatChange = 0;
         if(curStock <= stockThreshold1)
             cheatChange = cheatChange1;

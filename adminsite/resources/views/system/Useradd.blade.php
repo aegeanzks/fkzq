@@ -7,13 +7,13 @@
 <ol class="breadcrumb">
   <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> 首页</a></li>
   <li><a href="{{url('/userlist')}}">管理员列表</a></li>
-  <li class="active">编辑管理员</li>
+  <li class="active">添加管理员</li>
 </ol>
 </section>
 <section class="content">
 <div class="box box-warning">
 <div class="box-header with-border">
-  <h3 class="box-title">编辑</h3>
+  <h3 class="box-title">添加管理员</h3>
 </div>
 <!-- /.box-header -->
 <div class="box-body">

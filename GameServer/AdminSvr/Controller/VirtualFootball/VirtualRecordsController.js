@@ -148,7 +148,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 				const begin_time7 = req.query.start_time;
 				const end_time7 = req.query.end_time;
 				const page7 = req.query.page;
-				if(!outtradeno|| !status7 ||(!begin_time7&& !Number(begin_time7)) 
+				if(!balance_schedule_id7 ||(!begin_time7&& !Number(begin_time7)) 
 					|| (!end_time7 && !Number(end_time7))|| (!page7 && !Number(page7))){
 					res.send({
 						status:2,
@@ -163,10 +163,10 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
         case '9':
                 //校验参数合法性
                 const user_name9= req.query.user_name;
-				const status8 = req.query.status8;
+				const status8 = req.query.status;
 				const begin_time8 = req.query.start_time;
 				const end_time8 = req.query.end_time;
-				const page8 = req.query.page;
+				const page8 = parseInt(req.query.page);
 				if(!user_name9 || !status8 ||(!begin_time8 && !Number(begin_time8)) || (!end_time8 && !Number(end_time8))|| (!page8 && !Number(page8))){
 					res.send({
 						status:2,
@@ -176,7 +176,7 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-                VRecordsModule.vrecordListByusertimestaus(user_name9,status8,begin_time8,end_tim8,page8,res);
+                VRecordsModule.vrecordListByusertimestaus(user_name9,parseInt(status8),begin_time8,end_time8,page8,res);
                 break;
           case '10': 
                 //校验参数合法性
@@ -195,7 +195,92 @@ RlVirtualRecordsController.recordslist=function(req,res,next){
 					return 
 				}
 				//获取数据
-				VRecordsModule.vrecordListBydatenumtimestaus(balance_schedule_id10,status9,begin_time9,end_time9,page9,res);
+				VRecordsModule.vrecordListBydatenumtimestaus(balance_schedule_id10,parseInt(status9),begin_time9,end_time9,page9,res);
+				break;
+			case '11':
+				//校验参数合法性
+				const balance_schedule_id11 = parseInt(req.query.balance_schedule_id);
+				const user_name11 = req.query.user_name;
+				const status11 = req.query.status;
+				const begin_time11 = req.query.start_time;
+				const end_time11 = req.query.end_time;
+				const page11 = parseInt(req.query.page);
+				if(!balance_schedule_id11|| !status11 ||(!begin_time11&& !Number(begin_time11)) 
+					|| (!end_time11 && !Number(end_time11))|| (!page11 && !Number(page11))){
+					res.send({
+						status:2,
+						type: 'ERROR_DATENUM_USERNAME_STATUS_BEGINTIME_ENDTIME_PAGE',
+						message: 'balance_schedule_id||status||begin_time||end_time||page参数错误',
+					})
+					return 
+				}
+				//获取数据
+				VRecordsModule.vrecordListByall(balance_schedule_id11,parseInt(status11),begin_time11,end_time11,user_name11,page11,res);
+				break;
+			case '12':
+				//校验参数合法性
+				const balance_schedule_id12 = parseInt(req.query.balance_schedule_id);
+				const user_name12 = req.query.user_name;
+				const page12 = parseInt(req.query.page);
+				if(!balance_schedule_id12 || !user_name12|| (!page12 && !Number(page12))){
+					res.send({
+						status:2,
+						type: 'ERROR_DATENUM_USERNAME_STATUS_BEGINTIME_ENDTIME_PAGE',
+						message: 'balance_schedule_id||status||begin_time||end_time||page参数错误',
+					})
+					return 
+				}
+				//获取数据
+				VRecordsModule.vrecordListByidAndUser(balance_schedule_id12,user_name12,page12,res);
+				break;
+			case '13':
+				//校验参数合法性
+				const balance_schedule_id13 = parseInt(req.query.balance_schedule_id);
+				const user_name13 = req.query.user_name;
+				const status13 = req.query.status;
+				const page13 = parseInt(req.query.page);
+				if(!balance_schedule_id13 || !user_name13|| !status13|| (!page13 && !Number(page13))){
+					res.send({
+						status:2,
+						type: 'ERROR_DATENUM_USERNAME_STATUS_BEGINTIME_ENDTIME_PAGE',
+						message: 'balance_schedule_id||status||begin_time||end_time||page参数错误',
+					})
+					return 
+				}
+				//获取数据
+				VRecordsModule.vrecordListByidUserStatus(balance_schedule_id13,user_name13,parseInt(status13),page13,res);
+				break;
+			case '14':
+				//校验参数合法性
+				const user_name14 = req.query.user_name;
+				const status14 = req.query.status;
+				const page14 = parseInt(req.query.page);
+				if(!user_name14 || !user_name14|| !status14|| (!page14 && !Number(page14))){
+					res.send({
+						status:2,
+						type: 'ERROR_PARAMS',
+						message: '参数错误',
+					})
+					return 
+				}
+				//获取数据
+				VRecordsModule.vrecordListByUserStatus(user_name14,parseInt(status14),page14,res);
+				break;
+			case '15':
+				//校验参数合法性
+				const balance_schedule_id15 = parseInt(req.query.balance_schedule_id);
+				const status15 = req.query.status;
+				const page15 = parseInt(req.query.page);
+				if(!balance_schedule_id15 || !status15|| (!page15 && !Number(page15))){
+					res.send({
+						status:2,
+						type: 'ERROR_PARAMS',
+						message: '参数错误',
+					})
+					return 
+				}
+				//获取数据
+				VRecordsModule.vrecordListByidStatus(balance_schedule_id15,parseInt(status15),page15,res);
 				break;
 			default: 
 				res.json({

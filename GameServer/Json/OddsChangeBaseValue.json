@@ -1,6 +1,7 @@
 {
   "1": {
     "id": 1,
+    "id_1": 1,
     "change_rate": 6,
     "base_value": 0.01,
     "max_reward": 0.9,

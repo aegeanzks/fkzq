@@ -21,17 +21,20 @@ var RealFootballModule = require('./Module/RealFootball/RealFootballModule');
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
 var config = configs.realDataCenterSvrConfig();
+global.SERVERID = config.serverId;
 
 function GameSvr(){}
 
 GameSvr.start = function () {
     //管理器初始化
     new LogMgr();
-    console.log('开始启动服务('+config.serverId+')...');
+    console.log('开始启动服务('+config.serverId+') pid('+process.pid+')...');
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
     new HttpClientMgr();
-    new RpcMgr().run(config.serverId, GameSvr.run);
+    new RpcMgr();
+    GameSvr.regsterFun();
+    OBJ('RpcMgr').run(config.serverId, GameSvr.run);
 };
 
 //用户模块注册
@@ -44,7 +47,6 @@ GameSvr.regsterFun = function(){
 //运行
 GameSvr.run = function() {
     console.log('服务已启动...');
-    GameSvr.regsterFun();
     OBJ('ModuleMgr').run(config.runInterval);
 };
 

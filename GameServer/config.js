@@ -6,14 +6,14 @@
 
 exports.mongodb = function(){
 	return {
-        DBURL:'mongodb://127.0.0.1:27017/kzgame', //数据库连接
+        DBURL:'mongodb://zks:zks@127.0.0.1:27017/kzgame', //数据库连接
         debug:false,
 	};
 };
 //rpc
 exports.rpc = function(){
     return {
-        RPCURL:'amqp://zks:zks@192.168.1.118', //RPC
+        RPCURL:'amqp://zks:zks@192.168.1.103', //RPC
     };
 };
 
@@ -65,14 +65,22 @@ exports.adminSvrConfig = function(){
         limit:20,
         sign:'4A1fd0cEskf',
     }
-}
+};
 
 exports.agentSvrConfig = function(){
     return {
         serverId:'agent',
         //数据采集频率
         httpPort:11000,
-        runInterval:300//帧率
+        runInterval:300,//帧率
+        wsUrl:'ws://120.79.91.250:4181?platform_id=20',
+        origin:'http://120.79.91.250:4181/'
+    };
+};
+
+exports.daemonSvrConfig = function(){
+    return {
+        serverId:'daemon'
     };
 };
 

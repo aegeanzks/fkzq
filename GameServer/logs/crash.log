@@ -1,0 +1,24 @@
+2018-02-07 14:37:45:070 - [31merror[39m: uncaughtException: aa is not defined date=Wed Feb 07 2018 14:37:45 GMT+0800 (中国标准时间), pid=13796, uid=null, gid=null, cwd=d:\sport\crazy_football_server\GameServer, execPath=D:\Program Files\nodejs\node.exe, version=v6.11.2, argv=[D:\Program Files\nodejs\node.exe, d:\sport\crazy_football_server\GameServer\GameSvr\App.js, server2], rss=64327680, heapTotal=37797888, heapUsed=31055264, external=17896184, loadavg=[0, 0, 0], uptime=15910.8242001
+ReferenceError: aa is not defined
+    at d:\sport\crazy_football_server\GameServer\GameSvr\Module\RealFootball\RealFootball.js:335:26
+    at Query.<anonymous> (d:\sport\crazy_football_server\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at d:\sport\crazy_football_server\GameServer\node_modules\kareem\index.js:273:21
+    at d:\sport\crazy_football_server\GameServer\node_modules\kareem\index.js:131:16
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-09 17:00:49:113 - [31merror[39m: uncaughtException: OBJ(...).sendToVtDataCenter is not a function date=Fri Feb 09 2018 17:00:49 GMT+0800 (中国标准时间), pid=13360, uid=null, gid=null, cwd=D:\sport\crazy_football_server\GameServer, execPath=D:\Program Files\nodejs\node.exe, version=v6.11.2, argv=[D:\Program Files\nodejs\node.exe, D:\sport\crazy_football_server\GameServer\AdminSvr\app.js], rss=48979968, heapTotal=33603584, heapUsed=26644624, external=17898889, loadavg=[0, 0, 0], uptime=28832.9942001
+TypeError: OBJ(...).sendToVtDataCenter is not a function
+    at D:\sport\crazy_football_server\GameServer\AdminSvr\Module\SystemManage\GameConfigModule.js:751:42
+    at Query.<anonymous> (D:\sport\crazy_football_server\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at D:\sport\crazy_football_server\GameServer\node_modules\kareem\index.js:273:21
+    at D:\sport\crazy_football_server\GameServer\node_modules\kareem\index.js:131:16
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-09 17:09:20:378 - [31merror[39m: uncaughtException: OBJ(...).sendToVtDataCenter is not a function date=Fri Feb 09 2018 17:09:20 GMT+0800 (中国标准时间), pid=12152, uid=null, gid=null, cwd=D:\sport\crazy_football_server\GameServer, execPath=D:\Program Files\nodejs\node.exe, version=v6.11.2, argv=[D:\Program Files\nodejs\node.exe, D:\sport\crazy_football_server\GameServer\AdminSvr\app.js], rss=47718400, heapTotal=31506432, heapUsed=25214984, external=17884875, loadavg=[0, 0, 0], uptime=29344.2657001
+TypeError: OBJ(...).sendToVtDataCenter is not a function
+    at D:\sport\crazy_football_server\GameServer\AdminSvr\Module\SystemManage\GameConfigModule.js:751:42
+    at Query.<anonymous> (D:\sport\crazy_football_server\GameServer\node_modules\mongoose\lib\model.js:4054:16)
+    at D:\sport\crazy_football_server\GameServer\node_modules\kareem\index.js:273:21
+    at D:\sport\crazy_football_server\GameServer\node_modules\kareem\index.js:131:16
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+    at process._tickCallback (internal/process/next_tick.js:104:9)

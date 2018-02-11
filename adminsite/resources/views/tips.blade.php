@@ -33,11 +33,18 @@
     </section>
     <script>
       $(function(){
+        var url=document.referrer;
         var wait = document.getElementById('wait');
         var interval = setInterval(function(){
           var time = --wait.innerHTML;
           if(time <= 0) {
-            history.back();
+         //   
+            if(url==""){
+              history.back();
+            }
+            else{
+              document.location.href= url ;
+            }
             clearInterval(interval);
           };
         }, 1000);

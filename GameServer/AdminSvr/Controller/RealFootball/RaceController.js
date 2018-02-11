@@ -295,10 +295,16 @@ RlRaceController.updateRaceInfo = function(req,res,next){
 					fields.away_team = req.query.away_team;
 					fields.odds_jingcai = req.query.odds_jingcai;
 					fields.odds_rangqiu = req.query.odds_rangqiu;
+					if(req.query.input_flag == '1' && req.query.lottery_status == '0'){
+						fields.odds_jingcai_admin = req.query.odds_jingcai_admin;
+						fields.odds_rangqiu_admin = req.query.odds_rangqiu_admin;
+					}
+					fields.lottery_status = req.query.lottery_status;
 					fields.input_flag = req.query.input_flag;
 					fields.final_score=req.query.final_score;
 					if (!fields.id || !Number(fields.id) || !fields.home_team || !fields.away_team
-						 || !fields.odds_jingcai || !fields.odds_rangqiu || !fields.input_flag || !fields.final_score) {
+						 || !fields.odds_jingcai || !fields.odds_rangqiu || !fields.input_flag ||
+						 (req.query.input_flag == '1' &&req.query.lottery_status == '0' && (!fields.odds_jingcai_admin || !fields.odds_rangqiu_admin)) ) {
 						res.json({
 							status:2,
 							type: 'ERROR_ID_HOMETEAM_AWAYTEAM_ODDSJINGCAI_ODDSRANGQIU_INPUTFLAG',

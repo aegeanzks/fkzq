@@ -55,6 +55,7 @@ function Login(){
                     var res = new pbSvrcli.Res_Login();
                     res.setResult(data.res);
                     res.setCoin(data.balance);
+                    res.setName(userName);
                     //登录成功返回金币
                     OBJ('WsMgr').send(socket, pbSvrcli.Res_Login.Type.ID, res.serializeBinary());
                     //登录记录

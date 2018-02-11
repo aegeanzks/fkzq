@@ -15,18 +15,18 @@ message RspCommon{
 // 添加交易
 message AddTrade{
 	string out_trade_no = 1;  			// 平台订单号
-	int32  type = 2;			  		// 操作类型（1-平台转入，2-平台转出，3-用户转账）
+	int32  type = 2;			  		// 操作类型（1-用户转入，2-用户转出，3-用户转账）
 	int32 out_type = 3;					// 平台自定义订单类型
 	string out_type_description = 4; 	// 平台自定义订单类型描述
 	int32 user_id = 5;					// 用户id
 	string money = 6;					// 金额(最多保留7位小数，例如:”1.0000001”) 
 	int32 money_from = 7;				// 转账来源用户id
 	int32 game_id =8;					// 游戏id
-	int32 is_need_rebate = 9;				// 是否需要返点（1-是，2-否）
-	int32 platform_id = 10;				// 平台id
-	string memo = 11;					// 备注
-	string user_rebate = 12;			// 返点比例（代理平台用，其它平台不用传这个字段）
-	string money_from_rebate = 13;		// 转账来源用户返点比例（代理平台用，其它平台不用传这个字段）
+	int32 is_need_rebate = 9;			// 是否需要返点（1-是，2-否）
+	string used_up_rebate = 10;			// 已消耗返点
+	int32 platform_id = 11;				// 平台id
+	string memo = 12;					// 备注
+	string user_rebate = 13;			// 返点比例（代理平台用，其它平台不用传这个字段）
 }
 
 // 添加交易（响应）
@@ -84,12 +84,12 @@ message Trade{
 	int32 platform_id = 5; 		// 平台标识
 	int32 type = 6;			  	// 操作类型（1-平台转入，2-平台转出，3-用户转账）
 	int32 out_type = 7;			// 平台自定义订单类型
-	string out_type_description = 8; // 平台自定义订单类型描述
+	string out_type_description = 8; // 平台订单类型（1-充值，2-提现，3-投注，4-测小投注，5-结算，6-转账，7-转账出，8-活动，100-返点）(平台自定义从20开始)
 	string money = 9;			// 金额(最多保留7位小数，例如:”1.0000001”) 
-	int32 money_from = 10;		// 转账来源用户id
+	int32 relation_id = 10;		// 订单关联用户id（转账或返点时用到）
 	string balance = 11;		// 余额(最多保留7位小数，例如:”1.0000001”)
 	string memo = 12;			// 备注
-	string created_time = 13; 	// 创建时间
+	string created_at = 13; 	// 创建时间
 }
 
 
@@ -101,7 +101,7 @@ message NsqAddTrade{
 	string trade_no = 3;					// 交易单号
 	string balance = 4;						// 交易后余额
 	string relation_balance = 5;			// 交易后关系用户余额（用于用户转账生成流水）
-	string created_time = 6;				// 交易时间
+	string created_at = 6;					// 交易时间
 	AddTrade trade = 7;						// 订单
 }
 

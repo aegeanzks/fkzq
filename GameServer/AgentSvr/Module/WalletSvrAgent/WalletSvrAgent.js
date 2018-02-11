@@ -5,9 +5,11 @@ var pbWallet = require('../../../Msg/MsgFile/wallet_pb');
 var SingleTimer = require('../../../Utils/SingleTimer');
 var UtilFun = require('../../../Utils/Functions');
 var WebSocketClient = require('websocket').client;
+var config = require('../../../config').agentSvrConfig();
 
 function WalletSvrAgent() {
     var self = this;
+    self.isNeedRebate = 0;      //0没有返点，1有返点
 
     var uniqueId = 0;
     function getUniqueId() {
@@ -22,8 +24,7 @@ function WalletSvrAgent() {
     client.on('connectFailed', function (err) {
         console.error('钱包连接失败...');
         setTimeout(function () {
-            client.connect('ws://120.79.91.250:4181?platform_id=20', [],
-                'http://120.79.91.250:4181/');
+            client.connect(config.wsUrl, [], config.origin);
         }, 500);
     });
     client.on('connect', function (connection) {
@@ -39,8 +40,7 @@ function WalletSvrAgent() {
             console.error('钱包断开连接...');
             conn = null;
             setTimeout(function () {
-                client.connect('ws://120.79.91.250:4181?platform_id=20', [],
-                    'http://120.79.91.250:4181/');
+                client.connect(config.wsUrl, [], config.origin);
             }, 500);
         });
         connection.on('message', function (message) {
@@ -119,11 +119,10 @@ function WalletSvrAgent() {
         rb.setOutTradeNo(data.uuid);
         rb.setType(2);
         rb.setOutType(data.outType);
-        rb.setOutTypeDescription(data.outTypeDescription);
         rb.setUserId(data.userid);
-        rb.setGameId(1);
-        rb.setIsNeedRebate(2);
         rb.setMoney(data.betCoin);
+        rb.setGameId(1);
+        rb.setIsNeedRebate(self.isNeedRebate);
         rb.setPlatformId(51);
         if (!conn || !conn.connected) {
             response.rsp({
@@ -157,18 +156,17 @@ function WalletSvrAgent() {
         }
     };
 
-    //投注奖励
+    //投注奖励(结算)
     this.reqAddMoney = function (data, response) {
         console.log('reqAddMoney:'+data.userid);
         var rb = new pbWallet.AddTrade();
         rb.setOutTradeNo(data.uuid);
         rb.setType(1);
         rb.setOutType(data.outType);
-        rb.setOutTypeDescription(data.outTypeDescription);
         rb.setUserId(data.userid);
+        rb.setMoney(data.betCoin);
         rb.setGameId(1);
-        rb.setIsNeedRebate(2);
-        rb.setMoney(data.addCoin);
+        rb.setIsNeedRebate(0);
         rb.setPlatformId(51);
         if (!conn || !conn.connected) {
             response.rsp({
@@ -206,6 +204,5 @@ function WalletSvrAgent() {
 
     };
 
-    client.connect('ws://120.79.91.250:4181?platform_id=20', [],
-        'http://120.79.91.250:4181/');
+    client.connect(config.wsUrl, [], config.origin);
 }

@@ -23,13 +23,14 @@ function DataPull() {
 
     //数据库statement
     var scheduleStatement = OBJ('DbMgr').getStatement(Schema.Schedule());
-    var logRealBetStatement = OBJ('DbMgr').getStatement(Schema.LogRealBet());
     var realInfoStatement = OBJ('DbMgr').getStatement(Schema.RealInfo());
     //end 数据库statement
 
     var mapDeleteSchedule = new Map();         //开始赛事
     var mapEndSchedule = new Map();            //结束赛事 
     var mapScheduleScore = new Map();          //赛事比分
+    var mapBetNum = new Map();                 //可投注赛事,更新赛事的支持率
+    var mapModifyFields = new Map();           //本地维护的字段 hot_flag,display_flag,input_flag,odds_jingcai_admin,odds_rangqiu_admin,避免后台人员误操作多次改动
     var updateScheduleList = [];               //赛事信息更新
     var phaseScheduleIdArr = [];               //本期号赛事id  
 
@@ -40,14 +41,14 @@ function DataPull() {
     var startSvrflag = 1;                      //是否重启服务标识
     var incrementalFlag = 0;                   //增量推送的标识  
     var endPhaseFlag = 0;                      //本期号所有赛事比赛结束
-    var hasHistoryFlag = 0;                    // RealInfo是否有maxPhase字段
+    var hasHistoryFlag = 0;                    //RealInfo是否有maxPhase字段
 
     //mongodb find 输出字段列表
     var scehduleSelect = {
         "_id": 0, "id": 1, "weekday": 1, "official_num": 1, "phase": 1, "match_date": 1,
         "status": 1, "first_half": 1, "final_score": 1, "match_name": 1, "home_team": 1,
-        "away_team": 1, "odds_jingcai": 1, "handicap": 1, "odds_rangqiu": 1,
-        "display_flag": 1, "hot_flag": 1, "lottery_status": 1
+        "away_team": 1, "odds_jingcai": 1, "handicap": 1, "odds_rangqiu": 1,"odds_avg": 1,
+        "display_flag": 1, "hot_flag": 1, "lottery_status": 1, "bet_num": 1, "bet_num1": 1
     };
 
     //初始化
@@ -58,7 +59,7 @@ function DataPull() {
     */
     this.dataToPull = function () {
         endPhaseFlag = 0;
-        phaseScheduleIdArridArr = [];
+        phaseScheduleIdArr = [];
         //获取期号
         var phase = Func.getDate(phaseday);
         //获取历史数据完成
@@ -76,34 +77,34 @@ function DataPull() {
     /*
         @func 判断是否拉取历史数据
      */
-    function getMaxPhase(){
-        try{ 
-            var filter = {"status_name":"maxPhase"};
-            var select = {"_id": 0, "status_value": 1};
-            realInfoStatement.findOne(filter,select,function(error,docs){
-                if(error){
+    function getMaxPhase() {
+        try {
+            var filter = { "status_name": "maxPhase" };
+            var select = { "_id": 0, "status_value": 1 };
+            realInfoStatement.findOne(filter, select, function (error, docs) {
+                if (error) {
                     OBJ('LogMgr').error(error);
                 }
-                if(null == docs){
+                if (null == docs) {
                     hasHistoryFlag = 0;
-                }else{
+                } else {
                     hasHistoryFlag = 1;
                     var curTimeStamp = Func.getStamp(docs['status_value'].toString());
-                    var before1day = curTimeStamp - 24 * 60 *60 *1000;
+                    var before1day = curTimeStamp - 24 * 60 * 60 * 1000;
                     var before1Phase = parseInt(Func.getDate(before1day));
-                    if(before1Phase > parseInt(config['beginTime'])){
+                    if (before1Phase > parseInt(config['beginTime'])) {
                         phaseday = before1day;
                         var today = parseInt(Func.getDate(Date.now()));
-                        if(before1Phase ==  today){
+                        if (before1Phase == today) {
                             console.log('-----Start Pull online of data .....------');
                             switchOn = 1;
-                        }else{
+                        } else {
                             console.log('-----Start pull history of data .....------');
                         }
                     }
                 }
             });
-        }catch(err){
+        } catch (err) {
             OBJ('LogMgr').error(err);
         }
     }
@@ -111,29 +112,29 @@ function DataPull() {
     /*
         @func 更新maxPhase值
     */
-    function setMaxPhase(phase){
-        try{
-            if(hasHistoryFlag){
+    function setMaxPhase(phase) {
+        try {
+            if (hasHistoryFlag) {
                 var updateValue = {
-                    'status_value':phase
+                    'status_value': phase
                 };
-                realInfoStatement.update({ "status_name":"maxPhase"}, updateValue, function(error){
-                    if(error){
-                            OBJ('LogMgr').error(err);
+                realInfoStatement.update({ "status_name": "maxPhase" }, updateValue, function (error) {
+                    if (error) {
+                        OBJ('LogMgr').error(error);
                     }
                 });
-            }else{
+            } else {
                 hasHistoryFlag = 1;
                 var docRealInfo = OBJ('DbMgr').getModel(Schema.RealInfo());
                 docRealInfo.status_name = "maxPhase";
                 docRealInfo.status_value = phase;
-                docRealInfo.save(function(error){
-                    if(error){
+                docRealInfo.save(function (error) {
+                    if (error) {
                         OBJ('LogMgr').error(error);
                     }
                 });
             }
-        }catch(err){
+        } catch (err) {
             OBJ('LogMgr').error(err);
         }
     }
@@ -142,16 +143,16 @@ function DataPull() {
     /*
         @func 初始化函数
     */
-    function init(){
+    function init() {
         switchOn = (switchOn = parseInt(config['switch'])) ? switchOn : 0;
         beginTime = config['beginTime'];
-        endTime = parseInt(Func.getDate(Date.now() -24*60*60*1000));
+        endTime = parseInt(Func.getDate(Date.now() - 24 * 60 * 60 * 1000));
         phaseday = switchOn ? Date.now() : Func.getStamp(beginTime);
         freq = (freq = parseInt(config['pullInterval']) * 1000) ? freq : 6000;
         noDataTotal = (noDataTotal = parseInt(config['noDataTotal'])) ? noDataTotal : 3;
         pageUrl = 'http://api.caipiaokong.com/live/?name=jczq&format=json&uid=889953&token=007a12e40291b9b6d4a6516afcd79f58b059f2fc&phase=';
         getMaxPhase();
-        
+
     }
 
     /*
@@ -168,7 +169,7 @@ function DataPull() {
             //有比赛开始推送游戏服,停止下注
             deleteCurData();
             //比赛结束
-            endScheduleState();
+            //endScheduleState();
         }
     }
 
@@ -189,48 +190,60 @@ function DataPull() {
         }
         if (html.indexOf('{"id":"') > 0) {
             var finishNum = 0;                                                                          //用于判断phaseday是否可以跳出轮询
-            var dataArr = JSON.parse(html);
+            try{
+                var dataArr = JSON.parse(html);
+            }catch(err){
+                OBJ('LogMgr').error('err:'+err+'\nhtml:\n'+html);
+                console.log('pull the data,but not json:'+html);
+                return ;
+            }
             var len = dataArr.length;
             var nowTime = Date.now();
+            var totalCancle = 0;                                                                       //本期号赛事取消赛事总数                          
             for (var i = 0; i < len; i++) {
                 var id = parseInt(dataArr[i]['id']);
+                //判断该赛事是否为在线赛事
+                var betNumValue =mapBetNum.get(id);
                 phaseScheduleIdArr.push(id);
-                if(switchOn){                                                                           //在线数据                                                                 
-                    if(dataArr[i]['status'] == 6 || dataArr[i]['status'] == 7) {                        //取消比赛 status=6 status =7
-                        if (incrementalFlag){
+                if (switchOn) {                                                                           //在线数据                                                                 
+                    if (dataArr[i]['status'] == 6 || dataArr[i]['status'] == 7) {                        //取消比赛 status=6 status =7
+                        totalCancle++;
+                        if (incrementalFlag && betNumValue != null) {
                             //取消比赛不能下注了
                             if (mapDeleteSchedule.get(id) == null) {
-                                mapDeleteSchedule.set(parseInt(dataArr[i]['id']), 0);
+                                mapDeleteSchedule.set(id, 0);
                                 deleteScheduleFlag = 1;
                             }
                             //取消的比赛按比赛结束来算,比分0:0
-                            if(mapEndSchedule.get(id) == null){
+                            if (mapEndSchedule.get(id) == null) {
                                 var final_score = "0:0";
-                                mapEndSchedule.set(parseInt(dataArr[i]['id']), -1);
-                                mapScheduleScore.set(parseInt(dataArr[i]['id']), final_score);
+                                mapEndSchedule.set(id, -1);
+                                mapScheduleScore.set(id, final_score);
                                 endScheduleFlag = 1;
+                                //做结算
+                                endScheduleState();
                             }
                         }
                         finishNum++;
-                    }else if (dataArr[i]['status'] == '3' || dataArr[i]['status'] == '4'                //比赛结束 
+                    } else if (dataArr[i]['status'] == '3' || dataArr[i]['status'] == '4'                //比赛结束 
                         || dataArr[i]['status'] == '5') {
                         finishNum++;
                         //mapEndSchedule mapScheduleScore 赋值
-                        if (incrementalFlag && dataArr[i]['final_score'] != "") {
+                        /*if (incrementalFlag && dataArr[i]['final_score'] != "") {
                             if (mapEndSchedule.get(id) == null) {
                                 //用于比赛结束，数据正常的结算
-                                mapEndSchedule.set(parseInt(dataArr[i]['id']), 0);
-                                mapScheduleScore.set(parseInt(dataArr[i]['id']), dataArr[i]['final_score']);
+                                mapEndSchedule.set(id, 0);
+                                mapScheduleScore.set(id, dataArr[i]['final_score']);
                                 endScheduleFlag = 1;
                             }
                         }
-                        //end mapEndSchedule mapScheduleScore 赋值
+                        //end mapEndSchedule mapScheduleScore 赋值*/
                     }
                     //mapDeleteSchedule 赋值
-                    if(incrementalFlag) {
-                        if (Date.parse(dataArr[i]['match_date']) > Date.now()) {
+                    if (incrementalFlag && betNumValue != null) {
+                        if (Date.parse(dataArr[i]['match_date']) < Date.now()) {
                             if (mapDeleteSchedule.get(id) == null) {
-                                mapDeleteSchedule.set(parseInt(dataArr[i]['id']), 0);
+                                mapDeleteSchedule.set(id, 0);
                                 deleteScheduleFlag = 1;
                             }
                         }
@@ -242,9 +255,12 @@ function DataPull() {
             //本期号比赛结束
             if (finishNum == len) {
                 endPhaseFlag = 1;
-                setMaxPhase(phase);
+                //一个期号的所有赛事都取消,不set
+                if (len != totalCancle) {
+                    setMaxPhase(phase);
+                }
                 return 1;
-            }else if(0 == switchOn){
+            } else if (0 == switchOn) {
                 setMaxPhase(phase);
             }
             return 2;
@@ -265,7 +281,7 @@ function DataPull() {
         if (-1 == status) {
             return;
         }
-        if(switchOn){
+        if (switchOn) {
             totalNum++;
         }
         if (0 == status) {
@@ -362,16 +378,24 @@ function DataPull() {
         scheduleDoc.create_at = Date.parse(data['create_at']);
         scheduleDoc.official_num = data['official_num'];
         scheduleDoc.official_date = Date.parse(data['official_date']);
-        scheduleDoc.phase = parseInt(data['phase']);
+        //判断期号是否是对的
+        var weekDay = Func.getWeekDay(data['phase']);
+        if(weekDay == data['weekday']){
+            scheduleDoc.phase = parseInt(data['phase']);
+        }else{
+            var timeStime = Func.getStamp(data['phase']);
+            var before1day = timeStime - 1 * 24 * 60 * 60 * 1000;
+            scheduleDoc.phase = parseInt(Func.getDate(before1day));
+        }
+        
         scheduleDoc.match_num = data['match_num'];
         scheduleDoc.id = parseInt(data['id']);
-        
+
         //赔率为空的默认不显示
-        if(data['odds_jingcai'] == null || data['odds_rangqiu'] == null || data['odds_avg'] == null){
+        if (data['odds_jingcai'] == null || data['odds_rangqiu'] == null || data['odds_avg'] == null) {
             scheduleDoc.display_flag = 0;
         }
 
-        //scheduleDoc.official_date = moment.utc(data['official_date']).format();
         return scheduleDoc;
 
     }
@@ -395,223 +419,189 @@ function DataPull() {
         @doc  本地数据
     */
     function scheduleComp(data, doc) {
-        var docValue = {};
         var time_endsale = Date.parse(data['time_endsale']);
         var match_date = Date.parse(data['match_date']);
         var status = parseInt(data['status']);
-        var flag = 0;
-        var arr = [];
-        var pushFlag = 0;
-        var updateFlag = 0;
+        var flag = 0;                                //判断是否要更新数据库
+        var arr = {};
+        var pushFlag = 0;                            //判断该赛事信息变化是否要推送
+        var updateFlag = 0;                          //判断是否是在线赛事                       
         var curTime = Date.now();
 
-        docValue['id'] = parseInt(data['id']);
-        if (0 == doc['status'] && match_date < curTime) {
+        var docid = parseInt(data['id']);
+        //是否为在线赛事
+        var isOnline = mapBetNum.get(docid);
+        //用于判断本地维护的数据是否有变
+        var modifyFields = mapModifyFields.get(docid);
+        if (0 == doc['status'] && match_date > curTime 
+           && isOnline !=null && modifyFields !=null) {
             updateFlag = 1;
         }
-        //判断lottery_status值
-        if (data['status'] == 6 || data['status'] == 7 || data['status'] == 1) {
+
+        arr['sceheduleId'] = doc['id'];
+        //判断期号是否是对的,有些赛事的id会重复
+        arr['phase'] = doc['phase'];
+        arr['matchName'] = data['match_name'];
+        arr['endSale'] = data['match_date'].toLocaleString();
+        arr['homeName'] = data['home_team'];
+        arr['awayName'] = data['away_team'];
+        arr['handicap'] = data['handicap'];
+        arr['weekday'] = data['weekday'];
+        //有些弱强队对战不一定有赔率
+        if(doc['odds_jingcai'] != null){
+            arr['oddsJingcai'] = doc['odds_jingcai'][0];
+        }else{
+            arr['oddsJingcai'] = null;
+        }
+        if(doc['odds_rangqiu'] != null){
+            arr['oddsRangqiu'] = doc['odds_rangqiu'][0];
+        }else{
+            arr['oddsRangqiu']  = null;
+        }
+        arr['hotFlag'] = doc['hot_flag'];
+
+        //判断lottery_status值是否更新
+        if (data['status'] == 6 || data['status'] == 7 || data['status'] == 1) {           //6,7取消的比赛  1比赛进行中
             if (doc['lottery_status'] != 1) {
-                docValue['lottery_status'] = 1;
+                doc['lottery_status'] = 1;
                 flag = 1;
             }
-        } else if (data['status'] == 3 || data['status'] == 4 || data['status'] == 5) {
+        } else if (data['status'] == 3 || data['status'] == 4 || data['status'] == 5) {    //3,4,5 比赛结束
             if (data['final_score'] != "") {
                 if (doc['lottery_status'] != 2) {
-                    docValue['lottery_status'] = 2;
+                    doc['lottery_status'] = 2;
                     flag = 1;
                 }
             } else {
                 if (doc['lottery_status'] != 1) {
-                    docValue['lottery_status'] = 1;
+                    doc['lottery_status'] = 1;
                     flag = 1;
                 }
             }
-        } else if (data['status'] == 0) {
+        } else if (data['status'] == 0) {                                                  //0  比赛未开始
             if (doc['lottery_status'] != 0) {
-                docValue['lottery_status'] = 0;
+                doc['lottery_status'] = 0;
                 flag = 1;
             }
         }
 
-        //不显示默认为比赛结束去推送
-        if (0 == doc['display_flag'] && (match_date < curTime)) {
-            if (incrementalFlag) {
-                if (mapDeleteSchedule.get(docValue['id']) == null) {
-                    mapDeleteSchedule.set(parseInt(docValue['id']), 0);
-                    deleteScheduleFlag = 1;
-                }
-            }
-        }
         if (Date.parse(doc['time_endsale']) != time_endsale) {
-            docValue['time_endsale'] = new Date(time_endsale);
+            doc['time_endsale'] = new Date(time_endsale);
             flag = 1;
         }
-        arr['sceheduleId'] = data['id'];
-        arr['phase'] = data['phase'];
-        arr['matchName'] = data['match_name'];
+
         if (Date.parse(doc['match_date']) != match_date) {
-            docValue['match_date'] = new Date(match_date);
+            doc['match_date'] = new Date(match_date);
+            arr['endSale'] = doc['match_date'].toLocaleString();
             flag = 1;
             if (updateFlag) {
                 pushFlag = 1;
             }
-        }
-        arr['endSale'] = data['match_date'].toLocaleString();
-        arr['homeName'] = data['home_team'];
-        arr['awayName'] = data['away_team'];
-
-        if (doc['first_half'] != data['first_half']) {
-            docValue['first_half'] = data['first_half'];
-            flag = 1;
-        }
-        if (doc['final_score'] != data['final_score']) {
-            docValue['final_score'] = data['final_score'];
-            flag = 1;
         }
         if (doc['status'] != status) {
-            docValue['status'] = status;
+            doc['status'] = status;
+            //docValue['status'] = status;
+            //比分和状态同时录入
+            if(status == 3 || status == 4 || status == 5){
+                OBJ('LogMgr').info('status:'+status+'doc final_score:'+doc['final_score']+' data final_score:'+data['final_score']);
+                if(doc['final_score'] == null && data['final_score'] != null){
+                    if (mapEndSchedule.get(docid) == null) {
+                        //用于比赛结束，数据正常的结算
+                        mapEndSchedule.set(docid, 0);
+                        mapScheduleScore.set(docid, data['final_score']);
+                        endScheduleFlag = 1;
+                        OBJ('LogMgr').info('settlement status scheduleId'+docid);	
+                        endScheduleState();
+                    }
+                }
+            }
             flag = 1;
         }
-        if (doc['handicap'] != data['handicap']) {
-            docValue['handicap'] = data['handicap'];
+        if (doc['first_half'] != data['first_half'] 
+            && data['first_half'] != null) {
+            doc['first_half'] = data['first_half'];
+            //docValue['first_half'] = data['first_half'];
+            flag = 1;
+        }
+        if (doc['final_score'] != data['final_score']
+            && data['final_score'] != null) {
+            var temp = doc['final_score'];
+            doc['final_score'] = data['final_score'];
+            OBJ('LogMgr').info('doc final_score:'+temp+'data final_score:'+doc['final_score']);
+            //比分和状态不同时录入
+            if (mapEndSchedule.get(docid) == null) {
+                //用于比赛结束，数据正常的结算
+                mapEndSchedule.set(docid, 0);
+                mapScheduleScore.set(docid, data['final_score']);
+                endScheduleFlag = 1;
+                OBJ('LogMgr').info('settlement final_score scheduleId'+docid);	
+                endScheduleState();
+            }
+            flag = 1;
+        }
+        if (doc['handicap'] != data['handicap'] && data['handicap'] != null) {
+            doc['handicap'] = data['handicap'];
             flag = 1;
             if (updateFlag) {
                 pushFlag = 1;
             }
         }
-        arr['handicap'] = data['handicap'];
-        if (doc['weekday'] != data['weekday']) {
-            docValue['weekday'] = data['weekday'];
+        if (doc['weekday'] != data['weekday'] && data['weekday'] != null) {
+            doc['weekday'] = data['weekday'];
+            arr['weekday'] = data['weekday'];
             flag = 1;
             if (updateFlag) {
                 pushFlag = 1;
             }
         }
-        arr['weekday'] = data['weekday'];
+        arr['officialNum'] = arr['weekday'] + doc['official_num'];
 
         //odds数据比较
-        if (doc['odds_jingcai'] != null && !Func.isObjectValueEqual(doc['odds_jingcai'][0], data['odds_jingcai'])) {
-            docValue['odds_jingcai'] = data['odds_jingcai'];
+        if ((doc['odds_jingcai'] != null && data['odds_jingcai'] != null
+            && !Func.isObjectValueEqual(doc['odds_jingcai'][0], data['odds_jingcai']))
+           || doc['odds_jingcai'] == null && data['odds_jingcai'] != null) {
+            doc['odds_jingcai'] = data['odds_jingcai'];
             flag = 1;
             if (updateFlag && doc['input_flag'] == 0) {
                 pushFlag = 1;
+                arr['oddsJingcai'] = data['odds_jingcai'];
             }
 
         }
-        arr['input_flag'] = doc['input_flag'];
-        arr['type'] = 0;
-        arr['oddsJingcai'] = data['odds_jingcai'];
-        if (doc['odds_avg'] != null && !Func.isObjectValueEqual(doc['odds_avg'][0], data['odds_avg'])) {
-            docValue['odds_avg'] = data['odds_avg'];
+
+        if ((doc['odds_avg'] != null && data['odds_avg'] != null
+            && !Func.isObjectValueEqual(doc['odds_avg'][0], data['odds_avg']))
+            || doc['odds_avg'] == null && data['odds_avg'] !=null) {
+            doc['odds_avg'] = data['odds_avg'];
             flag = 1;
-            if (updateFlag) {
-                pushFlag = 1;
-            }
         }
-        /*{
-            if(doc['odds_wlxe'] != null && !Func.isObjectValueEqual(doc['odds_wlxe'][0],data['odds_wlxe'])){
-                docValue['odds_wlxe'] = data['odds_wlxe'];
-                flag = 1;
-            }
-            if(doc['odds_aomen'] != null && !Func.isObjectValueEqual(doc['odds_aomen'][0],data['odds_aomen'])){
-                docValue['odds_aomen'] = data['odds_aomen'];
-                flag = 1;
-            }
-            if(doc['odds_libo'] != null && !Func.isObjectValueEqual(doc['odds_libo'][0],data['odds_libo'])){
-                docValue['odds_libo'] = data['odds_libo'];
-                flag = 1;
-            }
-            if(doc['odds_bet365'] != null && !Func.isObjectValueEqual(doc['odds_bet365'][0],data['odds_bet365'])){
-                docValue['odds_bet365'] = data['odds_bet365'];
-                flag = 1;
-            }
-            if(doc['odds_bwin'] != null && !Func.isObjectValueEqual(doc['odds_bwin'][0],data['odds_bwin'])){
-                docValue['odds_bwin'] = data['odds_bwin'];
-                flag = 1;
-            }
-            if(doc['odds_weide'] != null && !Func.isObjectValueEqual(doc['odds_weide'][0],data['odds_weide'])){
-                docValue['odds_weide'] = data['odds_weide'];
-                flag = 1;
-            }
-            if(doc['odds_hg'] != null && !Func.isObjectValueEqual(doc['odds_hg'][0],data['odds_hg'])){
-                docValue['odds_hg'] = data['odds_hg'];
-                flag = 1;
-            }
-            if(doc['odds_ysb'] != null && !Func.isObjectValueEqual(doc['odds_ysb'][0],data['odds_ysb'])){
-                docValue['odds_ysb'] = data['odds_ysb'];
-                flag = 1;
-            }
-
-            //yapan数据比较
-            if(doc['odds_yapan'] != null && !Func.isObjectValueEqual(doc['odds_yapan'][0],data['odds_yapan'])){
-                docValue['odds_yapan'] = data['odds_yapan'];
-                flag = 1;
-            }
-            if(doc['odds_yapan_bet365'] != null && !Func.isObjectValueEqual(doc['odds_yapan_bet365'][0],data['odds_yapan_bet365'])){
-                docValue['odds_yapan_bet365'] = data['odds_yapan_bet365'];
-                flag = 1;
-            }
-            if(doc['odds_yapan_hg'] != null && !Func.isObjectValueEqual(doc['odds_yapan_hg'][0],data['odds_yapan_hg'])){
-                docValue['odds_yapan_hg'] = data['odds_yapan_hg'];
-                flag = 1;
-            }
-            if(doc['odds_yapan_ysb'] != null && !Func.isObjectValueEqual(doc['odds_yapan_ysb'][0],data['odds_yapan_ysb'])){
-                docValue['odds_yapan_ysb'] = data['odds_yapan_ysb'];
-                flag = 1;
-            }
-            if(doc['odds_yapan_weide'] != null && !Func.isObjectValueEqual(doc['odds_yapan_weide'][0],data['odds_yapan_weide'])){
-                docValue['odds_yapan_weide'] = data['odds_yapan_weide'];
-                flag = 1;
-            }
-            if(doc['odds_rangqiu_wlxe'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_wlxe'][0],data['odds_rangqiu_wlxe'])){
-                docValue['odds_rangqiu_wlxe'] = data['odds_rangqiu_wlxe'];
-                flag = 1;
-            }
-            if(doc['odds_rangqiu_libo'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_libo'][0],data['odds_rangqiu_libo'])){
-                docValue['odds_rangqiu_libo'] = data['odds_rangqiu_libo'];
-                flag = 1;
-            }
-            if(doc['odds_rangqiu_bet365'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_bet365'][0],data['odds_rangqiu_bet365'])){
-                docValue['odds_rangqiu_bet365'] = data['odds_rangqiu_bet365'];
-                flag = 1;
-            }
-        }*/
 
         //rangqiu数据比较
-        if (doc['odds_rangqiu'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu'][0], data['odds_rangqiu'])) {
-            docValue['odds_rangqiu'] = data['odds_rangqiu'];
+        if ((doc['odds_rangqiu'] != null && data['odds_rangqiu'] != null
+            && !Func.isObjectValueEqual(doc['odds_rangqiu'][0], data['odds_rangqiu']))
+            || doc['odds_rangqiu'] == null && data['odds_rangqiu'] != null) {
+            doc['odds_rangqiu'] = data['odds_rangqiu'];
             flag = 1;
             if (updateFlag && doc['input_flag'] == 0) {
                 pushFlag = 1;
+                arr['oddsRangqiu'] = data['odds_rangqiu'];
             }
         }
-        arr['oddsRangqiu'] = data['odds_rangqiu'];
 
         if (doc['input_flag'] == 0) {
-            if (doc['odds_rangqiu_admin'] != null && !Func.isObjectValueEqual(doc['odds_rangqiu_admin'][0], data['odds_rangqiu'])) {
-                docValue['odds_rangqiu_admin'] = data['odds_rangqiu'];
+            if ((doc['odds_rangqiu_admin'] != null && data['odds_rangqiu'] != null
+                && !Func.isObjectValueEqual(doc['odds_rangqiu_admin'][0], data['odds_rangqiu']))
+                || doc['odds_rangqiu_admin'] == null && data['odds_rangqiu'] != null) {
+                doc['odds_rangqiu_admin'] = data['odds_rangqiu'];
                 flag = 1;
             }
-            if (doc['odds_jingcai_admin'] != null && !Func.isObjectValueEqual(doc['odds_jingcai_admin'][0], data['odds_jingcai'])) {
-                docValue['odds_jingcai_admin'] = data['odds_jingcai'];
+            if ((doc['odds_jingcai_admin'] != null && data['odds_jingcai'] != null
+                && !Func.isObjectValueEqual(doc['odds_jingcai_admin'][0], data['odds_jingcai']))
+               || doc['odds_jingcai_admin'] == null && data['odds_jingcai'] != null) {
+                doc['odds_jingcai_admin'] = data['odds_jingcai'];
                 flag = 1;
             }
-        } else {
-            if (0 == pushFlag) {
-                arr['type'] = 1;          //用于区分doc['input_flag'] docs['hot_flag'] 后台是否修改过  0 默认值  1 代表运行期间后台修改了 
-                pushFlag = 1;
-            }
-            arr['oddsRangqiu'] = doc['odds_rangqiu_admin'][0];
-            arr['oddsJingcai'] = doc['odds_jingcai_admin'][0];
         }
-        if (1 == doc['hot_flag']) {
-            if (0 == pushFlag) {
-                arr['type'] = 1;        //用于区分doc['input_flag'] docs['hot_flag'] 后台是否修改过  0 默认值  1 代表运行期间后台修改了 
-                pushFlag = 1;
-            }
-        }
-        arr['hotFlag'] = doc['hot_flag'];
 
         if (pushFlag && doc['display_flag']) {
             updateScheduleFlag = 1;
@@ -619,12 +609,13 @@ function DataPull() {
         }
 
         if (flag) {
-            return docValue;
-        } else {
-            return null;
+            try{
+                doc.save();
+            }catch(err){
+                OBJ('LogMgr').error(err);
+            }
+            
         }
-
-
     }
 
     /*
@@ -639,29 +630,35 @@ function DataPull() {
 
         //有新的赛事增加推送游戏服
         if (incrementalFlag) {
-            addCurData(data, len);
+            addCurData(data);
         }
 
         //保存到数据库
-        try {
-            for (var i = 1; i <= len; i++) {
-                schedule.push(scheduleDeal(data[i - 1]));
-                if (0 == i % batchSize) {
-                    //写数据库
-                    if (schedule.length != 0)
-                        scheduleStatement.collection.insert(schedule, onInsert);
-                    schedule = [];
-                }
-            }
-            if (schedule.length != 0) {
+        for (var i = 1; i <= len; i++) {
+            schedule.push(scheduleDeal(data[i - 1]));
+            if (0 == i % batchSize) {
                 //写数据库
                 if (schedule.length != 0)
-                    scheduleStatement.collection.insert(schedule, onInsert);
+                    dataInsert(schedule);
+                schedule = [];
             }
-        } catch (err) {
+        }
+        if (schedule.length != 0) {
+            //写数据库
+            if (schedule.length != 0)
+                dataInsert(schedule);
+        }
+    }
+
+    /*
+        @func  schedule的insert操作
+    */
+    function dataInsert(schedule){
+        try{
+            scheduleStatement.collection.insert(schedule, onInsert);
+        }catch(err){
             OBJ('LogMgr').error(err);
         }
-
     }
 
 
@@ -678,7 +675,6 @@ function DataPull() {
         }
         var len = data.length;
         var Id = 0;
-        var dataArr = [];
         for (var i = 0; i < len; i++) {
             Id = parseInt(data[i]['id']);
             //schedule判断
@@ -686,10 +682,12 @@ function DataPull() {
                 if (scheduledocs[j]['_doc']['id'] != data[i]['id']) {
                     continue;
                 } else {
-                    var schedocValue = scheduleComp(data[i], scheduledocs[j]['_doc']);
-                    if (schedocValue != null) {
-                        dataArr.push(schedocValue);
-                    }
+                    scheduleComp(data[i], scheduledocs[j]);
+                    //var schedocValue = scheduleComp(data[i], scheduledocs[j]['_doc']);
+                    //if (schedocValue != null) {
+                    //    console.log('func dataDeal dataUpdate id =' + data[i]['id']);
+                    //    updateTodb(schedocValue);
+                    //}
                     break;
                 }
             }
@@ -697,15 +695,6 @@ function DataPull() {
         //赛事信息有更新推送游戏服
         if (incrementalFlag) {
             updateCurData();
-        }
-
-        //更新数据库
-        try {
-            for (var i = 0; i < dataArr.length; i++) {
-                scheduleStatement.collection.update({ id: dataArr[i]['id'] }, { $set: dataArr[i] }, false, true);
-            }
-        } catch (err) {
-            OBJ('LogMgr').error(err);
         }
     }
 
@@ -786,7 +775,7 @@ function DataPull() {
         @func 获取当前未开始赛事列表
     */
     function getCurScheduleList(func, source = null) {
-        var filter = { "match_date": { "$gt": Date.now() }, "display_flag": 1, "status": 0};
+        var filter = { "match_date": { "$gt": Date.now() }, "display_flag": 1, "status": 0 };
         try {
             scheduleStatement.find(filter, scehduleSelect,
                 { sort: { 'match_num': 1 } }, function (error, docs) {
@@ -799,7 +788,7 @@ function DataPull() {
                     var list = [];
                     for (var i = 0; i < docs.length; i++) {
                         var arr = {};
-                        arr['sceheduleId'] = parseInt(docs[i]['id']);
+                        arr['sceheduleId'] = docs[i]['id'];
                         arr['phase'] = docs[i]['phase'];
                         arr['matchName'] = docs[i]['match_name'];
                         arr['weekday'] = docs[i]['weekday'];
@@ -808,28 +797,56 @@ function DataPull() {
                         arr['homeName'] = docs[i]['home_team'];
                         arr['awayName'] = docs[i]['away_team'];
                         arr['handicap'] = docs[i]['handicap'];
-                        arr['input_flag'] = docs[i]['input_flag'];
-                        arr['type'] = 0;                             //用于区分doc[i]['input_flag'] docs[i]['hot_flag'] 后台是否修改过  0 默认值  1 代表运行期间后台修改了
                         if (docs[i]['input_flag']) {
                             arr['oddsJingcai'] = docs[i]['odds_jingcai_admin'];
                             arr['oddsRangqiu'] = docs[i]['odds_rangqiu_admin'];
                         } else {
                             //赔率为空赛事不开
-                            if(docs[i]['odds_jingcai'] == null){
+                            if (docs[i]['odds_jingcai'] == null || 
+                               docs[i]['odds_rangqiu'] == null ||
+                               docs[i]['odds_avg'] == null) {
                                 continue;
                             }
                             arr['oddsJingcai'] = docs[i]['odds_jingcai'];
                             arr['oddsRangqiu'] = docs[i]['odds_rangqiu'];
                         }
                         arr['hotFlag'] = docs[i]['hot_flag'];
-
                         list.push(arr);
+
+                        if (startSvrflag == 0) {
+                            //赋值 mapBetNum mapModifyFields
+                            var docValue = { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } };
+                            docValue.bet_num.h = docs[i]['bet_num'][0]['h'];
+                            docValue.bet_num.d = docs[i]['bet_num'][0]['d'];
+                            docValue.bet_num.a = docs[i]['bet_num'][0]['a'];
+                            docValue.bet_num1.h = docs[i]['bet_num1'][0]['h'];
+                            docValue.bet_num1.d = docs[i]['bet_num1'][0]['d'];
+                            docValue.bet_num1.a = docs[i]['bet_num1'][0]['a'];
+                            mapBetNum.set(docs[i]['id'], docValue);
+
+                            var modifyFields = {"hot_flag":arr['hotFlag'],"display_flag":1,
+                                                "input_flag":docs[i]['input_flag'],
+                                                "odds_jingcai_admin":arr['oddsJingcai'],
+                                                "odds_rangqiu_admin":arr['oddsRangqiu'] 
+                                               };
+                            mapModifyFields.set(docs[i]['id'],modifyFields);
+                            //end 赋值 mapBetNum mapModifyFields
+                        }
                     }
                     if (list.length > 0) {
+                        //获取赛事的投注人数
+                        var betNumList = [];
+                        for (var key of mapBetNum.keys()) {
+                            var docValue = { id: 0, num: { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } } };
+                            docValue.id = key;
+                            docValue.num = mapBetNum.get(key);
+                            betNumList.push(docValue);
+                        }
+                        //end 获取赛事的投注人数
                         if (source != null) {
-                            func(list, source);
+                            func(list, betNumList, source);
                         } else {
-                            func(list);
+                            func(list, betNumList);
                         }
                     }
                 });
@@ -841,18 +858,20 @@ function DataPull() {
     /*
         @func  广播当前赛事列表
     */
-    function broadcastCurData(list) {
+    function broadcastCurData(list, betNumList) {
         OBJ('RpcModule').broadcastGameServer('RealFootball', 'resCurData', {
-            map: list
+            map: list,
+            betRate: betNumList
         });
     }
 
     /*
         @func  发送当前赛事列表
     */
-    function sendCurData(list, source) {
+    function sendCurData(list, betNumList, source) {
         OBJ('RpcModule').send(source, 'RealFootball', 'resCurData', {
-            map: list
+            map: list,
+            betRate: betNumList
         });
     }
 
@@ -864,23 +883,24 @@ function DataPull() {
         getCurScheduleList(broadcastCurData);
     }
 
-    //游戏服重新重启请求赛事信息
-    this.reGetCurData = function (source) {
-        //一批数据未拉取完,直接return,拉取完数据中心会做推送
-        if (1 == startSvrflag) {
-            return;
-        }
-        getCurScheduleList(sendCurData, source);
-    }
-
-    /*
+        /*
         @func 有新的比赛赛事
     */
-    function addCurData(data, len) {
+    function addCurData(data) {
         var list = [];
+        var betNumList = [];
         for (var i = 0; i < data.length; i++) {
             var arr = {};
+            //比赛未开始的才做推送,并且赔率正常的
+            if(0 != data[i]['status'] || data[i]['odds_jingcai'] == null || 
+                data[i]['odds_rangqiu'] == null ||data[i]['odds_avg'] == null){ 
+                continue;
+            }
             arr['sceheduleId'] = parseInt(data[i]['id']);
+            var isNull = mapBetNum.get(arr['sceheduleId']);
+            if(isNull != null){
+                continue;
+            }
             arr['phase'] = data[i]['phase'];
             arr['matchName'] = data[i]['match_name'];
             arr['weekday'] = data[i]['weekday'];
@@ -889,16 +909,31 @@ function DataPull() {
             arr['homeName'] = data[i]['home_team'];
             arr['awayName'] = data[i]['away_team'];
             arr['handicap'] = data[i]['handicap'];
-            arr['input_flag'] = 0;
-            arr['type'] = 0;                    //用于区分doc[i]['input_flag'] docs[i]['hot_flag'] 后台是否修改过  0 默认值  1 代表运行期间后台修改了           
+            arr['hotFlag'] = 0;
+          
             arr['oddsJingcai'] = data[i]['odds_jingcai'];
             arr['oddsRangqiu'] = data[i]['odds_rangqiu'];
-            arr['hotFlag'] = 0;
 
             list.push(arr);
+
+            var betValue = { id: 0, num: { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } } };
+            betValue.id = arr['sceheduleId'];
+            betNumList.push(betValue);
+            //赋值 mapBetNum
+            var docValue = { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } };
+            mapBetNum.set(arr['sceheduleId'], docValue);
+
+            var modifyFields = {"hot_flag":arr['hotFlag'],"display_flag":1,
+                                "input_flag":0,
+                                "odds_jingcai_admin":data[i]['odds_jingcai'],
+                                "odds_rangqiu_admin":data[i]['odds_rangqiu']
+                                };
+            mapModifyFields.set(arr['sceheduleId'],modifyFields);
+            //end 赋值 mapBetNum
         }
-        OBJ('RpcModule').broadcastGameServer('RealFootball', 'resCurData', {
-            map: list
+        OBJ('RpcModule').broadcastGameServer('RealFootball', 'resAddData', {
+            map: list,
+            betRate: betNumList
         });
     }
 
@@ -909,41 +944,84 @@ function DataPull() {
         if (1 == deleteScheduleFlag) {
             deleteScheduleFlag = 0;
             var idArr = [];
-            for (var key in mapDeleteSchedule) {
-                var item = mapDeleteSchedule[key];
-                if (0 == item) {
-                    mapDeleteSchedule.set(key, 1);
-                    idArr.push(key);
-                }
+            for (var key of mapDeleteSchedule.keys()) {
+                var item = mapDeleteSchedule.get(key);
+                idArr.push(key);
             }
+
+
 
             if (idArr.length > 0) {
                 OBJ('RpcModule').broadcastGameServer('RealFootball', 'refreshStopBetSchedule', {
                     id: idArr
                 });
             }
+            //更新赛事的支持人数
+            for (var i = 0; i < idArr.length; i++) {
+                var item = mapBetNum.get(idArr[i]);
+                if (item == null) {
+                    console.log(' mapBetNum get is null ...');
+                    return;
+                }
+                updateBetNum(idArr[i],item,1);
+            }
+        }
+    }
+
+    /*
+        @func 比赛开始，更新赛事投注人数
+        @scheduleId 开始的赛事
+        @item   各区域投注人数信息
+    */
+    function updateBetNum(scheduleId,item,finished = 0){
+        try{
+            var updateValue = {
+                'bet_num': item.bet_num,
+                'bet_num1': item.bet_num1
+            };
+            scheduleStatement.update({ id: scheduleId}, updateValue, function (err) {
+                if (err) {
+                    OBJ('LogMgr').error(err);
+                }
+                if(finished){
+                    //删除mapBetNum  mapDeleteSchedule mapModifyFields
+                    console.log('delete map BetNum DeleteSchedule ModifyFields');
+                    if(mapBetNum.get(scheduleId) != null){
+                        mapBetNum.delete(scheduleId);
+                    }
+                    if(mapDeleteSchedule.get(scheduleId) != null){
+                        mapDeleteSchedule.delete(scheduleId);
+                    }
+                    if(mapModifyFields.get(scheduleId) != null){
+                        mapModifyFields.delete(scheduleId);
+                    }
+                    //end 删除mapBetNum mapDeleteSchedule mapModifyFields
+                }
+            });
+        }catch(err){
+            OBJ('LogMgr').error(err);
         }
     }
 
     /*
         @func 比赛结束,推送游戏服结算(含正常比分和取消比赛的)
     */
-    function endScheduleState(){
+    function endScheduleState() {
         if (1 == endScheduleFlag) {
             endScheduleFlag = 0;
             var idArr = [];
             var scoreArr = [];
             var raceStatus = [];
-            for (var key in mapEndSchedule) {
-                var item = mapEndSchedule(key);
-                var itemScore = mapScheduleScore(key);
-                if (0 != item && itemScore) {
-                    mapDeleteSchedule.set(key, 1);
+            for (var key of mapEndSchedule.keys()) {
+                var item = mapEndSchedule.get(key);
+                var itemScore = mapScheduleScore.get(key);
+                if (1 != item && itemScore) {
+                    mapEndSchedule.set(key, 1);
                     idArr.push(key);
                     scoreArr.push(itemScore);
-                    if(0 == item){
+                    if (0 == item) {
                         raceStatus.push(0);    //正常比分
-                    }else if(-1 == item){
+                    } else if (-1 == item) {
                         raceStatus.push(1);    //取消比赛
                     }
                 }
@@ -953,12 +1031,9 @@ function DataPull() {
             if (endPhaseFlag) {
                 //删除map的 值
                 for (var i = 0; i < phaseScheduleIdArr.length; i++) {
-                    if (1 == mapDeleteSchedule.get(phaseScheduleIdArr[i])) {
-                        mapDeleteSchedule.delete(phaseScheduleIdArr[i]);
-                        mapScheduleScore.delete(phaseScheduleIdArridArr[i]);
-                    }
-                    if (1 == mapEndSchedule.get(phaseScheduleIdArridArr[i])) {
+                    if (1 == mapEndSchedule.get(phaseScheduleIdArr[i])) {
                         mapEndSchedule.delete(phaseScheduleIdArr[i]);
+                        mapScheduleScore.delete(phaseScheduleIdArr[i]);
                     }
                 }
                 //end 删除map
@@ -968,13 +1043,11 @@ function DataPull() {
                 OBJ('RpcModule').broadcastGameServer('RealFootball', 'refreshScheduleState', {
                     id: idArr,
                     score: scoreArr,
-                    raceStatus:raceStatus
+                    raceStatus: raceStatus
                 });
             }
         }
     }
-
-
 
     /*
         @func 更新赛事信息有变更的
@@ -989,5 +1062,121 @@ function DataPull() {
         updateScheduleList = [];
     }
 
+    //游戏服重新重启请求赛事信息
+    this.reGetCurData = function (source) {
+        //一批数据未拉取完,直接return,拉取完数据中心会做推送
+        if (1 == startSvrflag) {
+            return;
+        }
+        getCurScheduleList(sendCurData, source);
+    }
+
+    /*
+        @func 更新赛事的支持率
+     */
+    this.updateSupportRate = function (data) {
+        var serverId = data.serverId;
+        var betRateArr = data.pushBetRate;
+
+        //更新赛事的支持人数
+        for (var i = 0; i < betRateArr.length; i++) {
+            var item = mapBetNum.get(betRateArr[i].id);
+            if (item == null) {
+                console.log('updateSupportRate mapBetNum get is null...');
+                return;
+            }
+
+            //更新 mapBetNum
+            var docValue = { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } };
+            docValue.bet_num = betRateArr[i].bet_num;
+            docValue.bet_num1 = betRateArr[i].bet_num1;
+
+            mapBetNum.set(betRateArr[i].id, docValue);
+            //end 更新 mapBetNum
+
+            updateBetNum(betRateArr[i].id,docValue);
+        }
+    }
+
+    /*
+        @func 后台更新为显示
+    */
+    this.refreshDisplay = function (data){
+        var betNumList = [];
+        var list = [];
+        for(var i = 0;i< data.list.length;i++){
+            var arr = {};
+            arr['sceheduleId'] = data.list[i]['sceheduleId'];
+            var isNullbet = mapBetNum.get(arr['sceheduleId']);
+            var isNullFields = mapModifyFields.get(arr['sceheduleId']);
+            if(isNullbet !=  null || isNullFields != null){
+                continue;
+            }
+            arr['phase'] = data.list[i]['phase'];
+            arr['matchName'] = data.list[i]['matchName'];
+            arr['weekday'] = data.list[i]['weekday'];
+            arr['officialNum'] = data.list[i]['officialNum'];
+            arr['endSale'] = data.list[i]['endSale'];
+            arr['homeName'] = data.list[i]['homeName'];
+            arr['awayName'] = data.list[i]['awayName'];
+            arr['handicap'] = data.list[i]['handicap'];
+            arr['oddsJingcai'] = data.list[i]['oddsJingcai'];
+            arr['oddsRangqiu'] = data.list[i]['oddsRangqiu'];
+            arr['hotFlag'] = data.list[i]['hotFlag'];
+
+            var betInfo = { id: 0, num: { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } } };
+            var tempBetNumValue = { bet_num: { h: 0, d: 0, a: 0 }, bet_num1: { h: 0, d: 0, a: 0 } };
+            betInfo.id = arr['sceheduleId'];
+            tempBetNumValue.bet_num = data.list[i]['bet_info'].bet_num;
+            tempBetNumValue.bet_num1 = data.list[i]['bet_info'].bet_num1;
+            betInfo.num.bet_num = tempBetNumValue.bet_num;
+            betInfo.num.bet_num1 = tempBetNumValue.bet_num1;
+            betNumList.push(betInfo);
+            list.push(arr);
+            mapBetNum.set(betInfo.id, tempBetNumValue);
     
+            var modifyInfo = {"hot_flag":arr['hotFlag'],"display_flag":1,
+                                "input_flag":data.list[i]['intputFlag'],
+                                "odds_jingcai_admin":arr['oddsJingcai'],
+                                "odds_rangqiu_admin":arr['oddsRangqiu']
+            };
+            mapModifyFields.set(betInfo.id,modifyInfo);
+        }
+
+        //广播给游戏服
+        OBJ('RpcModule').broadcastGameServer('RealFootball', 'resAddData', {
+            map: list,
+            betRate: betNumList
+        });
+    }
+
+    /*
+        @func 后台更新为不显示
+    */
+    this.refreshNotDisplay = function (data){
+        var idArr = [];
+        for(var i =0;i< data.list.length;i++){
+            var isNullBet = mapBetNum.get(data.list[i]);
+            var isNull = mapModifyFields.get(data.list[i]);
+            if(isNullBet == null || isNull == null){
+                continue;
+            }
+            idArr.push(data.list[i]);
+        }
+
+        if (idArr.length > 0) {
+            OBJ('RpcModule').broadcastGameServer('RealFootball', 'refreshStopBetSchedule', {
+                id: idArr
+            });
+        }
+        //更新赛事的支持人数
+        for (var i = 0; i < idArr.length; i++) {
+            var item = mapBetNum.get(idArr[i]);
+            if (item == null) {
+                console.log('refreshNotDisplay mapBetNum get is null ...');
+                return;
+            }
+            updateBetNum(idArr[i],item,1);
+        }
+    }
 }

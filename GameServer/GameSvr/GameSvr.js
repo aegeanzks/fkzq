@@ -31,16 +31,17 @@ function GameSvr(){}
 
 GameSvr.start = function (serverId, ip, port) {
     //管理器初始化
-    new LogMgr();
-    console.log('开始启动服务('+serverId+')...');
+    console.log('开始启动服务('+serverId+') pid('+process.pid+')...');
     console.log('ip:' + ip + ' 监听端口:'+port);
+    new LogMgr();
+    new RpcMgr();
     new MsgMgr();
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
-    new RpcMgr().run(serverId, function(){
+    GameSvr.registerModule();
+    OBJ('RpcMgr').run(serverId, function(){
         //RPC组件不需要socket，所以提前初始化
         console.log('服务已启动...');
-        GameSvr.registerModule();
         new WsMgr().run(port, GameSvr.regsterFun);
         GameSvr.run();
     });

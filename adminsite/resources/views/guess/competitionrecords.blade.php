@@ -15,12 +15,13 @@
 <div class="box">
 <div style="margin:5px 0px;clear:both; height:40px;">
 <div class="col-sm-12">
-账号查询:<input type="text" class="form-control" id="user_name" name="user_name" placeholder="输入账号"  value="{{ $data['user_name'] }}">
+订单查询:<input type="text" class="form-control" id="out_trade_no" name="out_trade_no" placeholder="输入订单号"  value="{{ $data['out_trade_no'] }}">
+账号:<input type="text" class="form-control" id="user_name" name="user_name" placeholder="输入账号"  value="{{ $data['user_name'] }}">
 状态: <select id="status" name="status" class="form-control" style="width:180px" >
 <option value="">全部</option>
-<option value="1">未开奖</option> 
-<option value="2">中</option>
-<option value="3">不中</option>
+<option value="0">未开奖</option> 
+<option value="1">中</option>
+<option value="2">不中</option>
 </select>
 
 开始时间：
@@ -49,37 +50,44 @@
                     <table class="table table-bordered">
                     <tbody id="contentbox">
                         <tr>
+                        <th>订单号</th>
                         <th>下注时间</th>
                         <th>账号</th>
                         <th>注数</th>
                         <th>倍数</th>
+                        <th>下注前金额</th>
                         <th>下注金额</th>
-                        <th >派奖金额</th>
-                        <th>状态</th>               
-                        <th>操作</th>      
+                        <th>可中金额</th>
+                        <th>派奖金额</th>
+                        <th>状态</th>
+                        <th>操作</th>                    
                       </tr> 
                    
                       @foreach($dataarray as $itemdata)
                       <tr>
                       <tr>
-                    
+                      <td>{{$itemdata['out_trade_no']}}</td>
                       <td>{{$itemdata['bet_date']}}</td>
-                      <td>{{$itemdata['username']}}</td>
+                      <td>{{$itemdata['user_name']}}</td>
                       <td>{{$itemdata['bet_num']}}</td>
                       <td>{{$itemdata['multiple']}}</td>
+                      <td>{{$itemdata['before_bet_coin']}}</td>
                       <td>{{$itemdata['bet_coin']}}</td>
                       <td>{{$itemdata['distribute_coin']}}</td>
                       @if($itemdata['status']==0)
+                      <td>0</td>
                       <td>未开奖</td>
                       @elseif($itemdata['status']==1)
-                      <td>不中</td>
-                      @elseif($itemdata['status']==2)
+                      <td>{{$itemdata['realDistrobute_coin']}}</td>
                       <td>中</td>
+                      @elseif($itemdata['status']==2)
+                      <td>{{$itemdata['realDistrobute_coin']}}</td>
+                      <td>不中</td>
                       @else
                       <td>--</td>
                       @endif                 
                       <td>   
-                      <a class="btn btn-info" href="/guess/competitionedit/{{$itemdata['id']}}" style="width:80px; float:left;margin:0px 2px;">投注方案</a>
+                      <a class="btn btn-info" href="/guess/competitionbetplan/{{$itemdata['out_trade_no']}}" style="width:80px; line-height:0.6;float:left;margin:0px 2px;">投注方案</a>
                       </td>
                   </tr>
                   
@@ -113,6 +121,7 @@ $(function(){
 
 
 function selsumbit(){
+    var out_trade_no=$("#out_trade_no").val();
     var user_name=$("#user_name").val();
     var status=$("#status").val();
     var start_time=$("#start_time").val();
@@ -140,10 +149,23 @@ function selsumbit(){
     {
         $("#typehidden").val(5);
     }
-    if(status==""&& start_time=="" &&  end_time=="" && user_name=="")
+    if(out_trade_no!=""){
+        $("#typehidden").val(6);
+    }
+    if(user_name != "" && status!=""){
+        $("#typehidden").val(8);
+    }
+    if(user_name != "" && start_time!="" &&  end_time!=""){
+        $("#typehidden").val(9);
+    }
+    if(user_name != "" && status !="" && start_time!="" &&  end_time!="" ){
+        $("#typehidden").val(10);
+    }
+    if(out_trade_no=="" && status==""&& start_time=="" &&  end_time=="" && user_name=="")
     {
         $("#typehidden").val(1);
     }
+    $("#pagehidden").val(1);
     return true;
   }
 </script>

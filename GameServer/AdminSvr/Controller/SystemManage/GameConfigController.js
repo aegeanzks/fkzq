@@ -482,6 +482,168 @@ GameConfigController.updateEventInfo = function(req,res,next){
 }
 
 
+    GameConfigController.updateGoalInfo = function(req,res,next){
+        try{
+            //校验参数合法性
+            var sign = req.query.all_goal_num+signValue;
+            if(!checkSign(sign,req.query.sign)){
+                res.send({
+                    status:2,
+                    type: 'ERROR_SIGN',
+                    message: 'sign错误',
+                })
+                return 
+            }
+            var fields ={};
+            fields.all_goal_num = req.query.all_goal_num;
+            fields.chance =  req.query.chance;
+            if(!fields.all_goal_num || !fields.chance){
+                res.send({
+                    status:2,
+                    type: 'ERROR_PARAMS',
+                    message: '参数错误',
+                })
+                return 
+            }
+            //更新数据
+            gameConfigModule.updateGoalInfo(fields,res);
+        }catch(err){
+            console.log('updateGoalInfo 更新数据失败', err);
+            res.send({
+                status: 1,
+                type: 'UPDATE_DATA_ERROR',
+                message: '更新数据失败'
+            })
+        }
+
+    }
+
+        /*
+        @func  获取竞猜足球的系统设置
+    */
+    GameConfigController.getRealBetItem = function(req,res,next){
+        try{
+            //校验sign
+            var sign = 'getReal'+signValue;
+            if(!checkSign(sign,req.query.sign)){
+                res.send({
+                    status:2,
+                    type: 'ERROR_SIGN',
+                    message: 'sign错误',
+                })
+                return 
+            }
+            //获取数据
+            gameConfigModule.getRealBetItem(res);
+        }catch(err){
+            console.log('getRealBetItem 获取数据失败', err);
+            res.send({
+                status: 1,
+                type: 'GET_DATA_ERROR',
+                message: '获取数据失败'
+            })
+        }
+    }
+
+    /*
+        @func  获取虚拟足球的系统设置
+    */
+    GameConfigController.getVirtualBetItem = function(req,res,next){
+        try{
+            //校验sign
+            var sign = 'getvirtual'+signValue;
+            if(!checkSign(sign,req.query.sign)){
+                res.send({
+                    status:2,
+                    type: 'ERROR_SIGN',
+                    message: 'sign错误',
+                })
+                return 
+            }
+            //获取数据
+            gameConfigModule.getVirtualBetItem(res);
+        }catch(err){
+            console.log('getVirtualBetItem 获取数据失败', err);
+            res.send({
+                status: 1,
+                type: 'GET_DATA_ERROR',
+                message: '获取数据失败'
+            })
+        }
+    }
+
+    /*
+        @func 
+     */
+    GameConfigController.updateBetItem = function(req,res,next){
+        try{
+            //校验sign
+            var sign = req.query.type+signValue+req.query.id;
+            if(!checkSign(sign,req.query.sign)){
+                res.send({
+                    status:2,
+                    type: 'ERROR_SIGN',
+                    message: 'sign错误',
+                })
+                return 
+            }
+            switch(req.query.type){
+                case '1':
+                    var value1 = {};
+                    value1['game_id'] = req.query.id;
+                    value1['item1'] = req.query.item1;
+                    value1['item2'] = req.query.item2;
+                    value1['item3'] = req.query.item3;
+                    if(!value1['game_id']||!value1['item1']||!value1['item2']
+                        || !value1['item3']){
+                        res.send({
+                            status:2,
+                            type: 'ERROR_PARAMS',
+                            message: '参数错误',
+                        })
+                        return 
+				    }
+                    //更新数据
+                    gameConfigModule.updateBetItem(res,value1,req.query.type);
+                    break;
+                case '2':
+                    var value2 = {};
+                    value2['game_id'] = req.query.id;
+                    value2['item1'] = req.query.item1;
+                    value2['item2'] = req.query.item2;
+                    value2['item3'] = req.query.item3;
+                    value2['num_limit'] = req.query.num_limit;
+                    value2['coin_limit'] = req.query.coin_limit;
+                    if(!value2['game_id'] || !value2['item1']||!value2['item2']
+                        || !value2['item3'] ||!value2['num_limit']||!value2['coin_limit']){
+                        res.send({
+                            status:2,
+                            type: 'ERROR_PARAMS',
+                            message: '参数错误',
+                        })
+                    return 
+                    }
+                    //更新数据
+                    gameConfigModule.updateBetItem(res,value2,req.query.type);
+                    break;
+                default: 
+				res.json({
+					status:2,
+					type: 'ERROR_QUERY_TYPE',
+					message: '参数错误',
+				})
+				return
+            }
+
+        }catch(err){
+            console.log('getVirtualBetItem 获取数据失败', err);
+            res.send({
+                status: 1,
+                type: 'GET_DATA_ERROR',
+                message: '获取数据失败'
+            })
+        }
+    }
 
     /*
     @func  添加赔率记录
@@ -513,7 +675,7 @@ GameConfigController.updateEventInfo = function(req,res,next){
         }
         //更新数据
         gameConfigModule.addgoalsInfo(fields,res);
-    }catch(err){
+        }catch(err){
         console.log('addGoalInfo 添加数据失败', err);
         res.send({
             status: 1,
@@ -521,5 +683,9 @@ GameConfigController.updateEventInfo = function(req,res,next){
             message: '添加更新数据失败'
         })
     }
-  }
+
+
+
+
+}
 

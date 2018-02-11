@@ -54,7 +54,7 @@
 <input type="hidden" id="displayhidden" name="displayhidden" value="{{ $data['display'] }}" />
 </div>
 </div>
-<div class="row" style="margin:8px;">
+<div class="row" style="margin:6px;">
 
  <a class="btn btn-info" href="javascript:selshowbtn(1)" >显示</a>
  <a class="btn btn-primary" href="javascript:selshowbtn(0)">不显示</a>
@@ -68,6 +68,7 @@
                         <th>&nbsp;</th>
                         <th>场次</th>
                         <th>期数</th>
+                        <th>赛事id</th>
                         <th>比赛时间</th>
                         <th>比赛状态</th>
                         <th >主队名称</th>
@@ -87,6 +88,7 @@
                       <td><input type="checkbox" name="selcheck_{{$itemdata['id']}}" id="selcheck_{{$itemdata['id']}}" value="{{$itemdata['id']}}" /></td>
                       <td>{{$itemdata['official_num']}}</td>
                       <td>{{$itemdata['phase']}}</td>
+                      <td>{{$itemdata['id']}}</td>
                       <td>{{$itemdata['match_date']}}</td>
                       @if($itemdata['status']==0)
                       <td>未开始</td>
@@ -107,7 +109,7 @@
                       <td>{{$itemdata['final_score']==""?"0:0":$itemdata['final_score']}}</td>
                       <td>{{$itemdata['away_team']}}</td>
                       @if($itemdata['odds_jingcai']!="")
-                      <td>{{$itemdata['odds_jingcai'][0]['a']}}/{{$itemdata['odds_jingcai'][0]['d']}}/{{$itemdata['odds_jingcai'][0]['h']}}</td>
+                      <td>{{$itemdata['odds_jingcai'][0]['h']}}/{{$itemdata['odds_jingcai'][0]['d']}}/{{$itemdata['odds_jingcai'][0]['a']}}</td>
                       @else
                       <td>0/0/0</td>
                       @endif
@@ -124,7 +126,10 @@
                       <td>----</td>
                       @endif
                       <td>   
-                      <a class="btn btn-info" href="/guess/competitionedit/{{$itemdata['id']}}" style="width:80px; float:left;margin:0px 2px;">编辑</a>
+                      <a class="btn btn-info" href="/guess/competitionedit/{{$itemdata['id']}}" style="width:80px; line-height:0.6;float:left;margin:0px 2px;">编辑</a>
+                      @if($itemdata['status']==1 and $itemdata['final_score']=="")
+                      <a class="btn btn-info" href="/guess/manualsettle/{{$itemdata['id']}}" style="width:80px; line-height:0.6;float:left;margin:0px 2px;">结算</a>
+                      @endif
                       </td>
                   </tr>
                   
@@ -281,6 +286,7 @@ function selhotbtn(values){
     {
         $("#typehidden").val(1)
     }
+    $("#pagehidden").val(1);
     return true;
   }
 

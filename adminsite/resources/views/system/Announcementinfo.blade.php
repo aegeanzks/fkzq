@@ -26,9 +26,9 @@
 @endif
 </div>
 @if($option=='add')
-<form  action="{{ url('/Announcement/announceadd')}}">
+<form  onsubmit="return checksubmit()" action="{{ url('/Announcement/announceadd')}}">
 @else
-<form  action="{{ url('/Announcement/announceupdate')}}">
+<form  onsubmit="return checksubmit()" action="{{ url('/Announcement/announceupdate')}}">
 @endif
 <div class="row"  style="padding:5px;">
    <div class="col-sm-12">
@@ -79,6 +79,26 @@ $(function(){
 
 
 });
+
+function checksubmit(){
+    var starttime = $("#starttime").val();
+    if(starttime == ""){
+      layer.alert('输入开始时间为空');
+        return false;
+    }
+    var endtime = $("#endtime").val();
+    if(endtime == ""){
+      layer.alert('输入结束时间为空');
+        return false;
+    }
+    var start =parseInt(starttime.replace(/-/ig,""));
+    var end =parseInt(endtime.replace(/-/ig,""));
+    if(start > end){
+      layer.alert('请输入结束时间大于开始时间');
+        return false;
+    }
+    return true;
+}
 </script>
 
 @endsection

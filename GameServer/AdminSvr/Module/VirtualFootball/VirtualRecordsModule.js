@@ -227,4 +227,46 @@ function VirtualRecordsModule(){
         var funcname = 'vrecordListByusertimestaus';
         findList(filter,page,res,funcname); 
     }
+
+
+    this.vrecordListByall = function(balance_schedule_id,status,begin_time,end_time,user_name,page,res){
+        eval('var tmp = /'+user_name+'/');
+        var beginStamp = Func.getStamp(begin_time);
+        var endStamp = Func.getStamp(end_time);
+        var begin = new Date(beginStamp);
+        var end = new Date(endStamp+24*60*60*1000);
+        var filter={"balance_schedule_id":balance_schedule_id,"user_name":tmp,"status":status,"bet_date":{"$gte":begin,"$lt":end}};
+        var funcname = 'vrecordListByall';
+        findList(filter,page,res,funcname); 
+    }
+
+
+    //获取数据
+    this.vrecordListByidAndUser = function(balance_schedule_id,user_name,page,res){
+        eval('var tmp = /'+user_name+'/');
+        var filter={"balance_schedule_id":balance_schedule_id,"user_name":tmp};
+        var funcname = 'vrecordListByidAndUser';
+        findList(filter,page,res,funcname); 
+    }
+
+
+    this.vrecordListByidUserStatus =function(balance_schedule_id,user_name,status,page,res){
+        eval('var tmp = /'+user_name+'/');
+        var filter={"balance_schedule_id":balance_schedule_id,"user_name":tmp,"status":status};
+        var funcname = 'vrecordListByidUserStatus';
+        findList(filter,page,res,funcname); 
+    }
+
+    this.vrecordListByUserStatus = function(user_name,status,page,res){
+        eval('var tmp = /'+user_name+'/');
+        var filter={"user_name":tmp,"status":status};
+        var funcname = 'vrecordListByUserStatus';
+        findList(filter,page,res,funcname); 
+    }
+
+    this.vrecordListByidStatus =function(balance_schedule_id,status,page,res){
+        var filter={"balance_schedule_id":balance_schedule_id,"status":status};
+        var funcname = 'vrecordListByidStatus';
+        findList(filter,page,res,funcname);   
+    }
 }

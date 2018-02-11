@@ -31,7 +31,7 @@ Route::get('/userlist',['uses'=>'UserController@index','middleware'=>['auth','au
 Route::get('/recuserlist', ['uses'=>'UserController@recindex','middleware'=>['auth','authpermission']]);
 Route::get('/user/getinfo/{userid}', ['uses'=>'UserController@loaduser','middleware'=>['auth','authpermission']]);
 Route::get('/user/edit', ['uses'=>'UserController@edituser','middleware'=>['auth','authpermission']]);
-Route::get('/user/active', ['uses'=>'UserController@activeuser','middleware'=>['auth','authpermission']]);
+Route::get('/user/active/{userid}', ['uses'=>'UserController@activeuser','middleware'=>['auth','authpermission']]);
 Route::get('/user/adduser',['middleware'=>['auth','authpermission'],function(){
     return view('system.Useradd');
 }]);
@@ -47,6 +47,8 @@ Route::get('/system/gameeventsetupdate',['uses'=>'GamesetController@gameeventset
 Route::get('/system/gameoodinfo',['uses'=>'GamesetController@gameoodinfo','middleware'=>['auth','authpermission']]);
 Route::get('/system/gamegoalsinfo',['uses'=>'GamesetController@gamegoalsinfo','middleware'=>['auth','authpermission']]);
 Route::get('/system/gamegoalsadd',['uses'=>'GamesetController@gamegoalsadd','middleware'=>['auth','authpermission']]);
+Route::get('/system/gamegoalsupdate',['uses'=>'GamesetController@gamegoalsupdate','middleware'=>['auth','authpermission']]);
+Route::get('/system/gamegoalsinfodel/{id}',['uses'=>'GamesetController@gamegoalsinfodel','middleware'=>['auth','authpermission']]);
 Route::get('/system/gamestockinfo/{gameid}',['uses'=>'GamesetController@gamestockinfo','middleware'=>['auth','authpermission']]);
 Route::get('/system/gamestockinfoupdate',['uses'=>'GamesetController@gamestockinfoupdate','middleware'=>['auth','authpermission']]);
 Route::get('/system/gameoodinfodel/{id}',['uses'=>'GamesetController@gameoodinfodel','middleware'=>['auth','authpermission']]);
@@ -73,14 +75,17 @@ Route::get('/guess/changeracetype',['uses'=>'GuessController@changeracetype','mi
 // Route::get('/guess/competitionrecords',function(){
 //     return view('guess.competitionrecords');
 // });
+Route::get('/guess/competitionbetplan/{out_trade_no}',['uses'=>'GuessController@loadbetplan','middleware'=>['auth','authpermission']]);
 Route::get('/guess/competitionedit/{id}',['uses'=>'GuessController@loadedit','middleware'=>['auth','authpermission']])->where(['id'=>'[0-9]+']);  //过滤输入参数的类型
 Route::get('/guess/competitionupdate',['uses'=>'GuessController@loadupdate','middleware'=>['auth','authpermission']]);
+Route::get('/guess/manualsettle/{id}',['uses'=>'GuessController@manualsettle','middleware'=>['auth','authpermission']]);
 /*竞彩足球管理 */
 
 
 /*虚拟竞彩足球管理 */
 Route::get('/vfootball/matchlist',['uses'=>'VirtualFootballController@matchlist','middleware'=>['auth','authpermission']]);
 Route::get('/vfootball/compeetitivrecord',['uses'=>'VirtualFootballController@crecordlist','middleware'=>['auth','authpermission']]);
+Route::get('/guess/compeetitivrdetail/{date_num}',['uses'=>'VirtualFootballController@loadvdetail','middleware'=>['auth','authpermission']]);
 /*虚拟竞彩足球管理 */
 
 
@@ -123,3 +128,12 @@ Route::get('/Permissions/addpermissionpage',['middleware'=>['auth','authpermissi
 Route::get('/Permissions/addpermission',['uses'=>'PermissionController@addpermission','middleware'=>['auth','authpermission']]);
 Route::get('/Permissions/delpermission/{id}',['uses'=>'PermissionController@delpermission','middleware'=>['auth','authpermission']])->where(['id'=>'[0-9]+']);
 /*权限管理 */
+
+
+/*系统设置*/
+Route::get('/system/paramlist', ['uses'=>'GamesetController@paramlist','middleware'=>['auth','authpermission']]);
+Route::get('/system/paramrealupdate', ['uses'=>'GamesetController@paramrealupdate','middleware'=>['auth','authpermission']]);
+Route::get('/system/paramvirtual', ['uses'=>'GamesetController@paramvirtual','middleware'=>['auth','authpermission']]);
+Route::get('/system/paramvirtualupdate', ['uses'=>'GamesetController@paramvirtualupdate','middleware'=>['auth','authpermission']]);
+
+/*系统设置*/

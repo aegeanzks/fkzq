@@ -206,6 +206,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{url('/system/gamelist')}}"><i class="fa fa-circle-o"></i> 游戏配置</a></li>
+            <li><a href="{{url('/system/paramlist')}}"><i class="fa fa-circle-o"></i> 系统设置</a></li>
             <li><a href="{{url('/userlist')}}"><i class="fa fa-circle-o"></i> 管理员列表</a></li>
             <li><a href="{{'/Permissions/list'}}"><i class="fa fa-circle-o"></i> 权限管理</a></li>
          </ul>

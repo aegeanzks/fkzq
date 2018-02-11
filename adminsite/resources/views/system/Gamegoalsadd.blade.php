@@ -2,7 +2,7 @@
 @section('content')
 <section class="content-header">
 <h1>
-添加赔率
+添加进球配置
   </h1>
 <ol class="breadcrumb">
   <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> 首页</a></li>
@@ -20,11 +20,11 @@
 <div class="row"  style="padding-top:20px;">
    <div class="col-sm-2">
    <label>总进球数</label>
-    <input type="text" name="all_goal_num" id="all_goal_num"  class="form-control" placeholder="输入主胜率" value="" />
+    <input type="text" name="all_goal_num" id="all_goal_num"  class="form-control" placeholder="输入总进球数" value="" />
    </div>
    <div class="col-sm-2">
    <label>总进球数概率</label>
-   <input type="text" name="chance" id="chance"  class="form-control" placeholder="输入平胜率" value="" />
+   <input type="text" name="chance" id="chance"  class="form-control" placeholder="输入总进球数概率" value="" />
    </div>
 </div> 
    <div class="row" style="margin-top:10px">

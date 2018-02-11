@@ -84,7 +84,12 @@ function doCurlGetJsonReq($url, $data = array(), $timeout = 25 ) {
   function hosturl(){
       return "http://127.0.0.1:9090";
   }
-
+  /*
+    每页显示的条数 
+   */
+  function  pagesize(){
+    return 20;
+}
 
   
 /**

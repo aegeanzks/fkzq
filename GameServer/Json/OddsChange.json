@@ -2,7 +2,7 @@
   "0": {
     "time_scale": 0,
     "draw1": 5,
-    "host2": 2,
+    "host2": 1,
     "guest3": 1,
     "next4": 120
   },
@@ -43,7 +43,7 @@
   },
   "6": {
     "time_scale": 6,
-    "draw1": 10,
+    "draw1": 5,
     "host2": 2,
     "guest3": 2,
     "next4": 80
@@ -86,7 +86,7 @@
   "12": {
     "time_scale": 12,
     "draw1": 10,
-    "host2": 3,
+    "host2": 1,
     "guest3": 3,
     "next4": 90
   },
@@ -129,8 +129,8 @@
     "time_scale": 18,
     "draw1": 5,
     "host2": 2,
-    "guest3": 4,
-    "next4": 80
+    "guest3": 2,
+    "next4": 70
   },
   "19": {
     "time_scale": 19,
@@ -169,10 +169,10 @@
   },
   "24": {
     "time_scale": 24,
-    "draw1": 15,
-    "host2": 4,
-    "guest3": 5,
-    "next4": 50
+    "draw1": 10,
+    "host2": 1,
+    "guest3": 2,
+    "next4": 60
   },
   "25": {
     "time_scale": 25,
@@ -211,10 +211,10 @@
   },
   "30": {
     "time_scale": 30,
-    "draw1": 10,
-    "host2": 2,
-    "guest3": 6,
-    "next4": 60
+    "draw1": 5,
+    "host2": 1,
+    "guest3": 3,
+    "next4": 40
   },
   "31": {
     "time_scale": 31,
@@ -253,9 +253,9 @@
   },
   "36": {
     "time_scale": 36,
-    "draw1": 15,
-    "host2": 5,
-    "guest3": 7,
+    "draw1": 5,
+    "host2": 2,
+    "guest3": 2,
     "next4": 50
   },
   "37": {
@@ -296,9 +296,9 @@
   "42": {
     "time_scale": 42,
     "draw1": 10,
-    "host2": 2,
-    "guest3": 6,
-    "next4": 60
+    "host2": 1,
+    "guest3": 3,
+    "next4": 40
   },
   "43": {
     "time_scale": 43,
@@ -337,10 +337,10 @@
   },
   "48": {
     "time_scale": 48,
-    "draw1": 15,
-    "host2": 3,
-    "guest3": 4,
-    "next4": 20
+    "draw1": 5,
+    "host2": 1,
+    "guest3": 2,
+    "next4": 50
   },
   "49": {
     "time_scale": 49,
@@ -380,9 +380,9 @@
   "54": {
     "time_scale": 54,
     "draw1": 10,
-    "host2": 4,
+    "host2": 3,
     "guest3": 3,
-    "next4": 40
+    "next4": 30
   },
   "55": {
     "time_scale": 55,
@@ -421,10 +421,10 @@
   },
   "60": {
     "time_scale": 60,
-    "draw1": 10,
+    "draw1": 5,
     "host2": 3,
-    "guest3": 2,
-    "next4": 20
+    "guest3": 7,
+    "next4": 15
   },
   "61": {
     "time_scale": 61,
@@ -463,10 +463,10 @@
   },
   "66": {
     "time_scale": 66,
-    "draw1": 7,
-    "host2": 3,
-    "guest3": 3,
-    "next4": 15
+    "draw1": 15,
+    "host2": 6,
+    "guest3": 6,
+    "next4": 20
   },
   "67": {
     "time_scale": 67,
@@ -505,9 +505,9 @@
   },
   "72": {
     "time_scale": 72,
-    "draw1": 10,
-    "host2": 2,
-    "guest3": 1,
+    "draw1": 12,
+    "host2": 8,
+    "guest3": 6,
     "next4": 20
   },
   "73": {
@@ -547,10 +547,10 @@
   },
   "78": {
     "time_scale": 78,
-    "draw1": 13,
-    "host2": 3,
-    "guest3": 3,
-    "next4": 14
+    "draw1": 8,
+    "host2": 6,
+    "guest3": 1,
+    "next4": 10
   },
   "79": {
     "time_scale": 79,
@@ -589,10 +589,10 @@
   },
   "84": {
     "time_scale": 84,
-    "draw1": 5,
+    "draw1": 11,
     "host2": 2,
-    "guest3": 3,
-    "next4": 18
+    "guest3": 2,
+    "next4": 8
   },
   "85": {
     "time_scale": 85,
@@ -631,10 +631,10 @@
   },
   "90": {
     "time_scale": 90,
-    "draw1": 10,
+    "draw1": 12,
     "host2": 1,
-    "guest3": 3,
-    "next4": 20
+    "guest3": 2,
+    "next4": 9
   },
   "91": {
     "time_scale": 91,
@@ -673,10 +673,10 @@
   },
   "96": {
     "time_scale": 96,
-    "draw1": 7,
-    "host2": 1,
+    "draw1": 8,
+    "host2": 3,
     "guest3": 1,
-    "next4": 17
+    "next4": 11
   },
   "97": {
     "time_scale": 97,
@@ -715,10 +715,10 @@
   },
   "102": {
     "time_scale": 102,
-    "draw1": 10,
+    "draw1": 13,
     "host2": 1,
-    "guest3": 1,
-    "next4": 14
+    "guest3": 2,
+    "next4": 13
   },
   "103": {
     "time_scale": 103,
@@ -757,10 +757,10 @@
   },
   "108": {
     "time_scale": 108,
-    "draw1": 9,
-    "host2": 1,
+    "draw1": 15,
+    "host2": 2,
     "guest3": 1,
-    "next4": 9
+    "next4": 20
   },
   "109": {
     "time_scale": 109,
@@ -799,7 +799,7 @@
   },
   "114": {
     "time_scale": 114,
-    "draw1": 12,
+    "draw1": 10,
     "host2": 1,
     "guest3": 1,
     "next4": 11

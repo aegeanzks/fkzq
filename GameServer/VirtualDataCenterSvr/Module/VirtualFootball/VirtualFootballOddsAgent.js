@@ -136,7 +136,7 @@ function VirtualFootballOddsAgent(conf, teamInfo1, teamInfo2, beginTime, endTime
             '-2_Q':countQ(self.weakWinTimes*mapOddsChangeRatio.get(-2).lose_ratio, allC),
             '-3_Q':countQ(self.weakWinTimes*mapOddsChangeRatio.get(-3).lose_ratio, allC),
             //模型4
-            'next_Q':countQ(self.strongNextGoalTimes*mapOddsChangeRatio.get(0).draw_ratio, allD)
+            'next_Q':countQ(self.zeroGoalTimes*mapOddsChangeRatio.get(0).draw_ratio, allD)
         };
     }
 

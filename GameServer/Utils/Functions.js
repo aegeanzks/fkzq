@@ -62,6 +62,41 @@ exports.getStamp =function(date){
     return timeStamp;  
 }
 
+/*
+    @func     根据日期,获取星期几
+    @date     日期   样式20180130
+    @return   周几
+ */
+exports.getWeekDay = function(date){
+    var str = date.substr(0,4)+'-'+date.substr(4,2)+'-'+date.substr(6,2)+' '+'00:00:00';
+    var week = new Date(str).getDay();
+    var weekDay = '周';
+    switch (week){
+        case 0 :
+                weekDay += "日";
+                break;
+        case 1 :
+                weekDay += "一";
+                break;
+        case 2 :
+                weekDay += "二";
+                break;
+        case 3 :
+                weekDay += "三";
+                break;
+        case 4 :
+                weekDay += "四";
+                break;
+        case 5 :
+                weekDay += "五";
+                break;
+        case 6 :
+                weekDay += "六";
+                break;
+    }
+    return weekDay;
+}
+
 //判断是否存在指定函数 
 exports.isExitsFunction =function(funcName) {
     try {

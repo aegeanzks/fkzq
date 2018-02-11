@@ -14,6 +14,7 @@ function GameConfigModule(){
     var eventStatement = OBJ('DbMgr').getStatement(Schema.ConfVirtualEvent());
     var oddsStatement = OBJ('DbMgr').getStatement(Schema.ConfVirtualOdds());
     var goalStatement = OBJ('DbMgr').getStatement(Schema.ConfVirtualGoal());
+    var confStatement = OBJ('DbMgr').getStatement(Schema.ConfBetItem());
 
     /*
         @func   库存stock组包
@@ -315,6 +316,65 @@ function GameConfigModule(){
                 message: '获取数据失败'
             })
         }        
+    }
+
+    /*
+        @func     投注项配置的组包
+        @docs     待组包的数据
+        @gameid   类型
+     */
+    function configPackages(doc,res,gameid){
+        var data = [];
+        var list = [];
+        var header = {};
+        header['status'] = 200;
+        header['totalCount'] = 1;
+        data.push(header);
+
+        var listOne ={};
+        listOne['game_id'] = doc['game_id'];
+        listOne['item1'] = doc['item1'];
+        listOne['item2'] = doc['item2'];
+        listOne['item3'] = doc['item3'];
+        if(2 == gameid){
+            listOne['num_limit'] = doc['num_limit'];
+            listOne['coin_limit'] = doc['coin_limit'];
+        }
+        list.push(listOne);
+        data.push(list);
+        res.send(data);
+    }
+
+    /*
+        @func     查找投注项配置数据库
+        @filter   过滤条件
+        @funcname 被哪个函数调用
+    */
+    function findConfBetItem(filter,res,funcname,gameid){
+        try{
+            confStatement.findOne(filter,null,function (finderr, docs) {
+                if (!finderr) {
+                    if(null == docs){
+                        res.send({
+                            status: 0,
+                            type: 'GET_DATA_EMPTY',
+                            message: '无相关记录'
+                        })
+                        return ;
+                    }
+                    configPackages(docs,res,gameid);
+                }else{
+                    console.log('Module of GameConfigModule '+funcname +' err :'+error);
+                }
+            });
+        }catch(err){
+            console.log('findConfBetItem 获取数据失败', err);
+            res.send({
+                status: 1,
+                type: 'GET_DATA_ERROR',
+                message: '获取数据失败'
+            })
+        }
     }
 
     /*
@@ -629,5 +689,92 @@ function GameConfigModule(){
                      message: '添加数据失败'
                  })
              }
+    }
+
+    this.updateGoalInfo = function(fields,res){
+        try{
+            var condition = {"all_goal_num":parseInt(fields.all_goal_num)};
+            var values = {"chance":parseInt(fields.chance)};
+            goalStatement.findOneAndUpdate(condition,{$set:values},function(error,docs){
+                if(!error){
+                    res.send({
+                        status: 200,
+                        type: 'UPDATE_DATA_SUCESS',
+                        message: '数据更新成功'
+                    });
+                }else{
+                    console.log('Module of RaceModule updateGoalInfo err :'+error);
+                }
+            });
+        }catch(err){
+            console.log('更新数据失败', err);
+            res.send({
+                status: 1,
+                type: 'UPDATE_DATA_ERROR',
+                message: '更新数据失败'
+            })
         }
+    }
+
+    this.getRealBetItem = function(res){
+        var filter = {'game_id':2};
+        var funcname = 'getRealBetItem';
+        findConfBetItem(filter,res,funcname,2);
+    }
+
+    this.getVirtualBetItem = function(res){
+        var filter = {'game_id':1};
+        var funcname = 'getVirtualBetItem';
+        findConfBetItem(filter,res,funcname,1);
+    }
+
+    this.updateBetItem = function(res,value,type){
+        var filter = {'game_id':parseInt(value['game_id'])};
+        var setvalues = {};
+        if(type == '1'){
+            setvalues = {"item1":parseInt(value.item1),"item2":parseInt(value.item2),"item3":parseInt(value.item3)};
+        }else if(type == '2'){
+            setvalues = {"item1":parseInt(value.item1),"item2":parseInt(value.item2),
+                         "item3":parseInt(value.item3),"num_limit":parseInt(value.num_limit),
+                         "coin_limit":parseInt(value.coin_limit)};
+        }
+        try{
+            confStatement.findOneAndUpdate(filter,{$set:setvalues},function(error,docs){
+                if(!error){
+                    res.send({
+                        status: 200,
+                        type: 'UPDATE_DATA_SUCESS',
+                        message: '数据更新成功'
+                    });
+                    if(type == '1'){
+                        //推送给数据中心
+                        OBJ('RpcModule').sendToVtDataCenter('VirtualFootball', 'refreshBetItem', {
+                            betItem1: parseInt(value.item1),
+                            betItem2: parseInt(value.item2),
+                            betItem3: parseInt(value.item3),
+                        });
+                    }
+                    if(type == '2'){
+                        //推送给数据中心
+                        OBJ('RpcModule').sendToDataCenter('RealFootball', 'refreshBetItem', {
+                            betItem1: parseInt(value.item1),
+                            betItem2: parseInt(value.item2),
+                            betItem3: parseInt(value.item3),
+                            betNumLimit:parseInt(value.num_limit),
+                            betCoinLimit:parseInt(value.coin_limit)
+                        });
+                    }
+                }else{
+                    console.log('Module of RaceModule updateBetItem err :'+error);
+                }
+            });
+        }catch(err){
+            console.log('更新数据失败', err);
+            res.send({
+                status: 1,
+                type: 'UPDATE_DATA_ERROR',
+                message: '更新数据失败'
+            })
+        }
+    }
 }

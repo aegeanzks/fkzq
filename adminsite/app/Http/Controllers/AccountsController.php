@@ -51,7 +51,7 @@ class AccountsController extends Controller
               $pageurl='/Accounts/list?'. http_build_query($postdata)."&page={page}";
               $total=$resultjson[0]['totalCount'];
               $dataarray=$resultjson[1];
-              $pagelist= buildPage($total,10,$page, $pageurl);
+              $pagelist= buildPage($total,pagesize(),$page, $pageurl);
           }
           else if($restatus==2){
             $data=[

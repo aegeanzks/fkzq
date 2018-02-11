@@ -18,8 +18,8 @@ class GuessController extends Controller
          $status=$request->status;
          $display_flag=$request->display_flag;
          $page=$request->page;
-         $starttime=$request->starttime;
-         $endtime=$request->endtime;
+         $starttime=str_replace('-','',$request->starttime);
+         $endtime=str_replace('-','',$request->endtime);
          $key=getmd5key();
     
             if($type==null){
@@ -80,7 +80,7 @@ class GuessController extends Controller
                    $pageurl='/guess/competitionmanage?'. http_build_query($postdata)."&page={page}";
                    $total=$resultjson[0]['totalCount'];
                    $dataarray=$resultjson[1];
-                   $pagelist= buildPage($total,10,$page, $pageurl);
+                   $pagelist= buildPage($total,pagesize(),$page, $pageurl);
                }
                else if($restatus==2){
                 $data=[
@@ -132,11 +132,12 @@ class GuessController extends Controller
    
      public function records(Request $request){
         $type=$request->type;
+        $out_trade_no = $request->out_trade_no;
         $user_name=$request->user_name;
         $status=$request->status;
         $page=$request->page;
-        $start_time=$request->start_time;
-        $end_time=$request->end_time;
+        $start_time=str_replace('-','',$request->start_time);
+        $end_time=str_replace('-','',$request->end_time);
         $key=getmd5key();
    
            if($type==null){
@@ -155,6 +156,7 @@ class GuessController extends Controller
                   
               $data=[
                 "type"=>$type==null?1:$type,
+                "out_trade_no"=>$out_trade_no==null?"":$out_trade_no,
                 "user_name"=>$user_name==null?"":$user_name,
                 "status"=>$status==null?"":$status,
                 "page"=>$page==null?"":$page,
@@ -177,6 +179,7 @@ class GuessController extends Controller
               if($restatus==200){
                  $data=[
                       "type"=>$type==null?1:$type,
+                      "out_trade_no"=>$out_trade_no==null?"":$out_trade_no,
                       "user_name"=>$user_name==null?"":$user_name,
                       "status"=>$status==null?"":$status,
                       "start_time"=>$start_time==null?"":$start_time,
@@ -186,6 +189,7 @@ class GuessController extends Controller
                     ];
                     $postdata=[
                        "type"=>$type==null?1:$type,
+                       "out_trade_no"=>$out_trade_no==null?"":$out_trade_no,
                        "user_name"=>$user_name==null?"":$user_name,
                        "status"=>$status==null?"":$status,
                        "start_time"=>$start_time==null?"":$start_time,
@@ -195,11 +199,12 @@ class GuessController extends Controller
                   $pageurl='/guess/competitionrecords?'. http_build_query($postdata)."&page={page}";
                   $total=$resultjson[0]['totalCount'];
                   $dataarray=$resultjson[1];
-                  $pagelist= buildPage($total,10,$page, $pageurl);
+                  $pagelist= buildPage($total,pagesize(),$page, $pageurl);
               }
               else if($restatus==2){
                 $data=[
                     "type"=>$type==null?1:$type,
+                    "out_trade_no"=>$out_trade_no==null?"":$out_trade_no,
                     "user_name"=>$user_name==null?"":$user_name,
                     "status"=>$status==null?"":$status,
                     "start_time"=>$start_time==null?"":$start_time,
@@ -213,6 +218,7 @@ class GuessController extends Controller
               else if($restatus==0){
                 $data=[
                     "type"=>$type==null?1:$type,
+                    "out_trade_no"=>$out_trade_no==null?"":$out_trade_no,
                     "user_name"=>$user_name==null?"":$user_name,
                     "status"=>$status==null?"":$status,
                     "start_time"=>$start_time==null?"":$start_time,
@@ -227,6 +233,7 @@ class GuessController extends Controller
            else{
             $data=[
                 "type"=>$type==null?1:$type,
+                "out_trade_no"=>$out_trade_no==null?"":$out_trade_no,
                 "user_name"=>$user_name==null?"":$user_name,
                 "status"=>$status==null?"":$status,
                 "start_time"=>$start_time==null?"":$start_time,
@@ -238,6 +245,70 @@ class GuessController extends Controller
                $pagelist="";
            }
               return view('guess.competitionrecords',compact('data','dataarray','pagelist'));
+    }
+
+    public function loadbetplan(Request $request){
+        $out_trade_no=$request->out_trade_no;
+        $type =7;
+        $key=getmd5key();
+        if($out_trade_no==null){
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'参数错误'
+            ];
+            return view("tips",compace('data'));
+        }
+        else{
+            $url=hosturl(). "/RealFootball/records";
+            $sign=md5($out_trade_no.$key.$type);
+            $getarray=[
+                "out_trade_no"=>$out_trade_no,
+                "type"=>$type,
+                "sign"=> $sign
+                 ];
+            $resultjson=doCurlGetJsonReq($url,$getarray,30);
+            $resultjson=json_decode($resultjson,True);
+            try{
+                $arrlength= count($resultjson) ;
+              }catch (\Exception $e) {
+                $arrlength=3;
+              }
+            if($arrlength!=3)
+             {
+                $restatus=$resultjson[0]['status'];
+                $data=$resultjson[1];
+                if($restatus==200){
+                    return view('guess.competitionbetplan',compact('data'));
+                }
+                else if($restatus==2)
+                {
+                    $data=[
+                        'ico'=>'fa-warning',
+                        'msg'=>'签名或参数错误'
+                    ];
+                    return  view("tips",compact('data'));
+                }
+                else
+                {
+                    $data=[
+                        'ico'=>'fa-warning',
+                        'msg'=>'签名或参数错误'
+                    ];
+                    return  view("tips",compact('data'));
+                }
+           }
+           else{
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'签名或参数错误'
+            ];
+            return  view("tips",compact('data'));
+           }
+
+
+          }
+
+
     }
 
     public function loadedit(Request $request){
@@ -313,6 +384,14 @@ class GuessController extends Controller
         $odds_rangqiuhostwin=$request->oddsrangqiuhostwin;
         $odds_rangqiupingwin=$request->oddsrangqiupingwin;
         $odds_rangqiuawaywin=$request->oddsrangqiuawaywin;
+        
+        $odds_jingcaiadminhostwin=$request->oddsjingcaiadminhostwin;
+        $odds_jingcaiadminpingwin=$request->oddsjingcaiadminpingwin;
+        $odds_jingcaiadminawaywin=$request->oddsjingcaiadminawaywin;
+        $odds_rangqiuadminhostwin=$request->oddsrangqiuadminhostwin;
+        $odds_rangqiuadminpingwin=$request->oddsrangqiuadminpingwin;
+        $odds_rangqiuadminawaywin=$request->oddsrangqiuadminwaywin;
+        $lottery_status = $request->lottery_status;
         $input_flag=$request->input_flag;
         $final_score=$request->final_score;
         if($final_score!=null){
@@ -323,7 +402,9 @@ class GuessController extends Controller
 
             }
         }
-        if($id==null || $home_team==null || $away_team==null|| $odds_jingcaihostwin==null|| $odds_jingcaipingwin==null|| $odds_jingcaiawaywin==null|| $odds_rangqiuhostwin==null|| $odds_rangqiupingwin==null|| $odds_rangqiuawaywin==null|| $input_flag==null)
+        if($id==null || $home_team==null || $away_team==null|| $input_flag==null || ($lottery_status =='0' &&$input_flag == "1" && ($odds_jingcaiadminhostwin == null
+          || $odds_jingcaiadminpingwin == null || $odds_jingcaiadminawaywin == null ||$odds_rangqiuadminhostwin == null 
+          || $odds_rangqiuadminpingwin == null || $odds_rangqiuadminawaywin == null || $lottery_status == null)))
         {
             $data=[
                 'ico'=>'fa-warning',
@@ -344,8 +425,11 @@ class GuessController extends Controller
                 "id"=>$id,
                 "home_team"=> $home_team,
                 "away_team"=>$away_team,
-                "odds_jingcai"=>["a"=>$odds_jingcaihostwin,"d"=>$odds_jingcaipingwin,"h"=>$odds_jingcaiawaywin],
-                "odds_rangqiu"=>["a"=>$odds_rangqiuhostwin,"d"=>$odds_rangqiupingwin,"h"=>$odds_rangqiuawaywin],
+                "odds_jingcai"=>["h"=>$odds_jingcaihostwin,"d"=>$odds_jingcaipingwin,"a"=>$odds_jingcaiawaywin],
+                "odds_rangqiu"=>["h"=>$odds_rangqiuhostwin,"d"=>$odds_rangqiupingwin,"a"=>$odds_rangqiuawaywin],
+                "odds_jingcai_admin"=>["h"=>$odds_jingcaiadminhostwin,"d"=>$odds_jingcaiadminpingwin,"a"=>$odds_jingcaiadminawaywin],
+                "odds_rangqiu_admin"=>["h"=>$odds_rangqiuadminhostwin,"d"=>$odds_rangqiuadminpingwin,"a"=>$odds_rangqiuadminawaywin],
+                "lottery_status"=>$lottery_status,
                 "input_flag"=>$input_flag,
                 "final_score"=>$final_score,
                 "sign"=>$sign
@@ -384,13 +468,13 @@ class GuessController extends Controller
        if($type==null || $id==null){
         $data=[
             'errcode'=>2,
-            'msg'=>'参数错误'
+            'msg'=>'请选择要修改的比赛'
           ];
        return  Response()->json($data);
        }
        //	var sign = signValue+req.query.display+type;
        if($type=="1"){
-          if($display!=null ){
+          if($display ==null ){
             $data=[
                 'errcode'=>2,
                 'msg'=>'参数错误'

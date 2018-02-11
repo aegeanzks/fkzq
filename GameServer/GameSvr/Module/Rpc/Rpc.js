@@ -12,6 +12,7 @@ var SingleTimer = require('../../../Utils/SingleTimer');
 var configVirtualDataCenter = require('../../../config').virtualDataCenterSvrConfig();
 var configRealDataCenter = require('../../../config').realDataCenterSvrConfig();
 var configWallet = require('../../../config').agentSvrConfig();
+var configDaemon = require('../../../config').daemonSvrConfig();
 var GameServerInfosSchema = require('../../../db_structure').GameServerInfos();
 var configServer = require('../../../config').gameSvrConfig();
 
@@ -29,6 +30,10 @@ function Rpc(){
         //ping到数据中心
         if(null != pingTimer && pingTimer.toNextTime())
         {
+            //ping到守护进程
+            self.send(configDaemon.serverId, 'Rpc', 'gameServerPing', {
+                source:SERVERID
+            });
             self.send2VirtualDataCenter('Rpc', 'gameServerPing', {
                 source:SERVERID
             });
@@ -40,7 +45,7 @@ function Rpc(){
         if(null != registerTimer && registerTimer.toNextTime())
         {
             class_GameServerInfos.find({'server_id':SERVERID}, function(err, data){
-                if(data.length == 0){
+                if(data == null || data.length == 0){
                     var model_GameServerInfos = OBJ('DbMgr').getModel(GameServerInfosSchema);
                     model_GameServerInfos.server_id = SERVERID;
                     model_GameServerInfos.ip = global.ip;
@@ -91,6 +96,10 @@ function Rpc(){
         OBJ('RpcMgr').send(target, moduleName, funcName, msg);
     };
 
+    this.req = function(target, moduleName, funcName, msg, func){
+        OBJ('RpcMgr').req(target, moduleName, funcName, msg, func);
+    };
+
     this.broadcastOtherGameServer = function(moduleName, funcName, msg){
         var count = configServer.servers.count;
         for(var i=1; i<=count; i++){
@@ -100,4 +109,12 @@ function Rpc(){
             this.send(curServerId, moduleName, funcName, msg);
         }
     };
+
+    function init(){
+        self.send(configDaemon.serverId, 'Rpc', 'reqApplyOpen', {
+            source:SERVERID, 
+            pid:process.pid
+        });
+    }
+    init();
 }

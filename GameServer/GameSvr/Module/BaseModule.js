@@ -29,6 +29,8 @@ function BaseModule() {
                 } catch (error) {
                     console.error('消息处理错误,ID:'+id);
                 }
+            }else if ('disconnect' == id || 'ping' == id){
+                func(socket);
             }
         });
     };

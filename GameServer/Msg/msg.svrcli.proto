@@ -1,10 +1,17 @@
 syntax = "proto3";
-//Common               0-9999
+//Common               1-9999
 //Login		       10000-19999
 //VirtualFootball      20000-29999
 //RealFootBall	   30000-39999
 
 package kzgame.svrcli.msg;
+
+//回复状态
+message Res_State
+{
+	enum Type {UNSET = 0; ID = 1;}
+	int32 state = 1;           // -1 没有记录
+}
 
 ///////////////////////////////////////////////////////////////////////////
 //登录
@@ -20,6 +27,7 @@ message Res_Login
 	enum Type {UNSET = 0; ID = 10001;}
 	int32 result = 1;	//0登录成功 1失败 其他预留
 	double coin = 2;		//游戏币  成功时才有效
+	string name = 3;	//玩家名称
 }
 //账号在其他地方登陆
 message Push_OtherLogin
@@ -185,6 +193,15 @@ message Push_BetArea
 	float guestNextGoalTimes = 6;	//客队进球倍数
 }
 
+//推送虚拟足球投注项信息
+message Push_VtBetItems
+{
+	enum Type {UNSET = 0; ID = 20012;}
+	int32 item1 = 1;                              
+	int32 item2 = 2;
+	int32 item3 = 3;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 //真实足球
 ///////////////////////////////////////////////////////////////////////////
@@ -200,9 +217,9 @@ message RlScheduleInfo
 	string endSale = 7;          //比赛时间
 	string homeName = 8;         //主队名字
 	string awayName = 9;	     //客队名字
-	string handicap = 10;         //让球
-	string oddsJingcai = 11;      //胜平负
-	string oddsRangqiu = 12;      //让球胜平负
+	string handicap = 10;        //让球
+	string oddsJingcai = 11;     //胜平负
+	string oddsRangqiu = 12;     //让球胜平负
 	int32  hotFlag = 13;         //热门赛事 0非热门 1热门
 }
 
@@ -216,6 +233,12 @@ message RlBetConfig
 	int32 betCoinLimit = 5;                   //最高下注金额 
 }
 
+//后台公告
+message Announce
+{
+	string content = 1;                       //公告内容
+}
+
 //真实足球页面信息请求
 message Ask_RealFootMainInfo
 {
@@ -227,8 +250,9 @@ message Res_RealFootMainInfo
 {
 	enum Type {UNSET = 0; ID = 30001;}
 	repeated RlScheduleInfo rlScheduleInfo =1;     //列表的比赛信息
-	RlBetConfig betConfig = 2;                  //投注配置
-	int32 maxLeagueId = 3;                     //最大联赛id
+	RlBetConfig betConfig = 2;                     //投注配置
+	int32 maxLeagueId = 3;                         //最大联赛id
+	repeated Announce announce =4;                 //公告
 }
 
 
@@ -267,23 +291,42 @@ message RlBetInfo
 	int32 betArea = 3;                     //投注区域  1主胜 2平  3客胜
 }
 
+//投注计划
+message RlBetPlan
+{
+	repeated RlBetInfo betInfo = 1;  	   //每注详情  
+}
+
+//赛事唯一标识
+message RlScheduleId
+{
+	int32 scheduleId = 1;                   //赛事id 
+}
+
+//串场类型
+message RlbetType
+{
+	int32 betType = 1;                     //投注类型    1  1场     2 2串1    3 3串1  4 4串1
+}
+
 //真实足球投注信息请求
 message Ask_RealFootBetInfo
 {
-	enum Type {UNSET = 0; ID = 30005;}
-	int32 betType = 1;               //投注类型    1  1场     2 2串1    3 3串1  4 4串1
-	int32 betNum = 2;                //投注数目   
-	int32 betTime = 3;               //投注倍数
-	int32 betCoinArea = 4;           //投注金币区域  1  100 2 1000 3 10000
-	repeated RlBetInfo betInfo = 5;  //投注详情     
+	enum Type {UNSET = 0; ID = 30005;}             
+	int32 betNum = 1;                        //投注数目   
+	int32 betTime = 2;                       //投注倍数
+	int32 betCoinArea = 3;                   //投注金币区域  1  100 2 1000 3 10000
+	repeated RlScheduleId schedule = 4;      //赛事id
+	repeated RlbetType betType = 5;          //串场类型
+	repeated RlBetPlan betPlan = 6;          //投注详情     
 }
 
 //回复真实足球投注信息请求
 message Res_RealFootBetInfo
 {
 	enum Type {UNSET = 0; ID = 30006;}
-	int32 status = 1;		//0成功 -1操作数据库失败 其它参数错误  (一场比赛只能压一次 /下注金额超过最大下注金额/最多压4场比赛等)
-	double coin = 2;		//游戏币
+	int32 status = 1;			 //0成功 -1操作数据库失败 其它参数错误  (一场比赛只能压一次 /下注金额超过最大下注金额/最多压4场比赛等)
+	double coin = 2;			 //游戏币
 }
 
 //投注记录信息
@@ -296,18 +339,15 @@ message RlBetRecordInfo
 	int32   betCoin = 5;          //投注金币
 	int32   distributeCoin= 6;    //猜中获取金币
 	int32   betStatus = 7;        //竞猜状态  0 等待开奖  1中奖   2不中  
-	string  betContents = 8;      //投注内容  
-								  //格式为{'schedule_id':,'match_date':,'team_name':,'odds':,"betClass":,"betArea":,"handicap":,'schedule_result':,'status':}数组
-                                  //schedule_id赛事id, match_date比赛时间, team_name比赛队伍, odds下注时赔率, betClass下注类型 1胜平负 2让球胜平负
-                                  //betArea投注区域 1主 2平 3客，handicap让球数, schedule_result比赛结果 -1 取消比赛 0未知 1主胜 2平 3客胜
-                                  //status竞猜状态 0未开奖  1中奖   2不中
+	string  teamName = 8;         //投注项中第一只队伍名字  
 }
 
 //真实足球我的竞猜请求
 message Ask_RealFootballBetRecords
 {
 	enum Type {UNSET = 0; ID = 30007;}
-	int32 page=1;            //页数	
+	int32 type=1;            //类型  0全部  1猜中  2待开奖
+	int32 page=2;            //页数	
 }
 
 
@@ -318,6 +358,39 @@ message Res_RealFootBetRecords
 	repeated RlBetRecordInfo betRecordInfo = 1;  
 }
 
+//赛事玩法
+message RlBetContent
+{
+	int32 betClass = 1;     //投注类型  1胜平负  2让球胜平负
+	string odds = 2;        //对应的赔率 {h:,d:,a:} h主 d平 a客 区域赔率
+	string betArea = 3;     //投注区域   {h:,d:,a:} h主 d平 a客 1代表有投该赛事区域  0代表没投
+	int32  result = 4;      //开奖结果   0未开奖  -1取消赛事  1(主胜/让球胜)   2(平/让球平)   3(主负/让球负)    
+}
+
+//投注的赛事项
+message RlBetItems
+{
+	string teamName = 1;    			  //两只球队名字
+	string handicap = 2;                  //让球数
+	repeated RlBetContent betContent =3;  //投注内容
+}
+
+//真实足球我的竞猜详情请求
+message Ask_RealFootBetDetails
+{
+	enum Type {UNSET = 0; ID = 30009;}
+	string  recordId = 1;                  //投注记录id
+}
+
+//回复真实足球我的竞猜详情的请求
+message Res_RealFootBetDetails
+{
+	enum Type {UNSET = 0; ID = 30010;}
+	string recordId = 1;                   //投注记录id
+	string matchDate = 2;                  //比赛时间(单场比赛显示)
+	repeated RlbetType betType = 3;        //串场类型
+	repeated RlBetItems betItems = 4;      //投注的赛事项
+}
 
 //比赛记录信息
 message RlScheduleRecords
@@ -336,35 +409,51 @@ message RlScheduleRecords
 //真实足球比赛记录请求
 message Ask_RealFootRecords
 {
-	enum Type {UNSET = 0; ID = 30009;}
+	enum Type {UNSET = 0; ID = 30011;}
 }
 
 //回复真实足球比赛记录请求
 message Res_RealFootRecords
 {
-	enum Type {UNSET = 0; ID = 30010;}                   					  
+	enum Type {UNSET = 0; ID = 30012;}                   					  
 	repeated RlScheduleRecords scheduleRecords = 1;  //比赛记录信息
 }
 
-//赛事唯一标识
-message RlScheduleId
-{
-	int32 scheduleId = 1;                           //赛事id 
-}
 
 //服务端主动通知客户端--停止下注的比赛
 message Push_StopBetSchedules
 {
-	enum Type {UNSET = 0; ID = 30011;} 
+	enum Type {UNSET = 0; ID = 30013;} 
 	repeated RlScheduleId rlScheduleId = 1;
 }
 
 //服务端主动通知客户端---新增赛事
 message Push_AddScheduleInfo
 {
-	enum Type {UNSET = 0; ID = 30012;}
+	enum Type {UNSET = 0; ID = 30014;}
 	repeated RlScheduleInfo rlscheduleInfo = 1;	//赛事信息
 }
+
+//推送公告信息
+message Push_Announce
+{
+	enum Type {UNSET = 0; ID = 30015;}
+	int32 status = 1;                              //-1 无公告 0有公告
+	repeated Announce announce =2;                 //公告
+}
+
+//推送竞猜足球投注项信息
+message Push_RlBetItems
+{
+	enum Type {UNSET = 0; ID = 30016;}
+	int32 item1 = 1;                              
+	int32 item2 = 2;
+	int32 item3 = 3;
+	int32 numLimit = 4;
+	int32 coinLimit = 5;
+}
+
+
 
 
 

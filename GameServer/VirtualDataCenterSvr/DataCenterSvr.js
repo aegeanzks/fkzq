@@ -21,17 +21,19 @@ var VirtualFootballModule = require('./Module/VirtualFootball/VirtualFootballMod
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
 var config = configs.virtualDataCenterSvrConfig();
+global.SERVERID = config.serverId;
 
 function GameSvr(){}
 
 GameSvr.start = function () {
     //管理器初始化
+    console.log('开始启动服务('+config.serverId+') pid('+process.pid+')...');
     new LogMgr();
-    console.log('开始启动服务('+config.serverId+')...');
+    new RpcMgr();
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
     new HttpClientMgr();
-    new RpcMgr().run(config.serverId, GameSvr.run);
+    OBJ('RpcMgr').run(config.serverId, GameSvr.run);
 };
 
 //用户模块注册

@@ -7,6 +7,8 @@
 // +----------------------------------------------------------------------
 var svr = require("./AdminSvr");
 var OBJ = require('../Utils/ObjRoot').getObj;
+const easyMonitor = require('easy-monitor');
+easyMonitor('疯狂足球');
 
 process.on('exit', function(){
     // 引入readline模块

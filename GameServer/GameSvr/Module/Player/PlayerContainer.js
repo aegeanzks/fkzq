@@ -63,5 +63,5 @@ function PlayerContainer(){
             retArr.push(player.userId);
         }
         return retArr;
-    }
+    };
 }

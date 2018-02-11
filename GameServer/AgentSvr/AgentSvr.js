@@ -15,27 +15,31 @@ var DbMgr = require('../Utils/Manager/DbMgr');
 var LogMgr = require('../Utils/Manager/LogMgr');
 
 var WalletSvrAgentModule = require('./Module/WalletSvrAgent/WalletSvrAgentModule');
+var RpcModule = require('./Module/Rpc/RpcModule');
 
 var configs = require("../config");
 var mongoCfg = configs.mongodb();
 var config = configs.agentSvrConfig();
+global.SERVERID = config.serverId;
 
 function AgentSvr(){}
 
 AgentSvr.start = function () {
     //管理器初始化
-    console.log('开始启动服务('+config.serverId+')...');
+    console.log('开始启动服务('+config.serverId+') pid('+process.pid+')...');
     new LogMgr();
     new ModuleMgr();
     new DbMgr().init(mongoCfg);
+    new RpcMgr();
     AgentSvr.regsterFun();
-    new RpcMgr().run(config.serverId, AgentSvr.run);
+    OBJ('RpcMgr').run(config.serverId, AgentSvr.run);
 };
 
 //用户模块注册
 AgentSvr.regsterFun = function(){
     //用户组件
     new WalletSvrAgentModule();
+    new RpcModule();
 };
 
 //运行

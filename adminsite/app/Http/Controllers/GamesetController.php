@@ -42,7 +42,7 @@ class GamesetController extends Controller
                         $pageurl='/system/gamelist?'. http_build_query($data)."&page={page}";
                         $total=$resultjson[0]['totalCount'];
                         $dataarray=$resultjson[1];
-                        $pagelist= buildPage($total,10,$page, $pageurl);
+                        $pagelist= buildPage($total,pagesize(),$page, $pageurl);
                     }
                     else if($restatus==2){
                         $dataarray=[];
@@ -238,6 +238,19 @@ class GamesetController extends Controller
                 $eventdata=$resultjson[1];
                 $msg="";
                foreach($eventdata as $itemdata){
+                    $total = intval(request('host_ball_handling_'.$itemdata['event_id'])) +
+                             intval(request('host_attack_'.$itemdata['event_id'])) + 
+                             intval(request('host_dangerous_attack_'.$itemdata['event_id'])) +
+                             intval(request('guest_ball_handling_'.$itemdata['event_id'])) +
+                             intval(request('guest_attack_'.$itemdata['event_id'])) +
+                             intval(request('guest_dangerous_attack_'.$itemdata['event_id']));
+                    if($total != 100){
+                        $data=[
+                            'ico'=>'fa-check',
+                            'msg'=>'修改失败,'.$itemdata['event_name'].'概率之和不为100%',
+                          ];
+                        return  view("tips",compact('data'));
+                    }
                     $postdata=[
                     "event_id"=>$itemdata['event_id'],
                     "host_ball_handling"=>request('host_ball_handling_'.$itemdata['event_id']),
@@ -313,7 +326,7 @@ class GamesetController extends Controller
                         $pageurl='/system/gameoodinfo?'. http_build_query($data)."&page={page}";
                         $total=$resultjson[0]['totalCount'];
                         $ooddata=$resultjson[1];
-                        $pagelist= buildPage($total,10,$page, $pageurl);
+                        $pagelist= buildPage($total,pagesize(),$page, $pageurl);
                     }
                     else if($restatus==2){
                         $ooddata=[];
@@ -608,6 +621,306 @@ public function gameoodinfodel(Request $request){
         }
     }
 
+    public function gamegoalsupdate(Request $request){
+        $key=getmd5key();
+        $sign=md5('getGo'.$key); 
+            $data=[
+                "sign"=>$sign
+              ];
+              $host=hosturl();
+              $url=$host."/SystemManage/getGoalInfo";
+              $resultjson=doCurlGetJsonReq($url,$data,30);
+              $resultjson=json_decode($resultjson,True);
+              try{
+                $arrlength= count($resultjson) ;
+              }catch (\Exception $e) {
+                $arrlength=3;
+              }
+              if($arrlength!=3){
+                $rstatus=$resultjson[0]['status'];
+                if($rstatus==200){
+                    $goaldata=$resultjson[1];
+                    $msg="";
+                    $total= 0;
+                    foreach($goaldata as $itemdata){
+                        $total += intval(request('chance_'.$itemdata['all_goal_num']));
+                        error_log('total'.$total);
+                    }
 
+                    if($total != 100){
+                        $data=[
+                            'ico'=>'fa-check',
+                            'msg'=>'修改失败,总进球数概率之和不为100%',
+                          ];
+                        return  view("tips",compact('data'));
+                    }
+                   foreach($goaldata as $itemdata){
+                        $postdata=[
+                        "all_goal_num"=>$itemdata['all_goal_num'],
+                        "chance"=>request('chance_'.$itemdata['all_goal_num']),
+                        "sign"=>md5($itemdata['all_goal_num'].$key)
+                        ];
+                        $url=$host."/SystemManage/updateGoalInfo";
+                        $resultjson=doCurlGetJsonReq($url,$postdata,30);
+                        $resultjson=json_decode($resultjson,True);
+                
+                          $rstatus=$resultjson['status'];
+                          if($rstatus!=200){
+                             $msg=$msg."进球配置更新失败<br>";
+                          }
+    
+                   }
+    
+                   if($msg!=""){
+                    $data=[
+                        'ico'=>'fa-warning',
+                        'msg'=> $msg
+                      ];
+                    return  view("tips",compact('data'));
+                   }
+                   else{
+                    $data=[
+                        'ico'=>'fa-check',
+                        'msg'=>'进球配置更新成功'
+                      ];
+                    return  view("tips",compact('data'));
+                   }
+                }
+            }
+    
+       }
+
+    public function gamegoalsinfodel(Request $request){
+        $id = $request->id;
+        $key=getmd5key();
+        if( $id==null  && is_numeric($id))
+        {
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'参数错误'
+              ];
+            return  view("tips",compact('data'));
+        }
+    
+         $getarray=[
+            "id" => $request->id,
+            "sign"=>md5($id.$key)
+             ];
+        $url=hosturl()."/SystemManage/delGoalById";
+        $resultjson=doCurlGetJsonReq($url,$getarray,30);
+        $resultjson=json_decode($resultjson,True);
+        $restatus=$resultjson['status'];
+       if( $restatus==200)
+        {
+        $data=[
+            'errcode'=>0,
+            'msg'=>'删除进球配置成功'
+            ];
+            return  response()->json($data);
+        //     return  view('tips',compact('data'));
+         // return Redirect::to('/system/gameoodinfo');
+        }
+        else if($restatus==1){
+                $data=[
+                    'errcode'=>1,
+                    'msg'=>'删除删除配置失败'
+                  ];
+                  return  response()->json($data);
+        }
+        else{
+            $data=[
+                'errcode'=>2,
+                'msg'=>'参数错误'
+              ];
+              return  response()->json($data);
+        }
+
+   }
+
+
+
+       /**
+	 * 获得竞猜足球的系统设置
+	 */
+    public function paramlist(Request $request){
+        $key=getmd5key();
+        $sign=md5('getReal'.$key); 
+            $data=[
+                "sign"=>$sign
+              ];
+              $host=hosturl();
+              $url=$host."/SystemManage/getRealBetItem";
+              $resultjson=doCurlGetJsonReq($url,$data,30);
+              $resultjson=json_decode($resultjson,True);
+              try{
+                $arrlength= count($resultjson) ;
+              }catch (\Exception $e) {
+                $arrlength=3;
+              }
+              if($arrlength!=3){
+                $rstatus=$resultjson[0]['status'];
+                if($rstatus==200){
+                    $paramdata=$resultjson[1];
+                  
+                }
+                else if($rstatus==2){
+                    $paramdata=[];
+                }
+                else if($rstatus==1){
+                    $paramdata=[];
+                }
+              }
+              else{
+                $paramdata=[];
+              }
+       
+             
+              return view('system.Systemparamset',compact('paramdata'));
+    }
+
+
+    /**
+	 * 获得竞猜足球的系统设置
+	 */
+    public function paramvirtual(Request $request){
+        $key=getmd5key();
+        $sign=md5('getvirtual'.$key); 
+            $data=[
+                "sign"=>$sign
+              ];
+              $host=hosturl();
+              $url=$host."/SystemManage/getVirtualBetItem";
+              $resultjson=doCurlGetJsonReq($url,$data,30);
+              $resultjson=json_decode($resultjson,True);
+              try{
+                $arrlength= count($resultjson) ;
+              }catch (\Exception $e) {
+                $arrlength=3;
+              }
+              if($arrlength!=3){
+                $rstatus=$resultjson[0]['status'];
+                if($rstatus==200){
+                    $paramdata=$resultjson[1];
+                  
+                }
+                else if($rstatus==2){
+                    $paramdata=[];
+                }
+                else if($rstatus==1){
+                    $paramdata=[];
+                }
+              }
+              else{
+                $paramdata=[];
+              }
+       
+             
+              return view('system.Systemparamvirtual',compact('paramdata'));
+    }
+
+        /**
+	 * 竞猜足球系统设置更新
+	 */
+   public function paramvirtualupdate(Request $request){
+        $id=$request->id;
+        $item1=$request->item1;
+        $item2=$request->item2;
+        $item3=$request->item3;
+
+        if($id==null || $item1==null || $item2==null|| $item3==null)
+        {
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'参数错误'
+            ];
+            return  view("tips",compact('data'));
+        }
+        else{
+            $type=1;
+            $key=getmd5key();
+            $sign=md5($type.$key.$id);
+            $url=hosturl()."/SystemManage/updateBetItem";
+            $getarray=[
+                "type"=>$type,
+                "id"=>$id,
+                "item1"=> $item1,
+                "item2"=>$item2,
+                "item3"=>$item3,
+                "sign"=>$sign
+                ];
+            $resultjson= doCurlGetJsonReq($url,$getarray,30);
+            $rdata=json_decode($resultjson,True);
+            if($rdata['status']==200){
+                $data=[
+                    'ico'=>'fa-check',
+                    'msg'=>'系统设置更新成功'
+                ];
+                return  view("tips",compact('data'));
+            }
+            else{
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'签名或参数错误'
+            ];
+            return  view("tips",compact('data'));
+        }
+        
+    }
+    }
+
+    /**
+	 * 竞猜足球系统设置更新
+	 */
+   public function paramrealupdate(Request $request)
+   {
+        $id=$request->id;
+        $item1=$request->item1;
+        $item2=$request->item2;
+        $item3=$request->item3;
+        $num_limit=$request->numlimit;
+        $coin_limit=$request->coinlimit;
+
+        if($id==null || $item1==null || $item2==null|| $item3==null|| $num_limit==null|| $coin_limit==null)
+        {
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'参数错误'
+            ];
+            return  view("tips",compact('data'));
+        }
+        else{
+            $type=2;
+            $key=getmd5key();
+            $sign=md5($type.$key.$id);
+            $url=hosturl()."/SystemManage/updateBetItem";
+            $getarray=[
+                "type"=>$type,
+                "id"=>$id,
+                "item1"=> $item1,
+                "item2"=>$item2,
+                "item3"=>$item3,
+                "num_limit"=>$num_limit,
+                "coin_limit"=>$coin_limit,
+                "sign"=>$sign
+                ];
+            $resultjson= doCurlGetJsonReq($url,$getarray,30);
+            $rdata=json_decode($resultjson,True);
+            if($rdata['status']==200){
+                $data=[
+                    'ico'=>'fa-check',
+                    'msg'=>'系统设置更新成功'
+                ];
+                return  view("tips",compact('data'));
+            }
+            else{
+            $data=[
+                'ico'=>'fa-warning',
+                'msg'=>'签名或参数错误'
+            ];
+            return  view("tips",compact('data'));
+        }
+        
+    }
+}
    
 }
